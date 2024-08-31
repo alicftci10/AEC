@@ -1,0 +1,104 @@
+﻿@model KullaniciDataModel
+
+<style>
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:hover {
+        -webkit-box-shadow: 0 0 0 1000px white inset !important;
+        background-color: white !important;
+        color: black !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+</style>
+
+<div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication">
+            <!-- Register -->
+            <div class="card" >
+                <div class="card-body" style="background-color:darkblue;">
+
+                    <span class="row justify-content-center menu-text fw-bolder" style="font-size:32px;margin-bottom:10px;"><img src="~/assets/img/favicon/AEC.ico" style="width:49px;padding-right:unset;padding-left:unset;" />EC</span>
+
+                    <h4 class="row justify-content-center mb-2 fw-bold" style="margin-bottom:10px;">Giriş Ekranı 👋</h4>
+                    <p class="mb-4">Lütfen size tanımlanan kullanıcı adı ve şifre ile giriş yapınız!</p>
+
+                    <form id="formAuthentication" class="mb-3" asp-controller="Authentication" asp-action="LoginEkrani" method="post">
+
+                        <input type="hidden" asp-for="Ad" value="0" />
+                        <input type="hidden" asp-for="Soyad" value="0" />
+                        <input type="hidden" asp-for="KullaniciAdi" value="0" />
+                        <input type="hidden" asp-for="Email" value="0" />
+                        <input type="hidden" asp-for="KullaniciTuruId" value="0" />
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold">Kullanıcı Adı</label>
+                            <input type="text" asp-for="EmailorKullaniciAdi"
+                                   class="form-control"
+                                   id="email"
+                                   placeholder="Kullanıcı Adı veya Email Giriniz"
+                                   autofocus />
+                            <span asp-validation-for="EmailorKullaniciAdi" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 form-password-toggle">
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label fw-bold" for="password">Şifre</label>
+                                <a href="auth-forgot-password-basic.html">
+                                    <small>Şifreni mi Unuttun?</small>
+                                </a>
+                            </div>
+                            <div class="input-group input-group-merge">
+                                <input type="password" asp-for="Sifre"
+                                       id="password"
+                                       class="form-control"
+                                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                       aria-describedby="password" />
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                             
+                            </div>
+                            <span asp-validation-for="Sifre" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remember-me" />
+                                <label class="form-check-label" for="remember-me"> Beni Hatırla </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary d-grid w-100" type="submit">Giriş</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /Register -->
+        </div>
+    </div>
+</div>
+
+@section AECScript {
+
+    <script type="text/javascript">
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem('rememberMe') === 'true') {
+                document.getElementById('email').value = localStorage.getItem('emailorKullaniciAdi') || '';
+                document.getElementById('password').value = localStorage.getItem('password') || '';
+                document.getElementById('remember-me').checked = true;
+            }
+
+            document.getElementById('formAuthentication').addEventListener('submit', function () {
+                if (document.getElementById('remember-me').checked) {
+                    localStorage.setItem('rememberMe', 'true');
+                    localStorage.setItem('emailorKullaniciAdi', document.getElementById('email').value);
+                    localStorage.setItem('password', document.getElementById('password').value);
+                } else {
+                    localStorage.removeItem('rememberMe');
+                    localStorage.removeItem('emailorKullaniciAdi');
+                    localStorage.removeItem('password');
+                }
+            });
+        });
+
+    </script>
+
+}

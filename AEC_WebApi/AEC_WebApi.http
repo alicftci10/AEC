@@ -1,0 +1,6 @@
+@AEC_WebApi_HostAddress = http://localhost:5076
+
+GET {{AEC_WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
