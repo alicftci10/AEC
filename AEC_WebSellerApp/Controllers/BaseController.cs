@@ -59,18 +59,30 @@ namespace AEC_WebSellerApp.Controllers
 
         }
 
-        
+        public void LoadKullaniciTuruDropDown()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciTuruApi/GetKullaniciTuruList";
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
 
-        //public void LoadViewBag()
-        //{
-        //    using (HamsterContext hs = new HamsterContext())
-        //    {
-        //        ViewBag.Yetki = hs.Yetkis.Select(i => new SelectListItem()
-        //        {
-        //            Value = i.Id.ToString(),
-        //            Text = i.YetkiAdi
-        //        }).ToList();
-        //    }
-        //}
+                List<KullaniciTuruDataModel> userModel = new List<KullaniciTuruDataModel>();
+
+                if (text != null)
+                {
+                    userModel = JsonConvert.DeserializeObject<List<KullaniciTuruDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<SelectListItem> list = new List<SelectListItem>();
+                foreach (var item in userModel)
+                {
+                    list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.KullaniciTuruAd });
+                }
+
+                ViewBag.KullaniciTuruList = list;
+            }
+        }
     }
 }

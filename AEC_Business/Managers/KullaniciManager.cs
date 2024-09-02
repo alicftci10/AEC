@@ -20,12 +20,12 @@ namespace AEC_Business.Managers
 
         public List<KullaniciDataModel> GetAllKullanici()
         {
-            KullaniciDataModel model = new KullaniciDataModel();
             List<KullaniciDataModel> listKullanici = new List<KullaniciDataModel>();
 
             List<Kullanici> list = _KullaniciRepository.GetAll() as List<Kullanici>;
             foreach (Kullanici kul in list)
             {
+                KullaniciDataModel model = new KullaniciDataModel();
                 model.Id = kul.Id;
                 model.Ad = kul.Ad;
                 model.Soyad = kul.Soyad;

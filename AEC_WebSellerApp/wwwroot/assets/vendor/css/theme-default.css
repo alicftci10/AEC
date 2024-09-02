@@ -211,12 +211,12 @@ button.list-group-item-primary.active {
   border-color: #329d00;
   box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
 }
-.btn-primary:hover {
-  color: #fff;
-  background-color: #5f61e6;
-  border-color: #5f61e6;
-  transform: translateY(-1px);
-}
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #329d00;
+        border-color: #329d00;
+        transform: translateY(-1px);
+    }
 .btn-check:focus + .btn-primary, .btn-primary:focus, .btn-primary.focus {
   color: #fff;
   background-color: #5f61e6;

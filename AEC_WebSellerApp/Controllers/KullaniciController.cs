@@ -2,6 +2,7 @@
 using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Reflection;
 using System.Text;
 
 namespace AEC_WebSellerApp.Controllers
@@ -30,64 +31,63 @@ namespace AEC_WebSellerApp.Controllers
                     modelList = JsonConvert.DeserializeObject<List<KullaniciDataModel>>(response.Content.ReadAsStringAsync().Result);
                 }
 
+                if (CurrentKullanici.KullaniciTuruId == 1)
+                {
+                    ViewData["KullaniciAdmin"] = modelList;
+                }
+                
                 return View(modelList);
             }
         }
 
-        //public IActionResult KullaniciCreate()
-        //{
-        //    KullaniciViewModel model = new KullaniciViewModel();
+        public IActionResult KullaniciCreate()
+        {
+            KullaniciDataModel model = new KullaniciDataModel();
 
-        //    if (CurrentKullanici.Yetki == 2)
-        //    {
-        //        TempData["ErrorMessage"] = "Bunu yapmaya yetkiniz yok. Lütfen yetkiliye başvurunuz.";
-        //        return RedirectToAction("KullaniciListesi");
-        //    }
+            //LoadViewBag();
 
-        //    LoadViewBag();
+            return View(model);
+        }
 
-        //    return View(model);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> KullaniciCreate(KullaniciDataModel model)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                //LoadViewBag();
 
-        //[HttpPost]
-        //public async Task<IActionResult> KullaniciCreate(KullaniciViewModel model)
-        //{
-        //    using (HttpClient client = new HttpClient())
-        //    {
-        //        LoadViewBag();
+                if (ModelState.IsValid)
+                {
+                    var KullaniciList = HttpContext.Session.GetString("Kullanicilar");
 
-        //        if (ModelState.IsValid)
-        //        {
-        //            var KullaniciList = HttpContext.Session.GetString("Kullanicilar");
+                    if (KullaniciList.Contains(model.KullaniciAdi))
+                    {
+                        ModelState.AddModelError("KullaniciAdi", "Bu Kullanıcı Adı daha önce kullanılmış. Lütfen farklı kullanıcı adı deneyin!");
+                        return View(model);
+                    }
 
-        //            if (KullaniciList.Contains(model.KullaniciAdi))
-        //            {
-        //                ModelState.AddModelError("KullaniciAdi", "Bu Kullanıcı Adı daha önce kullanılmış. Lütfen farklı kullanıcı adı deneyin!");
-        //                return View(model);
-        //            }
+                    string url = "https://localhost:7120/api/KullaniciApi/Save";
 
-        //            string url = "https://localhost:7120/api/KullaniciApi/Save";
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
 
-        //            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                    var json = JsonConvert.SerializeObject(model);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        //            var json = JsonConvert.SerializeObject(model);
-        //            var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = await client.PostAsync(url, content);
 
-        //            var response = await client.PostAsync(url, content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("KullaniciListesi");
+                    }
+                    else
+                    {
+                        return View(model);
+                    }
+                }
 
-        //            if (response.IsSuccessStatusCode)
-        //            {
-        //                return RedirectToAction("KullaniciListesi");
-        //            }
-        //            else
-        //            {
-        //                return View(model);
-        //            }
-        //        }
-
-        //        return View(model);
-        //    }
-        //}
+                return View(model);
+            }
+        }
 
         //public async Task<IActionResult> KullaniciEdit(int pId)
         //{
