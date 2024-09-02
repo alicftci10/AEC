@@ -25,6 +25,23 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult GetListPersonel(string? searchTerm)
+        {
+            string KullaniciAdi = GetCurrentKullanici(HttpContext).KullaniciAdi;
+            int? KullaniciTuru = GetCurrentKullanici(HttpContext).KullaniciTuruId;
+
+            return Ok(_kullanici.GetPersonelList(KullaniciAdi, KullaniciTuru, searchTerm));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetListMusteri(string? searchTerm)
+        {
+            return Ok(_kullanici.GetMusteriList(searchTerm));
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult GetKullanici(int pId)
         {
             return Ok(_kullanici.GetId(pId));

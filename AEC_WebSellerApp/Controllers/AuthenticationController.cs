@@ -30,7 +30,7 @@ namespace AEC_WebSellerApp.Controllers
                 var kullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
                 var emailList = HttpContext.Session.GetString("KullaniciEmailList");
 
-                if (!string.IsNullOrEmpty(model.EmailorKullaniciAdi))
+                if (!string.IsNullOrEmpty(model.EmailorKullaniciAdi) && kullaniciAdiList != null && emailList != null)
                 {
                     if (kullaniciAdiList.Contains(model.EmailorKullaniciAdi))
                     {

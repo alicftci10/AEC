@@ -91,6 +91,16 @@ namespace AEC_Business.Managers
             return item;
         }
 
+        public List<KullaniciDataModel> GetPersonelList(string KullaniciAdi, int? KullaniciTuru, string searchTerm)
+        {
+            return _KullaniciRepository.PersonelList(KullaniciAdi, KullaniciTuru, searchTerm);
+        }
+
+        public List<KullaniciDataModel> GetMusteriList(string searchTerm)
+        {
+            return _KullaniciRepository.MusteriList(searchTerm);
+        }
+
         public Kullanici GetId(int pId)
         {
             return _KullaniciRepository.GetSelect(pId);

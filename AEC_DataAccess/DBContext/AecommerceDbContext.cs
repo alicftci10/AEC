@@ -1,10 +1,10 @@
-﻿using System;
+﻿//using Monitor = AEC_DataAccess.DBModels.Monitor;
+using System;
 using System.Collections.Generic;
 using AEC_DataAccess.DBModels;
 using AEC_Entities.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Monitor = AEC_DataAccess.DBModels.Monitor;
-
 
 namespace AEC_DataAccess.DBContext;
 
@@ -59,12 +59,6 @@ public partial class AecommerceDbContext : DbContext
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
-
-    //if (!optionsBuilder.IsConfigured)
-    //{
-    //    string connectionString = ConfigurationInfo.ConnectionString;
-    //    optionsBuilder.UseSqlServer(connectionString);
-    //}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -153,12 +147,11 @@ public partial class AecommerceDbContext : DbContext
             entity.Property(e => e.Sifre).HasMaxLength(50);
             entity.Property(e => e.Soyad).HasMaxLength(50);
             entity.Property(e => e.Telefon)
-                .HasMaxLength(12)
+                .HasMaxLength(20)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.InverseCreatedByNavigation)
                 .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Kullanici_Kullanici");
 
             entity.HasOne(d => d.Kart).WithMany(p => p.Kullanicis)

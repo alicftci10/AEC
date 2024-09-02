@@ -36,6 +36,8 @@ namespace AEC_Entities.DataModels
         [Required(ErrorMessage = "Kullanıcı Adı Boş Girilemez!!")]
         public string? EmailorKullaniciAdi { get; set; }
 
+        public string? CreatedByName { get; set; }
+
         public string? ErrorMessage { get; set; }
 
         public bool IsSuccess { get; set; }

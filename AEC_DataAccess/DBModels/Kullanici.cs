@@ -27,13 +27,13 @@ public partial class Kullanici
 
     public DateTime CreatedAt { get; set; }
 
-    public int CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
 
     public virtual ICollection<Cozunurluk> Cozunurluks { get; set; } = new List<Cozunurluk>();
 
     public virtual ICollection<Cpu> Cpus { get; set; } = new List<Cpu>();
 
-    public virtual Kullanici CreatedByNavigation { get; set; } = null!;
+    public virtual Kullanici? CreatedByNavigation { get; set; }
 
     public virtual ICollection<Gpu> Gpus { get; set; } = new List<Gpu>();
 

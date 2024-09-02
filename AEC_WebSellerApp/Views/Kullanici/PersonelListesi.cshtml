@@ -1,4 +1,10 @@
-﻿<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
+﻿@model List<KullaniciDataModel>
+
+@{
+    int siralama = 1;
+}
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
         <div class="app-brand-link">
             <span class="menu-text fw-bolder ms-2" style="font-size:32px;"><img src="~/assets/img/favicon/AEC.ico" width="45" />EC</span>
@@ -13,7 +19,7 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item">
             <a href="/Home/Index" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div class="fw-bold">Ana Sayfa</div>
@@ -125,7 +131,7 @@
         <li class="menu-header small">
             <span class="menu-header-text">KULLANICILAR</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-person-circle"></i>
                 <div class="fw-bold">Kullanıcılar</div>
@@ -136,7 +142,7 @@
                         <div>Müşteriler</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="/Kullanici/PersonelListesi" class="menu-link">
                         <div>Personeller</div>
                     </a>
@@ -174,6 +180,7 @@
                 <div class="col nav-item d-flex align-items-center">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text"
+                           id="searchBox"
                            class="form-control border-0 shadow-none"
                            placeholder="Ara..."
                            aria-label="Ara..." style="background-color:black!important">
@@ -228,10 +235,78 @@
         </div>
     </nav>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="resultsContainer">
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            buraya yazılacak
+
+            <div class="card">
+
+                <h4 class="card-header text-center fw-bold" style="color:black;background-color:#329D00;">Personel Listesi</h4>
+                <div class="table-responsive text-nowrap bg-dark" style="height:73vh;">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ADI SOYADI</th>
+                                <th>EMAİL</th>
+                                <th>TELEFON</th>
+                                <th>EKLEYEN</th>
+                                <th>GÜNCELLEME TARİHİ</th>
+                                <th>KULLANICI TÜRÜ</th>
+                                <th>
+                                    
+                                    <a href="/Kullanici/KullaniciCreate" class="text-success">
+                                        <button type="button" class="btn btn-secondary" style="width:100px; line-height:initial; color:black"><i class="bi bi-plus-circle"></i> EKLE</button>
+                                       @*  <span class="badge bg-black" style="line-height:2;width:120px;">Ekle</span> *@
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        @siralama
+                                    </td>
+                                    <td>@item.Ad @item.Soyad</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Telefon</td>
+                                    <td>@item.CreatedByName</td>
+                                    <td>@item.CreatedAt</td>
+                                    <td>
+                                        @if (item.KullaniciTuruId == 1)
+                                        {
+                                            <span class="text-success">Admin</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">Personel</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </a>
+                                            <div class="dropdown-menu" style="background-color:black">
+                                                <a class="dropdown-item text-warning" href="/Kullanici/KullaniciEdit?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+                                                <a class="dropdown-item text-danger" href="/Kullanici/KullaniciDelete?pId=@item.Id"><i class="bx bx-trash me-1"></i> Sil</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                siralama++;
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
         </div>
 
 
@@ -248,17 +323,17 @@
                 <div>
                     <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
                     <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
-                   
-                  @*   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+
+                    @*   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
                     <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
 
                     <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-                       target="_blank"
-                       class="footer-link me-4">Documentation</a>
+                    target="_blank"
+                    class="footer-link me-4">Documentation</a>
 
                     <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                       target="_blank"
-                       class="footer-link me-4">Support</a> *@
+                    target="_blank"
+                    class="footer-link me-4">Support</a> *@
                 </div>
             </div>
         </footer>
@@ -266,3 +341,26 @@
         <div class="content-backdrop fade"></div>
     </div>
 </div>
+
+@section AECScript {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#searchBox').on('input', function () {
+                var searchTerm = $(this).val();
+                $.ajax({
+                    url: '/Kullanici/PersonelListesi',
+                    type: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        var newResults = $(data).find('#resultsContainer').html();
+                        $('#resultsContainer').html(newResults);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+}
