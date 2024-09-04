@@ -1,5 +1,4 @@
-﻿//using Monitor = AEC_DataAccess.DBModels.Monitor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using AEC_DataAccess.DBModels;
 using AEC_Entities.Configuration;
@@ -149,10 +148,6 @@ public partial class AecommerceDbContext : DbContext
             entity.Property(e => e.Telefon)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.InverseCreatedByNavigation)
-                .HasForeignKey(d => d.CreatedBy)
-                .HasConstraintName("FK_Kullanici_Kullanici");
 
             entity.HasOne(d => d.Kart).WithMany(p => p.Kullanicis)
                 .HasForeignKey(d => d.KartId)

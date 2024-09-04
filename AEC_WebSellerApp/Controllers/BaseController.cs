@@ -40,8 +40,9 @@ namespace AEC_WebSellerApp.Controllers
 
                 if (model != null)
                 {
-                    ViewData["AdSoyad"] = model.Ad + " " + model.Soyad;
-                    ViewData["Telefon"] = model.Telefon;
+                    ViewData["KullaniciId"] = model.Id;
+                    ViewData["KullaniciFullName"] = model.Ad + " " + model.Soyad;
+                    ViewData["KullaniciTelefon"] = model.Telefon;
                     if (model.KullaniciTuruId == 1)
                     {
                         ViewData["KullaniciTuru"] = "Admin";
@@ -63,24 +64,34 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciTuruApi/GetKullaniciTuruList";
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciTuruApi/GetAllKullaniciTuru";
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
                 var response = client.GetAsync(url);
                 var text = response.Result;
 
-                List<KullaniciTuruDataModel> userModel = new List<KullaniciTuruDataModel>();
+                List<KullaniciTuruDataModel> modelList = new List<KullaniciTuruDataModel>();
 
                 if (text != null)
                 {
-                    userModel = JsonConvert.DeserializeObject<List<KullaniciTuruDataModel>>(text.Content.ReadAsStringAsync().Result);
+                    modelList = JsonConvert.DeserializeObject<List<KullaniciTuruDataModel>>(text.Content.ReadAsStringAsync().Result);
                 }
 
+                List<SelectListItem> listPersonel = new List<SelectListItem>();
                 List<SelectListItem> list = new List<SelectListItem>();
-                foreach (var item in userModel)
+                foreach (var item in modelList)
                 {
-                    list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.KullaniciTuruAd });
+                    if (item.KullaniciTuruAd != "Müşteri")
+                    {
+                        listPersonel.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.KullaniciTuruAd });
+                        list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.KullaniciTuruAd });
+                    }
+                    else
+                    {
+                        list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.KullaniciTuruAd });
+                    }
                 }
 
+                ViewBag.KullaniciTuruPersonelList = listPersonel;
                 ViewBag.KullaniciTuruList = list;
             }
         }

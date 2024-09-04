@@ -31,42 +31,92 @@ namespace AEC_WebSellerApp.Controllers
                     modelList = JsonConvert.DeserializeObject<List<KullaniciDataModel>>(response.Content.ReadAsStringAsync().Result);
                 }
 
-                if (CurrentKullanici.KullaniciTuruId == 1)
-                {
-                    ViewData["KullaniciAdmin"] = modelList;
-                }
-                
-                return View(modelList);
+                return PartialView(modelList);
             }
         }
 
-        public IActionResult KullaniciCreate()
-        {
-            KullaniciDataModel model = new KullaniciDataModel();
+        //public IActionResult PersonelSayfasi()
+        //{
+        //    KullaniciDataModel model = new KullaniciDataModel();
 
-            //LoadViewBag();
+        //    LoadKullaniciTuruDropDown();
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> KullaniciCreate(KullaniciDataModel model)
+        public async Task<IActionResult> PersonelSayfasi(int pId)
         {
             using (HttpClient client = new HttpClient())
             {
-                //LoadViewBag();
+                LoadKullaniciTuruDropDown();
+
+                KullaniciDataModel model = new KullaniciDataModel();
+
+
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciApi/GetKullanici";
+
+                url += $"?pId={pId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                var response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<KullaniciDataModel>(response.Content.ReadAsStringAsync().Result);
+                }
+
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PersonelSayfasi(KullaniciDataModel model)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                LoadKullaniciTuruDropDown();
 
                 if (ModelState.IsValid)
                 {
-                    var KullaniciList = HttpContext.Session.GetString("Kullanicilar");
+                    string kullaniciadisonuc = null;
+                    string emailsonuc = null;
 
-                    if (KullaniciList.Contains(model.KullaniciAdi))
+                    var KullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
+
+                    if (KullaniciAdiList.Contains(model.KullaniciAdi))
+                    {
+                        kullaniciadisonuc = "1";
+                    }
+
+                    var EmailList = HttpContext.Session.GetString("KullaniciEmailList");
+
+                    if (EmailList.Contains(model.Email))
+                    {
+                        emailsonuc = "2";
+                    }
+
+                    if (kullaniciadisonuc == "1" && emailsonuc == "2")
                     {
                         ModelState.AddModelError("KullaniciAdi", "Bu Kullanıcı Adı daha önce kullanılmış. Lütfen farklı kullanıcı adı deneyin!");
+                        ModelState.AddModelError("Email", "Bu Email daha önce kullanılmış. Lütfen farklı Email deneyin!");
+                        model.IsSuccess = true;
+                        return View(model);
+                    }
+                    else if (kullaniciadisonuc != "1" && emailsonuc == "2")
+                    {
+                        ModelState.AddModelError("Email", "Bu Email daha önce kullanılmış. Lütfen farklı Email deneyin!");
+                        model.IsSuccess = true;
+                        return View(model);
+                    }
+                    else if (kullaniciadisonuc == "1" && emailsonuc != "2")
+                    {
+                        ModelState.AddModelError("KullaniciAdi", "Bu Kullanıcı Adı daha önce kullanılmış. Lütfen farklı kullanıcı adı deneyin!");
+                        model.IsSuccess = true;
                         return View(model);
                     }
 
-                    string url = "https://localhost:7120/api/KullaniciApi/Save";
+                    string url = ConfigurationInfo.ApiUrl + "/api/KullaniciApi/AddUpdate";
 
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
 
@@ -77,14 +127,11 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return RedirectToAction("KullaniciListesi");
-                    }
-                    else
-                    {
-                        return View(model);
+                        return RedirectToAction("PersonelSayfasi");
                     }
                 }
 
+                model.IsSuccess = true;
                 return View(model);
             }
         }

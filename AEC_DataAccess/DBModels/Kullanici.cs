@@ -33,11 +33,7 @@ public partial class Kullanici
 
     public virtual ICollection<Cpu> Cpus { get; set; } = new List<Cpu>();
 
-    public virtual Kullanici? CreatedByNavigation { get; set; }
-
     public virtual ICollection<Gpu> Gpus { get; set; } = new List<Gpu>();
-
-    public virtual ICollection<Kullanici> InverseCreatedByNavigation { get; set; } = new List<Kullanici>();
 
     public virtual ICollection<IsletimSistemi> IsletimSistemis { get; set; } = new List<IsletimSistemi>();
 

@@ -25,7 +25,7 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                LoadKullaniciListDropDown();
+                KullaniciList();
 
                 var kullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
                 var emailList = HttpContext.Session.GetString("KullaniciEmailList");
@@ -75,7 +75,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        private void LoadKullaniciListDropDown()
+        private void KullaniciList()
         {
             using (HttpClient client = new HttpClient())
             {

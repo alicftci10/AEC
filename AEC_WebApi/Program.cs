@@ -87,14 +87,14 @@ namespace AEC_WebApi
 
             //builder.Services.AddTransient<IHamsterService, HamsterManager>();
             builder.Services.AddTransient<IKullaniciService, KullaniciManager>();
-            //builder.Services.AddTransient<IPRTeamService, PRTeamManager>();
+            builder.Services.AddTransient <IKullaniciTuruService, KullaniciTuruManager>();
             //builder.Services.AddTransient<IMarketsService, MarketsManager>();
             //builder.Services.AddTransient<ILegalService, LegalManager>();
             //builder.Services.AddTransient<IWeb3Service, Web3Manager>();
             //builder.Services.AddTransient<ISpecialsService, SpecialsManager>();
 
             builder.Services.AddTransient<IEFKullaniciRepository, EFKullanici>();
-            //builder.Services.AddTransient<IEFPRTeamRepository, EFPRTeam>();
+            builder.Services.AddTransient<IEFKullaniciTuruRepository, EFKullaniciTuru>();
             //builder.Services.AddTransient<IEFMarketsRepository, EFMarkets>();
             //builder.Services.AddTransient<IEFLegalRepository, EFLegal>();
             //builder.Services.AddTransient<IEFWeb3Repository, EFWeb3>();

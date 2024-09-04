@@ -13,7 +13,7 @@ namespace AEC_DataAccess.EFInterfaces
     {
         Kullanici GetKullanici(KullaniciDataModel model, out string? ErrorMessage);
 
-        List<KullaniciDataModel> PersonelList(string KullaniciAdi, int? KullaniciTuru, string searchTerm);
+        List<KullaniciDataModel> PersonelList(string searchTerm);
 
         List<KullaniciDataModel> MusteriList(string searchTerm);
     }

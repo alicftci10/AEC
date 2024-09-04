@@ -14,7 +14,7 @@ namespace AEC_Business.Interfaces
 
         KullaniciDataModel GetKullanici(KullaniciDataModel model);
 
-        List<KullaniciDataModel> GetPersonelList(string KullaniciAdi, int? KullaniciTuru, string searchTerm);
+        List<KullaniciDataModel> GetPersonelList(string searchTerm);
 
         List<KullaniciDataModel> GetMusteriList(string searchTerm);
 

@@ -78,7 +78,7 @@ namespace AEC_Business.Managers
             item.Email = model.Email;
             item.Telefon = model.Telefon;
             item.Adres = model.Adres;
-            item.KullaniciTuruId = model.KullaniciTuruId;
+            item.KullaniciTuruId = model.KullaniciTuruId.Value;
             item.KartId = model.KartId;
             item.CreatedAt = DateTime.Now;
             item.CreatedBy = model.CreatedBy.Value;
@@ -91,9 +91,9 @@ namespace AEC_Business.Managers
             return item;
         }
 
-        public List<KullaniciDataModel> GetPersonelList(string KullaniciAdi, int? KullaniciTuru, string searchTerm)
+        public List<KullaniciDataModel> GetPersonelList(string searchTerm)
         {
-            return _KullaniciRepository.PersonelList(KullaniciAdi, KullaniciTuru, searchTerm);
+            return _KullaniciRepository.PersonelList(searchTerm);
         }
 
         public List<KullaniciDataModel> GetMusteriList(string searchTerm)

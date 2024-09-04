@@ -27,10 +27,7 @@ namespace AEC_WebApi.Controllers
         [Authorize]
         public IActionResult GetListPersonel(string? searchTerm)
         {
-            string KullaniciAdi = GetCurrentKullanici(HttpContext).KullaniciAdi;
-            int? KullaniciTuru = GetCurrentKullanici(HttpContext).KullaniciTuruId;
-
-            return Ok(_kullanici.GetPersonelList(KullaniciAdi, KullaniciTuru, searchTerm));
+            return Ok(_kullanici.GetPersonelList(searchTerm));
         }
 
         [HttpGet]
@@ -44,13 +41,25 @@ namespace AEC_WebApi.Controllers
         [Authorize]
         public IActionResult GetKullanici(int pId)
         {
+            if (pId == 0)
+            {
+                KullaniciDataModel model = new KullaniciDataModel();
+                return Ok(model);
+            }
             return Ok(_kullanici.GetId(pId));
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Save([FromBody] KullaniciDataModel model)
+        public IActionResult AddUpdate([FromBody] KullaniciDataModel model)
         {
+            model.CreatedBy = GetCurrentKullanici(HttpContext).Id;
+
+            if (model.Id > 0)
+            {
+                return Ok(Update(model));
+            }
+
             return Ok(_kullanici.Add(model));
         }
 

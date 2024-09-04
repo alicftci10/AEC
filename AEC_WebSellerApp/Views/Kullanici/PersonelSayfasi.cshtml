@@ -1,4 +1,7 @@
-﻿<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
+﻿@model KullaniciDataModel
+
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
         <div class="app-brand-link">
             <span class="menu-text fw-bolder ms-2" style="font-size:32px;"><img src="~/assets/img/favicon/AEC.ico" width="45" />EC</span>
@@ -13,7 +16,7 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item">
             <a href="/Home/Index" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div class="fw-bold">Ana Sayfa</div>
@@ -125,7 +128,7 @@
         <li class="menu-header small">
             <span class="menu-header-text">KULLANICILAR</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-person-circle"></i>
                 <div class="fw-bold">Kullanıcılar</div>
@@ -136,7 +139,7 @@
                         <div>Müşteriler</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="/Kullanici/PersonelSayfasi" class="menu-link">
                         <div>Personeller</div>
                     </a>
@@ -174,6 +177,7 @@
                 <div class="col nav-item d-flex align-items-center">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text"
+                           id="searchBox"
                            class="form-control border-0 shadow-none"
                            placeholder="Ara..."
                            aria-label="Ara..." style="background-color:black!important">
@@ -231,7 +235,23 @@
     <div class="content-wrapper">
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            buraya yazılacak
+            <div class="card">
+
+                <div class="card-header" style="background-color:#329D00;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
+                            Personel Listesi
+                        </h4>
+                        @if (ViewData["KullaniciTuru"] == "Admin")
+                        {
+                            <button type="button" class="btn rounded-pill btn-dark" data-bs-toggle="modal" data-bs-target="#exLargeModal" onclick="addModal()">
+                                <i class="bi bi-plus-circle"></i> EKLE
+                            </button>
+                        }
+                    </div>
+                </div>
+                <div id="list"></div>
+            </div>
         </div>
 
         <footer style="background-color:black!important;">
@@ -247,17 +267,17 @@
                 <div>
                     <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
                     <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
-                   
-                  @*   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+
+                    @*   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
                     <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
 
                     <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-                       target="_blank"
-                       class="footer-link me-4">Documentation</a>
+                    target="_blank"
+                    class="footer-link me-4">Documentation</a>
 
                     <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                       target="_blank"
-                       class="footer-link me-4">Support</a> *@
+                    target="_blank"
+                    class="footer-link me-4">Support</a> *@
                 </div>
             </div>
         </footer>
@@ -265,3 +285,196 @@
         <div class="content-backdrop fade"></div>
     </div>
 </div>
+
+
+@* <div id="personelForm"></div> *@
+
+<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Kullanıcı Ekle</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <form asp-action="PersonelSayfasi" asp-controller="Kullanici" method="post">
+
+                <input type="hidden" asp-for="Id" id="pId" />
+                <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
+
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmAd" class="form-label fw-bold">AD</label>
+                            <input type="text" asp-for="Ad" id="frmAd" class="form-control" placeholder="Ad Giriniz" />
+                            <span asp-validation-for="Ad" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
+                            <input type="text" asp-for="Soyad" id="frmSoyad" class="form-control" placeholder="Soyad Giriniz" />
+                            <span asp-validation-for="Soyad" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
+                            <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="form-control" placeholder="Kullanıcı Adı Giriniz" />
+                            <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0 form-password-toggle">
+                            <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
+                            <div class="input-group input-group-merge">
+                                <input type="text" asp-for="Sifre"
+                                       id="frmSifre"
+                                       class="form-control"
+                                       placeholder="Şifre Giriniz"
+                                       aria-describedby="password" />
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
+                            <span asp-validation-for="Sifre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
+                            <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Adresi Giriniz" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
+                            <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmAdres" class="form-label fw-bold">ADRES</label>
+                            <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmKullaniciTuru" class="form-label fw-bold">KULLANICI TÜRÜ</label>
+                            <select asp-for="KullaniciTuruId"
+                                    asp-items="@ViewBag.KullaniciTuruPersonelList"
+                                    class="form-select"
+                                    id="frmKullaniciTuru">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="KullaniciTuruId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    @* <div class="row">
+                    <div class="col mb-3">
+                    <label for="nameExLarge" class="form-label">Name</label>
+                    <input type="text" asp-for="Ad" id="nameExLarge" class="form-control" placeholder="Enter Name" />
+                    </div>
+                    </div> *@
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="addModal()">
+                        Kapat
+                    </button>
+                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section AECScript {
+
+    <script type="text/javascript">
+
+        function addModal() {
+
+            $.ajax({
+                url: '/Kullanici/PersonelSayfasi?pId=0',
+                type: 'GET',
+                success: function (response) {
+
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+
+            // $('#pId').val('0');
+            // $('#emailorkullaniciadi').val('0');
+            // $('#frmAd').val('');
+            // $('#frmSoyad').val('');
+            // $('#frmKullaniciAdi').val('');
+            // $('#frmSifre').val('');
+            // $('#frmEmail').val('');
+            // $('#frmTelefon').val('');
+            // $('#frmAdres').val('');
+            // $('#frmKullaniciTuru').val('');
+
+        }
+
+        $(document).ready(function () {
+
+            $('#searchBox').on('input', function () {
+                var searchTerm = $(this).val();
+                $.ajax({
+                    url: '/Kullanici/PersonelListesi',
+                    type: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        $('#list').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error: " + error);
+                    }
+                });
+            });
+        });
+
+        $.ajax({
+            url: '/Kullanici/PersonelListesi',
+            type: 'GET',
+            success: function (result) {
+                $('#list').html(result);
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+
+        // $.ajax({
+        //     url: '/Kullanici/PersonelForm',
+        //     type: 'GET',
+        //     success: function (result) {
+        //         $('#personelForm').html(result);
+        //     },
+        //     error: function (xhr, status, error) {
+        //         console.log("Error: " + error);
+        //     }
+        // });
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var isSuccess = '@Model.IsSuccess'; // Model'den başarı durumunu al
+            if (isSuccess == 'True') {
+                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
+                modal.show();
+            }
+
+            var modelid = '@Model.Id'; // Model'den başarı durumunu al
+            if (modelid > 0) {
+                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
+                modal.show();
+            }
+        });
+
+    </script>
+
+}

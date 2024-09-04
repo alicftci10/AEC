@@ -4,383 +4,65 @@
     int siralama = 1;
 }
 
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
-    <div class="app-brand demo">
-        <div class="app-brand-link">
-            <span class="menu-text fw-bolder ms-2" style="font-size:32px;"><img src="~/assets/img/favicon/AEC.ico" width="45" />EC</span>
-        </div>
+<div class="table-responsive text-nowrap bg-dark" style="height:73vh;">
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th></th>
+                <th>ADI SOYADI</th>
+                <th>EMAİL</th>
+                <th>TELEFON</th>
+                <th>EKLEYEN</th>
+                <th>GÜNCELLEME TARİHİ</th>
+                <th>KULLANICI TÜRÜ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
 
-        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-            <i class="bx bx-chevron-left bx-sm align-middle"></i>
-        </a>
-    </div>
-
-    <div class="menu-inner-shadow"></div>
-
-    <ul class="menu-inner py-1">
-        <!-- Dashboard -->
-        <li class="menu-item">
-            <a href="/Home/Index" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div class="fw-bold">Ana Sayfa</div>
-            </a>
-        </li>
-
-        <li class="menu-header small">
-            <span class="menu-header-text">SİPARİŞLER</span>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bi bi-alarm" style="position: relative; top: -1px; -webkit-text-stroke: 0.5px;"></i>
-                <div class="fw-bold">Bekliyor</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bi bi-hand-thumbs-up-fill" style="position: relative; top: -1px; -webkit-text-stroke: 0.5px;"></i>
-                <div class="fw-bold">Tamamlandı</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bi bi-hand-thumbs-down-fill" style="position: relative; top: 1px; -webkit-text-stroke: 0.5px;"></i>
-                <div class="fw-bold">İptal</div>
-            </a>
-        </li>
-
-        <li class="menu-header small">
-            <span class="menu-header-text">ÜRÜNLER</span>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bi bi-cart3" style="position: relative; top: -2px; -webkit-text-stroke: 0.5px;"></i>
-                <div class="fw-bold">Ürün Yönetimi</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div>Laptop</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div>Monitör</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bi bi-motherboard" style="-webkit-text-stroke: 0.5px;"></i>
-                <div class="fw-bold">Donanım</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div>CPU</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div>GPU</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div>RAM</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div>SSD</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bi bi-gear-fill" style="-webkit-text-stroke: 0.5px;"></i>
-                <div class="fw-bold">Donanım Özellikleri</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div>Yenileme Hızı</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div>Çözünürlük</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bi bi-windows"></i>
-                <div class="fw-bold">İşletim Sistemi</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bi bi-window-stack"></i>
-                <div class="fw-bold">Kategori Yönetimi</div>
-            </a>
-        </li>
-
-        <li class="menu-header small">
-            <span class="menu-header-text">KULLANICILAR</span>
-        </li>
-        <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bi bi-person-circle"></i>
-                <div class="fw-bold">Kullanıcılar</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div>Müşteriler</div>
-                    </a>
-                </li>
-                <li class="menu-item active">
-                    <a href="/Kullanici/PersonelListesi" class="menu-link">
-                        <div>Personeller</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bi bi-person-vcard-fill" style="position: relative; top: 1px;"></i>
-                <div class="fw-bold">Profil</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bi bi-eye-fill"></i>
-                <div class="fw-bold">Hakkımızda</div>
-            </a>
-        </li>
-    </ul>
-</aside>
-
-<div class="layout-page">
-
-    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-         id="layout-navbar" style="background-color:black!important">
-        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                <i class="bx bx-menu bx-sm"></i>
-            </a>
-        </div>
-
-        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-            <!-- Search -->
-            <div class="navbar-nav align-items-center col">
-                <div class="col nav-item d-flex align-items-center">
-                    <i class="bx bx-search fs-4 lh-0"></i>
-                    <input type="text"
-                           id="searchBox"
-                           class="form-control border-0 shadow-none"
-                           placeholder="Ara..."
-                           aria-label="Ara..." style="background-color:black!important">
-                </div>
-            </div>
-            <!-- /Search -->
-
-            <ul class="navbar-nav flex-row align-items-center ms-auto">
-
-                <!-- User -->
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                        <div class="avatar avatar-online">
-                            <img src="~/assets/img/avatars/user-avatar.png" alt class="w-px-40 h-auto rounded-circle" />
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" style="background-color:black!important">
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0 me-3">
-                                        <div class="avatar avatar-online">
-                                            <img src="~/assets/img/avatars/user-avatar.png" alt class="w-px-40 h-auto rounded-circle" />
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-semibold d-block">@ViewData["AdSoyad"]</span>
-                                        <small class="text-muted">@ViewData["KullaniciTuru"]</small>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="dropdown-divider"></div>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="bx bx-user me-2"></i>
-                                <span class="align-middle">My Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="/Authentication/LoginEkrani?p=logout">
-                                <i class="bx bx-power-off me-2"></i>
-                                <span class="align-middle">Çıkış</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <!--/ User -->
-            </ul>
-        </div>
-    </nav>
-
-    <div class="content-wrapper" id="resultsContainer">
-
-        <div class="container-xxl flex-grow-1 container-p-y">
-
-            <div class="card">
-
-                <div class="card-header" style="background-color:#329D00;">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
-                            Personel Listesi
-                        </h4>
-                        @if (ViewData["KullaniciAdmin"] != null)
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        @siralama
+                    </td>
+                    <td>@item.FullName</td>
+                    <td>@item.Email</td>
+                    <td>@item.Telefon</td>
+                    <td>@item.CreatedByName</td>
+                    <td>@item.CreatedAt</td>
+                    <td>
+                        @if (item.KullaniciTuruName == "Admin")
                         {
-                            <button type="button" class="btn rounded-pill btn-dark" data-bs-toggle="modal" data-bs-target="#exLargeModal" onclick="loadCreateForm()">
-                                <i class="bi bi-plus-circle"></i> EKLE
-                            </button>
+                            <span class="text-success">@item.KullaniciTuruName</span>
                         }
-                    </div>
-                </div>
+                        else
+                        {
+                            <span class="text-danger">@item.KullaniciTuruName</span>
+                        }
+                    </td>
+                    <td>
+                        @if (ViewData["KullaniciTuru"] == "Admin" || item.Id == Convert.ToInt32(ViewData["KullaniciId"]))
+                        {
+                            <div class="dropdown">
+                                <a type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </a>
+                                <div class="dropdown-menu" style="background-color:black">
+                                    <a class="dropdown-item text-warning" href="/Kullanici/PersonelSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+                                    @if (ViewData["KullaniciTuru"] == "Admin" && item.Id != Convert.ToInt32(ViewData["KullaniciId"]))
+                                    {
+                                        <a class="dropdown-item text-danger" href="/Kullanici/KullaniciDelete?pId=@item.Id"><i class="bx bx-trash me-1"></i> Sil</a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
 
-                <div class="table-responsive text-nowrap bg-dark" id="resultsContainer" style="height:73vh;">
-                    <table class="table table-dark">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>ADI SOYADI</th>
-                                <th>EMAİL</th>
-                                <th>TELEFON</th>
-                                <th>EKLEYEN</th>
-                                <th>GÜNCELLEME TARİHİ</th>
-                                <th>KULLANICI TÜRÜ</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-border-bottom-0">
+                siralama++;
+            }
 
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td class="text-center">
-                                        @siralama
-                                    </td>
-                                    <td>@item.Ad @item.Soyad</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.Telefon</td>
-                                    <td>@item.CreatedByName</td>
-                                    <td>@item.CreatedAt</td>
-                                    <td>
-                                        @if (item.KullaniciTuruId == 1)
-                                        {
-                                            <span class="text-success">Admin</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-danger">Personel</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </a>
-                                            <div class="dropdown-menu" style="background-color:black">
-                                                <a class="dropdown-item text-warning" href="/Kullanici/KullaniciEdit?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
-                                                <a class="dropdown-item text-danger" href="/Kullanici/KullaniciDelete?pId=@item.Id"><i class="bx bx-trash me-1"></i> Sil</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                siralama++;
-                            }
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <footer style="background-color:black!important;">
-            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row">
-                <div class="mb-2 mb-md-2">
-                    ©
-                    <script>
-                        document.write(new Date().getFullYear());
-                    </script>
-                    ,
-                    <a href="/Home/Index" target="_blank" class="footer-link fw-bolder">Ali E-Commerce</a>
-                </div>
-                <div>
-                    <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
-                    <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
-
-                    @*   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-
-                    <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-                    target="_blank"
-                    class="footer-link me-4">Documentation</a>
-
-                    <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                    target="_blank"
-                    class="footer-link me-4">Support</a> *@
-                </div>
-            </div>
-        </footer>
-
-        <div class="content-backdrop fade"></div>
-    </div>
+        </tbody>
+    </table>
 </div>
-
-<div id="exLargeModal"></div>
-
-@section AECScript {
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            $('#searchBox').on('input', function () {
-                var searchTerm = $(this).val();
-                $.ajax({
-                    url: '/Kullanici/PersonelListesi',
-                    type: 'GET',
-                    data: { searchTerm: searchTerm },
-                    success: function (data) {
-                        var newResults = $(data).find('#resultsContainer').html();
-                        $('#resultsContainer').html(newResults);
-                    }
-                });
-            });
-        });
-
-        function loadCreateForm() {
-            $.ajax({
-                url: '/Kullanici/KullaniciCreate', // Formu yükleyecek Action
-                type: 'GET',
-                success: function (response) {
-                    $('#exLargeModal').html(response); // Modal gövdesine formu yerleştir
-                    $('#exLargeModal .modal').modal('show'); // Modal'ı göster
-                },
-                error: function () {
-                    alert("Form yüklenirken bir hata oluştu.");
-                }
-            });
-        }
-
-    </script>
-
-}

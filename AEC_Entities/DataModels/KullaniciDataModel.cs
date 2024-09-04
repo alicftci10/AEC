@@ -29,14 +29,18 @@ namespace AEC_Entities.DataModels
         public string? Adres { get; set; }
 
         [Required(ErrorMessage = "Kullanıcı Türü Boş Girilemez!!")]
-        public int KullaniciTuruId { get; set; }
+        public int? KullaniciTuruId { get; set; }
 
         public int? KartId { get; set; }
 
         [Required(ErrorMessage = "Kullanıcı Adı Boş Girilemez!!")]
         public string? EmailorKullaniciAdi { get; set; }
 
+        public string? FullName { get; set; }
+
         public string? CreatedByName { get; set; }
+
+        public string? KullaniciTuruName { get; set; }
 
         public string? ErrorMessage { get; set; }
 

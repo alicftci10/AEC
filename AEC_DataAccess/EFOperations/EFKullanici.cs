@@ -45,21 +45,11 @@ namespace AEC_DataAccess.EFOperations
             }
         }
 
-        public List<KullaniciDataModel> PersonelList(string KullaniciAdi, int? KullaniciTuru, string searchTerm)
+        public List<KullaniciDataModel> PersonelList(string searchTerm)
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var searchList = db.Kullanicis.AsQueryable();
-
-                if (!string.IsNullOrEmpty(searchTerm))
-                {
-                    searchList = searchList.Where(i => i.Ad.Contains(searchTerm) ||
-                                     i.Soyad.Contains(searchTerm) ||
-                                     i.Email.Contains(searchTerm) ||
-                                     i.Telefon.Contains(searchTerm));
-                }
-
-                var kullaniciList = (from k in searchList
+                var kullaniciList = (from k in db.Kullanicis.AsQueryable()
                                      join
                                          kul in db.Kullanicis on k.CreatedBy equals kul.Id
 
@@ -70,27 +60,30 @@ namespace AEC_DataAccess.EFOperations
                                          Id = k.Id,
                                          Ad = k.Ad,
                                          Soyad = k.Soyad,
+                                         FullName = k.Ad + " " + k.Soyad,
                                          KullaniciAdi = k.KullaniciAdi,
                                          Sifre = k.Sifre,
                                          Email = k.Email,
                                          Telefon = k.Telefon,
                                          Adres = k.Adres,
                                          KullaniciTuruId = k.KullaniciTuruId,
+                                         KullaniciTuruName = k.KullaniciTuruId == 1 ? "Admin" : "Personel",
                                          KartId = k.KartId,
                                          CreatedAt = k.CreatedAt,
+                                         CreatedBy = k.CreatedBy,
                                          CreatedByName = db.Kullanicis.Where(i => i.Id == k.CreatedBy).Select(i => i.Ad + " " + i.Soyad).FirstOrDefault()
 
                                      }).ToList();
 
-                if (KullaniciTuru == 2)
+                if (!string.IsNullOrEmpty(searchTerm))
                 {
-                    foreach (var item in kullaniciList)
-                    {
-                        if (item.KullaniciAdi != KullaniciAdi)
-                        {
-                            item.Sifre = "****";
-                        }
-                    }
+                    searchTerm = searchTerm.ToLower();
+                    kullaniciList = kullaniciList.Where(i => i.FullName.ToLower().Contains(searchTerm) ||
+                                     i.Email.ToLower().Contains(searchTerm) ||
+                                     i.Telefon.Contains(searchTerm) ||
+                                     i.CreatedByName.ToLower().Contains(searchTerm) ||
+                                    Convert.ToString(i.CreatedAt).Contains(searchTerm) ||
+                                    i.KullaniciTuruName.ToLower().Contains(searchTerm)).ToList();
                 }
 
                 return kullaniciList;
