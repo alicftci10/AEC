@@ -49,14 +49,21 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </a>
                                 <div class="dropdown-menu" style="background-color:black">
+
                                     <a class="dropdown-item text-warning" href="/Kullanici/PersonelSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
                                     @if (ViewData["KullaniciTuru"] == "Admin" && item.Id != Convert.ToInt32(ViewData["KullaniciId"]))
                                     {
-                                        <a class="dropdown-item text-danger" href="/Kullanici/PersonelSil?pId=@item.Id"><i class="bx bx-trash me-1"></i> Sil</a>
+                                        <button type="button" class="dropdown-item text-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#backDropModal"
+                                                onclick="deleteModal(@item.Id)">
+                                            <i class="bx bx-trash me-1"></i> Sil
+                                        </button>
                                     }
                                 </div>
                             </div>
                         }
+
                     </td>
                 </tr>
 

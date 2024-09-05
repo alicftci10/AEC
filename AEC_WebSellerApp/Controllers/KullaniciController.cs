@@ -41,6 +41,18 @@ namespace AEC_WebSellerApp.Controllers
             {
                 LoadKullaniciTuruDropDown();
 
+                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
+                if (MessageBox == 1)
+                {
+                    TempData["MessageBox"] = 1;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 2)
+                {
+                    TempData["MessageBox"] = 2;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+
                 KullaniciDataModel model = new KullaniciDataModel();
 
                 if (pId > 0)
@@ -134,6 +146,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
+                        HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("PersonelSayfasi");
                     }
                 }
@@ -155,6 +168,7 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
+                HttpContext.Session.SetInt32("MessageBox", 2);
                 return RedirectToAction("PersonelSayfasi");
             }
         }

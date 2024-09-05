@@ -286,9 +286,6 @@
     </div>
 </div>
 
-
-@* <div id="personelForm"></div> *@
-
 <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -382,6 +379,35 @@
 </div>
 
 
+<div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="backDropModalTitle">Kullanıcı Sil</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-3" style="color:black">
+                        Kullanıcıyı Silmek İstediğinize Emin Misiniz ?
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Hayır
+                </button>
+                <a href="#" id="confirmDeleteLink" class="btn btn-dark">Evet</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
 @section AECScript {
 
     <script type="text/javascript">
@@ -443,7 +469,25 @@
                 var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
                 modal.show();
             }
+
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Kullanıcı Kayıt Edildi");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Kullanıcı Silindi");
+            }
         });
+
+        let kullaniciId = null;
+
+        function deleteModal(id) {
+
+            kullaniciId = id;
+            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
+            confirmDeleteLink.href = '/Kullanici/PersonelSil?pId=' + kullaniciId;
+
+        }
 
     </script>
 
