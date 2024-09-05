@@ -41,11 +41,6 @@ namespace AEC_WebApi.Controllers
         [Authorize]
         public IActionResult GetKullanici(int pId)
         {
-            if (pId == 0)
-            {
-                KullaniciDataModel model = new KullaniciDataModel();
-                return Ok(model);
-            }
             return Ok(_kullanici.GetId(pId));
         }
 

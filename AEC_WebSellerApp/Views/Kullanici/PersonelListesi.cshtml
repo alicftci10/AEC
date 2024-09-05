@@ -52,7 +52,7 @@
                                     <a class="dropdown-item text-warning" href="/Kullanici/PersonelSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
                                     @if (ViewData["KullaniciTuru"] == "Admin" && item.Id != Convert.ToInt32(ViewData["KullaniciId"]))
                                     {
-                                        <a class="dropdown-item text-danger" href="/Kullanici/KullaniciDelete?pId=@item.Id"><i class="bx bx-trash me-1"></i> Sil</a>
+                                        <a class="dropdown-item text-danger" href="/Kullanici/PersonelSil?pId=@item.Id"><i class="bx bx-trash me-1"></i> Sil</a>
                                     }
                                 </div>
                             </div>

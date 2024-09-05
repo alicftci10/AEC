@@ -178,9 +178,9 @@
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text"
                            id="searchBox"
-                           class="form-control border-0 shadow-none"
+                           class="form-control border-0 shadow-none text-white"
                            placeholder="Ara..."
-                           aria-label="Ara..." style="background-color:black!important">
+                           aria-label="Ara..." style="background-color:black!important;">
                 </div>
             </div>
             <!-- /Search -->
@@ -366,24 +366,16 @@
                             <span asp-validation-for="KullaniciTuruId" class="text-danger"></span>
                         </div>
                     </div>
-
-                    @* <div class="row">
-                    <div class="col mb-3">
-                    <label for="nameExLarge" class="form-label">Name</label>
-                    <input type="text" asp-for="Ad" id="nameExLarge" class="form-control" placeholder="Enter Name" />
-                    </div>
-                    </div> *@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="addModal()">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                         Kapat
                     </button>
                     <button type="submit" class="btn btn-dark">Kaydet</button>
                 </div>
 
             </form>
-
 
         </div>
     </div>
@@ -396,27 +388,16 @@
 
         function addModal() {
 
-            $.ajax({
-                url: '/Kullanici/PersonelSayfasi?pId=0',
-                type: 'GET',
-                success: function (response) {
-
-                },
-                error: function (xhr, status, error) {
-                    console.log("Error: " + error);
-                }
-            });
-
-            // $('#pId').val('0');
-            // $('#emailorkullaniciadi').val('0');
-            // $('#frmAd').val('');
-            // $('#frmSoyad').val('');
-            // $('#frmKullaniciAdi').val('');
-            // $('#frmSifre').val('');
-            // $('#frmEmail').val('');
-            // $('#frmTelefon').val('');
-            // $('#frmAdres').val('');
-            // $('#frmKullaniciTuru').val('');
+            $('#pId').val('0');
+            $('#emailorkullaniciadi').val('0');
+            $('#frmAd').val('');
+            $('#frmSoyad').val('');
+            $('#frmKullaniciAdi').val('');
+            $('#frmSifre').val('');
+            $('#frmEmail').val('');
+            $('#frmTelefon').val('');
+            $('#frmAdres').val('');
+            $('#frmKullaniciTuru').val('');
 
         }
 
@@ -449,26 +430,15 @@
             }
         });
 
-        // $.ajax({
-        //     url: '/Kullanici/PersonelForm',
-        //     type: 'GET',
-        //     success: function (result) {
-        //         $('#personelForm').html(result);
-        //     },
-        //     error: function (xhr, status, error) {
-        //         console.log("Error: " + error);
-        //     }
-        // });
-
         document.addEventListener('DOMContentLoaded', function () {
 
-            var isSuccess = '@Model.IsSuccess'; // Model'den başarı durumunu al
+            var isSuccess = '@Model.IsSuccess';
             if (isSuccess == 'True') {
                 var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
                 modal.show();
             }
 
-            var modelid = '@Model.Id'; // Model'den başarı durumunu al
+            var modelid = '@Model.Id';
             if (modelid > 0) {
                 var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
                 modal.show();

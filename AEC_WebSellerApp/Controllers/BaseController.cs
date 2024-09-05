@@ -95,5 +95,35 @@ namespace AEC_WebSellerApp.Controllers
                 ViewBag.KullaniciTuruList = list;
             }
         }
+
+        public void LoadKullaniciList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciApi/GetAllKullanici";
+
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KullaniciDataModel> kullanicilar = new List<KullaniciDataModel>();
+
+                if (text != null)
+                {
+                    kullanicilar = JsonConvert.DeserializeObject<List<KullaniciDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> kullaniciAdi = new List<string>();
+                List<string> email = new List<string>();
+
+                foreach (var item in kullanicilar)
+                {
+                    kullaniciAdi.Add(item.KullaniciAdi);
+                    email.Add(item.Email);
+                }
+
+                HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
+                HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
+            }
+        }
     }
 }
