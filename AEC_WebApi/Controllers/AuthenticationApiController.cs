@@ -17,7 +17,7 @@ namespace AEC_WebApi.Controllers
         [HttpPost]
         public IActionResult Giris([FromBody] KullaniciDataModel model)
         {
-            var kullanici = _Kullanici.GetKullanici(model);
+            var kullanici = _Kullanici.Giris(model);
 
             if (kullanici.Id > 0)
             {

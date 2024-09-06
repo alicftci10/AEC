@@ -44,10 +44,10 @@ namespace AEC_Business.Managers
             return listKullanici;
         }
 
-        public KullaniciDataModel GetKullanici(KullaniciDataModel model)
+        public KullaniciDataModel Giris(KullaniciDataModel model)
         {
             string? ErrorMessage = null;
-            Kullanici kul = _KullaniciRepository.GetKullanici(model, out ErrorMessage);
+            Kullanici kul = _KullaniciRepository.Giris(model, out ErrorMessage);
 
             model.Id = kul.Id;
             model.Ad = kul.Ad;

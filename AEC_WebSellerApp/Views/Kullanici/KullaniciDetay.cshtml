@@ -134,7 +134,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="/Kullanici/MusteriSayfasi" class="menu-link">
                         <div>Müşteriler</div>
                     </a>
                 </li>
@@ -181,6 +181,8 @@
                            placeholder="Ara..."
                            aria-label="Ara..." style="background-color:black!important;">
                 </div> *@
+                <div class="col-md-5"></div>
+                <span id="datetimenow" style="font-size:20px;color:#329d00"></span>
             </div>
             <!-- /Search -->
 
@@ -267,7 +269,11 @@
                 </div>
                 <hr class="my-0" />
                 <div class="card-body">
-                    <form id="formAccountSettings" asp-action="KullaniciDetay" asp-controller="Kullanici" method="post" onsubmit="return false">
+                    <form id="formAccountSettings" asp-action="KullaniciDetay" asp-controller="Kullanici" method="post">
+
+                        <input type="hidden" asp-for="Id" id="pId" />
+                        <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
+
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="frmAd" class="form-label fw-bold">AD</label>
@@ -310,7 +316,7 @@
                                 <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
                             </div>
                             <div class="mb-3 col-md-6">
-                                @if (Model.KullaniciTuruId == 1 || Model.KullaniciTuruId == 2)
+                                @if (ViewData["KullaniciTuru"] == "Admin" && Model.KullaniciTuruId != 3)
                                 {
                                     <label for="frmKullaniciTuru" class="form-label fw-bold">KULLANICI TÜRÜ</label>
                                     <select asp-for="KullaniciTuruId"
@@ -321,17 +327,25 @@
                                     </select>
                                     <span asp-validation-for="KullaniciTuruId" class="text-danger"></span>
                                 }
+                                else if (ViewData["KullaniciTuru"] == "Personel")
+                                {
+                                    <br />
+                                    <br />
+                                    <h4 class="text-danger text-center">Personel</h4>
+                                    <input type="hidden" asp-for="KullaniciTuruId" id="kullanicituruid" />
+                                }
                                 else
                                 {
                                     <br />
                                     <br />
                                     <h4 class="text-warning text-center">Müşteri</h4>
+                                    <input type="hidden" asp-for="KullaniciTuruId" id="kullanicituruid" />
                                 }
                             </div>
                         </div>
                         <div class="mt-2">
                             <button type="submit" class="btn btn-primary me-2">Kaydet</button>
-                            <button type="reset" class="btn btn-outline-secondary">İptal</button>
+                            <a href="/Home/Index" class="btn btn-danger">İptal</a>
                         </div>
                     </form>
                 </div>
@@ -361,3 +375,52 @@
         <div class="content-backdrop fade"></div>
     </div>
 </div>
+
+@section AECScript {
+
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Kullanıcı Kayıt Edildi");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Kullanıcı Silindi");
+            }
+        });
+
+        let kartId = null;
+
+        function deleteModal(id) {
+
+            kullaniciId = id;
+            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
+            confirmDeleteLink.href = '/Kullanici/KartSil?pId=' + kartId;
+
+        }
+
+        function updateDateTime() {
+            var now = new Date();
+
+            var day = String(now.getDate()).padStart(2, '0');
+            var month = String(now.getMonth() + 1).padStart(2, '0');
+            var year = now.getFullYear();
+
+            var hours = String(now.getHours()).padStart(2, '0');
+            var minutes = String(now.getMinutes()).padStart(2, '0');
+            var seconds = String(now.getSeconds()).padStart(2, '0');
+
+            var formattedDateTime = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+
+            document.getElementById('datetimenow').textContent = formattedDateTime;
+        }
+
+        updateDateTime();
+
+        setInterval(updateDateTime, 1000);
+
+    </script>
+
+}

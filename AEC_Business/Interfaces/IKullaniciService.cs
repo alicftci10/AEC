@@ -12,7 +12,7 @@ namespace AEC_Business.Interfaces
     {
         List<KullaniciDataModel> GetAllKullanici();
 
-        KullaniciDataModel GetKullanici(KullaniciDataModel model);
+        KullaniciDataModel Giris(KullaniciDataModel model);
 
         List<KullaniciDataModel> GetPersonelList(string searchTerm);
 

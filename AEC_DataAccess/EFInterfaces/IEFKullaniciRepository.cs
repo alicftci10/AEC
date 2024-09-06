@@ -11,7 +11,7 @@ namespace AEC_DataAccess.EFInterfaces
 {
     public interface IEFKullaniciRepository : IRepository<Kullanici>
     {
-        Kullanici GetKullanici(KullaniciDataModel model, out string? ErrorMessage);
+        Kullanici Giris(KullaniciDataModel model, out string? ErrorMessage);
 
         List<KullaniciDataModel> PersonelList(string searchTerm);
 

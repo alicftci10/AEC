@@ -12,7 +12,7 @@
                 <th>ADI SOYADI</th>
                 <th>EMAİL</th>
                 <th>TELEFON</th>
-                <th>EKLEYEN</th>
+                <th>ADRES</th>
                 <th>GÜNCELLEME TARİHİ</th>
                 <th>KULLANICI TÜRÜ</th>
                 <th></th>
@@ -27,7 +27,7 @@
                         @siralama
                     </td>
                     <td>
-                        @if (ViewData["KullaniciTuru"] == "Admin" || item.Id == Convert.ToInt32(ViewData["KullaniciId"]))
+                        @if (ViewData["KullaniciTuru"] == "Admin")
                         {
                             <a href="/Kullanici/KullaniciDetay?pId=@item.Id" class="fw-bold text-white" style="text-decoration: none;">@item.FullName</a>
                         }
@@ -38,20 +38,16 @@
                     </td>
                     <td>@item.Email</td>
                     <td>@item.Telefon</td>
-                    <td>@item.CreatedByName</td>
-                    <td>@item.CreatedAt</td>
-                    <td>
-                        @if (item.KullaniciTuruName == "Admin")
+                    <td title="@item.Adres">
+                        @if (item.Adres != null)
                         {
-                            <span class="text-success">@item.KullaniciTuruName</span>
-                        }
-                        else
-                        {
-                            <span class="text-danger">@item.KullaniciTuruName</span>
+                            @(item.Adres.Length > 30 ? item.Adres.Substring(0, 30) + "..." : item.Adres)
                         }
                     </td>
+                    <td>@item.CreatedAt</td>
+                    <td><span class="text-warning">@item.KullaniciTuruName</span></td>
                     <td>
-                        @if (ViewData["KullaniciTuru"] == "Admin" || item.Id == Convert.ToInt32(ViewData["KullaniciId"]))
+                        @if (ViewData["KullaniciTuru"] == "Admin")
                         {
                             <div class="dropdown">
                                 <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
@@ -59,20 +55,17 @@
                                 </div>
                                 <div class="dropdown-menu" style="background-color:black">
 
-                                    <a class="dropdown-item text-warning" href="/Kullanici/PersonelSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
-                                    @if (ViewData["KullaniciTuru"] == "Admin" && item.Id != Convert.ToInt32(ViewData["KullaniciId"]))
-                                    {
-                                        <button type="button" class="dropdown-item text-danger"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#backDropModal"
-                                                onclick="deleteModal(@item.Id)">
-                                            <i class="bx bx-trash me-1"></i> Sil
-                                        </button>
-                                    }
+                                    <a class="dropdown-item text-warning" href="/Kullanici/MusteriSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+
+                                    <button type="button" class="dropdown-item text-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#backDropModal"
+                                            onclick="deleteModal(@item.Id)">
+                                        <i class="bx bx-trash me-1"></i> Sil
+                                    </button>
                                 </div>
                             </div>
                         }
-
                     </td>
                 </tr>
 

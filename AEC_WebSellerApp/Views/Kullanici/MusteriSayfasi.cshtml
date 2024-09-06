@@ -1,4 +1,6 @@
-﻿<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
+﻿@model KullaniciDataModel
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
         <div class="app-brand-link">
             <span class="menu-text fw-bolder ms-2" style="font-size:32px;"><img src="~/assets/img/favicon/AEC.ico" width="45" />EC</span>
@@ -13,7 +15,7 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item">
             <a href="/Home/Index" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div class="fw-bold">Ana Sayfa</div>
@@ -125,13 +127,13 @@
         <li class="menu-header small">
             <span class="menu-header-text">KULLANICILAR</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-person-circle"></i>
                 <div class="fw-bold">Kullanıcılar</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="/Kullanici/MusteriSayfasi" class="menu-link">
                         <div>Müşteriler</div>
                     </a>
@@ -171,16 +173,14 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center col">
-                @*  <div class="col nav-item d-flex align-items-center">
-                <i class="bx bx-search fs-4 lh-0"></i>
-                <input type="text"
-                id="searchBox"
-                class="form-control border-0 shadow-none text-white"
-                placeholder="Ara..."
-                aria-label="Ara..." style="background-color:black!important;">
-                </div> *@
-                <div class="col-md-5"></div>
-                <span id="datetimenow" style="font-size:20px;color:#329d00"></span>
+                <div class="col nav-item d-flex align-items-center">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text"
+                           id="searchBox"
+                           class="form-control border-0 shadow-none text-white"
+                           placeholder="Ara..."
+                           aria-label="Ara..." style="background-color:black!important;">
+                </div>
             </div>
             <!-- /Search -->
 
@@ -234,7 +234,22 @@
     <div class="content-wrapper">
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            buraya yazılacak
+            <div class="card">
+                <div class="card-header" style="background-color:#329D00;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
+                            Müşteri Listesi
+                        </h4>
+                        @if (ViewData["KullaniciTuru"] == "Admin")
+                        {
+                            <button type="button" class="btn rounded-pill btn-dark" data-bs-toggle="modal" data-bs-target="#exLargeModal" onclick="addModal()">
+                                <i class="bi bi-plus-circle"></i> EKLE
+                            </button>
+                        }
+                    </div>
+                </div>
+                <div id="list"></div>
+            </div>
         </div>
 
         <footer style="background-color:black!important;">
@@ -258,29 +273,208 @@
     </div>
 </div>
 
+<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Kullanıcı Ekle</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <form asp-action="MusteriSayfasi" asp-controller="Kullanici" method="post">
+
+                <input type="hidden" asp-for="Id" id="pId" />
+                <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
+                <input type="hidden" asp-for="KullaniciTuruId" id="kullanicituruid" value="3" />
+
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmAd" class="form-label fw-bold">AD</label>
+                            <input type="text" asp-for="Ad" id="frmAd" class="form-control" placeholder="Ad Giriniz" />
+                            <span asp-validation-for="Ad" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
+                            <input type="text" asp-for="Soyad" id="frmSoyad" class="form-control" placeholder="Soyad Giriniz" />
+                            <span asp-validation-for="Soyad" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
+                            <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="form-control" placeholder="Kullanıcı Adı Giriniz" />
+                            <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0 form-password-toggle">
+                            <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
+                            <div class="input-group input-group-merge">
+                                <input type="text" asp-for="Sifre"
+                                       id="frmSifre"
+                                       class="form-control"
+                                       placeholder="Şifre Giriniz"
+                                       aria-describedby="password" />
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
+                            <span asp-validation-for="Sifre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
+                            <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Adresi Giriniz" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
+                            <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmAdres" class="form-label fw-bold">ADRES</label>
+                            <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
+                        </div>
+                        <div class="col mb-0">
+                            <br />
+                            <br />
+                            <h4 class="text-warning text-center">Müşteri</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Kapat
+                    </button>
+                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="backDropModalTitle">Kullanıcı Sil</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-3" style="color:black">
+                        Kullanıcıyı Silmek İstediğinize Emin Misiniz ?
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Hayır
+                </button>
+                <a href="#" id="confirmDeleteLink" class="btn btn-dark">Evet</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
 @section AECScript {
 
     <script type="text/javascript">
 
-        function updateDateTime() {
-            var now = new Date();
+        function addModal() {
 
-            var day = String(now.getDate()).padStart(2, '0');
-            var month = String(now.getMonth() + 1).padStart(2, '0');
-            var year = now.getFullYear();
+            $('#pId').val('0');
+            $('#emailorkullaniciadi').val('0');
+            $('#frmAd').val('');
+            $('#frmSoyad').val('');
+            $('#frmKullaniciAdi').val('');
+            $('#frmSifre').val('');
+            $('#frmEmail').val('');
+            $('#frmTelefon').val('');
+            $('#frmAdres').val('');
+            $('#kullanicituruid').val('3');
 
-            var hours = String(now.getHours()).padStart(2, '0');
-            var minutes = String(now.getMinutes()).padStart(2, '0');
-            var seconds = String(now.getSeconds()).padStart(2, '0');
-
-            var formattedDateTime = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes + ':' + seconds;
-
-            document.getElementById('datetimenow').textContent = formattedDateTime;
         }
 
-        updateDateTime();
+        $(document).ready(function () {
 
-        setInterval(updateDateTime, 1000);
+            $('#searchBox').on('input', function () {
+                var searchTerm = $(this).val();
+                $.ajax({
+                    url: '/Kullanici/MusteriListesi',
+                    type: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        $('#list').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error: " + error);
+                    }
+                });
+            });
+        });
+
+        $.ajax({
+            url: '/Kullanici/MusteriListesi',
+            type: 'GET',
+            success: function (result) {
+                $('#list').html(result);
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var isSuccess = '@Model.IsSuccess';
+            if (isSuccess == 'True') {
+                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
+                modal.show();
+            }
+
+            var modelid = '@Model.Id';
+            if (modelid > 0) {
+                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
+                modal.show();
+            }
+
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Kullanıcı Kayıt Edildi");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Kullanıcı Silindi");
+            }
+        });
+
+        $('#exLargeModal').on('hidden.bs.modal', function () {
+            $('.modal-backdrop').remove();
+        });
+
+        let kullaniciId = null;
+
+        function deleteModal(id) {
+
+            kullaniciId = id;
+            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
+            confirmDeleteLink.href = '/Kullanici/MusteriSil?pId=' + kullaniciId;
+
+        }
 
     </script>
 

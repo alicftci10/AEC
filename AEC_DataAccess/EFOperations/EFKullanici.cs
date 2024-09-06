@@ -15,7 +15,7 @@ namespace AEC_DataAccess.EFOperations
     {
         public EFKullanici(AecommerceDbContext AECContext) : base(AECContext) { }
 
-        public Kullanici GetKullanici(KullaniciDataModel model, out string? ErrorMessage)
+        public Kullanici Giris(KullaniciDataModel model, out string? ErrorMessage)
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
@@ -98,16 +98,28 @@ namespace AEC_DataAccess.EFOperations
                     Id = i.Id,
                     Ad = i.Ad,
                     Soyad = i.Soyad,
+                    FullName = i.Ad + " " + i.Soyad,
                     KullaniciAdi = i.KullaniciAdi,
                     Sifre = i.Sifre,
                     Email = i.Email,
                     Telefon = i.Telefon,
                     Adres = i.Adres,
                     KullaniciTuruId = i.KullaniciTuruId,
+                    KullaniciTuruName = "Müşteri",
                     CreatedAt = i.CreatedAt,
                     CreatedBy = i.CreatedBy
 
                 }).ToList();
+
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    searchTerm = searchTerm.ToLower();
+                    kullaniciList = kullaniciList.Where(i => i.FullName.ToLower().Contains(searchTerm) ||
+                                     i.Email.ToLower().Contains(searchTerm) ||
+                                     i.Telefon.Contains(searchTerm) ||
+                                    i.Adres.ToLower().Contains(searchTerm) ||
+                                    Convert.ToString(i.CreatedAt).Contains(searchTerm)).ToList();
+                }
 
                 return kullaniciList;
             }
