@@ -144,7 +144,7 @@
             </ul>
         </li>
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="/Kullanici/KullaniciDetay?pId=@ViewData["KullaniciId"]" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-person-vcard-fill" style="position: relative; top: 1px;"></i>
                 <div class="fw-bold">Profil</div>
             </a>
@@ -171,13 +171,14 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center col">
-                <div class="col nav-item d-flex align-items-center">
+               @*  <div class="col nav-item d-flex align-items-center">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text"
-                           class="form-control border-0 shadow-none"
+                           id="searchBox"
+                           class="form-control border-0 shadow-none text-white"
                            placeholder="Ara..."
-                           aria-label="Ara..." style="background-color:black!important">
-                </div>
+                           aria-label="Ara..." style="background-color:black!important;">
+                </div> *@
             </div>
             <!-- /Search -->
 
@@ -192,7 +193,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="background-color:black!important">
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <div class="dropdown-item">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar avatar-online">
@@ -204,15 +205,15 @@
                                         <small class="text-muted">@ViewData["KullaniciTuru"]</small>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         </li>
                         <li>
                             <div class="dropdown-divider"></div>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="/Kullanici/KullaniciDetay?pId=@ViewData["KullaniciId"]">
                                 <i class="bx bx-user me-2"></i>
-                                <span class="align-middle">My Profile</span>
+                                <span class="align-middle">Profil</span>
                             </a>
                         </li>
                         <li>
@@ -242,22 +243,11 @@
                         document.write(new Date().getFullYear());
                     </script>
                     ,
-                    <a href="/Home/Index" target="_blank" class="footer-link fw-bolder">Ali E-Commerce</a>
+                    <a href="https://localhost:7019/Home/Index" target="_blank" class="footer-link fw-bolder">Ali E-Commerce</a>
                 </div>
                 <div>
                     <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
                     <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
-                   
-                  @*   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-
-                    <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-                       target="_blank"
-                       class="footer-link me-4">Documentation</a>
-
-                    <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                       target="_blank"
-                       class="footer-link me-4">Support</a> *@
                 </div>
             </div>
         </footer>

@@ -23,8 +23,6 @@ public partial class Kullanici
 
     public int KullaniciTuruId { get; set; }
 
-    public int? KartId { get; set; }
-
     public DateTime CreatedAt { get; set; }
 
     public int? CreatedBy { get; set; }
@@ -37,11 +35,11 @@ public partial class Kullanici
 
     public virtual ICollection<IsletimSistemi> IsletimSistemis { get; set; } = new List<IsletimSistemi>();
 
-    public virtual KullaniciKart? Kart { get; set; }
-
     public virtual ICollection<Kategori> Kategoris { get; set; } = new List<Kategori>();
 
-    public virtual ICollection<KullaniciKart> KullaniciKarts { get; set; } = new List<KullaniciKart>();
+    public virtual ICollection<KullaniciKart> KullaniciKartCreatedByNavigations { get; set; } = new List<KullaniciKart>();
+
+    public virtual ICollection<KullaniciKart> KullaniciKartKullanicis { get; set; } = new List<KullaniciKart>();
 
     public virtual KullaniciTuru KullaniciTuru { get; set; } = null!;
 

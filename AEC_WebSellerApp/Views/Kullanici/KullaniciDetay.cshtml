@@ -127,7 +127,7 @@
         <li class="menu-header small">
             <span class="menu-header-text">KULLANICILAR</span>
         </li>
-        <li class="menu-item active open">
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-person-circle"></i>
                 <div class="fw-bold">Kullanıcılar</div>
@@ -138,14 +138,14 @@
                         <div>Müşteriler</div>
                     </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="/Kullanici/PersonelSayfasi" class="menu-link">
                         <div>Personeller</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active">
             <a href="/Kullanici/KullaniciDetay?pId=@ViewData["KullaniciId"]" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-person-vcard-fill" style="position: relative; top: 1px;"></i>
                 <div class="fw-bold">Profil</div>
@@ -173,14 +173,14 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center col">
-                <div class="col nav-item d-flex align-items-center">
+                @* <div class="col nav-item d-flex align-items-center">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text"
                            id="searchBox"
                            class="form-control border-0 shadow-none text-white"
                            placeholder="Ara..."
                            aria-label="Ara..." style="background-color:black!important;">
-                </div>
+                </div> *@
             </div>
             <!-- /Search -->
 
@@ -234,23 +234,110 @@
     <div class="content-wrapper">
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            <div class="card">
 
-                <div class="card-header" style="background-color:#329D00;">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
-                            Personel Listesi
-                        </h4>
-                        @if (ViewData["KullaniciTuru"] == "Admin")
-                        {
-                            <button type="button" class="btn rounded-pill btn-dark" data-bs-toggle="modal" data-bs-target="#exLargeModal" onclick="addModal()">
-                                <i class="bi bi-plus-circle"></i> EKLE
+            <div class="card mb-4 bg-dark">
+                <h4 class="card-header fw-bold" style="color:black">KULLANICI</h4>
+                <!-- Account -->
+                <div class="card-body">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="../assets/img/avatars/1.png"
+                             alt="user-avatar"
+                             class="d-block rounded"
+                             height="100"
+                             width="100"
+                             id="uploadedAvatar" />
+                        <div class="button-wrapper">
+                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                <span class="d-none d-sm-block">Upload new photo</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input type="file"
+                                       id="upload"
+                                       class="account-file-input"
+                                       hidden
+                                       accept="image/png, image/jpeg" />
+                            </label>
+                            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                <i class="bx bx-reset d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Reset</span>
                             </button>
-                        }
+
+                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                        </div>
                     </div>
                 </div>
-                <div id="list"></div>
+                <hr class="my-0" />
+                <div class="card-body">
+                    <form id="formAccountSettings" asp-action="KullaniciDetay" asp-controller="Kullanici" method="post" onsubmit="return false">
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="frmAd" class="form-label fw-bold">AD</label>
+                                <input type="text" asp-for="Ad" id="frmAd" class="form-control" placeholder="Ad Giriniz" />
+                                <span asp-validation-for="Ad" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
+                                <input type="text" asp-for="Soyad" id="frmSoyad" class="form-control" placeholder="Soyad Giriniz" />
+                                <span asp-validation-for="Soyad" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
+                                <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="form-control" placeholder="Kullanıcı Adı Giriniz" />
+                                <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-md-6 form-password-toggle">
+                                <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" asp-for="Sifre"
+                                           id="frmSifre"
+                                           class="form-control"
+                                           placeholder="Şifre Giriniz"
+                                           aria-describedby="password" />
+                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                </div>
+                                <span asp-validation-for="Sifre" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
+                                <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Adresi Giriniz" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
+                                <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="frmAdres" class="form-label fw-bold">ADRES</label>
+                                <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                @if (Model.KullaniciTuruId == 1 || Model.KullaniciTuruId == 2)
+                                {
+                                    <label for="frmKullaniciTuru" class="form-label fw-bold">KULLANICI TÜRÜ</label>
+                                    <select asp-for="KullaniciTuruId"
+                                            asp-items="@ViewBag.KullaniciTuruPersonelList"
+                                            class="form-select"
+                                            id="frmKullaniciTuru">
+                                        <option selected value="">Seçiniz </option>
+                                    </select>
+                                    <span asp-validation-for="KullaniciTuruId" class="text-danger"></span>
+                                }
+                                else
+                                {
+                                    <br />
+                                    <br />
+                                    <h4 class="text-warning text-center">Müşteri</h4>
+                                }
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary me-2">Kaydet</button>
+                            <button type="reset" class="btn btn-outline-secondary">İptal</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /Account -->
             </div>
+
         </div>
 
         <footer style="background-color:black!important;">
@@ -266,6 +353,7 @@
                 <div>
                     <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
                     <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
+
                 </div>
             </div>
         </footer>
@@ -273,210 +361,3 @@
         <div class="content-backdrop fade"></div>
     </div>
 </div>
-
-<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel4">Kullanıcı Ekle</h5>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <form asp-action="PersonelSayfasi" asp-controller="Kullanici" method="post">
-
-                <input type="hidden" asp-for="Id" id="pId" />
-                <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
-
-                <div class="modal-body">
-                    <div class="row g-2">
-                        <div class="col mb-0">
-                            <label for="frmAd" class="form-label fw-bold">AD</label>
-                            <input type="text" asp-for="Ad" id="frmAd" class="form-control" placeholder="Ad Giriniz" />
-                            <span asp-validation-for="Ad" class="text-danger"></span>
-                        </div>
-                        <div class="col mb-0">
-                            <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
-                            <input type="text" asp-for="Soyad" id="frmSoyad" class="form-control" placeholder="Soyad Giriniz" />
-                            <span asp-validation-for="Soyad" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row g-2">
-                        <div class="col mb-0">
-                            <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
-                            <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="form-control" placeholder="Kullanıcı Adı Giriniz" />
-                            <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
-                        </div>
-                        <div class="col mb-0 form-password-toggle">
-                            <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
-                            <div class="input-group input-group-merge">
-                                <input type="text" asp-for="Sifre"
-                                       id="frmSifre"
-                                       class="form-control"
-                                       placeholder="Şifre Giriniz"
-                                       aria-describedby="password" />
-                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                            <span asp-validation-for="Sifre" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row g-2">
-                        <div class="col mb-0">
-                            <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
-                            <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Adresi Giriniz" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="col mb-0">
-                            <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
-                            <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row g-2">
-                        <div class="col mb-0">
-                            <label for="frmAdres" class="form-label fw-bold">ADRES</label>
-                            <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
-                        </div>
-                        <div class="col mb-0">
-                            <label for="frmKullaniciTuru" class="form-label fw-bold">KULLANICI TÜRÜ</label>
-                            <select asp-for="KullaniciTuruId"
-                                    asp-items="@ViewBag.KullaniciTuruPersonelList"
-                                    class="form-select"
-                                    id="frmKullaniciTuru">
-                                <option selected value="">Seçiniz </option>
-                            </select>
-                            <span asp-validation-for="KullaniciTuruId" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                        Kapat
-                    </button>
-                    <button type="submit" class="btn btn-dark">Kaydet</button>
-                </div>
-
-            </form>
-
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
-    <div class="modal-dialog">
-        <form class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="backDropModalTitle">Kullanıcı Sil</h5>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-3" style="color:black">
-                        Kullanıcıyı Silmek İstediğinize Emin Misiniz ?
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    Hayır
-                </button>
-                <a href="#" id="confirmDeleteLink" class="btn btn-dark">Evet</a>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-
-@section AECScript {
-
-    <script type="text/javascript">
-
-        function addModal() {
-
-            $('#pId').val('0');
-            $('#emailorkullaniciadi').val('0');
-            $('#frmAd').val('');
-            $('#frmSoyad').val('');
-            $('#frmKullaniciAdi').val('');
-            $('#frmSifre').val('');
-            $('#frmEmail').val('');
-            $('#frmTelefon').val('');
-            $('#frmAdres').val('');
-            $('#frmKullaniciTuru').val('');
-
-        }
-
-        $(document).ready(function () {
-
-            $('#searchBox').on('input', function () {
-                var searchTerm = $(this).val();
-                $.ajax({
-                    url: '/Kullanici/PersonelListesi',
-                    type: 'GET',
-                    data: { searchTerm: searchTerm },
-                    success: function (data) {
-                        $('#list').html(data);
-                    },
-                    error: function (xhr, status, error) {
-                        console.log("Error: " + error);
-                    }
-                });
-            });
-        });
-
-        $.ajax({
-            url: '/Kullanici/PersonelListesi',
-            type: 'GET',
-            success: function (result) {
-                $('#list').html(result);
-            },
-            error: function (xhr, status, error) {
-                console.log("Error: " + error);
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-
-            var isSuccess = '@Model.IsSuccess';
-            if (isSuccess == 'True') {
-                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
-                modal.show();
-            }
-
-            var modelid = '@Model.Id';
-            if (modelid > 0) {
-                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
-                modal.show();
-            }
-
-            var messageBox = '@TempData["MessageBox"]';
-            if (messageBox == 1) {
-                MessageBox("success", "Kullanıcı Kayıt Edildi");
-            }
-            else if (messageBox == 2) {
-                MessageBox("success", "Kullanıcı Silindi");
-            }
-        });
-
-        let kullaniciId = null;
-
-        function deleteModal(id) {
-
-            kullaniciId = id;
-            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
-            confirmDeleteLink.href = '/Kullanici/PersonelSil?pId=' + kullaniciId;
-
-        }
-
-    </script>
-
-}

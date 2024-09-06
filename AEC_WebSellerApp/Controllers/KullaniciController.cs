@@ -172,5 +172,30 @@ namespace AEC_WebSellerApp.Controllers
                 return RedirectToAction("PersonelSayfasi");
             }
         }
+
+        public async Task<IActionResult> KullaniciDetay(int pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                LoadKullaniciTuruDropDown();
+
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciApi/GetKullanici";
+
+                url += $"?pId={pId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                var response = await client.GetAsync(url);
+
+                KullaniciDataModel model = new KullaniciDataModel();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<KullaniciDataModel>(response.Content.ReadAsStringAsync().Result);
+                }
+
+                return View(model);
+            }
+        }
     }
 }

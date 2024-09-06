@@ -35,7 +35,6 @@ namespace AEC_Business.Managers
                 model.Telefon = kul.Telefon;
                 model.Adres = kul.Adres;
                 model.KullaniciTuruId = kul.KullaniciTuruId;
-                model.KartId = kul.KartId;
                 model.CreatedAt = kul.CreatedAt;
                 model.CreatedBy = kul.CreatedBy;
 
@@ -59,7 +58,6 @@ namespace AEC_Business.Managers
             model.Telefon = kul.Telefon;
             model.Adres = kul.Adres;
             model.KullaniciTuruId = kul.KullaniciTuruId;
-            model.KartId = kul.KartId;
             model.CreatedAt = kul.CreatedAt;
             model.CreatedBy = kul.CreatedBy;
             model.ErrorMessage = ErrorMessage;
@@ -79,7 +77,6 @@ namespace AEC_Business.Managers
             item.Telefon = model.Telefon;
             item.Adres = model.Adres;
             item.KullaniciTuruId = model.KullaniciTuruId.Value;
-            item.KartId = model.KartId;
             item.CreatedAt = DateTime.Now;
             item.CreatedBy = model.CreatedBy.Value;
 

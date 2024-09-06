@@ -7,6 +7,8 @@ public partial class KullaniciKart
 {
     public int Id { get; set; }
 
+    public int KullaniciId { get; set; }
+
     public string KartAdi { get; set; } = null!;
 
     public string KartNumarasi { get; set; } = null!;
@@ -25,5 +27,5 @@ public partial class KullaniciKart
 
     public virtual Kullanici CreatedByNavigation { get; set; } = null!;
 
-    public virtual ICollection<Kullanici> Kullanicis { get; set; } = new List<Kullanici>();
+    public virtual Kullanici Kullanici { get; set; } = null!;
 }

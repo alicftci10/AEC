@@ -149,10 +149,6 @@ public partial class AecommerceDbContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.Kart).WithMany(p => p.Kullanicis)
-                .HasForeignKey(d => d.KartId)
-                .HasConstraintName("FK_Kullanici_KullaniciKart");
-
             entity.HasOne(d => d.KullaniciTuru).WithMany(p => p.Kullanicis)
                 .HasForeignKey(d => d.KullaniciTuruId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -175,10 +171,15 @@ public partial class AecommerceDbContext : DbContext
             entity.Property(e => e.KartSktay).HasColumnName("KartSKTAy");
             entity.Property(e => e.KartSktyil).HasColumnName("KartSKTYil");
 
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.KullaniciKarts)
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.KullaniciKartCreatedByNavigations)
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_KullaniciKart_Kullanici");
+
+            entity.HasOne(d => d.Kullanici).WithMany(p => p.KullaniciKartKullanicis)
+                .HasForeignKey(d => d.KullaniciId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_KullaniciKart_KullaniciId");
         });
 
         modelBuilder.Entity<KullaniciTuru>(entity =>

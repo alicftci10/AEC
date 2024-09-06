@@ -26,7 +26,9 @@
                     <td class="text-center">
                         @siralama
                     </td>
-                    <td>@item.FullName</td>
+                    <td>
+                        <a href="/Kullanici/KullaniciDetay?pId=@item.Id" class="fw-bold text-white" style="text-decoration: none;">@item.FullName</a>
+                    </td>
                     <td>@item.Email</td>
                     <td>@item.Telefon</td>
                     <td>@item.CreatedByName</td>
@@ -45,9 +47,9 @@
                         @if (ViewData["KullaniciTuru"] == "Admin" || item.Id == Convert.ToInt32(ViewData["KullaniciId"]))
                         {
                             <div class="dropdown">
-                                <a type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
+                                <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
                                     <i class="bx bx-dots-vertical-rounded"></i>
-                                </a>
+                                </div>
                                 <div class="dropdown-menu" style="background-color:black">
 
                                     <a class="dropdown-item text-warning" href="/Kullanici/PersonelSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>

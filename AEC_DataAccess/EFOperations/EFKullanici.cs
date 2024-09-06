@@ -68,7 +68,6 @@ namespace AEC_DataAccess.EFOperations
                                          Adres = k.Adres,
                                          KullaniciTuruId = k.KullaniciTuruId,
                                          KullaniciTuruName = k.KullaniciTuruId == 1 ? "Admin" : "Personel",
-                                         KartId = k.KartId,
                                          CreatedAt = k.CreatedAt,
                                          CreatedBy = k.CreatedBy,
                                          CreatedByName = db.Kullanicis.Where(i => i.Id == k.CreatedBy).Select(i => i.Ad + " " + i.Soyad).FirstOrDefault()
@@ -105,7 +104,6 @@ namespace AEC_DataAccess.EFOperations
                     Telefon = i.Telefon,
                     Adres = i.Adres,
                     KullaniciTuruId = i.KullaniciTuruId,
-                    KartId = i.KartId,
                     CreatedAt = i.CreatedAt,
                     CreatedBy = i.CreatedBy
 
