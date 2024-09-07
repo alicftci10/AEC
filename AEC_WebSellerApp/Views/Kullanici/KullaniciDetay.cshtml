@@ -174,15 +174,16 @@
             <!-- Search -->
             <div class="navbar-nav align-items-center col">
                 @* <div class="col nav-item d-flex align-items-center">
-                    <i class="bx bx-search fs-4 lh-0"></i>
-                    <input type="text"
-                           id="searchBox"
-                           class="form-control border-0 shadow-none text-white"
-                           placeholder="Ara..."
-                           aria-label="Ara..." style="background-color:black!important;">
+                <i class="bx bx-search fs-4 lh-0"></i>
+                <input type="text"
+                id="searchBox"
+                class="form-control border-0 shadow-none text-white"
+                placeholder="Ara..."
+                aria-label="Ara..." style="background-color:black!important;">
                 </div> *@
-                <div class="col-md-5"></div>
-                <span id="datetimenow" style="font-size:20px;color:#329d00"></span>
+                <div id="havadurumu"></div>
+                <div class="col-md-2"></div>
+                <span id="datetimenow" style="font-size:20px;color:white;"></span>
             </div>
             <!-- /Search -->
 
@@ -241,30 +242,14 @@
                 <h4 class="card-header fw-bold" style="color:black">KULLANICI</h4>
                 <!-- Account -->
                 <div class="card-body">
-                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="../assets/img/avatars/1.png"
+                    <div class="d-flex align-items-start align-items-sm-center gap-4"  >
+                        <img src="~/assets/img/avatars/user-avatar.png"
                              alt="user-avatar"
                              class="d-block rounded"
-                             height="100"
-                             width="100"
+                             height="175"
+                             width="175"
                              id="uploadedAvatar" />
-                        <div class="button-wrapper">
-                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                <span class="d-none d-sm-block">Upload new photo</span>
-                                <i class="bx bx-upload d-block d-sm-none"></i>
-                                <input type="file"
-                                       id="upload"
-                                       class="account-file-input"
-                                       hidden
-                                       accept="image/png, image/jpeg" />
-                            </label>
-                            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                                <i class="bx bx-reset d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Reset</span>
-                            </button>
-
-                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
-                        </div>
+                        <div id="kullanicikartlist" class="d-flex"></div>
                     </div>
                 </div>
                 <hr class="my-0" />
@@ -391,6 +376,19 @@
             }
         });
 
+        var pId = '@Model.Id';
+
+        $.ajax({
+            url: '/KullaniciKart/KullaniciKartListesi?pId=' + pId,
+            type: 'GET',
+            success: function (result) {
+                $('#kullanicikartlist').html(result);
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+
         let kartId = null;
 
         function deleteModal(id) {
@@ -400,6 +398,8 @@
             confirmDeleteLink.href = '/Kullanici/KartSil?pId=' + kartId;
 
         }
+
+        //Anlık hava durumu ve zaman bilgisi
 
         function updateDateTime() {
             var now = new Date();
@@ -420,6 +420,26 @@
         updateDateTime();
 
         setInterval(updateDateTime, 1000);
+
+        const apiKey = 'ec4b19585fd7f1c5c0ac5a26a341737b';
+        const city = 'Ankara';
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=tr`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const temperature = data.main.temp;
+                const weatherDescription = data.weather[0].description;
+
+                document.getElementById('havadurumu').innerHTML = `
+                                              <div style="font-size: 16px;">
+                                                  <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                                                  <span style="color: white;">${temperature}°C</span>,
+                                                  <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                                              </div>
+                                            `;
+            })
+            .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 
     </script>
 

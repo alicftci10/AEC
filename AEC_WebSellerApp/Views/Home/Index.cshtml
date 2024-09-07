@@ -179,8 +179,9 @@
                 placeholder="Ara..."
                 aria-label="Ara..." style="background-color:black!important;">
                 </div> *@
-                <div class="col-md-5"></div>
-                <span id="datetimenow" style="font-size:20px;color:#329d00"></span>
+                <div id="havadurumu"></div>
+                <div class="col-md-2"></div>
+                <span id="datetimenow" style="font-size:20px;color:white;"></span>
             </div>
             <!-- /Search -->
 
@@ -262,6 +263,8 @@
 
     <script type="text/javascript">
 
+        //Anlık hava durumu ve zaman bilgisi
+
         function updateDateTime() {
             var now = new Date();
 
@@ -281,6 +284,26 @@
         updateDateTime();
 
         setInterval(updateDateTime, 1000);
+
+        const apiKey = 'ec4b19585fd7f1c5c0ac5a26a341737b';
+        const city = 'Ankara';
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=tr`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const temperature = data.main.temp;
+                const weatherDescription = data.weather[0].description;
+
+                document.getElementById('havadurumu').innerHTML = `
+                      <div style="font-size: 16px;">
+                          <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                          <span style="color: white;">${temperature}°C</span>,
+                          <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                      </div>
+                    `;
+            })
+            .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 
     </script>
 

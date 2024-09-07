@@ -1,0 +1,12 @@
+﻿@model List<KullaniciKartDataModel>
+
+@foreach (var item in Model)
+{
+    <div class="card bg-secondary text-white" style="margin-left:20px;">
+        <div class="card-header">@item.KartAdi</div>
+        <div class="card-body">
+            <h5 class="card-title text-white">@(item.KartNumarasi.Substring(0, 4) + "****" + item.KartNumarasi.Substring(12, 4))</h5>
+            <p class="card-text">@item.KartSktay / @item.KartSktyil</p>
+        </div>
+    </div>
+}

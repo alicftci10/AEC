@@ -85,17 +85,16 @@ namespace AEC_WebApi
             builder.Services.AddDbContext<AecommerceDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            //builder.Services.AddTransient<IHamsterService, HamsterManager>();
             builder.Services.AddTransient<IKullaniciService, KullaniciManager>();
             builder.Services.AddTransient <IKullaniciTuruService, KullaniciTuruManager>();
-            //builder.Services.AddTransient<IMarketsService, MarketsManager>();
+            builder.Services.AddTransient<IKullaniciKartService, KullaniciKartManager>();
             //builder.Services.AddTransient<ILegalService, LegalManager>();
             //builder.Services.AddTransient<IWeb3Service, Web3Manager>();
             //builder.Services.AddTransient<ISpecialsService, SpecialsManager>();
 
             builder.Services.AddTransient<IEFKullaniciRepository, EFKullanici>();
             builder.Services.AddTransient<IEFKullaniciTuruRepository, EFKullaniciTuru>();
-            //builder.Services.AddTransient<IEFMarketsRepository, EFMarkets>();
+            builder.Services.AddTransient<IEFKullaniciKartRepository, EFKullaniciKart>();
             //builder.Services.AddTransient<IEFLegalRepository, EFLegal>();
             //builder.Services.AddTransient<IEFWeb3Repository, EFWeb3>();
             //builder.Services.AddTransient<IEFSpecialsRepository, EFSpecials>();

@@ -50,8 +50,8 @@ namespace AEC_DataAccess.EFOperations
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
                 var kullaniciList = (from k in db.Kullanicis.AsQueryable()
-                                     join
-                                         kul in db.Kullanicis on k.CreatedBy equals kul.Id
+                                     
+                                     join kul in db.Kullanicis on k.CreatedBy equals kul.Id
 
                                      where (k.KullaniciTuruId != 3)
 
@@ -93,7 +93,7 @@ namespace AEC_DataAccess.EFOperations
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var kullaniciList = db.Kullanicis.Where(i => i.KullaniciTuruId == 3).Select(i => new KullaniciDataModel
+                var kullaniciList = db.Kullanicis.AsQueryable().Where(i => i.KullaniciTuruId == 3).Select(i => new KullaniciDataModel
                 {
                     Id = i.Id,
                     Ad = i.Ad,
