@@ -1,0 +1,130 @@
+﻿@model KullaniciKartDataModel
+
+
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel4">Kart Ekle</h5>
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"></button>
+</div>
+<form asp-action="KullaniciKartSayfasi" asp-controller="KullaniciKart" method="post">
+
+    <input type="hidden" asp-for="Id" id="pId" />
+    <input type="hidden" asp-for="KullaniciId" id="kullaniciId" />
+
+    <div class="modal-body">
+        <div class="row g-2">
+            <div class="col mb-0">
+                <label for="frmKartAdi" class="form-label fw-bold">KART ADI</label>
+                <input type="text" asp-for="KartAdi" id="frmKartAdi" class="form-control" placeholder="Kart Adı Giriniz" />
+                <span asp-validation-for="KartAdi" class="text-danger"></span>
+            </div>
+            <div class="col mb-0">
+                <label for="frmKartNumarasi" class="form-label fw-bold">KART NUMARASI</label>
+                <input type="text" asp-for="KartNumarasi" id="frmKartNumarasi" class="form-control" placeholder="Kart Numarası Giriniz" />
+                <span asp-validation-for="KartNumarasi" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="row g-2">
+            <div class="col mb-0">
+                <label for="frmKartAdSoyad" class="form-label fw-bold">KART AD SOYAD</label>
+                <input type="text" asp-for="KartAdSoyad" id="frmKartAdSoyad" class="form-control" placeholder="Kart Üzerindeki Adı Soyadı Giriniz" />
+                <span asp-validation-for="KartAdSoyad" class="text-danger"></span>
+            </div>
+            <div class="col mb-0">
+                <label for="frmKartSktay" class="form-label fw-bold">KART AY/YIL</label>
+                <select asp-for="KartSktay"
+                        class="form-select"
+                        id="frmKartSktay">
+                    <option selected value="">Seçiniz </option>
+                    <option selected value="1">01 </option>
+                    <option selected value="2">02 </option>
+                    <option selected value="3">03 </option>
+                    <option selected value="4">04 </option>
+                    <option selected value="5">05 </option>
+                    <option selected value="6">06 </option>
+                    <option selected value="7">07 </option>
+                    <option selected value="8">08 </option>
+                    <option selected value="9">09 </option>
+                    <option selected value="10">10 </option>
+                    <option selected value="11">11 </option>
+                    <option selected value="12">12 </option>
+                </select>
+                <input type="number" asp-for="KartSktyil" id="frmKartSktyil" class="form-control" />
+                <span asp-validation-for="KartSktay" class="text-danger"></span><span asp-validation-for="KartSktyil" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="row g-2">
+            <label for="frmKartCvvkodu" class="form-label fw-bold">KART CVV</label>
+            <input type="number" asp-for="KartCvvkodu" id="frmKartCvvkodu" class="form-control" />
+            <span asp-validation-for="KartCvvkodu" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Kapat
+        </button>
+        <button type="submit" class="btn btn-dark">Kaydet</button>
+    </div>
+
+</form>
+
+
+
+@section AECScript {
+
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var isSuccess = '@Model.IsSuccess';
+            debugger;
+            if (isSuccess == 'True') {
+                updateModal('@Model.KullaniciId');
+            }
+
+            // var modelid = '@Model.Id';
+            // if (modelid > 0) {
+            //     updateModal('@Model.KullaniciId');
+            // }
+
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Kullanıcı Kayıt Edildi");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Kullanıcı Silindi");
+            }
+            else if (messageBox == 4) {
+                MessageBox("success", "Kart Kayıt Edildi");
+            }
+            else if (messageBox == 5) {
+                MessageBox("success", "Kart Silindi");
+            }
+
+        });
+
+        function updateModal(id) {
+            kartid = id;
+            window.location.href = '/Kullanici/KullaniciDetay?pId=' + kartid + '&showModal=true';
+        }
+
+        function addModal() {
+
+            $('#pId').val('0');
+            $('#frmKartAdi').val('');
+            $('#frmKartNumarasi').val('');
+            $('#frmKartAdSoyad').val('');
+            $('#frmKartSktay').val('');
+            $('#frmKartSktyil').val('');
+            $('#frmKartCvvkodu').val('');
+
+        }
+
+    </script>
+
+}

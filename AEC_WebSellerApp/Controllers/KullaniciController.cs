@@ -100,16 +100,19 @@ namespace AEC_WebSellerApp.Controllers
                     string? secilenKullaniciAdi = HttpContext.Session.GetString("secilenKullaniciAdi");
                     string? secilenEmail = HttpContext.Session.GetString("secilenEmail");
 
-                    string kullaniciadisonuc = null;
-                    string emailsonuc = null;
+                    string kullaniciadisonuc = "";
+                    string emailsonuc = "";
 
                     if (model.KullaniciAdi != secilenKullaniciAdi)
                     {
                         var KullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
 
-                        if (KullaniciAdiList.Contains(model.KullaniciAdi))
+                        if (!string.IsNullOrEmpty(KullaniciAdiList))
                         {
-                            kullaniciadisonuc = "1";
+                            if (KullaniciAdiList.Contains(model.KullaniciAdi))
+                            {
+                                kullaniciadisonuc = "1";
+                            }
                         }
                     }
 
@@ -117,9 +120,12 @@ namespace AEC_WebSellerApp.Controllers
                     {
                         var EmailList = HttpContext.Session.GetString("KullaniciEmailList");
 
-                        if (EmailList.Contains(model.Email))
+                        if (!string.IsNullOrEmpty(EmailList))
                         {
-                            emailsonuc = "2";
+                            if (EmailList.Contains(model.Email))
+                            {
+                                emailsonuc = "2";
+                            }
                         }
                     }
 
@@ -209,7 +215,12 @@ namespace AEC_WebSellerApp.Controllers
 
                 if (pId == 0)
                 {
-                    pId = HttpContext.Session.GetInt32("secilenkullaniciId").Value;
+                    int? secilenKullaniciId = HttpContext.Session.GetInt32("secilenkullaniciId");
+
+                    if (secilenKullaniciId != null)
+                    {
+                        pId = secilenKullaniciId.Value;
+                    }
                 }
 
                 string url = ConfigurationInfo.ApiUrl + "/api/KullaniciApi/GetKullanici";
@@ -228,7 +239,6 @@ namespace AEC_WebSellerApp.Controllers
 
                     HttpContext.Session.SetString("secilenKullaniciAdi", model.KullaniciAdi);
                     HttpContext.Session.SetString("secilenEmail", model.Email);
-                  
                 }
 
                 return View(model);
@@ -249,16 +259,19 @@ namespace AEC_WebSellerApp.Controllers
                     string? secilenKullaniciAdi = HttpContext.Session.GetString("secilenKullaniciAdi");
                     string? secilenEmail = HttpContext.Session.GetString("secilenEmail");
 
-                    string kullaniciadisonuc = null;
-                    string emailsonuc = null;
+                    string kullaniciadisonuc = "";
+                    string emailsonuc = "";
 
                     if (model.KullaniciAdi != secilenKullaniciAdi)
                     {
                         var KullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
 
-                        if (KullaniciAdiList.Contains(model.KullaniciAdi))
+                        if (!string.IsNullOrEmpty(KullaniciAdiList))
                         {
-                            kullaniciadisonuc = "1";
+                            if (KullaniciAdiList.Contains(model.KullaniciAdi))
+                            {
+                                kullaniciadisonuc = "1";
+                            }
                         }
                     }
 
@@ -266,9 +279,12 @@ namespace AEC_WebSellerApp.Controllers
                     {
                         var EmailList = HttpContext.Session.GetString("KullaniciEmailList");
 
-                        if (EmailList.Contains(model.Email))
+                        if (!string.IsNullOrEmpty(EmailList))
                         {
-                            emailsonuc = "2";
+                            if (EmailList.Contains(model.Email))
+                            {
+                                emailsonuc = "2";
+                            }
                         }
                     }
 
