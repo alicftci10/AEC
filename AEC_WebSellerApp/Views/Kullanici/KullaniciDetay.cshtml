@@ -243,9 +243,9 @@
                     <h4 class="fw-bold" style="color:black">KULLANICI</h4>
                     @if (ViewData["KullaniciTuru"] == "Admin")
                     {
-                        <button type="button" style="color:black" id="kartModalAdd" class="btn rounded-pill btn-secondary fw-bold" data-bs-toggle="modal" data-bs-target="#exLargeModal">
+                        <a href="/KullaniciKart/KullaniciKartSayfasi" type="button" style="color:black" class="btn rounded-pill btn-secondary fw-bold">
                             <i class="bi bi-plus-circle" style="-webkit-text-stroke: 0.5px;"></i> KART EKLE
-                        </button>
+                        </a>
                     }
                 </div>
 
@@ -370,66 +370,27 @@
     </div>
 </div>
 
-<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div id="kartModal"></div>
-        </div>
-    </div>
-</div>
-
 @section AECScript {
 
     <script type="text/javascript">
 
         document.addEventListener('DOMContentLoaded', function () {
-            // URL'deki parametreleri kontrol et
-            const urlParams = new URLSearchParams(window.location.search);
-            const showModal = urlParams.get('showModal');
 
-            if (showModal === 'true') {
-                // Modal'ı göster
-                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
-                modal.show();
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Kullanıcı Kayıt Edildi");
             }
+            else if (messageBox == 2) {
+                MessageBox("success", "Kullanıcı Silindi");
+            }
+            else if (messageBox == 4) {
+                MessageBox("success", "Kart Kayıt Edildi");
+            }
+            else if (messageBox == 5) {
+                MessageBox("success", "Kart Silindi");
+            }
+
         });
-
-        // document.addEventListener('DOMContentLoaded', function () {
-
-        //     var isSuccess = '@Model.IsSuccess';
-        //     debugger;
-        //     if (isSuccess == 'True') {
-        //         updateModal('@Model.Id');
-        //     }
-
-        //     var modelid = '@Model.Id';
-        //     if (modelid > 0) {
-        //         $('#kartModal').modal('show');
-        //     }
-
-        //     var messageBox = '@TempData["MessageBox"]';
-        //     if (messageBox == 1) {
-        //         MessageBox("success", "Kullanıcı Kayıt Edildi");
-        //     }
-        //     else if (messageBox == 2) {
-        //         MessageBox("success", "Kullanıcı Silindi");
-        //     }
-        //     else if (messageBox == 4) {
-        //         MessageBox("success", "Kart Kayıt Edildi");
-        //     }
-        //     else if (messageBox == 5) {
-        //         MessageBox("success", "Kart Silindi");
-        //     }
-
-        // });
-
-        // $('#kartModalAdd').on('hidden.bs.modal', function () {
-        //     $('.modal-backdrop').remove();
-        // });
-
-        // $('#kartModal').on('hidden.bs.modal', function () {
-        //     $('.modal-backdrop').remove();
-        // });
 
         $.ajax({
             url: '/KullaniciKart/KullaniciKartListesi?pId=' + '@Model.Id',
@@ -441,69 +402,6 @@
                 console.log("Error: " + error);
             }
         });
-
-        $('#kartModalAdd').click(function () {
-
-            $.ajax({
-                url: '/KullaniciKart/KullaniciKartSayfasi',
-                type: 'GET',
-                success: function (data) {
-                    $('#kartModal').html(data);
-                    $('#exLargeModal').modal('show');
-                    addModal();
-                }
-            });
-
-            function addModal() {
-
-                $('#pId').val('0');
-                $('#frmKartAdi').val('');
-                $('#frmKartNumarasi').val('');
-                $('#frmKartAdSoyad').val('');
-                $('#frmKartSktay').val('');
-                $('#frmKartSktyil').val('');
-                $('#frmKartCvvkodu').val('');
-
-            }
-        });
-
-        function updateModal(id) {
-            kartid = id;
-
-            $.ajax({
-                url: '/KullaniciKart/KullaniciKartSayfasi?pId=' + kartid,
-                type: 'GET',
-                success: function (data) {
-                    // Modal içeriğini güncelle
-                    $('#kartModal').html(data);
-
-                    // Modal'ı Bootstrap ile göster
-                    var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
-                    modal.show();
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX isteği sırasında hata oluştu:", error);
-                }
-            });
-        }
-
-        // let kartid = null;
-
-        // function updateModal(id) {
-
-        //     kartid = id;
-        //     const confirmUpdateLink = document.getElementById('confirmUpdateLink');
-        //     confirmUpdateLink.href = '/KullaniciKart/KullaniciKartSayfasi?pId=' + kartId;
-
-        // }
-
-        function deleteModal(id) {
-
-            kartid = id;
-            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
-            confirmDeleteLink.href = '/KullaniciKart/KullaniciKartSayfasi?pId=' + kartId;
-
-        }
 
         //Anlık hava durumu ve zaman bilgisi
 

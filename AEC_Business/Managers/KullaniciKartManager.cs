@@ -26,9 +26,9 @@ namespace AEC_Business.Managers
             item.KartAdi = model.KartAdi;
             item.KartNumarasi = model.KartNumarasi;
             item.KartAdSoyad = model.KartAdSoyad;
-            item.KartSktay = model.KartSktay;
-            item.KartSktyil = model.KartSktyil;
-            item.KartCvvkodu = model.KartCvvkodu;
+            item.KartSktay = model.KartSktay.Value;
+            item.KartSktyil = model.KartSktyil.Value;
+            item.KartCvvkodu = model.KartCvvkodu.Value;
             item.CreatedAt = DateTime.Now;
             item.CreatedBy = model.CreatedBy.Value;
 

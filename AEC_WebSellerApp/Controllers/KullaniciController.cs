@@ -204,6 +204,16 @@ namespace AEC_WebSellerApp.Controllers
                     TempData["MessageBox"] = 2;
                     HttpContext.Session.SetInt32("MessageBox", 3);
                 }
+                else if (MessageBox == 4)
+                {
+                    TempData["MessageBox"] = 4;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 5)
+                {
+                    TempData["MessageBox"] = 5;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
 
                 if (CurrentKullanici.KullaniciTuruId == 2)
                 {
@@ -239,6 +249,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     HttpContext.Session.SetString("secilenKullaniciAdi", model.KullaniciAdi);
                     HttpContext.Session.SetString("secilenEmail", model.Email);
+                    HttpContext.Session.SetInt32("secilenkullaniciId", model.Id);
                 }
 
                 return View(model);

@@ -15,7 +15,7 @@ namespace AEC_Entities.DataModels
         [Required(ErrorMessage = "Soyad Boş Girilemez!!")]
         public string Soyad { get; set; } = null!;
 
-        [Required(ErrorMessage = "Kullanıcı Adı Boş Girilemez!!")]
+        [Required(ErrorMessage = "Kullanıcı Adı Boş Girilemez!!")]    
         public string KullaniciAdi { get; set; } = null!;
 
         [Required(ErrorMessage = "Şifre Boş Girilemez!!")]

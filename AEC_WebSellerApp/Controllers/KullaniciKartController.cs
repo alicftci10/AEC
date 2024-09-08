@@ -49,22 +49,10 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public async Task<IActionResult> KullaniciKartSayfasi(int? pId)
+        public async Task<IActionResult> KullaniciKartSayfasi(int pId)
         {
             using (HttpClient client = new HttpClient())
             {
-                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
-                if (MessageBox == 1)
-                {
-                    TempData["MessageBox"] = 4;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
-                else if (MessageBox == 2)
-                {
-                    TempData["MessageBox"] = 5;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
-
                 if (CurrentKullanici.KullaniciTuruId == 2)
                 {
                     if (pId != CurrentKullanici.Id)
@@ -75,7 +63,16 @@ namespace AEC_WebSellerApp.Controllers
 
                 KullaniciKartDataModel model = new KullaniciKartDataModel();
 
-                if (pId > 0)
+                if (pId == 0)
+                {
+                    int? kullaniciId = HttpContext.Session.GetInt32("secilenkullaniciId");
+                    if (kullaniciId != null)
+                    {
+                        model.KullaniciId = kullaniciId.Value;
+                    }
+                }
+
+                if (pId > 0) 
                 {
                     string url = ConfigurationInfo.ApiUrl + "/api/KullaniciKartApi/GetKullaniciKart";
 
@@ -94,7 +91,7 @@ namespace AEC_WebSellerApp.Controllers
                     }
                 }
 
-                return PartialView(model);
+                return View(model);
             }
         }
 
@@ -103,6 +100,12 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
+                if (model.KartSktay == null || model.KartSktyil == null)
+                {
+                    ModelState.AddModelError("KartSktay", "Kart Ay/Yıl Boş Girilemez!!");
+                    return View(model);
+                }
+
                 if (ModelState.IsValid)
                 {
                     if (model.Id == 0)
@@ -147,19 +150,16 @@ namespace AEC_WebSellerApp.Controllers
                     {
                         ModelState.AddModelError("KartAdi", "Bu Kart Adı daha önce kullanılmış. Lütfen farklı Kart Adı deneyin!");
                         ModelState.AddModelError("KartNumarasi", "Bu Kart Numarasında kartınız mevcut. Lütfen farklı Kart Numarası deneyin!");
-                        model.IsSuccess = true;
                         return View(model);
                     }
                     else if (kullanicikartadisonuc != "1" && kullanicikartnumarasisonuc == "2")
                     {
                         ModelState.AddModelError("KartNumarasi", "Bu Kart Numarasında kartınız mevcut. Lütfen farklı Kart Numarası deneyin!");
-                        model.IsSuccess = true;
                         return View(model);
                     }
                     else if (kullanicikartadisonuc == "1" && kullanicikartnumarasisonuc != "2")
                     {
                         ModelState.AddModelError("KartAdi", "Bu Kart Adı daha önce kullanılmış. Lütfen farklı Kart Adı deneyin!");
-                        model.IsSuccess = true;
                         return View(model);
                     }
 
@@ -174,12 +174,11 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
-                        HttpContext.Session.SetInt32("MessageBox", 1);
+                        HttpContext.Session.SetInt32("MessageBox", 4);
                         return RedirectToAction("KullaniciDetay", "Kullanici");
                     }
                 }
 
-                model.IsSuccess = true ;
                 return View(model);
             }
         }

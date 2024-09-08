@@ -20,15 +20,13 @@ namespace AEC_Entities.DataModels
         [Required(ErrorMessage = "Kart Adı Soyadı Boş Girilemez!!")]
         public string KartAdSoyad { get; set; } = null!;
 
-        [Required(ErrorMessage = "Kart Ayı Boş Girilemez!!")]
-        public int KartSktay { get; set; }
+        [Required(ErrorMessage = "Kart Ay/Yıl Boş Girilemez!!")]
+        public int? KartSktay { get; set; }
 
-        [Required(ErrorMessage = "Kart Yılı Boş Girilemez!!")]
-        public int KartSktyil { get; set; }
+        [Required(ErrorMessage = "Kart Ay/Yıl Boş Girilemez!!")]
+        public int? KartSktyil { get; set; }
 
         [Required(ErrorMessage = "Kart CVV Boş Girilemez!!")]
-        public int KartCvvkodu { get; set; }
-
-        public bool IsSuccess { get; set; }
+        public int? KartCvvkodu { get; set; }
     }
 }
