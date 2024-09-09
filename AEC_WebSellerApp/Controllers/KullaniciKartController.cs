@@ -182,5 +182,22 @@ namespace AEC_WebSellerApp.Controllers
                 return View(model);
             }
         }
+
+        public async Task<IActionResult> KullaniciKartSil(int pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciKartApi/Delete";
+
+                url += $"?pId={pId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                var response = await client.DeleteAsync(url);
+
+                HttpContext.Session.SetInt32("MessageBox", 5);
+                return RedirectToAction("KullaniciDetay", "Kullanici");
+            }
+        }
     }
 }

@@ -255,19 +255,23 @@
                                 <input type="text" asp-for="KartAdi" id="frmKartAdi" class="form-control" placeholder="Kart Adı Giriniz" />
                                 <span asp-validation-for="KartAdi" class="text-danger"></span>
                             </div>
+                            <div class="col mb-0"></div>
+                        </div>
+                        <br />
+                        <div class="row g-2">
                             <div class="col mb-0">
                                 <label for="frmKartNumarasi" class="form-label fw-bold">KART NUMARASI</label>
                                 <input type="text" asp-for="KartNumarasi" id="frmKartNumarasi" class="form-control" placeholder="Kart Numarası Giriniz" />
                                 <span asp-validation-for="KartNumarasi" class="text-danger"></span>
                             </div>
-                        </div>
-                        <br />
-                        <div class="row g-2">
                             <div class="col mb-0">
                                 <label for="frmKartAdSoyad" class="form-label fw-bold">KART AD SOYAD</label>
                                 <input type="text" asp-for="KartAdSoyad" id="frmKartAdSoyad" class="form-control" placeholder="Kart Üzerindeki Adı Soyadı Giriniz" />
                                 <span asp-validation-for="KartAdSoyad" class="text-danger"></span>
                             </div>
+                        </div>
+                        <br />
+                        <div class="row g-2">
                             <div class="col mb-0">
                                 <label for="frmKartSktay" class="form-label fw-bold">KART AY/YIL</label>
                                 <div class="d-flex">
@@ -290,29 +294,26 @@
                                             <option selected value="12">12 </option>
                                         </select>
                                     </div>
-                                    <div class="fw-bold" style="font-size:47px;margin-top:-21px;padding:5px;"> / </div>
-                                    <div class="col-md-2" style="height:40px;">
+                                    <i class="bi bi-slash-lg" style="-webkit-text-stroke: 0.5px; position: relative; top: 29px;transform: scale(3); bottom:10px;margin-left:20px;"></i>
+                                    <div class="col-md-2" style="height:40px; margin-left:20px;">
                                         <input type="text" asp-for="KartSktyil" id="frmKartSktyil" class="form-control" placeholder="Yılı Giriniz" />
-                                        <span asp-validation-for="KartSktay" class="text-danger"></span>
                                     </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col" style="margin-top:-29px;">
-                                        <label for="frmKartCvvkodu" class="form-label fw-bold">KART CVV</label>
-                                        <input type="text" asp-for="KartCvvkodu" id="frmKartCvvkodu" class="form-control" placeholder="CVV Giriniz" />
-                                        <span asp-validation-for="KartCvvkodu" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-md-2"></div>
                                 </div>
+                                <span asp-validation-for="KartSktay" class="text-danger"></span>
+                            </div>
+                            <div class="col mb-0">
+                                <label for="frmKartCvvkodu" class="form-label fw-bold">KART CVV</label>
+                                <input type="text" asp-for="KartCvvkodu" id="frmKartCvvkodu" class="form-control" placeholder="CVV Giriniz" />
+                                <span asp-validation-for="KartCvvkodu" class="text-danger"></span>
                             </div>
                         </div>
-
                         <br />
-
-                        <a href="/Kullanici/KullaniciDetay?pId=@Model.KullaniciId" type="button" class="btn btn-danger">
-                            Kapat
-                        </a>
-                        <button type="submit" class="btn btn-success">Kaydet</button>
-
+                        <div class="mt-2">
+                            <a href="/Kullanici/KullaniciDetay?pId=@Model.KullaniciId" type="button" class="btn btn-danger me-2">
+                                Kapat
+                            </a>
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                        </div>
                     </form>
                 </div>
                 <!-- /Account -->
@@ -390,12 +391,12 @@
                 const weatherDescription = data.weather[0].description;
 
                 document.getElementById('havadurumu').innerHTML = `
-                                                                                                                                      <div style="font-size: 16px;">
-                                                                                                                                          <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                                                                                                                                          <span style="color: white;">${temperature}°C</span>,
-                                                                                                                                          <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                                                                                                                                      </div>
-                                                                                                                                    `;
+                                                                                                                                                                                                                      <div style="font-size: 16px;">
+                                                                                                                                                                                                                          <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                                                                                                                                                                                                                          <span style="color: white;">${temperature}°C</span>,
+                                                                                                                                                                                                                          <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                                                                                                                                                                                                                      </div>
+                                                                                                                                                                                                                    `;
             })
             .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 
