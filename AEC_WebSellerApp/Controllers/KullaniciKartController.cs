@@ -53,26 +53,9 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                if (CurrentKullanici.KullaniciTuruId == 2)
-                {
-                    if (pId != CurrentKullanici.Id)
-                    {
-                        pId = CurrentKullanici.Id;
-                    }
-                }
-
                 KullaniciKartDataModel model = new KullaniciKartDataModel();
 
-                if (pId == 0)
-                {
-                    int? kullaniciId = HttpContext.Session.GetInt32("secilenkullaniciId");
-                    if (kullaniciId != null)
-                    {
-                        model.KullaniciId = kullaniciId.Value;
-                    }
-                }
-
-                if (pId > 0) 
+                if (pId > 0)
                 {
                     string url = ConfigurationInfo.ApiUrl + "/api/KullaniciKartApi/GetKullaniciKart";
 
@@ -86,8 +69,24 @@ namespace AEC_WebSellerApp.Controllers
                     {
                         model = JsonConvert.DeserializeObject<KullaniciKartDataModel>(response.Content.ReadAsStringAsync().Result);
 
+                        if (CurrentKullanici.KullaniciTuruId == 2)
+                        {
+                            if (model.KullaniciId != CurrentKullanici.Id)
+                            {
+                                return RedirectToAction("KullaniciDetay", "Kullanici");
+                            }
+                        }
+
                         HttpContext.Session.SetString("secilenKullaniciKartAdi", model.KartAdi);
                         HttpContext.Session.SetString("secilenKullaniciKartNumarasi", model.KartNumarasi);
+                    }
+                }
+                else
+                {
+                    int? kullaniciId = HttpContext.Session.GetInt32("secilenkullaniciId");
+                    if (kullaniciId != null)
+                    {
+                        model.KullaniciId = kullaniciId.Value;
                     }
                 }
 

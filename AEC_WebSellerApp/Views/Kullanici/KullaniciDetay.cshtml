@@ -241,12 +241,9 @@
             <div class="card mb-4 bg-dark">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4 class="fw-bold" style="color:black">KULLANICI</h4>
-                    @if (ViewData["KullaniciTuru"] == "Admin")
-                    {
-                        <a href="/KullaniciKart/KullaniciKartSayfasi" type="button" style="color:black" class="btn rounded-pill btn-secondary fw-bold">
-                            <i class="bi bi-plus-circle" style="-webkit-text-stroke: 0.5px;"></i> KART EKLE
-                        </a>
-                    }
+                    <a href="/KullaniciKart/KullaniciKartSayfasi" type="button" style="color:black" class="btn rounded-pill btn-secondary fw-bold">
+                        <i class="bi bi-plus-circle" style="-webkit-text-stroke: 0.5px;"></i> KART EKLE
+                    </a>
                 </div>
 
                 <!-- Account -->
@@ -370,6 +367,33 @@
     </div>
 </div>
 
+<div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="backDropModalTitle">Kullanıcı Sil</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-3" style="color:black">
+                        Kartı Silmek İstediğinize Emin Misiniz ?
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Hayır
+                </button>
+                <a href="#" id="confirmDeleteLink" class="btn btn-dark">Evet</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 @section AECScript {
 
     <script type="text/javascript">
@@ -402,6 +426,13 @@
                 console.log("Error: " + error);
             }
         });
+
+        function deleteModal(id) {
+
+            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
+            confirmDeleteLink.href = '/KullaniciKart/KullaniciKartSil?pId=' + id;
+
+        }
 
         //Anlık hava durumu ve zaman bilgisi
 
@@ -436,12 +467,12 @@
                 const weatherDescription = data.weather[0].description;
 
                 document.getElementById('havadurumu').innerHTML = `
-                                                      <div style="font-size: 16px;">
-                                                          <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                                                          <span style="color: white;">${temperature}°C</span>,
-                                                          <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                                                      </div>
-                                                    `;
+                                                              <div style="font-size: 16px;">
+                                                                  <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                                                                  <span style="color: white;">${temperature}°C</span>,
+                                                                  <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                                                              </div>
+                                                            `;
             })
             .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 

@@ -1,5 +1,18 @@
 ﻿@model KullaniciKartDataModel
 
+<style>
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
         <div class="app-brand-link">
@@ -261,7 +274,7 @@
                         <div class="row g-2">
                             <div class="col mb-0">
                                 <label for="frmKartNumarasi" class="form-label fw-bold">KART NUMARASI</label>
-                                <input type="text" asp-for="KartNumarasi" id="frmKartNumarasi" class="form-control" placeholder="Kart Numarası Giriniz" />
+                                <input type="number" asp-for="KartNumarasi" id="frmKartNumarasi" class="form-control" placeholder="Kart Numarası Giriniz" />
                                 <span asp-validation-for="KartNumarasi" class="text-danger"></span>
                             </div>
                             <div class="col mb-0">
@@ -296,14 +309,14 @@
                                     </div>
                                     <i class="bi bi-slash-lg" style="-webkit-text-stroke: 0.5px; position: relative; top: 29px;transform: scale(3); bottom:10px;margin-left:20px;"></i>
                                     <div class="col-md-2" style="height:40px; margin-left:20px;">
-                                        <input type="text" asp-for="KartSktyil" id="frmKartSktyil" class="form-control" placeholder="Yılı Giriniz" />
+                                        <input type="number" asp-for="KartSktyil" id="frmKartSktyil" class="form-control" placeholder="Yılı Giriniz" />
                                     </div>
                                 </div>
                                 <span asp-validation-for="KartSktay" class="text-danger"></span>
                             </div>
                             <div class="col mb-0">
                                 <label for="frmKartCvvkodu" class="form-label fw-bold">KART CVV</label>
-                                <input type="text" asp-for="KartCvvkodu" id="frmKartCvvkodu" class="form-control" placeholder="CVV Giriniz" />
+                                <input type="number" asp-for="KartCvvkodu" id="frmKartCvvkodu" class="form-control" placeholder="CVV Giriniz" />
                                 <span asp-validation-for="KartCvvkodu" class="text-danger"></span>
                             </div>
                         </div>

@@ -479,13 +479,10 @@
             $('.modal-backdrop').remove();
         });
 
-        let kullaniciId = null;
-
         function deleteModal(id) {
 
-            kullaniciId = id;
             const confirmDeleteLink = document.getElementById('confirmDeleteLink');
-            confirmDeleteLink.href = '/Kullanici/PersonelSil?pId=' + kullaniciId;
+            confirmDeleteLink.href = '/Kullanici/PersonelSil?pId=' + id;
 
         }
 
