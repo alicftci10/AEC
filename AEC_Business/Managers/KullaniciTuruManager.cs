@@ -27,7 +27,7 @@ namespace AEC_Business.Managers
             {
                 KullaniciTuruDataModel model = new KullaniciTuruDataModel();
                 model.Id = item.Id;
-                model.KullaniciTuruAd = item.TurAdi;
+                model.TurAdi = item.TurAdi;
                 model.CreatedAt = item.CreatedAt;
                 model.CreatedBy = item.CreatedBy;
 
@@ -35,6 +35,47 @@ namespace AEC_Business.Managers
             }
 
             return listKullaniciTuru;
+        }
+
+        private KullaniciTuru GetDataModel(KullaniciTuruDataModel model)
+        {
+            KullaniciTuru item = new KullaniciTuru();
+
+            item.TurAdi = model.TurAdi;
+            item.CreatedAt = DateTime.Now;
+            item.CreatedBy = model.CreatedBy.Value;
+
+            if (model.Id > 0)
+            {
+                item.Id = model.Id;
+            }
+
+            return item;
+        }
+
+        public List<KullaniciTuruDataModel> GetKullaniciTuruList(string searchTerm)
+        {
+            return _KullaniciTuruRepository.GetKullaniciTuruList(searchTerm);
+        }
+
+        public KullaniciTuru GetId(int pId)
+        {
+            return _KullaniciTuruRepository.GetSelect(pId);
+        }
+
+        public int Add(KullaniciTuruDataModel item)
+        {
+            return _KullaniciTuruRepository.Add(GetDataModel(item)).Id;
+        }
+
+        public int Update(KullaniciTuruDataModel item)
+        {
+            return _KullaniciTuruRepository.Update(GetDataModel(item)).Id;
+        }
+
+        public KullaniciTuru Delete(int pId)
+        {
+            return _KullaniciTuruRepository.Delete(pId);
         }
     }
 }

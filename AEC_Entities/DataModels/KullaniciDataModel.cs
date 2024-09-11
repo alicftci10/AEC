@@ -36,13 +36,9 @@ namespace AEC_Entities.DataModels
 
         public string? FullName { get; set; }
 
-        public string? CreatedByName { get; set; }
-
         public string? KullaniciTuruName { get; set; }
 
         public string? ErrorMessage { get; set; }
-
-        public bool IsSuccess { get; set; }
 
         public string? JwtToken { get; set; }
     }

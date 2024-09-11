@@ -10,9 +10,9 @@ namespace AEC_WebSellerApp.Controllers
 {
     public class BaseController : Controller
     {
-        public BaseController() 
+        public BaseController()
         {
-            
+
         }
 
         public KullaniciDataModel CurrentKullanici
@@ -69,24 +69,94 @@ namespace AEC_WebSellerApp.Controllers
                 var response = client.GetAsync(url);
                 var text = response.Result;
 
-                List<KullaniciDataModel> kullanicilar = new List<KullaniciDataModel>();
+                List<KullaniciDataModel> modelList = new List<KullaniciDataModel>();
 
                 if (text != null)
                 {
-                    kullanicilar = JsonConvert.DeserializeObject<List<KullaniciDataModel>>(text.Content.ReadAsStringAsync().Result);
+                    modelList = JsonConvert.DeserializeObject<List<KullaniciDataModel>>(text.Content.ReadAsStringAsync().Result);
                 }
 
                 List<string> kullaniciAdi = new List<string>();
                 List<string> email = new List<string>();
 
-                foreach (var item in kullanicilar)
+                if (modelList != null)
                 {
-                    kullaniciAdi.Add(item.KullaniciAdi);
-                    email.Add(item.Email);
+                    foreach (var item in modelList)
+                    {
+                        kullaniciAdi.Add(item.KullaniciAdi);
+                        email.Add(item.Email);
+                    }
+
+                    HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
+                    HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
+                }
+            }
+        }
+
+        public void LoadKullaniciKartList(int pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciKartApi/GetKullaniciKartListesi";
+
+                url += $"?pId={pId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KullaniciKartDataModel> modelList = new List<KullaniciKartDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KullaniciKartDataModel>>(text.Content.ReadAsStringAsync().Result);
                 }
 
-                HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
-                HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
+                List<string> KartAdi = new List<string>();
+                List<string> KartNumarasi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        KartAdi.Add(item.KartAdi);
+                        KartNumarasi.Add(item.KartNumarasi);
+                    }
+
+                    HttpContext.Session.SetString("KullaniciKartAdiList", JsonConvert.SerializeObject(KartAdi));
+                    HttpContext.Session.SetString("KullaniciKartNumarasiList", JsonConvert.SerializeObject(KartNumarasi));
+                }
+            }
+        }
+
+
+        public void LoadKullaniciTuruList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciTuruApi/GetAllKullaniciTuru";
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KullaniciTuruDataModel> modelList = new List<KullaniciTuruDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KullaniciTuruDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> kullanicituruAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        kullanicituruAdi.Add(item.TurAdi);
+                    }
+
+                    HttpContext.Session.SetString("KullaniciTuruAdiList", JsonConvert.SerializeObject(kullanicituruAdi));
+                }
             }
         }
 
@@ -108,21 +178,25 @@ namespace AEC_WebSellerApp.Controllers
 
                 List<SelectListItem> listPersonel = new List<SelectListItem>();
                 List<SelectListItem> list = new List<SelectListItem>();
-                foreach (var item in modelList)
-                {
-                    if (item.KullaniciTuruAd != "Müşteri")
-                    {
-                        listPersonel.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.KullaniciTuruAd });
-                        list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.KullaniciTuruAd });
-                    }
-                    else
-                    {
-                        list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.KullaniciTuruAd });
-                    }
-                }
 
-                ViewBag.KullaniciTuruPersonelList = listPersonel;
-                ViewBag.KullaniciTuruList = list;
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        if (item.TurAdi == "Admin" || item.TurAdi == "Personel")
+                        {
+                            listPersonel.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TurAdi });
+                            list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TurAdi });
+                        }
+                        else
+                        {
+                            list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TurAdi });
+                        }
+                    }
+
+                    ViewBag.KullaniciTuruPersonelList = listPersonel;
+                    ViewBag.KullaniciTuruList = list;
+                }
             }
         }
     }

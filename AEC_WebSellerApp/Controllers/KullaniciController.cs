@@ -103,6 +103,12 @@ namespace AEC_WebSellerApp.Controllers
                     string kullaniciadisonuc = "";
                     string emailsonuc = "";
 
+                    if (model.Id == 0)
+                    {
+                        secilenKullaniciAdi = null;
+                        secilenEmail = null;
+                    }
+
                     if (model.KullaniciAdi != secilenKullaniciAdi)
                     {
                         var KullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
@@ -432,6 +438,12 @@ namespace AEC_WebSellerApp.Controllers
 
                     string kullaniciadisonuc = null;
                     string emailsonuc = null;
+
+                    if (model.Id == 0)
+                    {
+                        secilenKullaniciAdi = null;
+                        secilenEmail = null;
+                    }
 
                     if (model.KullaniciAdi != secilenKullaniciAdi)
                     {

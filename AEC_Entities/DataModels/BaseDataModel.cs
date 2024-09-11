@@ -11,5 +11,9 @@ namespace AEC_Entities.DataModels
         public int Id { get; set; }
         public DateTime? CreatedAt { get; set; }
         public int? CreatedBy { get; set; }
+
+        public bool IsSuccess { get; set; }
+
+        public string? CreatedByName { get; set; }
     }
 }

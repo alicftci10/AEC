@@ -27,21 +27,6 @@ namespace AEC_WebSellerApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     modelList = JsonConvert.DeserializeObject<List<KullaniciKartDataModel>>(response.Content.ReadAsStringAsync().Result);
-
-                    List<string> KartAdi = new List<string>();
-                    List<string> KartNumarasi = new List<string>();
-
-                    if (modelList != null)
-                    {
-                        foreach (var item in modelList)
-                        {
-                            KartAdi.Add(item.KartAdi);
-                            KartNumarasi.Add(item.KartNumarasi);
-                        }
-
-                        HttpContext.Session.SetString("KullaniciKartAdiList", JsonConvert.SerializeObject(KartAdi));
-                        HttpContext.Session.SetString("KullaniciKartNumarasiList", JsonConvert.SerializeObject(KartNumarasi));
-                    }
                 }
 
                 HttpContext.Session.SetInt32("secilenKullaniciKartId", pId);
@@ -107,17 +92,21 @@ namespace AEC_WebSellerApp.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    if (model.Id == 0)
-                    {
-                        int? KullaniciId = HttpContext.Session.GetInt32("secilenKullaniciKartId");
-                        model.KullaniciId = KullaniciId.Value;
-                    }
-
                     string? secilenKullaniciKartAdi = HttpContext.Session.GetString("secilenKullaniciKartAdi");
                     string? secilenKullaniciKartNumarasi = HttpContext.Session.GetString("secilenKullaniciKartNumarasi");
 
                     string kullanicikartadisonuc = "";
                     string kullanicikartnumarasisonuc = "";
+
+                    if (model.Id == 0)
+                    {
+                        int? KullaniciId = HttpContext.Session.GetInt32("secilenKullaniciKartId");
+                        model.KullaniciId = KullaniciId.Value;
+                        secilenKullaniciKartAdi = null;
+                        secilenKullaniciKartNumarasi = null;
+                    }
+
+                    LoadKullaniciKartList(model.KullaniciId);
 
                     if (model.KartAdi != secilenKullaniciKartAdi)
                     {

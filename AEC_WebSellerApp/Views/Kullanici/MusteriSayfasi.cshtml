@@ -151,6 +151,15 @@
                 <div class="fw-bold">Profil</div>
             </a>
         </li>
+        @if (ViewData["KullaniciTuru"] == "Admin")
+        {
+            <li class="menu-item">
+                <a href="/KullaniciTuru/KullaniciTuruSayfasi" class="menu-link">
+                    <i class="menu-icon tf-icons bi bi-people-fill" style="position: relative; top: 1px;"></i>
+                    <div class="fw-bold">Kullanıcı Türü Yönetimi</div>
+                </a>
+            </li>
+        }
         <li class="menu-item">
             <a href="#" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-eye-fill"></i>
