@@ -47,9 +47,13 @@ namespace AEC_WebSellerApp.Controllers
                     {
                         ViewData["KullaniciTuru"] = "Admin";
                     }
-                    else
+                    else if (model.KullaniciTuruId == 2)
                     {
                         ViewData["KullaniciTuru"] = "Personel";
+                    }
+                    else if (model.KullaniciTuruId == 3)
+                    {
+                        ViewData["KullaniciTuru"] = "Müşteri";
                     }
                 }
             }
@@ -128,7 +132,6 @@ namespace AEC_WebSellerApp.Controllers
                 }
             }
         }
-
 
         public void LoadKullaniciTuruList()
         {

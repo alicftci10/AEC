@@ -19,9 +19,11 @@ namespace AEC_DataAccess.EFOperations
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var kullanici = db.Kullanicis.FirstOrDefault(i => i.Sifre == model.Sifre && i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
-                var kullaniciadi = db.Kullanicis.FirstOrDefault(i => i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
-                var sifre = db.Kullanicis.FirstOrDefault(i => i.Sifre == model.Sifre);
+                var Personel = db.Kullanicis.Where(i=>i.KullaniciTuruId == 1 || i.KullaniciTuruId == 2).ToList();
+
+                var kullanici = Personel.FirstOrDefault(i => i.Sifre == model.Sifre && i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
+                var kullaniciadi = Personel.FirstOrDefault(i => i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
+                var sifre = Personel.FirstOrDefault(i => i.Sifre == model.Sifre);
 
                 if (kullanici != null)
                 {

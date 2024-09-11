@@ -7,6 +7,10 @@ public partial class Cpu
 {
     public int Id { get; set; }
 
+    public string IslemciSerisi { get; set; } = null!;
+
+    public string IslemciMimarisi { get; set; } = null!;
+
     public string IslemciAdi { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }

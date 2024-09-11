@@ -82,6 +82,8 @@ public partial class AecommerceDbContext : DbContext
 
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.IslemciAdi).HasMaxLength(200);
+            entity.Property(e => e.IslemciMimarisi).HasMaxLength(50);
+            entity.Property(e => e.IslemciSerisi).HasMaxLength(50);
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Cpus)
                 .HasForeignKey(d => d.CreatedBy)
@@ -95,6 +97,7 @@ public partial class AecommerceDbContext : DbContext
 
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.EkranKartiAdi).HasMaxLength(200);
+            entity.Property(e => e.EkranKartiSerisi).HasMaxLength(50);
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Gpus)
                 .HasForeignKey(d => d.CreatedBy)

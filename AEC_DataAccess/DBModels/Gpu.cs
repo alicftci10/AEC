@@ -7,6 +7,8 @@ public partial class Gpu
 {
     public int Id { get; set; }
 
+    public string EkranKartiSerisi { get; set; } = null!;
+
     public string EkranKartiAdi { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
