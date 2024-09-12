@@ -19,11 +19,11 @@ namespace AEC_DataAccess.EFOperations
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var Personel = db.Kullanicis.Where(i=>i.KullaniciTuruId == 1 || i.KullaniciTuruId == 2).ToList();
+                var CPU = db.Kullanicis.Where(i=>i.KullaniciTuruId == 1 || i.KullaniciTuruId == 2).ToList();
 
-                var kullanici = Personel.FirstOrDefault(i => i.Sifre == model.Sifre && i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
-                var kullaniciadi = Personel.FirstOrDefault(i => i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
-                var sifre = Personel.FirstOrDefault(i => i.Sifre == model.Sifre);
+                var kullanici = CPU.FirstOrDefault(i => i.Sifre == model.Sifre && i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
+                var kullaniciadi = CPU.FirstOrDefault(i => i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
+                var sifre = CPU.FirstOrDefault(i => i.Sifre == model.Sifre);
 
                 if (kullanici != null)
                 {
@@ -55,7 +55,7 @@ namespace AEC_DataAccess.EFOperations
                                      
                                      join kul in db.Kullanicis on k.CreatedBy equals kul.Id
 
-                                     where (k.KullaniciTuruId != 3)
+                                     where (k.KullaniciTuruId == 1 || k.KullaniciTuruId == 2)
 
                                      select new KullaniciDataModel
                                      {
@@ -69,7 +69,7 @@ namespace AEC_DataAccess.EFOperations
                                          Telefon = k.Telefon,
                                          Adres = k.Adres,
                                          KullaniciTuruId = k.KullaniciTuruId,
-                                         KullaniciTuruName = k.KullaniciTuruId == 1 ? "Admin" : "Personel",
+                                         KullaniciTuruName = k.KullaniciTuruId == 1 ? "Admin" : "CPU",
                                          CreatedAt = k.CreatedAt,
                                          CreatedBy = k.CreatedBy,
                                          CreatedByName = db.Kullanicis.Where(i => i.Id == k.CreatedBy).Select(i => i.Ad + " " + i.Soyad).FirstOrDefault()

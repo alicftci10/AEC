@@ -49,7 +49,7 @@ namespace AEC_WebSellerApp.Controllers
                     }
                     else if (model.KullaniciTuruId == 2)
                     {
-                        ViewData["KullaniciTuru"] = "Personel";
+                        ViewData["KullaniciTuru"] = "CPU";
                     }
                     else if (model.KullaniciTuruId == 3)
                     {
@@ -186,7 +186,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.TurAdi == "Admin" || item.TurAdi == "Personel")
+                        if (item.TurAdi == "Admin" || item.TurAdi == "CPU")
                         {
                             listPersonel.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TurAdi });
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TurAdi });

@@ -23,24 +23,28 @@ namespace AEC_Business.Managers
             List<KullaniciDataModel> listKullanici = new List<KullaniciDataModel>();
 
             List<Kullanici> list = _KullaniciRepository.GetAll() as List<Kullanici>;
-            foreach (Kullanici kul in list)
-            {
-                KullaniciDataModel model = new KullaniciDataModel();
-                model.Id = kul.Id;
-                model.Ad = kul.Ad;
-                model.Soyad = kul.Soyad;
-                model.KullaniciAdi = kul.KullaniciAdi;
-                model.Sifre = kul.Sifre;
-                model.Email = kul.Email;
-                model.Telefon = kul.Telefon;
-                model.Adres = kul.Adres;
-                model.KullaniciTuruId = kul.KullaniciTuruId;
-                model.CreatedAt = kul.CreatedAt;
-                model.CreatedBy = kul.CreatedBy;
 
-                listKullanici.Add(model);
+            if (list != null)
+            {
+                foreach (Kullanici kul in list)
+                {
+                    KullaniciDataModel model = new KullaniciDataModel();
+                    model.Id = kul.Id;
+                    model.Ad = kul.Ad;
+                    model.Soyad = kul.Soyad;
+                    model.KullaniciAdi = kul.KullaniciAdi;
+                    model.Sifre = kul.Sifre;
+                    model.Email = kul.Email;
+                    model.Telefon = kul.Telefon;
+                    model.Adres = kul.Adres;
+                    model.KullaniciTuruId = kul.KullaniciTuruId;
+                    model.CreatedAt = kul.CreatedAt;
+                    model.CreatedBy = kul.CreatedBy;
+
+                    listKullanici.Add(model);
+                }
             }
-            
+
             return listKullanici;
         }
 

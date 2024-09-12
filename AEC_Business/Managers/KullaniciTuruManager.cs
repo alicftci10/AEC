@@ -23,15 +23,19 @@ namespace AEC_Business.Managers
             List<KullaniciTuruDataModel> listKullaniciTuru = new List<KullaniciTuruDataModel>();
 
             List<KullaniciTuru> list = _KullaniciTuruRepository.GetAll() as List<KullaniciTuru>;
-            foreach (KullaniciTuru item in list)
-            {
-                KullaniciTuruDataModel model = new KullaniciTuruDataModel();
-                model.Id = item.Id;
-                model.TurAdi = item.TurAdi;
-                model.CreatedAt = item.CreatedAt;
-                model.CreatedBy = item.CreatedBy;
 
-                listKullaniciTuru.Add(model);
+            if (list != null)
+            {
+                foreach (KullaniciTuru item in list)
+                {
+                    KullaniciTuruDataModel model = new KullaniciTuruDataModel();
+                    model.Id = item.Id;
+                    model.TurAdi = item.TurAdi;
+                    model.CreatedAt = item.CreatedAt;
+                    model.CreatedBy = item.CreatedBy;
+
+                    listKullaniciTuru.Add(model);
+                }
             }
 
             return listKullaniciTuru;
