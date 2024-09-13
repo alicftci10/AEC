@@ -12,7 +12,7 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/GetListCPU";
+                string url = ConfigurationInfo.ApiUrl + "/api/CPUApi/GetCPUList";
 
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
@@ -38,8 +38,6 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                LoadKullaniciTuruDropDown();
-
                 int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
                 if (MessageBox == 1)
                 {
@@ -58,13 +56,10 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     if (CurrentKullanici.KullaniciTuruId == 2)
                     {
-                        if (pId != CurrentKullanici.Id)
-                        {
-                            pId = CurrentKullanici.Id;
-                        }
+                        return View(model);
                     }
 
-                    string url = ConfigurationInfo.ApiUrl + "/api/KullaniciApi/GetKullanici";
+                    string url = ConfigurationInfo.ApiUrl + "/api/CPUApi/GetCPU";
 
                     url += $"?pId={pId}";
 
@@ -76,8 +71,7 @@ namespace AEC_WebSellerApp.Controllers
                     {
                         model = JsonConvert.DeserializeObject<CPUDataModel>(response.Content.ReadAsStringAsync().Result);
 
-                        HttpContext.Session.SetString("secilenKullaniciAdi", model.KullaniciAdi);
-                        HttpContext.Session.SetString("secilenEmail", model.Email);
+                        HttpContext.Session.SetString("secilenIslemciAdi", model.IslemciAdi);
                     }
                 }
 
@@ -90,71 +84,33 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                LoadKullaniciTuruDropDown();
-
                 if (ModelState.IsValid)
                 {
-                    LoadKullaniciList();
-
-                    string? secilenKullaniciAdi = HttpContext.Session.GetString("secilenKullaniciAdi");
-                    string? secilenEmail = HttpContext.Session.GetString("secilenEmail");
-
-                    string kullaniciadisonuc = "";
-                    string emailsonuc = "";
+                    string? secilenIslemciAdi = HttpContext.Session.GetString("secilenIslemciAdi");
 
                     if (model.Id == 0)
                     {
-                        secilenKullaniciAdi = null;
-                        secilenEmail = null;
+                        secilenIslemciAdi = null;
                     }
 
-                    if (model.KullaniciAdi != secilenKullaniciAdi)
-                    {
-                        var KullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
+                    LoadCPUList();
 
-                        if (!string.IsNullOrEmpty(KullaniciAdiList))
+                    if (model.IslemciAdi != secilenIslemciAdi)
+                    {
+                        var IslemciAdi = HttpContext.Session.GetString("IslemciAdiList");
+
+                        if (!string.IsNullOrEmpty(IslemciAdi))
                         {
-                            if (KullaniciAdiList.Contains(model.KullaniciAdi))
+                            if (IslemciAdi.Contains(model.IslemciAdi))
                             {
-                                kullaniciadisonuc = "1";
+                                ModelState.AddModelError("IslemciAdi", "Bu İşlemci Adı daha önce kullanılmış. Lütfen farklı İşlemci Adı deneyin!");
+                                model.IsSuccess = true;
+                                return View(model);
                             }
                         }
                     }
 
-                    if (model.Email != secilenEmail)
-                    {
-                        var EmailList = HttpContext.Session.GetString("KullaniciEmailList");
-
-                        if (!string.IsNullOrEmpty(EmailList))
-                        {
-                            if (EmailList.Contains(model.Email))
-                            {
-                                emailsonuc = "2";
-                            }
-                        }
-                    }
-
-                    if (kullaniciadisonuc == "1" && emailsonuc == "2")
-                    {
-                        ModelState.AddModelError("KullaniciAdi", "Bu Kullanıcı Adı daha önce kullanılmış. Lütfen farklı kullanıcı adı deneyin!");
-                        ModelState.AddModelError("Email", "Bu Email daha önce kullanılmış. Lütfen farklı Email deneyin!");
-                        model.IsSuccess = true;
-                        return View(model);
-                    }
-                    else if (kullaniciadisonuc != "1" && emailsonuc == "2")
-                    {
-                        ModelState.AddModelError("Email", "Bu Email daha önce kullanılmış. Lütfen farklı Email deneyin!");
-                        model.IsSuccess = true;
-                        return View(model);
-                    }
-                    else if (kullaniciadisonuc == "1" && emailsonuc != "2")
-                    {
-                        ModelState.AddModelError("KullaniciAdi", "Bu Kullanıcı Adı daha önce kullanılmış. Lütfen farklı kullanıcı adı deneyin!");
-                        model.IsSuccess = true;
-                        return View(model);
-                    }
-
-                    string url = ConfigurationInfo.ApiUrl + "/api/KullaniciApi/AddUpdate";
+                    string url = ConfigurationInfo.ApiUrl + "/api/CPUApi/AddUpdate";
 
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
 
@@ -179,7 +135,7 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciApi/Delete";
+                string url = ConfigurationInfo.ApiUrl + "/api/CPUApi/Delete";
 
                 url += $"?pId={pId}";
 

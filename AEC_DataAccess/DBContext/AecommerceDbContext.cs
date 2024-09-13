@@ -176,7 +176,6 @@ public partial class AecommerceDbContext : DbContext
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.KullaniciKartCreatedByNavigations)
                 .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_KullaniciKart_Kullanici");
 
             entity.HasOne(d => d.Kullanici).WithMany(p => p.KullaniciKartKullanicis)

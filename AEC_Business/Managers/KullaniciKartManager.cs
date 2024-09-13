@@ -30,7 +30,7 @@ namespace AEC_Business.Managers
             item.KartSktyil = model.KartSktyil.Value;
             item.KartCvvkodu = model.KartCvvkodu.Value;
             item.CreatedAt = DateTime.Now;
-            item.CreatedBy = model.CreatedBy.Value;
+            item.CreatedBy = model.CreatedBy;
 
             if (model.Id > 0)
             {

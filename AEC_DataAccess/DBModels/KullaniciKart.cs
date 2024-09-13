@@ -23,9 +23,9 @@ public partial class KullaniciKart
 
     public DateTime CreatedAt { get; set; }
 
-    public int CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
 
-    public virtual Kullanici CreatedByNavigation { get; set; } = null!;
+    public virtual Kullanici? CreatedByNavigation { get; set; }
 
     public virtual Kullanici Kullanici { get; set; } = null!;
 }

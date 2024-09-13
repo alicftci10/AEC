@@ -49,7 +49,7 @@ namespace AEC_WebSellerApp.Controllers
                     }
                     else if (model.KullaniciTuruId == 2)
                     {
-                        ViewData["KullaniciTuru"] = "CPU";
+                        ViewData["KullaniciTuru"] = "Personel";
                     }
                     else if (model.KullaniciTuruId == 3)
                     {
@@ -93,42 +93,6 @@ namespace AEC_WebSellerApp.Controllers
 
                     HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
                     HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
-                }
-            }
-        }
-
-        public void LoadKullaniciKartList(int pId)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciKartApi/GetKullaniciKartListesi";
-
-                url += $"?pId={pId}";
-
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
-                var response = client.GetAsync(url);
-                var text = response.Result;
-
-                List<KullaniciKartDataModel> modelList = new List<KullaniciKartDataModel>();
-
-                if (text != null)
-                {
-                    modelList = JsonConvert.DeserializeObject<List<KullaniciKartDataModel>>(text.Content.ReadAsStringAsync().Result);
-                }
-
-                List<string> KartAdi = new List<string>();
-                List<string> KartNumarasi = new List<string>();
-
-                if (modelList != null)
-                {
-                    foreach (var item in modelList)
-                    {
-                        KartAdi.Add(item.KartAdi);
-                        KartNumarasi.Add(item.KartNumarasi);
-                    }
-
-                    HttpContext.Session.SetString("KullaniciKartAdiList", JsonConvert.SerializeObject(KartAdi));
-                    HttpContext.Session.SetString("KullaniciKartNumarasiList", JsonConvert.SerializeObject(KartNumarasi));
                 }
             }
         }
@@ -186,7 +150,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.TurAdi == "Admin" || item.TurAdi == "CPU")
+                        if (item.TurAdi == "Admin" || item.TurAdi == "Personel")
                         {
                             listPersonel.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TurAdi });
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TurAdi });
@@ -199,6 +163,73 @@ namespace AEC_WebSellerApp.Controllers
 
                     ViewBag.KullaniciTuruPersonelList = listPersonel;
                     ViewBag.KullaniciTuruList = list;
+                }
+            }
+        }
+
+        public void LoadKullaniciKartList(int pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciKartApi/GetKullaniciKartListesi";
+
+                url += $"?pId={pId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KullaniciKartDataModel> modelList = new List<KullaniciKartDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KullaniciKartDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> KartAdi = new List<string>();
+                List<string> KartNumarasi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        KartAdi.Add(item.KartAdi);
+                        KartNumarasi.Add(item.KartNumarasi);
+                    }
+
+                    HttpContext.Session.SetString("KullaniciKartAdiList", JsonConvert.SerializeObject(KartAdi));
+                    HttpContext.Session.SetString("KullaniciKartNumarasiList", JsonConvert.SerializeObject(KartNumarasi));
+                }
+            }
+        }
+
+        public void LoadCPUList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/CPUApi/GetAllCPU";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<CPUDataModel> modelList = new List<CPUDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<CPUDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> IslemciAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        IslemciAdi.Add(item.IslemciAdi);
+                    }
+
+                    HttpContext.Session.SetString("IslemciAdiList", JsonConvert.SerializeObject(IslemciAdi));
                 }
             }
         }
