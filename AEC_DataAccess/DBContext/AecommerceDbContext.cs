@@ -127,14 +127,14 @@ public partial class AecommerceDbContext : DbContext
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.KategoriAdi).HasMaxLength(100);
 
-            entity.HasOne(d => d.AnaKategori).WithMany(p => p.InverseAnaKategori)
-                .HasForeignKey(d => d.AnaKategoriId)
-                .HasConstraintName("FK_Kategori_Kategori");
-
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Kategoris)
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Kategori_Kullanici");
+
+            entity.HasOne(d => d.MainKategori).WithMany(p => p.InverseMainKategori)
+                .HasForeignKey(d => d.MainKategoriId)
+                .HasConstraintName("FK_Kategori_Kategori");
         });
 
         modelBuilder.Entity<Kullanici>(entity =>

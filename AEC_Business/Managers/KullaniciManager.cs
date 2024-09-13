@@ -50,8 +50,7 @@ namespace AEC_Business.Managers
 
         public KullaniciDataModel Giris(KullaniciDataModel model)
         {
-            string? ErrorMessage = null;
-            Kullanici kul = _KullaniciRepository.Giris(model, out ErrorMessage);
+            Kullanici kul = _KullaniciRepository.Giris(model, out string? ErrorMessage);
 
             model.Id = kul.Id;
             model.Ad = kul.Ad;

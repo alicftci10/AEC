@@ -203,6 +203,37 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
+        public void LoadKategoriList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KategoriApi/GetAllKategori";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KategoriDataModel> modelList = new List<KategoriDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> KategoriAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        KategoriAdi.Add(item.KategoriAdi);
+                    }
+
+                    HttpContext.Session.SetString("KategoriAdiList", JsonConvert.SerializeObject(KategoriAdi));
+                }
+            }
+        }
+
         public void LoadCPUList()
         {
             using (HttpClient client = new HttpClient())
