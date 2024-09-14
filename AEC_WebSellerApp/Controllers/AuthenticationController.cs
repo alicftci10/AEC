@@ -27,8 +27,8 @@ namespace AEC_WebSellerApp.Controllers
             {
                 KullaniciList();
 
-                var kullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
-                var emailList = HttpContext.Session.GetString("KullaniciEmailList");
+                var kullaniciAdiList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciAdiList"));
+                var emailList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciEmailList"));
 
                 if (!string.IsNullOrEmpty(model.EmailorKullaniciAdi) && kullaniciAdiList != null && emailList != null)
                 {

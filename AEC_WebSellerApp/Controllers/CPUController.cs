@@ -97,9 +97,9 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.IslemciAdi != secilenIslemciAdi)
                     {
-                        var IslemciAdi = HttpContext.Session.GetString("IslemciAdiList");
+                        var IslemciAdi = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("IslemciAdiList"));
 
-                        if (!string.IsNullOrEmpty(IslemciAdi))
+                        if (IslemciAdi != null)
                         {
                             if (IslemciAdi.Contains(model.IslemciAdi))
                             {

@@ -3,6 +3,7 @@ using AEC_DataAccess.DBModels;
 using AEC_DataAccess.EFInterfaces;
 using AEC_DataAccess.GenericRepository.Repository;
 using AEC_Entities.DataModels;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +39,11 @@ namespace AEC_DataAccess.EFOperations
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
                     searchTerm = searchTerm.ToLower();
-                    List = List.Where(i => i.IslemciSerisi.ToLower().Contains(searchTerm) ||
-                                    i.IslemciMimarisi.ToLower().Contains(searchTerm) ||
-                                    i.IslemciAdi.ToLower().Contains(searchTerm) ||
-                                    i.CreatedByName.ToLower().Contains(searchTerm) ||
-                                    Convert.ToString(i.CreatedAt).Contains(searchTerm)).ToList();
+                    List = List.Where(i => (!string.IsNullOrEmpty(i.IslemciSerisi) && i.IslemciSerisi.ToLower().Contains(searchTerm)) ||
+                                           (!string.IsNullOrEmpty(i.IslemciMimarisi) && i.IslemciMimarisi.ToLower().Contains(searchTerm)) ||
+                                           (!string.IsNullOrEmpty(i.IslemciAdi) && i.IslemciAdi.ToLower().Contains(searchTerm)) ||
+                                           (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||
+                                           (!string.IsNullOrEmpty(Convert.ToString(i.CreatedAt)) && Convert.ToString(i.CreatedAt).Contains(searchTerm))).ToList();
                 }
 
                 return List;

@@ -92,9 +92,9 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.TurAdi != secilenKullaniciTuruAdi)
                     {
-                        var KullaniciTuruAdiList = HttpContext.Session.GetString("KullaniciTuruAdiList");
+                        var KullaniciTuruAdiList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciTuruAdiList"));
 
-                        if (!string.IsNullOrEmpty(KullaniciTuruAdiList))
+                        if (KullaniciTuruAdiList != null)
                         {
                             if (KullaniciTuruAdiList.Contains(model.TurAdi))
                             {

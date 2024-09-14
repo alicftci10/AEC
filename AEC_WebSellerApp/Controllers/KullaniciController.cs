@@ -111,9 +111,9 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.KullaniciAdi != secilenKullaniciAdi)
                     {
-                        var KullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
+                        var KullaniciAdiList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciAdiList"));
 
-                        if (!string.IsNullOrEmpty(KullaniciAdiList))
+                        if (KullaniciAdiList != null)
                         {
                             if (KullaniciAdiList.Contains(model.KullaniciAdi))
                             {
@@ -124,9 +124,9 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.Email != secilenEmail)
                     {
-                        var EmailList = HttpContext.Session.GetString("KullaniciEmailList");
+                        var EmailList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciEmailList"));
 
-                        if (!string.IsNullOrEmpty(EmailList))
+                        if (EmailList != null)
                         {
                             if (EmailList.Contains(model.Email))
                             {
@@ -281,9 +281,9 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.KullaniciAdi != secilenKullaniciAdi)
                     {
-                        var KullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
+                        var KullaniciAdiList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciAdiList"));
 
-                        if (!string.IsNullOrEmpty(KullaniciAdiList))
+                        if (KullaniciAdiList != null)
                         {
                             if (KullaniciAdiList.Contains(model.KullaniciAdi))
                             {
@@ -294,9 +294,9 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.Email != secilenEmail)
                     {
-                        var EmailList = HttpContext.Session.GetString("KullaniciEmailList");
+                        var EmailList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciEmailList"));
 
-                        if (!string.IsNullOrEmpty(EmailList))
+                        if (EmailList != null)
                         {
                             if (EmailList.Contains(model.Email))
                             {
@@ -447,21 +447,27 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.KullaniciAdi != secilenKullaniciAdi)
                     {
-                        var KullaniciAdiList = HttpContext.Session.GetString("KullaniciAdiList");
+                        var KullaniciAdiList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciAdiList"));
 
-                        if (KullaniciAdiList.Contains(model.KullaniciAdi))
+                        if (KullaniciAdiList != null)
                         {
-                            kullaniciadisonuc = "1";
+                            if (KullaniciAdiList.Contains(model.KullaniciAdi))
+                            {
+                                kullaniciadisonuc = "1";
+                            }
                         }
                     }
 
                     if (model.Email != secilenEmail)
                     {
-                        var EmailList = HttpContext.Session.GetString("KullaniciEmailList");
+                        var EmailList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciEmailList"));
 
-                        if (EmailList.Contains(model.Email))
+                        if (EmailList != null)
                         {
-                            emailsonuc = "2";
+                            if (EmailList.Contains(model.Email))
+                            {
+                                emailsonuc = "2";
+                            }
                         }
                     }
 

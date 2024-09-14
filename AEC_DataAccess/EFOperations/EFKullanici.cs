@@ -53,7 +53,8 @@ namespace AEC_DataAccess.EFOperations
             {
                 var kullaniciList = (from k in db.Kullanicis.AsQueryable()
                                      
-                                     join kul in db.Kullanicis on k.CreatedBy equals kul.Id
+                                     join kul in db.Kullanicis on k.CreatedBy equals kul.Id into a
+                                     from KulTable in a.DefaultIfEmpty()
 
                                      where (k.KullaniciTuruId == 1 || k.KullaniciTuruId == 2)
 
@@ -79,12 +80,12 @@ namespace AEC_DataAccess.EFOperations
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
                     searchTerm = searchTerm.ToLower();
-                    kullaniciList = kullaniciList.Where(i => i.FullName.ToLower().Contains(searchTerm) ||
-                                     i.Email.ToLower().Contains(searchTerm) ||
-                                     i.Telefon.Contains(searchTerm) ||
-                                     i.CreatedByName.ToLower().Contains(searchTerm) ||
-                                    Convert.ToString(i.CreatedAt).Contains(searchTerm) ||
-                                    i.KullaniciTuruName.ToLower().Contains(searchTerm)).ToList();
+                    kullaniciList = kullaniciList.Where(i => (!string.IsNullOrEmpty(i.FullName) && i.FullName.ToLower().Contains(searchTerm)) ||
+                                                             (!string.IsNullOrEmpty(i.Email) && i.Email.ToLower().Contains(searchTerm)) ||
+                                                             (!string.IsNullOrEmpty(i.Telefon) && i.Telefon.Contains(searchTerm)) ||
+                                                             (!string.IsNullOrEmpty(i.KullaniciTuruName) && i.KullaniciTuruName.ToLower().Contains(searchTerm)) ||
+                                                             (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||
+                                                             (!string.IsNullOrEmpty(Convert.ToString(i.CreatedAt)) && Convert.ToString(i.CreatedAt).Contains(searchTerm))).ToList();
                 }
 
                 return kullaniciList;
@@ -116,11 +117,11 @@ namespace AEC_DataAccess.EFOperations
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
                     searchTerm = searchTerm.ToLower();
-                    kullaniciList = kullaniciList.Where(i => i.FullName.ToLower().Contains(searchTerm) ||
-                                     i.Email.ToLower().Contains(searchTerm) ||
-                                     i.Telefon.Contains(searchTerm) ||
-                                    i.Adres.ToLower().Contains(searchTerm) ||
-                                    Convert.ToString(i.CreatedAt).Contains(searchTerm)).ToList();
+                    kullaniciList = kullaniciList.Where(i => (!string.IsNullOrEmpty(i.FullName) && i.FullName.ToLower().Contains(searchTerm)) ||
+                                                             (!string.IsNullOrEmpty(i.Email) && i.Email.ToLower().Contains(searchTerm)) ||
+                                                             (!string.IsNullOrEmpty(i.Telefon) && i.Telefon.Contains(searchTerm)) ||
+                                                             (!string.IsNullOrEmpty(i.Adres) && i.Adres.ToLower().Contains(searchTerm)) ||
+                                                             (!string.IsNullOrEmpty(Convert.ToString(i.CreatedAt)) && Convert.ToString(i.CreatedAt).Contains(searchTerm))).ToList();
                 }
 
                 return kullaniciList;

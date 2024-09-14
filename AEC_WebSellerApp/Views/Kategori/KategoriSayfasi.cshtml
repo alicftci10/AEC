@@ -1,4 +1,4 @@
-﻿@model KullaniciDataModel
+﻿@model KategoriDataModel
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
@@ -117,7 +117,7 @@
                 <div class="fw-bold">İşletim Sistemi</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active">
             <a href="/Kategori/KategoriSayfasi" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-window-stack"></i>
                 <div class="fw-bold">Kategori Yönetimi</div>
@@ -145,7 +145,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item active">
+        <li class="menu-item">
             <a href="/Kullanici/KullaniciDetay?pId=@ViewData["KullaniciId"]" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-person-vcard-fill" style="position: relative; top: 1px;"></i>
                 <div class="fw-bold">Profil</div>
@@ -182,17 +182,14 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center col">
-                @* <div class="col nav-item d-flex align-items-center">
-                <i class="bx bx-search fs-4 lh-0"></i>
-                <input type="text"
-                id="searchBox"
-                class="form-control border-0 shadow-none text-white"
-                placeholder="Ara..."
-                aria-label="Ara..." style="background-color:black!important;">
-                </div> *@
-                <div id="havadurumu"></div>
-                <div class="col-md-2"></div>
-                <span id="datetimenow" style="font-size:20px;color:white;"></span>
+                <div class="col nav-item d-flex align-items-center">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text"
+                           id="searchBox"
+                           class="form-control border-0 shadow-none text-white"
+                           placeholder="Ara..."
+                           aria-label="Ara..." style="background-color:black!important;">
+                </div>
             </div>
             <!-- /Search -->
 
@@ -246,112 +243,22 @@
     <div class="content-wrapper">
 
         <div class="container-xxl flex-grow-1 container-p-y">
-
-            <div class="card mb-4 bg-dark">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="fw-bold" style="color:#329d00">KULLANICI</h4>
-                    <a href="/KullaniciKart/KullaniciKartSayfasi" type="button" style="color:black" class="btn rounded-pill btn-secondary fw-bold">
-                        <i class="bi bi-plus-circle" style="-webkit-text-stroke: 0.5px;"></i> KART EKLE
-                    </a>
-                </div>
-
-                <!-- Account -->
-                <div class="card-body">
-                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="~/assets/img/avatars/user-avatar.png"
-                             alt="user-avatar"
-                             class="d-block rounded"
-                             height="175"
-                             width="175"
-                             id="uploadedAvatar" />
-                        <div id="kullanicikartlist" class="d-flex"></div>
+            <div class="card">
+                <div class="card-header" style="background-color:#329D00;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
+                            Kategori Listesi
+                        </h4>
+                        @if (ViewData["KullaniciTuru"] == "Admin")
+                        {
+                            <button type="button" class="btn rounded-pill btn-dark" data-bs-toggle="modal" data-bs-target="#exLargeModal" onclick="addModal()">
+                                <i class="bi bi-plus-circle"></i> EKLE
+                            </button>
+                        }
                     </div>
                 </div>
-                <hr class="my-0" />
-                <div class="card-body">
-                    <form id="formAccountSettings" asp-action="KullaniciDetay" asp-controller="Kullanici" method="post">
-
-                        <input type="hidden" asp-for="Id" id="pId" />
-                        <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
-
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
-                                <label for="frmAd" class="form-label fw-bold">AD</label>
-                                <input type="text" asp-for="Ad" id="frmAd" class="form-control" placeholder="Ad Giriniz" />
-                                <span asp-validation-for="Ad" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
-                                <input type="text" asp-for="Soyad" id="frmSoyad" class="form-control" placeholder="Soyad Giriniz" />
-                                <span asp-validation-for="Soyad" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
-                                <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="form-control" placeholder="Kullanıcı Adı Giriniz" />
-                                <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3 col-md-6 form-password-toggle">
-                                <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="text" asp-for="Sifre"
-                                           id="frmSifre"
-                                           class="form-control"
-                                           placeholder="Şifre Giriniz"
-                                           aria-describedby="password" />
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
-                                <span asp-validation-for="Sifre" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
-                                <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Adresi Giriniz" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
-                                <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmAdres" class="form-label fw-bold">ADRES</label>
-                                <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                @if (ViewData["KullaniciTuru"] == "Admin" && Model.KullaniciTuruId != 3 && Model.Id != Convert.ToInt32(ViewData["KullaniciId"]))
-                                {
-                                    <label for="frmKullaniciTuru" class="form-label fw-bold">KULLANICI TÜRÜ</label>
-                                    <select asp-for="KullaniciTuruId"
-                                            asp-items="@ViewBag.KullaniciTuruPersonelList"
-                                            class="form-select"
-                                            id="frmKullaniciTuru">
-                                        <option selected value="">Seçiniz </option>
-                                    </select>
-                                    <span asp-validation-for="KullaniciTuruId" class="text-danger"></span>
-                                }
-                                else if (ViewData["KullaniciTuru"] == "Personel")
-                                {
-                                    <br />
-                                    <br />
-                                    <h4 class="text-danger text-center">Personel</h4>
-                                    <input type="hidden" asp-for="KullaniciTuruId" id="kullanicituruid" />
-                                }
-                                else if (Model.KullaniciTuruId == 3)
-                                {
-                                    <br />
-                                    <br />
-                                    <h4 class="text-warning text-center">Müşteri</h4>
-                                    <input type="hidden" asp-for="KullaniciTuruId" id="kullanicituruid" />
-                                }
-                            </div>
-                        </div>
-                        <div class="mt-2">
-                            <button type="submit" class="btn btn-primary me-2">Kaydet</button>
-                            <a href="/Home/Index" class="btn btn-danger">İptal</a>
-                        </div>
-                    </form>
-                </div>
-                <!-- /Account -->
+                <div id="list"></div>
             </div>
-
         </div>
 
         <footer style="background-color:black!important;">
@@ -367,7 +274,6 @@
                 <div>
                     <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
                     <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
-
                 </div>
             </div>
         </footer>
@@ -375,6 +281,54 @@
         <div class="content-backdrop fade"></div>
     </div>
 </div>
+
+<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Kategori Ekle/Düzenle</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <form asp-action="KategoriSayfasi" asp-controller="Kategori" method="post">
+
+                <input type="hidden" asp-for="Id" id="pId" />
+
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmMainKategoriId" class="form-label fw-bold">ANA KATEGORİ</label>
+                            <select asp-for="MainKategoriId"
+                                    asp-items="@ViewBag.KategoriList"
+                                    class="form-select"
+                                    id="frmMainKategoriId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmKategoriAdi" class="form-label fw-bold">KATEGORİ ADI</label>
+                            <input type="text" asp-for="KategoriAdi" id="frmKategoriAdi" class="form-control" placeholder="Kategori Adı Giriniz" />
+                            <span asp-validation-for="KategoriAdi" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Kapat
+                    </button>
+                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
     <div class="modal-dialog">
@@ -389,7 +343,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-3" style="color:black">
-                        Kartı Silmek İstediğinize Emin Misiniz ?
+                        Kategoriyi Silmek İstediğinize Emin Misiniz ?
                     </div>
                 </div>
             </div>
@@ -407,83 +361,77 @@
 
     <script type="text/javascript">
 
-        document.addEventListener('DOMContentLoaded', function () {
+        function addModal() {
 
-            var messageBox = '@TempData["MessageBox"]';
-            if (messageBox == 1) {
-                MessageBox("success", "Kullanıcı Kayıt Edildi");
-            }
-            else if (messageBox == 2) {
-                MessageBox("success", "Kullanıcı Silindi");
-            }
-            else if (messageBox == 4) {
-                MessageBox("success", "Kart Kayıt Edildi");
-            }
-            else if (messageBox == 5) {
-                MessageBox("success", "Kart Silindi");
-            }
+            $('#pId').val('0');
+            $('#frmMainKategoriId').val('');
+            $('#frmKategoriAdi').val('');
 
+        }
+
+        $(document).ready(function () {
+
+            $('#searchBox').on('input', function () {
+                var searchTerm = $(this).val();
+                $.ajax({
+                    url: '/Kategori/KategoriListesi',
+                    type: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        $('#list').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error: " + error);
+                    }
+                });
+            });
         });
 
         $.ajax({
-            url: '/KullaniciKart/KullaniciKartListesi?pId=' + '@Model.Id',
+            url: '/Kategori/KategoriListesi',
             type: 'GET',
             success: function (result) {
-                $('#kullanicikartlist').html(result);
+                $('#list').html(result);
             },
             error: function (xhr, status, error) {
                 console.log("Error: " + error);
             }
         });
 
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var isSuccess = '@Model.IsSuccess';
+            if (isSuccess == 'True') {
+                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
+                modal.show();
+            }
+
+            var modelid = '@Model.Id';
+            if (modelid > 0) {
+                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
+                modal.show();
+            }
+
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Kategori Kayıt Edildi");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Kategori Silindi");
+            }
+
+        });
+
+        $('#exLargeModal').on('hidden.bs.modal', function () {
+            $('.modal-backdrop').remove();
+        });
+
         function deleteModal(id) {
 
             const confirmDeleteLink = document.getElementById('confirmDeleteLink');
-            confirmDeleteLink.href = '/KullaniciKart/KullaniciKartSil?pId=' + id;
+            confirmDeleteLink.href = '/Kategori/KategoriSil?pId=' + id;
 
         }
-
-        //Anlık hava durumu ve zaman bilgisi
-
-        function updateDateTime() {
-            var now = new Date();
-
-            var day = String(now.getDate()).padStart(2, '0');
-            var month = String(now.getMonth() + 1).padStart(2, '0');
-            var year = now.getFullYear();
-
-            var hours = String(now.getHours()).padStart(2, '0');
-            var minutes = String(now.getMinutes()).padStart(2, '0');
-            var seconds = String(now.getSeconds()).padStart(2, '0');
-
-            var formattedDateTime = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes + ':' + seconds;
-
-            document.getElementById('datetimenow').textContent = formattedDateTime;
-        }
-
-        updateDateTime();
-
-        setInterval(updateDateTime, 1000);
-
-        const apiKey = 'ec4b19585fd7f1c5c0ac5a26a341737b';
-        const city = 'Ankara';
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=tr`;
-
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const temperature = data.main.temp;
-                const weatherDescription = data.weather[0].description;
-
-                document.getElementById('havadurumu').innerHTML = `
-                                                              <div style="font-size: 16px;">
-                                                                  <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                                                                  <span style="color: white;">${temperature}°C</span>,
-                                                                  <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                                                              </div>
-                                                            `;
-            })
-            .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 
     </script>
 

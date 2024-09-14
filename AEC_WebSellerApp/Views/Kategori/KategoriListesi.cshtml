@@ -9,9 +9,9 @@
         <thead>
             <tr>
                 <th></th>
-                <th>İŞLEMCİ SERİSİ</th>
-                <th>İŞLEMCİ MİMARİSİ</th>
-                <th>İŞLEMCİ</th>
+                <th>ÜST KATEGORİ</th>
+                <th>ORTA KATEGORİ</th>
+                <th>ALT KATEGORİ</th>
                 <th>EKLEYEN</th>
                 <th>GÜNCELLEME TARİHİ</th>
                 <th></th>
@@ -39,15 +39,17 @@
                                 </div>
                                 <div class="dropdown-menu" style="background-color:black">
 
-                                    <a class="dropdown-item text-warning" href="/CPU/CPUSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+                                    <a class="dropdown-item text-warning" href="/Kategori/KategoriSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
 
-                                    <button type="button" class="dropdown-item text-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#backDropModal"
-                                            onclick="deleteModal(@item.Id)">
-                                        <i class="bx bx-trash me-1"></i> Sil
-                                    </button>
-
+                                    @if (item.AltKategori != null)
+                                    {
+                                        <button type="button" class="dropdown-item text-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#backDropModal"
+                                                onclick="deleteModal(@item.Id)">
+                                            <i class="bx bx-trash me-1"></i> Sil
+                                        </button>
+                                    }
                                 </div>
                             </div>
                         }

@@ -36,9 +36,9 @@ namespace AEC_DataAccess.EFOperations
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
                     searchTerm = searchTerm.ToLower();
-                    kullanicituruList = kullanicituruList.Where(i => i.TurAdi.ToLower().Contains(searchTerm) ||
-                                    i.CreatedByName.ToLower().Contains(searchTerm) ||
-                                    Convert.ToString(i.CreatedAt).Contains(searchTerm)).ToList();
+                    kullanicituruList = kullanicituruList.Where(i => (!string.IsNullOrEmpty(i.TurAdi) && i.TurAdi.ToLower().Contains(searchTerm)) ||
+                                                                     (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||
+                                                                     (!string.IsNullOrEmpty(Convert.ToString(i.CreatedAt)) && Convert.ToString(i.CreatedAt).Contains(searchTerm))).ToList();
                 }
 
                 return kullanicituruList;

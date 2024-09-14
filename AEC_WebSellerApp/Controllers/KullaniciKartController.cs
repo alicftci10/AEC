@@ -110,7 +110,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.KartAdi != secilenKullaniciKartAdi)
                     {
-                        var KullaniciKartAdiList = HttpContext.Session.GetString("KullaniciKartAdiList");
+                        var KullaniciKartAdiList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciKartAdiList"));
 
                         if (KullaniciKartAdiList != null)
                         {
@@ -123,7 +123,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.KartNumarasi != secilenKullaniciKartNumarasi)
                     {
-                        var KullaniciKartNumarasiList = HttpContext.Session.GetString("KullaniciKartNumarasiList");
+                        var KullaniciKartNumarasiList = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KullaniciKartNumarasiList"));
 
                         if (KullaniciKartNumarasiList != null)
                         {

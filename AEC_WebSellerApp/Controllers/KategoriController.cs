@@ -38,6 +38,8 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
+                LoadKategoriDropDown();
+
                 int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
                 if (MessageBox == 1)
                 {
@@ -84,6 +86,8 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
+                LoadKategoriDropDown();
+
                 if (ModelState.IsValid)
                 {
                     string? secilenKategoriAdi = HttpContext.Session.GetString("secilenKategoriAdi");
@@ -97,9 +101,9 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (model.KategoriAdi != secilenKategoriAdi)
                     {
-                        var KategoriAdi = HttpContext.Session.GetString("KategoriAdiList");
+                        var KategoriAdi = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("KategoriAdiList"));
 
-                        if (!string.IsNullOrEmpty(KategoriAdi))
+                        if (KategoriAdi != null)
                         {
                             if (KategoriAdi.Contains(model.KategoriAdi))
                             {
