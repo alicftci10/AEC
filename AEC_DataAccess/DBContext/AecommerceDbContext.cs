@@ -65,10 +65,13 @@ public partial class AecommerceDbContext : DbContext
         {
             entity.ToTable("Cozunurluk");
 
-            entity.Property(e => e.Cozunurluk1)
-                .HasMaxLength(50)
-                .HasColumnName("Cozunurluk");
+            entity.Property(e => e.CozunurlukAdi).HasMaxLength(50);
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+            entity.HasOne(d => d.CozunurlukNavigation).WithMany(p => p.Cozunurluks)
+                .HasForeignKey(d => d.CozunurlukId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Cozunurluk_Kategori");
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Cozunurluks)
                 .HasForeignKey(d => d.CreatedBy)
@@ -83,12 +86,16 @@ public partial class AecommerceDbContext : DbContext
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.IslemciAdi).HasMaxLength(200);
             entity.Property(e => e.IslemciMimarisi).HasMaxLength(50);
-            entity.Property(e => e.IslemciSerisi).HasMaxLength(50);
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Cpus)
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_CPU_Kullanici");
+
+            entity.HasOne(d => d.IslemciSerisi).WithMany(p => p.Cpus)
+                .HasForeignKey(d => d.IslemciSerisiId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CPU_Kategori");
         });
 
         modelBuilder.Entity<Gpu>(entity =>
@@ -97,12 +104,16 @@ public partial class AecommerceDbContext : DbContext
 
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.EkranKartiAdi).HasMaxLength(200);
-            entity.Property(e => e.EkranKartiSerisi).HasMaxLength(50);
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Gpus)
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_GPU_Kullanici");
+
+            entity.HasOne(d => d.EkranKartiSerisi).WithMany(p => p.Gpus)
+                .HasForeignKey(d => d.EkranKartiSerisiId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GPU_Kategori");
         });
 
         modelBuilder.Entity<IsletimSistemi>(entity =>
@@ -118,6 +129,11 @@ public partial class AecommerceDbContext : DbContext
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_IsletimSistemi_Kullanici");
+
+            entity.HasOne(d => d.IsletimSistemiNavigation).WithMany(p => p.IsletimSistemis)
+                .HasForeignKey(d => d.IsletimSistemiId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_IsletimSistemi_Kategori");
         });
 
         modelBuilder.Entity<Kategori>(entity =>
@@ -242,11 +258,6 @@ public partial class AecommerceDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Laptop_IsletimSistemi");
 
-            entity.HasOne(d => d.Marka).WithMany(p => p.Laptops)
-                .HasForeignKey(d => d.MarkaId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Laptop_Kategori");
-
             entity.HasOne(d => d.Ram).WithMany(p => p.Laptops)
                 .HasForeignKey(d => d.Ramid)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -285,11 +296,6 @@ public partial class AecommerceDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Monitor_Kullanici");
 
-            entity.HasOne(d => d.Marka).WithMany(p => p.Monitors)
-                .HasForeignKey(d => d.MarkaId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Monitor_Kategori");
-
             entity.HasOne(d => d.YenilemeHizi).WithMany(p => p.Monitors)
                 .HasForeignKey(d => d.YenilemeHiziId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -304,11 +310,17 @@ public partial class AecommerceDbContext : DbContext
             entity.Property(e => e.Ramadi)
                 .HasMaxLength(200)
                 .HasColumnName("RAMAdi");
+            entity.Property(e => e.Ramid).HasColumnName("RAMId");
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Rams)
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RAM_Kullanici");
+
+            entity.HasOne(d => d.RamNavigation).WithMany(p => p.Rams)
+                .HasForeignKey(d => d.Ramid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_RAM_Kategori");
         });
 
         modelBuilder.Entity<Sepet>(entity =>
@@ -395,14 +407,17 @@ public partial class AecommerceDbContext : DbContext
             entity.ToTable("YenilemeHizi");
 
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-            entity.Property(e => e.YenilemeHizi1)
-                .HasMaxLength(20)
-                .HasColumnName("YenilemeHizi");
+            entity.Property(e => e.YenilemeHiziAdi).HasMaxLength(50);
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.YenilemeHizis)
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_YenilemeHizi_Kullanici");
+
+            entity.HasOne(d => d.YenilemeHiziNavigation).WithMany(p => p.YenilemeHizis)
+                .HasForeignKey(d => d.YenilemeHiziId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_YenilemeHizi_Kategori");
         });
 
         OnModelCreatingPartial(modelBuilder);

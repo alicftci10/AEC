@@ -7,8 +7,6 @@ public partial class Laptop
 {
     public int Id { get; set; }
 
-    public int MarkaId { get; set; }
-
     public string LaptopAdi { get; set; } = null!;
 
     public decimal Fiyat { get; set; }
@@ -50,8 +48,6 @@ public partial class Laptop
     public virtual Gpu Gpu { get; set; } = null!;
 
     public virtual IsletimSistemi IsletimSistemi { get; set; } = null!;
-
-    public virtual Kategori Marka { get; set; } = null!;
 
     public virtual Ram Ram { get; set; } = null!;
 

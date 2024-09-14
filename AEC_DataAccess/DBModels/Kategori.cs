@@ -15,13 +15,21 @@ public partial class Kategori
 
     public int CreatedBy { get; set; }
 
+    public virtual ICollection<Cozunurluk> Cozunurluks { get; set; } = new List<Cozunurluk>();
+
+    public virtual ICollection<Cpu> Cpus { get; set; } = new List<Cpu>();
+
     public virtual Kullanici CreatedByNavigation { get; set; } = null!;
+
+    public virtual ICollection<Gpu> Gpus { get; set; } = new List<Gpu>();
 
     public virtual ICollection<Kategori> InverseMainKategori { get; set; } = new List<Kategori>();
 
-    public virtual ICollection<Laptop> Laptops { get; set; } = new List<Laptop>();
+    public virtual ICollection<IsletimSistemi> IsletimSistemis { get; set; } = new List<IsletimSistemi>();
 
     public virtual Kategori? MainKategori { get; set; }
 
-    public virtual ICollection<Monitor> Monitors { get; set; } = new List<Monitor>();
+    public virtual ICollection<Ram> Rams { get; set; } = new List<Ram>();
+
+    public virtual ICollection<YenilemeHizi> YenilemeHizis { get; set; } = new List<YenilemeHizi>();
 }

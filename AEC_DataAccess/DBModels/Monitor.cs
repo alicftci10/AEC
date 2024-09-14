@@ -7,8 +7,6 @@ public partial class Monitor
 {
     public int Id { get; set; }
 
-    public int MarkaId { get; set; }
-
     public string MonitorAdi { get; set; } = null!;
 
     public decimal Fiyat { get; set; }
@@ -34,8 +32,6 @@ public partial class Monitor
     public virtual Cozunurluk Cozunurluk { get; set; } = null!;
 
     public virtual Kullanici CreatedByNavigation { get; set; } = null!;
-
-    public virtual Kategori Marka { get; set; } = null!;
 
     public virtual ICollection<Sepet> Sepets { get; set; } = new List<Sepet>();
 

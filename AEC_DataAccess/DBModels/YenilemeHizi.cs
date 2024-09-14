@@ -7,7 +7,9 @@ public partial class YenilemeHizi
 {
     public int Id { get; set; }
 
-    public string YenilemeHizi1 { get; set; } = null!;
+    public int YenilemeHiziId { get; set; }
+
+    public string YenilemeHiziAdi { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
 
@@ -18,4 +20,6 @@ public partial class YenilemeHizi
     public virtual ICollection<Laptop> Laptops { get; set; } = new List<Laptop>();
 
     public virtual ICollection<Monitor> Monitors { get; set; } = new List<Monitor>();
+
+    public virtual Kategori YenilemeHiziNavigation { get; set; } = null!;
 }

@@ -7,11 +7,15 @@ public partial class Cozunurluk
 {
     public int Id { get; set; }
 
-    public string Cozunurluk1 { get; set; } = null!;
+    public int CozunurlukId { get; set; }
+
+    public string CozunurlukAdi { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
 
     public int CreatedBy { get; set; }
+
+    public virtual Kategori CozunurlukNavigation { get; set; } = null!;
 
     public virtual Kullanici CreatedByNavigation { get; set; } = null!;
 

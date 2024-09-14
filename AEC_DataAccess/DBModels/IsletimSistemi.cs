@@ -7,6 +7,8 @@ public partial class IsletimSistemi
 {
     public int Id { get; set; }
 
+    public int IsletimSistemiId { get; set; }
+
     public string IsletimSistemiAdi { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
@@ -14,6 +16,8 @@ public partial class IsletimSistemi
     public int CreatedBy { get; set; }
 
     public virtual Kullanici CreatedByNavigation { get; set; } = null!;
+
+    public virtual Kategori IsletimSistemiNavigation { get; set; } = null!;
 
     public virtual ICollection<Laptop> Laptops { get; set; } = new List<Laptop>();
 }
