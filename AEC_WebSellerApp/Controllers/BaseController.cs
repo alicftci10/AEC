@@ -466,5 +466,70 @@ namespace AEC_WebSellerApp.Controllers
                 }
             }
         }
+
+        public void LoadSSDList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/SSDApi/GetAllSSD";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<SSDDataModel> modelList = new List<SSDDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<SSDDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> DepolamaAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        DepolamaAdi.Add(item.DepolamaAdi);
+                    }
+
+                    HttpContext.Session.SetString("DepolamaAdiList", JsonConvert.SerializeObject(DepolamaAdi));
+                }
+            }
+        }
+
+        public void LoadSSDDropDown()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KategoriApi/GetKategoriList";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KategoriDataModel> modelList = new List<KategoriDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<SelectListItem> list = new List<SelectListItem>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        if (item.AltKategori != null && item.OrtaKategori == "Depolama")
+                        {
+                            list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
+                        }
+                    }
+
+                    ViewBag.DepolamaList = list;
+                }
+            }
+        }
     }
 }

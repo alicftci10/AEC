@@ -9,7 +9,7 @@ namespace AEC_Entities.DataModels
 {
     public class RAMDataModel : BaseDataModel
     {
-        [Required(ErrorMessage = "Bellek Boş Girilemez!!")]
+        [Required(ErrorMessage = "Bellek Türü Boş Girilemez!!")]
         public int? BellekId { get; set; }
 
         [Required(ErrorMessage = "Bellek Adı Boş Girilemez!!")]
