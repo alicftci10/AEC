@@ -30,7 +30,7 @@ namespace AEC_Business.Managers
                 {
                     CPUDataModel model = new CPUDataModel();
                     model.Id = item.Id;
-                    model.IslemciSerisi = item.IslemciSerisi;
+                    model.IslemciSerisiId = item.IslemciSerisiId;
                     model.IslemciMimarisi = item.IslemciMimarisi;
                     model.IslemciAdi = item.IslemciAdi;
                     model.CreatedAt = item.CreatedAt;
@@ -47,7 +47,7 @@ namespace AEC_Business.Managers
         {
             Cpu item = new Cpu();
 
-            item.IslemciSerisi = model.IslemciSerisi;
+            item.IslemciSerisiId = model.IslemciSerisiId.Value;
             item.IslemciMimarisi = model.IslemciMimarisi;
             item.IslemciAdi = model.IslemciAdi;
             item.CreatedAt = DateTime.Now;

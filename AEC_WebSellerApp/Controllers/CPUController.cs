@@ -38,6 +38,8 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
+                LoadCPUDropDown();
+
                 int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
                 if (MessageBox == 1)
                 {
@@ -84,6 +86,8 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
+                LoadCPUDropDown();
+
                 if (ModelState.IsValid)
                 {
                     string? secilenIslemciAdi = HttpContext.Session.GetString("secilenIslemciAdi");

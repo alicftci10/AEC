@@ -24,10 +24,13 @@ namespace AEC_DataAccess.EFOperations
 
                             join kul in db.Kullanicis on x.CreatedBy equals kul.Id
 
+                            join k in db.Kategoris on x.IslemciSerisiId equals k.Id
+
                             select new CPUDataModel
                             {
                                 Id = x.Id,
-                                IslemciSerisi = x.IslemciSerisi,
+                                IslemciSerisiId = x.IslemciSerisiId,
+                                IslemciSerisiName = db.Kategoris.Where(i => i.Id == x.IslemciSerisiId).Select(i => i.KategoriAdi).FirstOrDefault(),
                                 IslemciMimarisi = x.IslemciMimarisi,
                                 IslemciAdi = x.IslemciAdi,
                                 CreatedAt = x.CreatedAt,
@@ -39,7 +42,7 @@ namespace AEC_DataAccess.EFOperations
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
                     searchTerm = searchTerm.ToLower();
-                    List = List.Where(i => (!string.IsNullOrEmpty(i.IslemciSerisi) && i.IslemciSerisi.ToLower().Contains(searchTerm)) ||
+                    List = List.Where(i => (!string.IsNullOrEmpty(i.IslemciSerisiName) && i.IslemciSerisiName.ToLower().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.IslemciMimarisi) && i.IslemciMimarisi.ToLower().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.IslemciAdi) && i.IslemciAdi.ToLower().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||

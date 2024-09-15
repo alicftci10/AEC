@@ -300,8 +300,13 @@
                     <div class="row g-2">
                         <div class="col mb-0">
                             <label for="frmIslemciSerisi" class="form-label fw-bold">İŞLEMCİ SERİSİ</label>
-                            <input type="text" asp-for="IslemciSerisi" id="frmIslemciSerisi" class="form-control" placeholder="İşlemci Serisi Giriniz" />
-                            <span asp-validation-for="IslemciSerisi" class="text-danger"></span>
+                            <select asp-for="IslemciSerisiId"
+                                    asp-items="@ViewBag.IslemciSerisiList"
+                                    class="form-select"
+                                    id="frmIslemciSerisi">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="IslemciSerisiId" class="text-danger"></span>
                         </div>
                         <div class="col mb-0">
                             <label for="frmIslemciMimarisi" class="form-label fw-bold">İŞLEMCİ MİMARİSİ</label>
