@@ -51,7 +51,7 @@ namespace AEC_DataAccess.EFOperations
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var kullaniciList = (from k in db.Kullanicis.AsQueryable()
+                var kullaniciList = (from k in db.Kullanicis
                                      
                                      join kul in db.Kullanicis on k.CreatedBy equals kul.Id into a
                                      from KulTable in a.DefaultIfEmpty()
@@ -73,7 +73,7 @@ namespace AEC_DataAccess.EFOperations
                                          KullaniciTuruName = k.KullaniciTuruId == 1 ? "Admin" : "Personel",
                                          CreatedAt = k.CreatedAt,
                                          CreatedBy = k.CreatedBy,
-                                         CreatedByName = db.Kullanicis.Where(i => i.Id == k.CreatedBy).Select(i => i.Ad + " " + i.Soyad).FirstOrDefault()
+                                         CreatedByName = KulTable.Ad + " " + KulTable.Soyad
 
                                      }).ToList();
 
@@ -85,7 +85,8 @@ namespace AEC_DataAccess.EFOperations
                                                              (!string.IsNullOrEmpty(i.Telefon) && i.Telefon.Contains(searchTerm)) ||
                                                              (!string.IsNullOrEmpty(i.KullaniciTuruName) && i.KullaniciTuruName.ToLower().Contains(searchTerm)) ||
                                                              (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||
-                                                             (!string.IsNullOrEmpty(Convert.ToString(i.CreatedAt)) && Convert.ToString(i.CreatedAt).Contains(searchTerm))).ToList();
+                                                             (i.CreatedAt != null && i.CreatedAt.ToString().Contains(searchTerm))
+                                                             ).ToList();
                 }
 
                 return kullaniciList;
@@ -96,7 +97,7 @@ namespace AEC_DataAccess.EFOperations
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var kullaniciList = db.Kullanicis.AsQueryable().Where(i => i.KullaniciTuruId == 3).Select(i => new KullaniciDataModel
+                var kullaniciList = db.Kullanicis.Where(i => i.KullaniciTuruId == 3).Select(i => new KullaniciDataModel
                 {
                     Id = i.Id,
                     Ad = i.Ad,
@@ -121,7 +122,8 @@ namespace AEC_DataAccess.EFOperations
                                                              (!string.IsNullOrEmpty(i.Email) && i.Email.ToLower().Contains(searchTerm)) ||
                                                              (!string.IsNullOrEmpty(i.Telefon) && i.Telefon.Contains(searchTerm)) ||
                                                              (!string.IsNullOrEmpty(i.Adres) && i.Adres.ToLower().Contains(searchTerm)) ||
-                                                             (!string.IsNullOrEmpty(Convert.ToString(i.CreatedAt)) && Convert.ToString(i.CreatedAt).Contains(searchTerm))).ToList();
+                                                             (i.CreatedAt != null && i.CreatedAt.ToString().Contains(searchTerm))
+                                                             ).ToList();
                 }
 
                 return kullaniciList;

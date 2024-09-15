@@ -19,7 +19,7 @@ namespace AEC_DataAccess.EFOperations
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var List = (from x in db.Gpus.AsQueryable()
+                var List = (from x in db.Gpus
 
                             join kul in db.Kullanicis on x.CreatedBy equals kul.Id
 
@@ -29,11 +29,11 @@ namespace AEC_DataAccess.EFOperations
                             {
                                 Id = x.Id,
                                 EkranKartiSerisiId = x.EkranKartiSerisiId,
-                                EkranKartiSerisiName = db.Kategoris.Where(i => i.Id == x.EkranKartiSerisiId).Select(i => i.KategoriAdi).FirstOrDefault(),
+                                EkranKartiSerisiName = k.KategoriAdi,
                                 EkranKartiAdi = x.EkranKartiAdi,
                                 CreatedAt = x.CreatedAt,
                                 CreatedBy = x.CreatedBy,
-                                CreatedByName = db.Kullanicis.Where(i => i.Id == x.CreatedBy).Select(i => i.Ad + " " + i.Soyad).FirstOrDefault()
+                                CreatedByName = kul.Ad + " " + kul.Soyad
 
                             }).ToList();
 
@@ -43,7 +43,8 @@ namespace AEC_DataAccess.EFOperations
                     List = List.Where(i => (!string.IsNullOrEmpty(i.EkranKartiSerisiName) && i.EkranKartiSerisiName.ToLower().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.EkranKartiAdi) && i.EkranKartiAdi.ToLower().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||
-                                           (!string.IsNullOrEmpty(Convert.ToString(i.CreatedAt)) && Convert.ToString(i.CreatedAt).Contains(searchTerm))).ToList();
+                                           (i.CreatedAt != null && i.CreatedAt.ToString().Contains(searchTerm))
+                                           ).ToList();
                 }
 
                 return List;

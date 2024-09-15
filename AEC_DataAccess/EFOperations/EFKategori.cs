@@ -21,7 +21,7 @@ namespace AEC_DataAccess.EFOperations
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var List = (from x in db.Kategoris.AsQueryable()
+                var List = (from x in db.Kategoris
 
                             join kul in db.Kullanicis on x.CreatedBy equals kul.Id
 
@@ -35,7 +35,7 @@ namespace AEC_DataAccess.EFOperations
                                 MainKategoriId = x.MainKategoriId,
                                 CreatedAt = x.CreatedAt,
                                 CreatedBy = x.CreatedBy,
-                                CreatedByName = db.Kullanicis.Where(i => i.Id == x.CreatedBy).Select(i => i.Ad + " " + i.Soyad).FirstOrDefault()
+                                CreatedByName = kul.Ad + " " + kul.Soyad
 
                             }).ToList();
 
@@ -68,7 +68,8 @@ namespace AEC_DataAccess.EFOperations
                                            (!string.IsNullOrEmpty(i.OrtaKategori) && i.OrtaKategori.ToLower().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.AltKategori) && i.AltKategori.ToLower().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||
-                                           (!string.IsNullOrEmpty(Convert.ToString(i.CreatedAt)) && Convert.ToString(i.CreatedAt).Contains(searchTerm))).ToList();
+                                           (i.CreatedAt != null && i.CreatedAt.ToString().Contains(searchTerm))
+                                           ).ToList();
                 }
 
                 return List;
