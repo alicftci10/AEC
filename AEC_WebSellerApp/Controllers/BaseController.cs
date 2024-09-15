@@ -336,5 +336,70 @@ namespace AEC_WebSellerApp.Controllers
                 }
             }
         }
+
+        public void LoadGPUList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/GPUApi/GetAllGPU";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<GPUDataModel> modelList = new List<GPUDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<GPUDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> EkranKartiAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        EkranKartiAdi.Add(item.EkranKartiAdi);
+                    }
+
+                    HttpContext.Session.SetString("EkranKartiAdiList", JsonConvert.SerializeObject(EkranKartiAdi));
+                }
+            }
+        }
+
+        public void LoadGPUDropDown()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KategoriApi/GetKategoriList";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KategoriDataModel> modelList = new List<KategoriDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<SelectListItem> list = new List<SelectListItem>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        if (item.AltKategori != null && item.OrtaKategori == "Ekran Kartı Donanımları")
+                        {
+                            list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
+                        }
+                    }
+
+                    ViewBag.EkranKartiSerisiList = list;
+                }
+            }
+        }
     }
 }

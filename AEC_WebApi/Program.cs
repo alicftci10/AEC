@@ -88,16 +88,16 @@ namespace AEC_WebApi
             builder.Services.AddTransient<IKullaniciService, KullaniciManager>();
             builder.Services.AddTransient <IKullaniciTuruService, KullaniciTuruManager>();
             builder.Services.AddTransient<IKullaniciKartService, KullaniciKartManager>();
-            builder.Services.AddTransient<ICPUService, CPUManager>();
             builder.Services.AddTransient<IKategoriService, KategoriManager>();
-            //builder.Services.AddTransient<ISpecialsService, SpecialsManager>();
+            builder.Services.AddTransient<ICPUService, CPUManager>();
+            builder.Services.AddTransient<IGPUService, GPUManager>();
 
             builder.Services.AddTransient<IEFKullaniciRepository, EFKullanici>();
             builder.Services.AddTransient<IEFKullaniciTuruRepository, EFKullaniciTuru>();
             builder.Services.AddTransient<IEFKullaniciKartRepository, EFKullaniciKart>();
-            builder.Services.AddTransient<IEFCPURepository, EFCPU>();
             builder.Services.AddTransient<IEFKategoriRepository, EFKategori>();
-            //builder.Services.AddTransient<IEFSpecialsRepository, EFSpecials>();
+            builder.Services.AddTransient<IEFCPURepository, EFCPU>();
+            builder.Services.AddTransient<IEFGPURepository, EFGPU>();
 
             builder.Services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
 
