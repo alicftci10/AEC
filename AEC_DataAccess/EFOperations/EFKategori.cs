@@ -72,6 +72,13 @@ namespace AEC_DataAccess.EFOperations
                                            ).ToList();
                 }
 
+                List = List.OrderBy(i => string.IsNullOrEmpty(i.OrtaKategori) && string.IsNullOrEmpty(i.AltKategori) ? 0 : 1)
+                   .ThenBy(i => !string.IsNullOrEmpty(i.OrtaKategori) && string.IsNullOrEmpty(i.AltKategori) ? 0 : 1)
+                   .ThenBy(i => !string.IsNullOrEmpty(i.AltKategori) ? 0 : 1)
+                   .ThenBy(i => i.UstKategori)
+                   .ThenBy(i => i.OrtaKategori)
+                   .ToList();
+
                 return List;
             }
         }

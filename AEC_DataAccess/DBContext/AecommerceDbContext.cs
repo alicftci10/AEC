@@ -224,13 +224,10 @@ public partial class AecommerceDbContext : DbContext
             entity.Property(e => e.Agirlik).HasMaxLength(100);
             entity.Property(e => e.Batarya).HasMaxLength(100);
             entity.Property(e => e.Boyut).HasMaxLength(100);
-            entity.Property(e => e.Cpuid).HasColumnName("CPUId");
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.Fiyat).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.Gpuid).HasColumnName("GPUId");
             entity.Property(e => e.Klavye).HasMaxLength(100);
             entity.Property(e => e.LaptopAdi).HasMaxLength(100);
-            entity.Property(e => e.Ssdid).HasColumnName("SSDId");
 
             entity.HasOne(d => d.Bellek).WithMany(p => p.Laptops)
                 .HasForeignKey(d => d.BellekId)
@@ -242,30 +239,30 @@ public partial class AecommerceDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Laptop_Cozunurluk");
 
-            entity.HasOne(d => d.Cpu).WithMany(p => p.Laptops)
-                .HasForeignKey(d => d.Cpuid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Laptop_CPU");
-
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Laptops)
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Laptop_Kullanici");
 
-            entity.HasOne(d => d.Gpu).WithMany(p => p.Laptops)
-                .HasForeignKey(d => d.Gpuid)
+            entity.HasOne(d => d.Depolama).WithMany(p => p.Laptops)
+                .HasForeignKey(d => d.DepolamaId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Laptop_SSD");
+
+            entity.HasOne(d => d.EkranKarti).WithMany(p => p.Laptops)
+                .HasForeignKey(d => d.EkranKartiId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Laptop_GPU");
+
+            entity.HasOne(d => d.Islemci).WithMany(p => p.Laptops)
+                .HasForeignKey(d => d.IslemciId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Laptop_CPU");
 
             entity.HasOne(d => d.IsletimSistemi).WithMany(p => p.Laptops)
                 .HasForeignKey(d => d.IsletimSistemiId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Laptop_IsletimSistemi");
-
-            entity.HasOne(d => d.Ssd).WithMany(p => p.Laptops)
-                .HasForeignKey(d => d.Ssdid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Laptop_SSD");
 
             entity.HasOne(d => d.YenilemeHizi).WithMany(p => p.Laptops)
                 .HasForeignKey(d => d.YenilemeHiziId)
@@ -344,14 +341,17 @@ public partial class AecommerceDbContext : DbContext
             entity.ToTable("SSD");
 
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-            entity.Property(e => e.Ssdadi)
-                .HasMaxLength(200)
-                .HasColumnName("SSDAdi");
+            entity.Property(e => e.DepolamaAdi).HasMaxLength(200);
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Ssds)
                 .HasForeignKey(d => d.CreatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SSD_Kullanici");
+
+            entity.HasOne(d => d.Depolama).WithMany(p => p.Ssds)
+                .HasForeignKey(d => d.DepolamaId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SSD_Kategori");
         });
 
         modelBuilder.Entity<UrunResmi>(entity =>

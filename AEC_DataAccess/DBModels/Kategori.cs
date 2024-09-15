@@ -31,5 +31,7 @@ public partial class Kategori
 
     public virtual ICollection<Ram> Rams { get; set; } = new List<Ram>();
 
+    public virtual ICollection<Ssd> Ssds { get; set; } = new List<Ssd>();
+
     public virtual ICollection<YenilemeHizi> YenilemeHizis { get; set; } = new List<YenilemeHizi>();
 }

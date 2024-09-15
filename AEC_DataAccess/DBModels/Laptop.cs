@@ -13,13 +13,13 @@ public partial class Laptop
 
     public int IsletimSistemiId { get; set; }
 
-    public int Cpuid { get; set; }
+    public int IslemciId { get; set; }
 
-    public int Gpuid { get; set; }
+    public int EkranKartiId { get; set; }
 
     public int BellekId { get; set; }
 
-    public int Ssdid { get; set; }
+    public int DepolamaId { get; set; }
 
     public int CozunurlukId { get; set; }
 
@@ -43,17 +43,17 @@ public partial class Laptop
 
     public virtual Cozunurluk Cozunurluk { get; set; } = null!;
 
-    public virtual Cpu Cpu { get; set; } = null!;
-
     public virtual Kullanici CreatedByNavigation { get; set; } = null!;
 
-    public virtual Gpu Gpu { get; set; } = null!;
+    public virtual Ssd Depolama { get; set; } = null!;
+
+    public virtual Gpu EkranKarti { get; set; } = null!;
+
+    public virtual Cpu Islemci { get; set; } = null!;
 
     public virtual IsletimSistemi IsletimSistemi { get; set; } = null!;
 
     public virtual ICollection<Sepet> Sepets { get; set; } = new List<Sepet>();
-
-    public virtual Ssd Ssd { get; set; } = null!;
 
     public virtual ICollection<UrunResmi> UrunResmis { get; set; } = new List<UrunResmi>();
 
