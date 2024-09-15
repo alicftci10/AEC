@@ -17,7 +17,7 @@ public partial class Laptop
 
     public int Gpuid { get; set; }
 
-    public int Ramid { get; set; }
+    public int BellekId { get; set; }
 
     public int Ssdid { get; set; }
 
@@ -39,6 +39,8 @@ public partial class Laptop
 
     public int CreatedBy { get; set; }
 
+    public virtual Ram Bellek { get; set; } = null!;
+
     public virtual Cozunurluk Cozunurluk { get; set; } = null!;
 
     public virtual Cpu Cpu { get; set; } = null!;
@@ -48,8 +50,6 @@ public partial class Laptop
     public virtual Gpu Gpu { get; set; } = null!;
 
     public virtual IsletimSistemi IsletimSistemi { get; set; } = null!;
-
-    public virtual Ram Ram { get; set; } = null!;
 
     public virtual ICollection<Sepet> Sepets { get; set; } = new List<Sepet>();
 

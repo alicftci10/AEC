@@ -1,4 +1,4 @@
-﻿@model GPUDataModel
+﻿@model RAMDataModel
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
@@ -76,12 +76,12 @@
                         <div>CPU</div>
                     </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="/GPU/GPUSayfasi" class="menu-link">
                         <div>GPU</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="/RAM/RAMSayfasi" class="menu-link">
                         <div>RAM</div>
                     </a>
@@ -247,7 +247,7 @@
                 <div class="card-header" style="background-color:#329D00;">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
-                            Ekran Kartı Listesi
+                            Bellek Listesi
                         </h4>
                         @if (ViewData["KullaniciTuru"] == "Admin")
                         {
@@ -286,36 +286,36 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel4">Ekran Kartı Ekle/Düzenle</h5>
+                <h5 class="modal-title" id="exampleModalLabel4">Bellek Ekle/Düzenle</h5>
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form asp-action="GPUSayfasi" asp-controller="GPU" method="post">
+            <form asp-action="RAMSayfasi" asp-controller="RAM" method="post">
 
                 <input type="hidden" asp-for="Id" id="pId" />
 
                 <div class="modal-body">
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmEkranKartiSerisi" class="form-label fw-bold">EKRAN KARTI SERİSİ</label>
-                            <select asp-for="EkranKartiSerisiId"
-                                    asp-items="@ViewBag.EkranKartiSerisiList"
+                            <label for="frmBellekId" class="form-label fw-bold">BELLEK TÜRÜ</label>
+                            <select asp-for="BellekId"
+                                    asp-items="@ViewBag.BellekList"
                                     class="form-select"
-                                    id="frmEkranKartiSerisi">
+                                    id="frmBellekId">
                                 <option selected value="">Seçiniz </option>
                             </select>
-                            <span asp-validation-for="EkranKartiSerisiId" class="text-danger"></span>
+                            <span asp-validation-for="BellekId" class="text-danger"></span>
                         </div>
                         <div class="col mb-0"></div>
                     </div>
                     <br />
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmEkranKartiAdi" class="form-label fw-bold">EKRAN KARTI ADI</label>
-                            <input type="text" asp-for="EkranKartiAdi" id="frmEkranKartiAdi" class="form-control" placeholder="Ekran Kartı Adı Giriniz" />
-                            <span asp-validation-for="EkranKartiAdi" class="text-danger"></span>
+                            <label for="frmBellekAdi" class="form-label fw-bold">BELLEK ADI</label>
+                            <input type="text" asp-for="BellekAdi" id="frmBellekAdi" class="form-control" placeholder="Bellek Adı Giriniz" />
+                            <span asp-validation-for="BellekAdi" class="text-danger"></span>
                         </div>
                     </div>
                     <br />
@@ -348,7 +348,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-3" style="color:black">
-                        Ekran Kartını Silmek İstediğinize Emin Misiniz ?
+                        Belleği Silmek İstediğinize Emin Misiniz ?
                     </div>
                 </div>
             </div>
@@ -369,8 +369,8 @@
         function addModal() {
 
             $('#pId').val('0');
-            $('#frmEkranKartiSerisi').val('');
-            $('#frmEkranKartiAdi').val('');
+            $('#frmBellekId').val('');
+            $('#frmBellekAdi').val('');
 
         }
 
@@ -379,7 +379,7 @@
             $('#searchBox').on('input', function () {
                 var searchTerm = $(this).val();
                 $.ajax({
-                    url: '/GPU/GPUListesi',
+                    url: '/RAM/RAMListesi',
                     type: 'GET',
                     data: { searchTerm: searchTerm },
                     success: function (data) {
@@ -393,7 +393,7 @@
         });
 
         $.ajax({
-            url: '/GPU/GPUListesi',
+            url: '/RAM/RAMListesi',
             type: 'GET',
             success: function (result) {
                 $('#list').html(result);
@@ -419,10 +419,10 @@
 
             var messageBox = '@TempData["MessageBox"]';
             if (messageBox == 1) {
-                MessageBox("success", "Ekran Kartı Kayıt Edildi");
+                MessageBox("success", "Bellek Kayıt Edildi");
             }
             else if (messageBox == 2) {
-                MessageBox("success", "Ekran Kartı Silindi");
+                MessageBox("success", "Bellek Silindi");
             }
 
         });
@@ -434,7 +434,7 @@
         function deleteModal(id) {
 
             const confirmDeleteLink = document.getElementById('confirmDeleteLink');
-            confirmDeleteLink.href = '/GPU/GPUSil?pId=' + id;
+            confirmDeleteLink.href = '/RAM/RAMSil?pId=' + id;
 
         }
 

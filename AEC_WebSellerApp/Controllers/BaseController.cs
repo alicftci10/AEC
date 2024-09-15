@@ -401,5 +401,70 @@ namespace AEC_WebSellerApp.Controllers
                 }
             }
         }
+
+        public void LoadRAMList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/RAMApi/GetAllRAM";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<RAMDataModel> modelList = new List<RAMDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<RAMDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> BellekAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        BellekAdi.Add(item.BellekAdi);
+                    }
+
+                    HttpContext.Session.SetString("BellekAdiList", JsonConvert.SerializeObject(BellekAdi));
+                }
+            }
+        }
+
+        public void LoadRAMDropDown()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KategoriApi/GetKategoriList";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KategoriDataModel> modelList = new List<KategoriDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<SelectListItem> list = new List<SelectListItem>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        if (item.AltKategori != null && item.OrtaKategori == "Bellek")
+                        {
+                            list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
+                        }
+                    }
+
+                    ViewBag.BellekList = list;
+                }
+            }
+        }
     }
 }
