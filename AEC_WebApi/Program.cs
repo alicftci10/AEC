@@ -93,6 +93,7 @@ namespace AEC_WebApi
             builder.Services.AddTransient<IGPUService, GPUManager>();
             builder.Services.AddTransient<IRAMService, RAMManager>();
             builder.Services.AddTransient<ISSDService, SSDManager>();
+            builder.Services.AddTransient<IYenilemeHiziService, YenilemeHiziManager>();
 
             builder.Services.AddTransient<IEFKullaniciRepository, EFKullanici>();
             builder.Services.AddTransient<IEFKullaniciTuruRepository, EFKullaniciTuru>();
@@ -102,6 +103,7 @@ namespace AEC_WebApi
             builder.Services.AddTransient<IEFGPURepository, EFGPU>();
             builder.Services.AddTransient<IEFRAMRepository, EFRAM>();
             builder.Services.AddTransient<IEFSSDRepository, EFSSD>();
+            builder.Services.AddTransient<IEFYenilemeHiziRepository, EFYenilemeHizi>();
 
             builder.Services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
 

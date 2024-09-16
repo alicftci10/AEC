@@ -1,17 +1,4 @@
-﻿@model KullaniciKartDataModel
-
-<style>
-    input[type=number]::-webkit-outer-spin-button,
-    input[type=number]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    input[type=number] {
-        -moz-appearance: textfield;
-    }
-</style>
-
+﻿@model YenilemeHiziDataModel
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
@@ -106,13 +93,13 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-gear-fill" style="-webkit-text-stroke: 0.5px;"></i>
                 <div class="fw-bold">Donanım Özellikleri</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="/YenilemeHizi/YenilemeHiziSayfasi" class="menu-link">
                         <div>Yenileme Hızı</div>
                     </a>
@@ -158,7 +145,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item active">
+        <li class="menu-item">
             <a href="/Kullanici/KullaniciDetay?pId=@ViewData["KullaniciId"]" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-person-vcard-fill" style="position: relative; top: 1px;"></i>
                 <div class="fw-bold">Profil</div>
@@ -195,17 +182,14 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center col">
-                @* <div class="col nav-item d-flex align-items-center">
-                <i class="bx bx-search fs-4 lh-0"></i>
-                <input type="text"
-                id="searchBox"
-                class="form-control border-0 shadow-none text-white"
-                placeholder="Ara..."
-                aria-label="Ara..." style="background-color:black!important;">
-                </div> *@
-                <div id="havadurumu"></div>
-                <div class="col-md-2"></div>
-                <span id="datetimenow" style="font-size:20px;color:white;"></span>
+                <div class="col nav-item d-flex align-items-center">
+                    <i class="bx bx-search fs-4 lh-0"></i>
+                    <input type="text"
+                           id="searchBox"
+                           class="form-control border-0 shadow-none text-white"
+                           placeholder="Ara..."
+                           aria-label="Ara..." style="background-color:black!important;">
+                </div>
             </div>
             <!-- /Search -->
 
@@ -259,88 +243,22 @@
     <div class="content-wrapper">
 
         <div class="container-xxl flex-grow-1 container-p-y">
-
-            <div class="card mb-4 bg-dark">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="fw-bold" style="color:#329d00">KART EKLE/DÜZENLE</h4>
+            <div class="card">
+                <div class="card-header" style="background-color:#329D00;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
+                            Yenileme Hızı Listesi
+                        </h4>
+                        @if (ViewData["KullaniciTuru"] == "Admin")
+                        {
+                            <button type="button" class="btn rounded-pill btn-dark" data-bs-toggle="modal" data-bs-target="#exLargeModal" onclick="addModal()">
+                                <i class="bi bi-plus-circle"></i> EKLE
+                            </button>
+                        }
+                    </div>
                 </div>
-                <hr class="my-0" />
-                <div class="card-body">
-                    <form asp-action="KullaniciKartSayfasi" asp-controller="KullaniciKart" method="post" id="frmKullaniciKart">
-
-                        <input type="hidden" asp-for="Id" id="pId" />
-                        <input type="hidden" asp-for="KullaniciId" id="kullaniciId" />
-
-                        <div class="row g-2">
-                            <div class="col mb-0">
-                                <label for="frmKartAdi" class="form-label fw-bold">KART ADI</label>
-                                <input type="text" asp-for="KartAdi" id="frmKartAdi" class="form-control" placeholder="Kart Adı Giriniz" />
-                                <span asp-validation-for="KartAdi" class="text-danger"></span>
-                            </div>
-                            <div class="col mb-0"></div>
-                        </div>
-                        <br />
-                        <div class="row g-2">
-                            <div class="col mb-0">
-                                <label for="frmKartNumarasi" class="form-label fw-bold">KART NUMARASI</label>
-                                <input type="number" asp-for="KartNumarasi" id="frmKartNumarasi" class="form-control" placeholder="Kart Numarası Giriniz" />
-                                <span asp-validation-for="KartNumarasi" class="text-danger"></span>
-                            </div>
-                            <div class="col mb-0">
-                                <label for="frmKartAdSoyad" class="form-label fw-bold">KART AD SOYAD</label>
-                                <input type="text" asp-for="KartAdSoyad" id="frmKartAdSoyad" class="form-control" placeholder="Kart Üzerindeki Adı Soyadı Giriniz" />
-                                <span asp-validation-for="KartAdSoyad" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row g-2">
-                            <div class="col mb-0">
-                                <label for="frmKartSktay" class="form-label fw-bold">KART AY/YIL</label>
-                                <div class="d-flex">
-                                    <div class="col-md-2" style="height:40px;">
-                                        <select asp-for="KartSktay"
-                                                class="form-select"
-                                                id="frmKartSktay">
-                                            <option selected value="">Seçiniz </option>
-                                            <option selected value="1">01 </option>
-                                            <option selected value="2">02 </option>
-                                            <option selected value="3">03 </option>
-                                            <option selected value="4">04 </option>
-                                            <option selected value="5">05 </option>
-                                            <option selected value="6">06 </option>
-                                            <option selected value="7">07 </option>
-                                            <option selected value="8">08 </option>
-                                            <option selected value="9">09 </option>
-                                            <option selected value="10">10 </option>
-                                            <option selected value="11">11 </option>
-                                            <option selected value="12">12 </option>
-                                        </select>
-                                    </div>
-                                    <i class="bi bi-slash-lg" style="-webkit-text-stroke: 0.5px; position: relative; top: 29px;transform: scale(3); bottom:10px;margin-left:20px;"></i>
-                                    <div class="col-md-2" style="height:40px; margin-left:20px;">
-                                        <input type="number" asp-for="KartSktyil" id="frmKartSktyil" class="form-control" placeholder="Yılı Giriniz" />
-                                    </div>
-                                </div>
-                                <span asp-validation-for="KartSktay" class="text-danger"></span>
-                            </div>
-                            <div class="col mb-0">
-                                <label for="frmKartCvvkodu" class="form-label fw-bold">KART CVV</label>
-                                <input type="number" asp-for="KartCvvkodu" id="frmKartCvvkodu" class="form-control" placeholder="CVV Giriniz" />
-                                <span asp-validation-for="KartCvvkodu" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="mt-2">
-                            <a href="/Kullanici/KullaniciDetay?pId=@Model.KullaniciId" type="button" class="btn btn-danger me-2">
-                                Kapat
-                            </a>
-                            <button type="submit" class="btn btn-success">Kaydet</button>
-                        </div>
-                    </form>
-                </div>
-                <!-- /Account -->
+                <div id="list"></div>
             </div>
-
         </div>
 
         <footer style="background-color:black!important;">
@@ -356,7 +274,6 @@
                 <div>
                     <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
                     <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
-
                 </div>
             </div>
         </footer>
@@ -365,62 +282,161 @@
     </div>
 </div>
 
+<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Yenileme Hızı Ekle/Düzenle</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <form asp-action="YenilemeHiziSayfasi" asp-controller="YenilemeHizi" method="post">
+
+                <input type="hidden" asp-for="Id" id="pId" />
+
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmYenilemeHiziId" class="form-label fw-bold">YENİLEME HIZI DEĞERİ</label>
+                            <select asp-for="YenilemeHiziId"
+                                    asp-items="@ViewBag.YenilemeHiziList"
+                                    class="form-select"
+                                    id="frmYenilemeHiziId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="YenilemeHiziId" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0"></div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmYenilemeHiziAdi" class="form-label fw-bold">YENİLEME HIZI ADI</label>
+                            <input type="text" asp-for="YenilemeHiziAdi" id="frmYenilemeHiziAdi" class="form-control" placeholder="Yenileme Hızı Adı Giriniz" />
+                            <span asp-validation-for="YenilemeHiziAdi" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Kapat
+                    </button>
+                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="backDropModalTitle">UYARI!!</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-3" style="color:black">
+                        Yenileme Hızını Silmek İstediğinize Emin Misiniz ?
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Hayır
+                </button>
+                <a href="#" id="confirmDeleteLink" class="btn btn-dark">Evet</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 @section AECScript {
 
     <script type="text/javascript">
 
-        document.addEventListener('DOMContentLoaded', function () {
+        function addModal() {
 
-            var modelId = '@Model.Id';
-            if (modelId == 0) {
+            $('#pId').val('0');
+            $('#frmYenilemeHiziId').val('');
+            $('#frmYenilemeHiziAdi').val('');
 
-                $('#frmKartSktay').val('');
-                $('#frmKartSktyil').val('');
-                $('#frmKartCvvkodu').val('');
+        }
+
+        $(document).ready(function () {
+
+            $('#searchBox').on('input', function () {
+                var searchTerm = $(this).val();
+                $.ajax({
+                    url: '/YenilemeHizi/YenilemeHiziListesi',
+                    type: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        $('#list').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error: " + error);
+                    }
+                });
+            });
+        });
+
+        $.ajax({
+            url: '/YenilemeHizi/YenilemeHiziListesi',
+            type: 'GET',
+            success: function (result) {
+                $('#list').html(result);
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
             }
         });
 
-        //Anlık hava durumu ve zaman bilgisi
+        document.addEventListener('DOMContentLoaded', function () {
 
-        function updateDateTime() {
-            var now = new Date();
+            var isSuccess = '@Model.IsSuccess';
+            if (isSuccess == 'True') {
+                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
+                modal.show();
+            }
 
-            var day = String(now.getDate()).padStart(2, '0');
-            var month = String(now.getMonth() + 1).padStart(2, '0');
-            var year = now.getFullYear();
+            var modelid = '@Model.Id';
+            if (modelid > 0) {
+                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
+                modal.show();
+            }
 
-            var hours = String(now.getHours()).padStart(2, '0');
-            var minutes = String(now.getMinutes()).padStart(2, '0');
-            var seconds = String(now.getSeconds()).padStart(2, '0');
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Yenileme Hızı Kayıt Edildi");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Yenileme Hızı Silindi");
+            }
 
-            var formattedDateTime = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+        });
 
-            document.getElementById('datetimenow').textContent = formattedDateTime;
+        $('#exLargeModal').on('hidden.bs.modal', function () {
+            $('.modal-backdrop').remove();
+        });
+
+        function deleteModal(id) {
+
+            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
+            confirmDeleteLink.href = '/YenilemeHizi/YenilemeHiziSil?pId=' + id;
+
         }
-
-        updateDateTime();
-
-        setInterval(updateDateTime, 1000);
-
-        const apiKey = 'ec4b19585fd7f1c5c0ac5a26a341737b';
-        const city = 'Ankara';
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=tr`;
-
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const temperature = data.main.temp;
-                const weatherDescription = data.weather[0].description;
-
-                document.getElementById('havadurumu').innerHTML = `
-                                                                                                                                                                                                                      <div style="font-size: 16px;">
-                                                                                                                                                                                                                          <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                                                                                                                                                                                                                          <span style="color: white;">${temperature}°C</span>,
-                                                                                                                                                                                                                          <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                                                                                                                                                                                                                      </div>
-                                                                                                                                                                                                                    `;
-            })
-            .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 
     </script>
 

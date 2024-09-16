@@ -531,5 +531,70 @@ namespace AEC_WebSellerApp.Controllers
                 }
             }
         }
+
+        public void LoadYenilemeHiziList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/YenilemeHiziApi/GetAllYenilemeHizi";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<YenilemeHiziDataModel> modelList = new List<YenilemeHiziDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<YenilemeHiziDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> YenilemeHiziAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        YenilemeHiziAdi.Add(item.YenilemeHiziAdi);
+                    }
+
+                    HttpContext.Session.SetString("YenilemeHiziAdiList", JsonConvert.SerializeObject(YenilemeHiziAdi));
+                }
+            }
+        }
+
+        public void LoadYenilemeHiziDropDown()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KategoriApi/GetKategoriList";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KategoriDataModel> modelList = new List<KategoriDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<SelectListItem> list = new List<SelectListItem>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        if (item.AltKategori != null && item.OrtaKategori == "Yenileme Hızı")
+                        {
+                            list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
+                        }
+                    }
+
+                    ViewBag.YenilemeHiziList = list;
+                }
+            }
+        }
     }
 }
