@@ -1,4 +1,4 @@
-﻿@model RAMDataModel
+﻿@model IsletimSistemiDataModel
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
@@ -65,7 +65,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item active open">
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-motherboard" style="-webkit-text-stroke: 0.5px;"></i>
                 <div class="fw-bold">Donanım</div>
@@ -81,7 +81,7 @@
                         <div>GPU</div>
                     </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="/RAM/RAMSayfasi" class="menu-link">
                         <div>RAM</div>
                     </a>
@@ -111,7 +111,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active">
             <a href="/IsletimSistemi/IsletimSistemiSayfasi" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-windows"></i>
                 <div class="fw-bold">İşletim Sistemi</div>
@@ -247,7 +247,7 @@
                 <div class="card-header" style="background-color:#329D00;">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
-                            Bellek Listesi
+                            İşletim Sistemi Listesi
                         </h4>
                         @if (ViewData["KullaniciTuru"] == "Admin")
                         {
@@ -286,36 +286,36 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel4">Bellek Ekle/Düzenle</h5>
+                <h5 class="modal-title" id="exampleModalLabel4">İşletim Sistemi Ekle/Düzenle</h5>
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form asp-action="RAMSayfasi" asp-controller="RAM" method="post">
+            <form asp-action="IsletimSistemiSayfasi" asp-controller="IsletimSistemi" method="post">
 
                 <input type="hidden" asp-for="Id" id="pId" />
 
                 <div class="modal-body">
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmBellekId" class="form-label fw-bold">BELLEK TÜRÜ</label>
-                            <select asp-for="BellekId"
-                                    asp-items="@ViewBag.BellekList"
+                            <label for="frmIsletimSistemiId" class="form-label fw-bold">İŞLETİM SİSTEMİ</label>
+                            <select asp-for="IsletimSistemiId"
+                                    asp-items="@ViewBag.IsletimSistemiList"
                                     class="form-select"
-                                    id="frmBellekId">
+                                    id="frmIsletimSistemiId">
                                 <option selected value="">Seçiniz </option>
                             </select>
-                            <span asp-validation-for="BellekId" class="text-danger"></span>
+                            <span asp-validation-for="IsletimSistemiId" class="text-danger"></span>
                         </div>
                         <div class="col mb-0"></div>
                     </div>
                     <br />
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmBellekAdi" class="form-label fw-bold">BELLEK ADI</label>
-                            <input type="text" asp-for="BellekAdi" id="frmBellekAdi" class="form-control" placeholder="Bellek Adı Giriniz" />
-                            <span asp-validation-for="BellekAdi" class="text-danger"></span>
+                            <label for="frmIsletimSistemiAdi" class="form-label fw-bold">İŞLETİM SİSTEMİ SÜRÜMÜ</label>
+                            <input type="text" asp-for="IsletimSistemiAdi" id="frmIsletimSistemiAdi" class="form-control" placeholder="İşletim Sistemi Sürümü Giriniz" />
+                            <span asp-validation-for="IsletimSistemiAdi" class="text-danger"></span>
                         </div>
                     </div>
                     <br />
@@ -348,7 +348,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-3" style="color:black">
-                        Belleği Silmek İstediğinize Emin Misiniz ?
+                        İşletim Sistemini Silmek İstediğinize Emin Misiniz ?
                     </div>
                 </div>
             </div>
@@ -369,8 +369,8 @@
         function addModal() {
 
             $('#pId').val('0');
-            $('#frmBellekId').val('');
-            $('#frmBellekAdi').val('');
+            $('#frmIsletimSistemiId').val('');
+            $('#frmIsletimSistemiAdi').val('');
 
         }
 
@@ -379,7 +379,7 @@
             $('#searchBox').on('input', function () {
                 var searchTerm = $(this).val();
                 $.ajax({
-                    url: '/RAM/RAMListesi',
+                    url: '/IsletimSistemi/IsletimSistemiListesi',
                     type: 'GET',
                     data: { searchTerm: searchTerm },
                     success: function (data) {
@@ -393,7 +393,7 @@
         });
 
         $.ajax({
-            url: '/RAM/RAMListesi',
+            url: '/IsletimSistemi/IsletimSistemiListesi',
             type: 'GET',
             success: function (result) {
                 $('#list').html(result);
@@ -419,10 +419,10 @@
 
             var messageBox = '@TempData["MessageBox"]';
             if (messageBox == 1) {
-                MessageBox("success", "Bellek Kayıt Edildi");
+                MessageBox("success", "İşletim Sistemi Kayıt Edildi");
             }
             else if (messageBox == 2) {
-                MessageBox("success", "Bellek Silindi");
+                MessageBox("success", "İşletim Sistemi Silindi");
             }
 
         });
@@ -434,7 +434,7 @@
         function deleteModal(id) {
 
             const confirmDeleteLink = document.getElementById('confirmDeleteLink');
-            confirmDeleteLink.href = '/RAM/RAMSil?pId=' + id;
+            confirmDeleteLink.href = '/IsletimSistemi/IsletimSistemiSil?pId=' + id;
 
         }
 
