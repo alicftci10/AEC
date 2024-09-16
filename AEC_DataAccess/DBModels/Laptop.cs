@@ -33,8 +33,6 @@ public partial class Laptop
 
     public string? Batarya { get; set; }
 
-    public int UrunKodu { get; set; }
-
     public DateTime CreatedAt { get; set; }
 
     public int CreatedBy { get; set; }

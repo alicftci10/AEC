@@ -23,8 +23,6 @@ public partial class Monitor
 
     public string? Agirlik { get; set; }
 
-    public int UrunKodu { get; set; }
-
     public DateTime CreatedAt { get; set; }
 
     public int CreatedBy { get; set; }
