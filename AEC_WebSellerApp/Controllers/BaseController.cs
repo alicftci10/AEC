@@ -596,5 +596,70 @@ namespace AEC_WebSellerApp.Controllers
                 }
             }
         }
+
+        public void LoadCozunurlukList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/CozunurlukApi/GetAllCozunurluk";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<CozunurlukDataModel> modelList = new List<CozunurlukDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<CozunurlukDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> CozunurlukAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        CozunurlukAdi.Add(item.CozunurlukAdi);
+                    }
+
+                    HttpContext.Session.SetString("CozunurlukAdiList", JsonConvert.SerializeObject(CozunurlukAdi));
+                }
+            }
+        }
+
+        public void LoadCozunurlukDropDown()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KategoriApi/GetKategoriList";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KategoriDataModel> modelList = new List<KategoriDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<SelectListItem> list = new List<SelectListItem>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        if (item.AltKategori != null && item.OrtaKategori == "Çözünürlük")
+                        {
+                            list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
+                        }
+                    }
+
+                    ViewBag.CozunurlukList = list;
+                }
+            }
+        }
     }
 }
