@@ -96,6 +96,7 @@ namespace AEC_WebApi
             builder.Services.AddTransient<IYenilemeHiziService, YenilemeHiziManager>();
             builder.Services.AddTransient<ICozunurlukService, CozunurlukManager>();
             builder.Services.AddTransient<IIsletimSistemiService, IsletimSistemiManager>();
+            builder.Services.AddTransient<ILaptopService, LaptopManager>();
 
             builder.Services.AddTransient<IEFKullaniciRepository, EFKullanici>();
             builder.Services.AddTransient<IEFKullaniciTuruRepository, EFKullaniciTuru>();
@@ -108,6 +109,7 @@ namespace AEC_WebApi
             builder.Services.AddTransient<IEFYenilemeHiziRepository, EFYenilemeHizi>();
             builder.Services.AddTransient<IEFCozunurlukRepository, EFCozunurluk>();
             builder.Services.AddTransient<IEFIsletimSistemiRepository, EFIsletimSistemi>();
+            builder.Services.AddTransient<IEFLaptopRepository, EFLaptop>();
 
             builder.Services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
 
