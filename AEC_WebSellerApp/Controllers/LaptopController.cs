@@ -38,7 +38,13 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                LoadLaptopDropDown();
+                LoadIsletimSistemiList();
+                LoadCPUList();
+                LoadGPUList();
+                LoadRAMList();
+                LoadSSDList();
+                LoadCozunurlukList();
+                LoadYenilemeHiziList();
 
                 int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
                 if (MessageBox == 1)
@@ -73,7 +79,7 @@ namespace AEC_WebSellerApp.Controllers
                     {
                         model = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
 
-                        HttpContext.Session.SetString("secilenEkranKartiAdi", model.EkranKartiAdi);
+                        HttpContext.Session.SetString("secilenLaptopAdi", model.LaptopAdi);
                     }
                 }
 
@@ -86,28 +92,34 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                LoadLaptopDropDown();
+                LoadIsletimSistemiList();
+                LoadCPUList();
+                LoadGPUList();
+                LoadRAMList();
+                LoadSSDList();
+                LoadCozunurlukList();
+                LoadYenilemeHiziList();
 
                 if (ModelState.IsValid)
                 {
-                    string? secilenEkranKartiAdi = HttpContext.Session.GetString("secilenEkranKartiAdi");
+                    string? secilenLaptopAdi = HttpContext.Session.GetString("secilenLaptopAdi");
 
                     if (model.Id == 0)
                     {
-                        secilenEkranKartiAdi = null;
+                        secilenLaptopAdi = null;
                     }
 
                     LoadLaptopList();
 
-                    if (model.EkranKartiAdi != secilenEkranKartiAdi)
+                    if (model.LaptopAdi != secilenLaptopAdi)
                     {
-                        var EkranKartiAdi = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("EkranKartiAdiList"));
+                        var LaptopAdi = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("LaptopAdiList"));
 
-                        if (EkranKartiAdi != null)
+                        if (LaptopAdi != null)
                         {
-                            if (EkranKartiAdi.Contains(model.EkranKartiAdi))
+                            if (LaptopAdi.Contains(model.LaptopAdi))
                             {
-                                ModelState.AddModelError("EkranKartiAdi", "Bu Ekran Kartı Adı daha önce kullanılmış. Lütfen farklı Ekran Kartı Adı deneyin!");
+                                ModelState.AddModelError("LaptopAdi", "Bu Laptop Adı daha önce kullanılmış. Lütfen farklı Laptop Adı deneyin!");
                                 model.IsSuccess = true;
                                 return View(model);
                             }

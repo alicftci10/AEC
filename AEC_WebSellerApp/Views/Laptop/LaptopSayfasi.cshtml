@@ -1,4 +1,4 @@
-﻿@model KullaniciDataModel
+﻿@model LaptopDataModel
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
@@ -47,13 +47,13 @@
         <li class="menu-header small">
             <span class="menu-header-text">ÜRÜNLER</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-cart3" style="position: relative; top: -2px; -webkit-text-stroke: 0.5px;"></i>
                 <div class="fw-bold">Ürün Yönetimi</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="/Laptop/LaptopSayfasi" class="menu-link">
                         <div>Laptop</div>
                     </a>
@@ -127,7 +127,7 @@
         <li class="menu-header small">
             <span class="menu-header-text">KULLANICILAR</span>
         </li>
-        <li class="menu-item active open">
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-person-circle"></i>
                 <div class="fw-bold">Kullanıcılar</div>
@@ -138,7 +138,7 @@
                         <div>Müşteriler</div>
                     </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="/Kullanici/PersonelSayfasi" class="menu-link">
                         <div>Personeller</div>
                     </a>
@@ -247,7 +247,7 @@
                 <div class="card-header" style="background-color:#329D00;">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
-                            Personel Listesi
+                            Laptop Listesi
                         </h4>
                         @if (ViewData["KullaniciTuru"] == "Admin")
                         {
@@ -286,89 +286,135 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel4">Kullanıcı Ekle/Düzenle</h5>
+                <h5 class="modal-title" id="exampleModalLabel4">Laptop Ekle/Düzenle</h5>
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form asp-action="PersonelSayfasi" asp-controller="Kullanici" method="post">
+            <form asp-action="LaptopSayfasi" asp-controller="Laptop" method="post">
 
                 <input type="hidden" asp-for="Id" id="pId" />
-                <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
 
                 <div class="modal-body">
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmAd" class="form-label fw-bold">AD</label>
-                            <input type="text" asp-for="Ad" id="frmAd" class="form-control" placeholder="Ad Giriniz" />
-                            <span asp-validation-for="Ad" class="text-danger"></span>
+                            <label for="frmLaptopAdi" class="form-label fw-bold">LAPTOP ADI</label>
+                            <input type="text" asp-for="LaptopAdi" id="frmLaptopAdi" class="form-control" placeholder="Laptop Adı Giriniz" />
+                            <span asp-validation-for="LaptopAdi" class="text-danger"></span>
                         </div>
                         <div class="col mb-0">
-                            <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
-                            <input type="text" asp-for="Soyad" id="frmSoyad" class="form-control" placeholder="Soyad Giriniz" />
-                            <span asp-validation-for="Soyad" class="text-danger"></span>
+                            <label for="frmFiyat" class="form-label fw-bold">FİYATI</label>
+                            <input type="text" asp-for="Fiyat" id="frmFiyat" class="form-control" placeholder="Fiyat Giriniz" />
+                            <span asp-validation-for="Fiyat" class="text-danger"></span>
                         </div>
                     </div>
                     <br />
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
-                            <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="form-control" placeholder="Kullanıcı Adı Giriniz" />
-                            <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                            <label for="frmIsletimSistemiId" class="form-label fw-bold">İŞLETİM SİSTEMİ</label>
+                            <select asp-for="IsletimSistemiId"
+                                    asp-items="@ViewBag.IsletimSistemiAdiList"
+                                    class="form-select"
+                                    id="frmIsletimSistemiId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="IsletimSistemiId" class="text-danger"></span>
                         </div>
-                        <div class="col mb-0 form-password-toggle">
-                            <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
-                            <div class="input-group input-group-merge">
-                                <input type="text" asp-for="Sifre"
-                                       id="frmSifre"
-                                       class="form-control"
-                                       placeholder="Şifre Giriniz"
-                                       aria-describedby="password" />
-                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                            <span asp-validation-for="Sifre" class="text-danger"></span>
+                        <div class="col mb-0">
+                            <label for="frmIslemciId" class="form-label fw-bold">İŞLEMCİ</label>
+                            <select asp-for="IslemciId"
+                                    asp-items="@ViewBag.IslemciAdiList"
+                                    class="form-select"
+                                    id="frmIslemciId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="IslemciId" class="text-danger"></span>
                         </div>
                     </div>
                     <br />
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
-                            <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Adresi Giriniz" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <label for="frmEkranKartiId" class="form-label fw-bold">EKRAN KARTI</label>
+                            <select asp-for="EkranKartiId"
+                                    asp-items="@ViewBag.EkranKartiAdiList"
+                                    class="form-select"
+                                    id="frmEkranKartiId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="EkranKartiId" class="text-danger"></span>
                         </div>
                         <div class="col mb-0">
-                            <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
-                            <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
+                            <label for="frmBellekId" class="form-label fw-bold">BELLEK</label>
+                            <select asp-for="BellekId"
+                                    asp-items="@ViewBag.BellekAdiList"
+                                    class="form-select"
+                                    id="frmBellekId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="BellekId" class="text-danger"></span>
                         </div>
                     </div>
                     <br />
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmAdres" class="form-label fw-bold">ADRES</label>
-                            <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
+                            <label for="frmDepolamaId" class="form-label fw-bold">DEPOLAMA</label>
+                            <select asp-for="DepolamaId"
+                                    asp-items="@ViewBag.DepolamaAdiList"
+                                    class="form-select"
+                                    id="frmDepolamaId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="DepolamaId" class="text-danger"></span>
                         </div>
                         <div class="col mb-0">
-                            @if (ViewData["KullaniciTuru"] == "Admin" && Model.Id != Convert.ToInt32(ViewData["KullaniciId"]))
-                            {
-                                <label for="frmKullaniciTuru" class="form-label fw-bold">KULLANICI TÜRÜ</label>
-                                <select asp-for="KullaniciTuruId"
-                                        asp-items="@ViewBag.KullaniciTuruPersonelList"
-                                        class="form-select"
-                                        id="frmKullaniciTuru">
-                                    <option selected value="">Seçiniz </option>
-                                </select>
-                                <span asp-validation-for="KullaniciTuruId" class="text-danger"></span>
-                            }
-                            else if (ViewData["KullaniciTuru"] == "Personel")
-                            {
-                                <br />
-                                <br />
-                                <h4 class="text-danger text-center">Personel</h4>
-                                <input type="hidden" asp-for="KullaniciTuruId" id="kullanicituruid" />
-                            }
+                            <label for="frmCozunurlukId" class="form-label fw-bold">ÇÖZÜNÜRLÜK</label>
+                            <select asp-for="CozunurlukId"
+                                    asp-items="@ViewBag.CozunurlukAdiList"
+                                    class="form-select"
+                                    id="frmCozunurlukId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="CozunurlukId" class="text-danger"></span>
                         </div>
                     </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmYenilemeHiziId" class="form-label fw-bold">YENİLEME HIZI</label>
+                            <select asp-for="YenilemeHiziId"
+                                    asp-items="@ViewBag.YenilemeHiziAdiList"
+                                    class="form-select"
+                                    id="frmYenilemeHiziId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="YenilemeHiziId" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmKlavye" class="form-label fw-bold">KLAVYE</label>
+                            <input type="text" asp-for="Klavye" id="frmKlavye" class="form-control" placeholder="Klavye Giriniz" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmBoyut" class="form-label fw-bold">BOYUT</label>
+                            <input type="text" asp-for="Boyut" id="frmBoyut" class="form-control" placeholder="Boyut Giriniz" />
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmAgirlik" class="form-label fw-bold">AĞIRLIK</label>
+                            <input type="text" asp-for="Agirlik" id="frmAgirlik" class="form-control" placeholder="Ağırlık Giriniz" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmBatarya" class="form-label fw-bold">BATARYA</label>
+                            <input type="text" asp-for="Batarya" id="frmBatarya" class="form-control" placeholder="Batarya Giriniz" />
+                        </div>
+                        <div class="col mb-0"></div>
+                    </div>
+                    <br />
                 </div>
 
                 <div class="modal-footer">
@@ -398,7 +444,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-3" style="color:black">
-                        Kullanıcıyı Silmek İstediğinize Emin Misiniz ?
+                        Laptop Kaydını Silmek İstediğinize Emin Misiniz ?
                     </div>
                 </div>
             </div>
@@ -419,15 +465,19 @@
         function addModal() {
 
             $('#pId').val('0');
-            $('#emailorkullaniciadi').val('0');
-            $('#frmAd').val('');
-            $('#frmSoyad').val('');
-            $('#frmKullaniciAdi').val('');
-            $('#frmSifre').val('');
-            $('#frmEmail').val('');
-            $('#frmTelefon').val('');
-            $('#frmAdres').val('');
-            $('#frmKullaniciTuru').val('');
+            $('#frmLaptopAdi').val('');
+            $('#frmFiyat').val('');
+            $('#frmIsletimSistemiId').val('');
+            $('#frmIslemciId').val('');
+            $('#frmEkranKartiId').val('');
+            $('#frmBellekId').val('');
+            $('#frmDepolamaId').val('');
+            $('#frmCozunurlukId').val('');
+            $('#frmYenilemeHiziId').val('');
+            $('#frmKlavye').val('');
+            $('#frmBoyut').val('');
+            $('#frmAgirlik').val('');
+            $('#frmBatarya').val('');
 
         }
 
@@ -436,7 +486,7 @@
             $('#searchBox').on('input', function () {
                 var searchTerm = $(this).val();
                 $.ajax({
-                    url: '/Kullanici/PersonelListesi',
+                    url: '/Laptop/LaptopListesi',
                     type: 'GET',
                     data: { searchTerm: searchTerm },
                     success: function (data) {
@@ -450,7 +500,7 @@
         });
 
         $.ajax({
-            url: '/Kullanici/PersonelListesi',
+            url: '/Laptop/LaptopListesi',
             type: 'GET',
             success: function (result) {
                 $('#list').html(result);
@@ -476,10 +526,10 @@
 
             var messageBox = '@TempData["MessageBox"]';
             if (messageBox == 1) {
-                MessageBox("success", "Kullanıcı Kayıt Edildi");
+                MessageBox("success", "Laptop Kayıt Edildi");
             }
             else if (messageBox == 2) {
-                MessageBox("success", "Kullanıcı Silindi");
+                MessageBox("success", "Laptop Silindi");
             }
 
         });
@@ -491,7 +541,7 @@
         function deleteModal(id) {
 
             const confirmDeleteLink = document.getElementById('confirmDeleteLink');
-            confirmDeleteLink.href = '/Kullanici/PersonelSil?pId=' + id;
+            confirmDeleteLink.href = '/Laptop/LaptopSil?pId=' + id;
 
         }
 

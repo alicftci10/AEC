@@ -63,7 +63,8 @@ namespace AEC_DataAccess.EFOperations
                                 Batarya = x.Batarya,
                                 CreatedAt = x.CreatedAt,
                                 CreatedBy = x.CreatedBy,
-                                CreatedByName = kul.Ad + " " + kul.Soyad
+                                CreatedByName = kul.Ad + " " + kul.Soyad,
+                                ResimUrl = db.UrunResmis.Where(i=>i.LaptopId == x.Id).Select(i => i.ResimUrl).FirstOrDefault()
 
                             }).ToList();
 

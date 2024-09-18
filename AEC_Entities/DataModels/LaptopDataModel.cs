@@ -57,5 +57,7 @@ namespace AEC_Entities.DataModels
         public string? Agirlik { get; set; }
 
         public string? Batarya { get; set; }
+
+        public string? ResimUrl { get; set; }
     }
 }

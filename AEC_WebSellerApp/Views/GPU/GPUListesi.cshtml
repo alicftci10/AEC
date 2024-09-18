@@ -28,21 +28,7 @@
                     <td>
                         @if (!string.IsNullOrEmpty(item.EkranKartiAdi))
                         {
-                            var metin = item.EkranKartiAdi;
-                            int ortaIndex = metin.Length / 2;
-
-                            int boslukIndex = metin.IndexOf(' ', ortaIndex);
-
-                            if (boslukIndex == -1)
-                            {
-                                boslukIndex = metin.Length;
-                            }
-
-                            var ilkParca = metin.Substring(0, boslukIndex);
-
-                            var ikinciParca = metin.Substring(boslukIndex).TrimStart();
-
-                            <span>@ilkParca<br />@ikinciParca</span>
+                            @Html.Raw(Formatting.FormatMetniİkiyeBolme(item.EkranKartiAdi))
                         }
                     </td>
                     <td>@item.CreatedByName</td>

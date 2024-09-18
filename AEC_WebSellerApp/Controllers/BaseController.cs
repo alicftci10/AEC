@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using static System.Net.WebRequestMethods;
 
 namespace AEC_WebSellerApp.Controllers
@@ -290,15 +291,18 @@ namespace AEC_WebSellerApp.Controllers
                 }
 
                 List<string> IslemciAdi = new List<string>();
+                List<SelectListItem> IslemciAdiList = new List<SelectListItem>();
 
                 if (modelList != null)
                 {
                     foreach (var item in modelList)
                     {
                         IslemciAdi.Add(item.IslemciAdi);
+                        IslemciAdiList.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.IslemciAdi });
                     }
 
                     HttpContext.Session.SetString("IslemciAdiList", JsonConvert.SerializeObject(IslemciAdi));
+                    ViewBag.IslemciAdiList = IslemciAdiList;
                 }
             }
         }
@@ -355,15 +359,18 @@ namespace AEC_WebSellerApp.Controllers
                 }
 
                 List<string> EkranKartiAdi = new List<string>();
+                List<SelectListItem> EkranKartiAdiList = new List<SelectListItem>();
 
                 if (modelList != null)
                 {
                     foreach (var item in modelList)
                     {
                         EkranKartiAdi.Add(item.EkranKartiAdi);
+                        EkranKartiAdiList.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.EkranKartiAdi });
                     }
 
                     HttpContext.Session.SetString("EkranKartiAdiList", JsonConvert.SerializeObject(EkranKartiAdi));
+                    ViewBag.EkranKartiAdiList = EkranKartiAdiList;
                 }
             }
         }
@@ -420,15 +427,18 @@ namespace AEC_WebSellerApp.Controllers
                 }
 
                 List<string> BellekAdi = new List<string>();
+                List<SelectListItem> BellekAdiList = new List<SelectListItem>();
 
                 if (modelList != null)
                 {
                     foreach (var item in modelList)
                     {
                         BellekAdi.Add(item.BellekAdi);
+                        BellekAdiList.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.BellekAdi });
                     }
 
                     HttpContext.Session.SetString("BellekAdiList", JsonConvert.SerializeObject(BellekAdi));
+                    ViewBag.BellekAdiList = BellekAdiList;
                 }
             }
         }
@@ -485,15 +495,18 @@ namespace AEC_WebSellerApp.Controllers
                 }
 
                 List<string> DepolamaAdi = new List<string>();
+                List<SelectListItem> DepolamaAdiList = new List<SelectListItem>();
 
                 if (modelList != null)
                 {
                     foreach (var item in modelList)
                     {
                         DepolamaAdi.Add(item.DepolamaAdi);
+                        DepolamaAdiList.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.DepolamaAdi });
                     }
 
                     HttpContext.Session.SetString("DepolamaAdiList", JsonConvert.SerializeObject(DepolamaAdi));
+                    ViewBag.DepolamaAdiList = DepolamaAdiList;
                 }
             }
         }
@@ -550,15 +563,18 @@ namespace AEC_WebSellerApp.Controllers
                 }
 
                 List<string> YenilemeHiziAdi = new List<string>();
+                List<SelectListItem> YenilemeHiziAdiList = new List<SelectListItem>();
 
                 if (modelList != null)
                 {
                     foreach (var item in modelList)
                     {
                         YenilemeHiziAdi.Add(item.YenilemeHiziAdi);
+                        YenilemeHiziAdiList.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.YenilemeHiziAdi });
                     }
 
                     HttpContext.Session.SetString("YenilemeHiziAdiList", JsonConvert.SerializeObject(YenilemeHiziAdi));
+                    ViewBag.YenilemeHiziAdiList = YenilemeHiziAdiList;
                 }
             }
         }
@@ -615,15 +631,18 @@ namespace AEC_WebSellerApp.Controllers
                 }
 
                 List<string> CozunurlukAdi = new List<string>();
+                List<SelectListItem> CozunurlukAdiList = new List<SelectListItem>();
 
                 if (modelList != null)
                 {
                     foreach (var item in modelList)
                     {
                         CozunurlukAdi.Add(item.CozunurlukAdi);
+                        CozunurlukAdiList.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.CozunurlukAdi });
                     }
 
                     HttpContext.Session.SetString("CozunurlukAdiList", JsonConvert.SerializeObject(CozunurlukAdi));
+                    ViewBag.CozunurlukAdiList = CozunurlukAdiList;
                 }
             }
         }
@@ -680,15 +699,18 @@ namespace AEC_WebSellerApp.Controllers
                 }
 
                 List<string> IsletimSistemiAdi = new List<string>();
+                List<SelectListItem> IsletimSistemiAdiList = new List<SelectListItem>();
 
                 if (modelList != null)
                 {
                     foreach (var item in modelList)
                     {
                         IsletimSistemiAdi.Add(item.IsletimSistemiAdi);
+                        IsletimSistemiAdiList.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.IsletimSistemiAdi });
                     }
 
                     HttpContext.Session.SetString("IsletimSistemiAdiList", JsonConvert.SerializeObject(IsletimSistemiAdi));
+                    ViewBag.IsletimSistemiAdiList = IsletimSistemiAdiList;
                 }
             }
         }
@@ -723,6 +745,37 @@ namespace AEC_WebSellerApp.Controllers
                     }
 
                     ViewBag.IsletimSistemiList = list;
+                }
+            }
+        }
+
+        public void LoadLaptopList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/GetAllLaptop";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<LaptopDataModel> modelList = new List<LaptopDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<LaptopDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> LaptopAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        LaptopAdi.Add(item.LaptopAdi);
+                    }
+
+                    HttpContext.Session.SetString("LaptopAdiList", JsonConvert.SerializeObject(LaptopAdi));
                 }
             }
         }
