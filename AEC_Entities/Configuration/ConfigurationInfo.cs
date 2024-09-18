@@ -10,11 +10,11 @@ namespace AEC_Entities.Configuration
     {
         public static string ApiUrl { get; set; }
         public static string ConnectionString { get; set; }
-        public static string ImageFolderUrl { get; set; }
+        public static string UrunResmiFolderUrl { get; set; }
         public static string FileUploadFolderUrl { get; set; }
 
         /// <summary>
-        /// Minutes
+        /// Dakika
         /// </summary>
 		public static int MemoryCacheTimeOut { get; set; }
     }

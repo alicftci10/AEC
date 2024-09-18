@@ -1,0 +1,60 @@
+﻿@model UrunResmiDataModel
+
+<div class="modal fade" id="exLargeModalresim" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Laptop Ekle/Düzenle</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <form asp-action="LaptopResimAddUpdate" asp-controller="Laptop" method="post">
+
+                <input type="hidden" asp-for="Id" id="resimId" />
+                <input type="hidden" asp-for="LaptopId" id="laptopid" />
+
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmResimUrl" class="form-label fw-bold">RESİM</label>
+                            <input type="file" name="ResimUrl" id="frmResimUrl" class="form-control" />
+                            <span asp-validation-for="ResimUrl" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0"></div>
+                    </div>
+                    <br />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Kapat
+                    </button>
+                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section AECScript {
+
+    <script type="text/javascript">
+
+        function addModal2() {
+
+            $('#resimId').val('0');
+            $('#frmResimUrl').val('');
+
+        }
+
+        $('#exLargeModalresim').on('hidden.bs.modal', function () {
+            $('.modal-backdrop').remove();
+        });
+
+    </script>
+
+}

@@ -97,6 +97,7 @@ namespace AEC_WebApi
             builder.Services.AddTransient<ICozunurlukService, CozunurlukManager>();
             builder.Services.AddTransient<IIsletimSistemiService, IsletimSistemiManager>();
             builder.Services.AddTransient<ILaptopService, LaptopManager>();
+            builder.Services.AddTransient<IUrunResmiService, UrunResmiManager>();
 
             builder.Services.AddTransient<IEFKullaniciRepository, EFKullanici>();
             builder.Services.AddTransient<IEFKullaniciTuruRepository, EFKullaniciTuru>();
@@ -110,6 +111,7 @@ namespace AEC_WebApi
             builder.Services.AddTransient<IEFCozunurlukRepository, EFCozunurluk>();
             builder.Services.AddTransient<IEFIsletimSistemiRepository, EFIsletimSistemi>();
             builder.Services.AddTransient<IEFLaptopRepository, EFLaptop>();
+            builder.Services.AddTransient<IEFUrunResmiRepository, EFUrunResmi>();
 
             builder.Services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
 
@@ -120,7 +122,7 @@ namespace AEC_WebApi
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             ConfigurationInfo.ConnectionString = connectionString;
 
-            ConfigurationInfo.ImageFolderUrl = builder.Configuration["ImageUploadURL"];
+            ConfigurationInfo.UrunResmiFolderUrl = builder.Configuration["UrunResmiFolderUrl"];
 
             #endregion
 

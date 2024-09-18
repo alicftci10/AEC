@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AEC_DataAccess\AEC_DataAccess.csproj" />
     <ProjectReference Include="..\AEC_Entities\AEC_Entities.csproj" />
   </ItemGroup>

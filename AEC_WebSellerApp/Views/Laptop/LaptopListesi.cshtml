@@ -25,7 +25,9 @@
                     <td class="text-center">
                         @siralama
                     </td>
-                    <td>@item.ResimUrl</td>
+                    <td>
+                        <a class="dropdown-item text-warning" href="#" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)">@item.ResimUrl</a>
+                    </td>
                     <td>@item.LaptopAdi</td>
                     <td>@Formatting.FormatTurkLirasi(item.Fiyat.Value)</td>
                     <td>@item.CreatedByName</td>

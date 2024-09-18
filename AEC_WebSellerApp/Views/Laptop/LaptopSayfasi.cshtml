@@ -430,6 +430,7 @@
     </div>
 </div>
 
+<div id="list2"></div>
 
 <div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
     <div class="modal-dialog">
@@ -527,12 +528,37 @@
             var messageBox = '@TempData["MessageBox"]';
             if (messageBox == 1) {
                 MessageBox("success", "Laptop Kayıt Edildi");
+                resimModal('@TempData["LaptopId"]');
             }
             else if (messageBox == 2) {
                 MessageBox("success", "Laptop Silindi");
             }
+            else if (messageBox == 4) {
+                MessageBox("success", "Resim Kayıt Edildi");
+            }
+            else if (messageBox == 5) {
+                MessageBox("success", "Resim Silindi");
+            }
 
         });
+
+        function resimModal(id) {
+            $.ajax({
+                url: '/Laptop/LaptopResimAddUpdate',
+                type: 'GET',
+                success: function (result) {
+                    if (id != null) {
+                        '@TempData["LaptopId"]' = id;
+                    }
+                    $('#list2').html(result);
+                    var modal2 = new bootstrap.Modal(document.getElementById('exLargeModalresim'));
+                    modal2.show();
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+        }
 
         $('#exLargeModal').on('hidden.bs.modal', function () {
             $('.modal-backdrop').remove();

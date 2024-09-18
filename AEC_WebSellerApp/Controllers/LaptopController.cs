@@ -57,6 +57,16 @@ namespace AEC_WebSellerApp.Controllers
                     TempData["MessageBox"] = 2;
                     HttpContext.Session.SetInt32("MessageBox", 3);
                 }
+                else if (MessageBox == 4)
+                {
+                    TempData["MessageBox"] = 4;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 5)
+                {
+                    TempData["MessageBox"] = 5;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
 
                 LaptopDataModel model = new LaptopDataModel();
 
@@ -137,8 +147,11 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
+                        model = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
+                        ViewData["LaptopId"] = model.Id;
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("LaptopSayfasi");
+                     
                     }
                 }
 
@@ -161,6 +174,68 @@ namespace AEC_WebSellerApp.Controllers
 
                 HttpContext.Session.SetInt32("MessageBox", 2);
                 return RedirectToAction("LaptopSayfasi");
+            }
+        }
+
+        public async Task<IActionResult> LaptopResimAddUpdate(int? pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                UrunResmiDataModel model = new UrunResmiDataModel();
+                model.LaptopId = Convert.ToInt32(ViewData["LaptopId"]);
+
+                if (pId > 0)
+                {
+                    if (CurrentKullanici.KullaniciTuruId == 2)
+                    {
+                        return RedirectToAction("LaptopSayfasi");
+                    }
+
+                    string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetUrunResmi";
+
+                    url += $"?pId={pId}";
+
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                    var response = await client.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        model = JsonConvert.DeserializeObject<UrunResmiDataModel>(response.Content.ReadAsStringAsync().Result);
+                    }
+                }
+
+                return PartialView(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LaptopResimAddUpdate(UrunResmiDataModel model)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                if (ModelState.IsValid)
+                {
+                    string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/AddUpdate";
+
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                    var json = JsonConvert.SerializeObject(model);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = await client.PostAsync(url, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        model = JsonConvert.DeserializeObject<UrunResmiDataModel>(response.Content.ReadAsStringAsync().Result);
+                        HttpContext.Session.SetInt32("MessageBox", 4);
+                        return RedirectToAction("LaptopSayfasi");
+
+                    }
+                }
+
+                model.IsSuccess = true;
+                return View(model);
             }
         }
     }
