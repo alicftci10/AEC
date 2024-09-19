@@ -2,6 +2,7 @@
 using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace AEC_WebSellerApp.Controllers
@@ -147,11 +148,11 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
-                        model = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
-                        ViewData["LaptopId"] = model.Id;
+                        var model2 = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
+                        HttpContext.Session.SetInt32("secilenLaptopId", model2.Id);
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("LaptopSayfasi");
-                     
+
                     }
                 }
 
@@ -177,32 +178,29 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public async Task<IActionResult> LaptopResimAddUpdate(int? pId)
+        public async Task<IActionResult> LaptopResimAddUpdate(int? pLaptopId)
         {
             using (HttpClient client = new HttpClient())
             {
-                UrunResmiDataModel model = new UrunResmiDataModel();
-                model.LaptopId = Convert.ToInt32(ViewData["LaptopId"]);
-
-                if (pId > 0)
+                if (CurrentKullanici.KullaniciTuruId == 2)
                 {
-                    if (CurrentKullanici.KullaniciTuruId == 2)
-                    {
-                        return RedirectToAction("LaptopSayfasi");
-                    }
+                    return RedirectToAction("LaptopSayfasi");
+                }
 
-                    string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetUrunResmi";
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetLaptopResmiList";
 
-                    url += $"?pId={pId}";
+                url += $"?pLaptopId={pLaptopId}";
 
-                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
 
-                    var response = await client.GetAsync(url);
+                var response = await client.GetAsync(url);
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        model = JsonConvert.DeserializeObject<UrunResmiDataModel>(response.Content.ReadAsStringAsync().Result);
-                    }
+                List<UrunResmiDataModel> model = new List<UrunResmiDataModel>();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<List<UrunResmiDataModel>>(response.Content.ReadAsStringAsync().Result);
+                    HttpContext.Session.SetInt32("secilenLaptopId",pLaptopId.Value);
                 }
 
                 return PartialView(model);
@@ -210,32 +208,43 @@ namespace AEC_WebSellerApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LaptopResimAddUpdate(UrunResmiDataModel model)
+        public async Task<IActionResult> LaptopResimAddUpdate(List<IFormFile> ResimUrl)
         {
             using (HttpClient client = new HttpClient())
             {
-                if (ModelState.IsValid)
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/AddUpdate";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                int? LaptopId = HttpContext.Session.GetInt32("secilenLaptopId");
+
+                using (var multipartFormContent = new MultipartFormDataContent())
                 {
-                    string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/AddUpdate";
+                    foreach (var dosya in ResimUrl)
+                    {
+                        if (dosya.Length > 0)
+                        {
+                            var dosyaIcerigi = new StreamContent(dosya.OpenReadStream());
+                            dosyaIcerigi.Headers.ContentType = new MediaTypeHeaderValue(dosya.ContentType);
+                            multipartFormContent.Add(dosyaIcerigi, "ResimUrl", dosya.FileName);
+                        }
+                    }
 
-                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                    if (LaptopId.HasValue)
+                    {
+                        multipartFormContent.Add(new StringContent(LaptopId.Value.ToString()), "LaptopId");
+                    }
 
-                    var json = JsonConvert.SerializeObject(model);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    var response = await client.PostAsync(url, content);
+                    var response = await client.PostAsync(url, multipartFormContent);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        model = JsonConvert.DeserializeObject<UrunResmiDataModel>(response.Content.ReadAsStringAsync().Result);
                         HttpContext.Session.SetInt32("MessageBox", 4);
                         return RedirectToAction("LaptopSayfasi");
-
                     }
                 }
 
-                model.IsSuccess = true;
-                return View(model);
+                return PartialView(ResimUrl);
             }
         }
     }

@@ -15,11 +15,11 @@ namespace AEC_DataAccess.EFOperations
     {
         public EFUrunResmi(AecommerceDbContext AECContext) : base(AECContext) { }
 
-        public List<UrunResmiDataModel> GetLaptopResmiList(int LaptopId)
+        public List<UrunResmiDataModel> GetLaptopResmiList(int pLaptopId)
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var List = db.UrunResmis.Where(i => i.LaptopId == LaptopId)
+                var List = db.UrunResmis.Where(i => i.LaptopId == pLaptopId)
                     .Select(x => new UrunResmiDataModel
                     {
                         Id = x.Id,
@@ -36,11 +36,11 @@ namespace AEC_DataAccess.EFOperations
             }
         }
 
-        public List<UrunResmiDataModel> GetMonitorResmiList(int MonitorId)
+        public List<UrunResmiDataModel> GetMonitorResmiList(int pMonitorId)
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
-                var List = db.UrunResmis.Where(i => i.MonitorId == MonitorId)
+                var List = db.UrunResmis.Where(i => i.MonitorId == pMonitorId)
                     .Select(x => new UrunResmiDataModel
                     {
                         Id = x.Id,

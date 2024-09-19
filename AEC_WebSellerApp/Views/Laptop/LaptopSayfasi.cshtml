@@ -528,7 +528,7 @@
             var messageBox = '@TempData["MessageBox"]';
             if (messageBox == 1) {
                 MessageBox("success", "Laptop Kayıt Edildi");
-                resimModal('@TempData["LaptopId"]');
+                resimModal();
             }
             else if (messageBox == 2) {
                 MessageBox("success", "Laptop Silindi");
@@ -544,15 +544,12 @@
 
         function resimModal(id) {
             $.ajax({
-                url: '/Laptop/LaptopResimAddUpdate',
+                url: '/Laptop/LaptopResimAddUpdate?pLaptopId=' + id,
                 type: 'GET',
                 success: function (result) {
-                    if (id != null) {
-                        '@TempData["LaptopId"]' = id;
-                    }
                     $('#list2').html(result);
-                    var modal2 = new bootstrap.Modal(document.getElementById('exLargeModalresim'));
-                    modal2.show();
+                    var modal = new bootstrap.Modal(document.getElementById('exLargeModalresim'));
+                    modal.show();
                 },
                 error: function (xhr, status, error) {
                     console.log("Error: " + error);
@@ -561,6 +558,10 @@
         }
 
         $('#exLargeModal').on('hidden.bs.modal', function () {
+            $('.modal-backdrop').remove();
+        });
+
+        $('#list2').on('hidden.bs.modal', function () {
             $('.modal-backdrop').remove();
         });
 

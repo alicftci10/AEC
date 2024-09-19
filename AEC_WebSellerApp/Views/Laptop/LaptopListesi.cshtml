@@ -29,7 +29,12 @@
                         <a class="dropdown-item text-warning" href="#" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)">@item.ResimUrl</a>
                     </td>
                     <td>@item.LaptopAdi</td>
-                    <td>@Formatting.FormatTurkLirasi(item.Fiyat.Value)</td>
+                    <td>
+                        @if (item.Fiyat != null)
+                        {
+                            @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                        }
+                    </td>
                     <td>@item.CreatedByName</td>
                     <td>@item.CreatedAt</td>
                     <td>

@@ -29,7 +29,6 @@ namespace AEC_DataAccess.GenericRepository.Repository
             {
                 _transaction = _context.Database.BeginTransaction();
             }
-
         }
 
         public T Add(T entity)
@@ -70,12 +69,31 @@ namespace AEC_DataAccess.GenericRepository.Repository
             try
             {
                 _context.SaveChanges();
-                _transaction.Commit();
+                CommitTransaction();
             }
             catch (Exception ex)
             {
-                //Log yazma
+                RollbackTransaction();
+            }
+        }
+
+        private void CommitTransaction()
+        {
+            if (_transaction != null)
+            {
+                _transaction.Commit();
+                _transaction.Dispose();
+                _transaction = null;
+            }
+        }
+
+        private void RollbackTransaction()
+        {
+            if (_transaction != null)
+            {
                 _transaction.Rollback();
+                _transaction.Dispose();
+                _transaction = null;
             }
         }
 

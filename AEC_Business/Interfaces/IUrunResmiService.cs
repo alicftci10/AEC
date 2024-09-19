@@ -1,5 +1,6 @@
 ﻿using AEC_DataAccess.DBModels;
 using AEC_Entities.DataModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace AEC_Business.Interfaces
     {
         List<UrunResmiDataModel> GetAllUrunResmi();
 
-        List<UrunResmiDataModel> GetLaptopResmiList(int LaptopId);
+        bool AddUpdate(int LaptopId, List<IFormFile> ResimUrl, int CreatedBy);
 
-        List<UrunResmiDataModel> GetMonitorResmiList(int MonitorId);
+        List<UrunResmiDataModel> GetLaptopResmiList(int pLaptopId);
+
+        List<UrunResmiDataModel> GetMonitorResmiList(int pMonitorId);
 
         UrunResmi GetId(int pId);
 

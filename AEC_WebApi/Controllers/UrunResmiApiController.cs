@@ -24,16 +24,16 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetLaptopResmiList(int LaptopId)
+        public IActionResult GetLaptopResmiList(int pLaptopId)
         {
-            return Ok(_UrunResmi.GetLaptopResmiList(LaptopId));
+            return Ok(_UrunResmi.GetLaptopResmiList(pLaptopId));
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetMonitorResmiList(int MonitorId)
+        public IActionResult GetMonitorResmiList(int pMonitorId)
         {
-            return Ok(_UrunResmi.GetMonitorResmiList(MonitorId));
+            return Ok(_UrunResmi.GetMonitorResmiList(pMonitorId));
         }
 
         [HttpGet]
@@ -45,23 +45,9 @@ namespace AEC_WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult AddUpdate([FromBody] UrunResmiDataModel model)
+        public IActionResult AddUpdate([FromForm] int LaptopId, [FromForm] List<IFormFile> ResimUrl)
         {
-            model.CreatedBy = GetCurrentKullanici(HttpContext).Id;
-
-            if (model.Id > 0)
-            {
-                return Ok(Update(model));
-            }
-
-            return Ok(_UrunResmi.Add(model));
-        }
-
-        [HttpPut]
-        [Authorize]
-        public IActionResult Update([FromBody] UrunResmiDataModel model)
-        {
-            return Ok(_UrunResmi.Update(model));
+            return Ok(_UrunResmi.AddUpdate(LaptopId, ResimUrl, GetCurrentKullanici(HttpContext).Id));
         }
 
         [HttpDelete]

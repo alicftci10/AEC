@@ -8,7 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace AEC_Business.Managers
 {
@@ -47,55 +50,57 @@ namespace AEC_Business.Managers
             return listUrunResmi;
         }
 
-        //public bool UploadAndSaveProductImage(IFormFile[] pFiles, int LaptopId, int CreatedBy)
-        //{
-        //    //FileUpload işlemleri
+        public bool AddUpdate(int LaptopId, List<IFormFile> ResimUrl, int CreatedBy)
+        {
+            string imageFilePath = "Laptop_" + LaptopId;
+            string imagePath = ConfigurationInfo.UrunResmiFolderUrl + "\\" + imageFilePath;
+            if (!Directory.Exists(imagePath))
+            {
+                Directory.CreateDirectory(imagePath);
+            }
+            else
+            {
+                var deleteList = _UrunResmiRepository.GetLaptopResmiList(LaptopId);
+                foreach (var item in deleteList)
+                {
+                    Delete(item.Id);
+                }
+            }
 
-        //    if (pFiles == null || pFiles.Length == 0 || LaptopId <= 0)
-        //    {
-        //        return false;
-        //    }
+            int index = 1;
 
-        //    string imageFilePath = "Laptop_" + LaptopId;
-        //    string imagePath = ConfigurationInfo.UrunResmiFolderUrl + "\\" + imageFilePath;
-        //    if (!Directory.Exists(imagePath))
-        //    {
-        //        Directory.CreateDirectory(imagePath);
-        //    }
+            foreach (var file in ResimUrl)
+            {
+                if (ResimUrl == null || file.Length == 0 || LaptopId <= 0)
+                {
+                    return false;
+                }
 
-        //    int index = 1;
+                if (file.Length > 0)
+                {
+                    var filePath = Path.Combine(imagePath, index + Path.GetExtension(imagePath + file.FileName));
 
-        //    foreach (var file in pFiles)
-        //    {
-        //        if (file.Length > 0)
-        //        {
-        //            var filePath = Path.Combine(imagePath, index + Path.GetExtension(imagePath + file.FileName));
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
 
-        //            using (var stream = new FileStream(filePath, FileMode.Create))
-        //            {
-        //                file.CopyTo(stream);
-        //            }
+                    UrunResmiDataModel img = new UrunResmiDataModel();
 
-        //            index++;
+                    img.LaptopId = LaptopId;
+                    img.ResimUrl = imageFilePath + "\\" + index + Path.GetExtension(imagePath + file.FileName);
+                    img.ResimBoyutu = file.Length;
+                    img.ResimTuru = file.ContentType;
+                    img.CreatedBy = CreatedBy;
 
+                    Add(img);
 
-        //            //Veritabanı kayıt işlemleri
+                    index++;
+                }
+            }
 
-        //            UrunResmiDataModel img = new UrunResmiDataModel();
-        //            img.LaptopId = LaptopId;
-        //            img.CreatedBy = pCreatedBy;
-        //            img.CreatedAt = DateTime.Now;
-        //            img.ImageSize = file.Length;
-        //            img.ImageType = file.ContentType;
-        //            img.ImageUrl = imageFilePath + "\\" + index + Path.GetExtension(imagePath + file.FileName);
-
-        //            _eFProductImageRepository.Add(img);
-
-        //        }
-        //    }
-
-        //    return true;
-        //}
+            return true;
+        }
 
         private UrunResmi GetDataModel(UrunResmiDataModel model)
         {
@@ -117,14 +122,14 @@ namespace AEC_Business.Managers
             return item;
         }
 
-        public List<UrunResmiDataModel> GetLaptopResmiList(int LaptopId)
+        public List<UrunResmiDataModel> GetLaptopResmiList(int pLaptopId)
         {
-            return _UrunResmiRepository.GetLaptopResmiList(LaptopId);
+            return _UrunResmiRepository.GetLaptopResmiList(pLaptopId);
         }
 
-        public List<UrunResmiDataModel> GetMonitorResmiList(int MonitorId)
+        public List<UrunResmiDataModel> GetMonitorResmiList(int pMonitorId)
         {
-            return _UrunResmiRepository.GetMonitorResmiList(MonitorId);
+            return _UrunResmiRepository.GetMonitorResmiList(pMonitorId);
         }
 
         public UrunResmi GetId(int pId)

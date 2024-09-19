@@ -1,4 +1,4 @@
-﻿@model UrunResmiDataModel
+﻿@model List<UrunResmiDataModel>
 
 <div class="modal fade" id="exLargeModalresim" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -10,19 +10,36 @@
                         data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form asp-action="LaptopResimAddUpdate" asp-controller="Laptop" method="post">
+            <form asp-action="LaptopResimAddUpdate" asp-controller="Laptop" method="post" enctype="multipart/form-data">
 
-                <input type="hidden" asp-for="Id" id="resimId" />
-                <input type="hidden" asp-for="LaptopId" id="laptopid" />
+                <input type="hidden" name="Id" id="resimId" />
+                <input type="hidden" name="LaptopId" id="laptopid" />
 
                 <div class="modal-body">
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmResimUrl" class="form-label fw-bold">RESİM</label>
-                            <input type="file" name="ResimUrl" id="frmResimUrl" class="form-control" />
-                            <span asp-validation-for="ResimUrl" class="text-danger"></span>
+                            <label for="frmResimUrl1" class="form-label fw-bold">RESİM 1</label>
+                            <input type="file" name="ResimUrl" id="frmResimUrl1" class="form-control" />
                         </div>
-                        <div class="col mb-0"></div>
+                        <div class="col mb-0">
+                            <div class="col mb-0">
+                                <label for="frmResimUrl2" class="form-label fw-bold">RESİM 2</label>
+                                <input type="file" name="ResimUrl" id="frmResimUrl2" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmResimUrl3" class="form-label fw-bold">RESİM 3</label>
+                            <input type="file" name="ResimUrl" id="frmResimUrl3" class="form-control" />
+                        </div>
+                        <div class="col mb-0">
+                            <div class="col mb-0">
+                                <label for="frmResimUrl4" class="form-label fw-bold">RESİM 4</label>
+                                <input type="file" name="ResimUrl" id="frmResimUrl4" class="form-control" />
+                            </div>
+                        </div>
                     </div>
                     <br />
                 </div>
@@ -47,13 +64,12 @@
         function addModal2() {
 
             $('#resimId').val('0');
-            $('#frmResimUrl').val('');
+            $('#frmResimUrl1').val('');
+            $('#frmResimUrl2').val('');
+            $('#frmResimUrl3').val('');
+            $('#frmResimUrl4').val('');
 
         }
-
-        $('#exLargeModalresim').on('hidden.bs.modal', function () {
-            $('.modal-backdrop').remove();
-        });
 
     </script>
 

@@ -11,8 +11,8 @@ namespace AEC_DataAccess.EFInterfaces
 {
     public interface IEFUrunResmiRepository : IRepository<UrunResmi>
     {
-        List<UrunResmiDataModel> GetLaptopResmiList(int LaptopId);
+        List<UrunResmiDataModel> GetLaptopResmiList(int pLaptopId);
 
-        List<UrunResmiDataModel> GetMonitorResmiList(int MonitorId);
+        List<UrunResmiDataModel> GetMonitorResmiList(int pMonitorId);
     }
 }
