@@ -43,7 +43,7 @@
                     </td>
                     <td>@item.LaptopAdi</td>
                     <td>
-                        @if (item.Fiyat != null)
+                        @if (item.Fiyat.HasValue)
                         {
                             @Formatting.FormatTurkLirasi(item.Fiyat.Value)
                         }
