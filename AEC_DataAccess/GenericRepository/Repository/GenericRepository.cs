@@ -14,21 +14,21 @@ namespace AEC_DataAccess.GenericRepository.Repository
     {
         private readonly AecommerceDbContext _context;
         private readonly DbSet<T> _dbSet;
-        private IDbContextTransaction _transaction;
+        //private IDbContextTransaction _transaction;
 
 
         public GenericRepository(AecommerceDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
-            if (_context.Database.CurrentTransaction != null)
-            {
-                _transaction = _context.Database.CurrentTransaction;
-            }
-            else
-            {
-                _transaction = _context.Database.BeginTransaction();
-            }
+            //if (_context.Database.CurrentTransaction != null)
+            //{
+            //    _transaction = _context.Database.CurrentTransaction;
+            //}
+            //else
+            //{
+            //    _transaction = _context.Database.BeginTransaction();
+            //}
         }
 
         public T Add(T entity)
@@ -66,34 +66,17 @@ namespace AEC_DataAccess.GenericRepository.Repository
 
         public void SaveChanges()
         {
-            try
+            using (var _transaction = _context.Database.BeginTransaction())
             {
-                _context.SaveChanges();
-                CommitTransaction();
-            }
-            catch (Exception ex)
-            {
-                RollbackTransaction();
-            }
-        }
-
-        private void CommitTransaction()
-        {
-            if (_transaction != null)
-            {
-                _transaction.Commit();
-                _transaction.Dispose();
-                _transaction = null;
-            }
-        }
-
-        private void RollbackTransaction()
-        {
-            if (_transaction != null)
-            {
-                _transaction.Rollback();
-                _transaction.Dispose();
-                _transaction = null;
+                try
+                {
+                    _context.SaveChanges();
+                    _transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    _transaction.Rollback();
+                }
             }
         }
 

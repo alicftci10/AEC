@@ -1,5 +1,16 @@
 ﻿@model LaptopDataModel
 
+<style type="text/css">
+
+    .img-thumbnail {
+        max-width: 150px; /* Resimlerin maksimum genişliği */
+        max-height: 150px; /* Resimlerin maksimum yüksekliği */
+        object-fit: cover; /* Resimlerin oranını koruyarak sığdırır */
+        margin-top: 10px; /* Üstten boşluk */
+        margin-left: 50px;
+    }
+</style>
+
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
         <div class="app-brand-link">
@@ -571,6 +582,24 @@
             confirmDeleteLink.href = '/Laptop/LaptopSil?pId=' + id;
 
         }
+
+        function previewImage(input, previewId) {
+            const file = input.files[0];
+            const preview = document.getElementById(previewId);
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result; // Seçilen dosyanın önizleme URL'sini ayarla
+                    preview.style.display = 'block'; // Resmi göster
+                }
+                reader.readAsDataURL(file); // Dosyayı URL formatında oku
+            } else {
+                preview.style.display = 'none'; // Dosya seçilmediğinde resmi gizle
+            }
+        }
+
+
 
     </script>
 

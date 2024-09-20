@@ -148,8 +148,9 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
-                        var model2 = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
-                        HttpContext.Session.SetInt32("secilenLaptopId", model2.Id);
+                        var kayitedilenmodel = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
+
+                        HttpContext.Session.SetInt32("secilenLaptopId", kayitedilenmodel.Id);
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("LaptopSayfasi");
 
@@ -185,6 +186,11 @@ namespace AEC_WebSellerApp.Controllers
                 if (CurrentKullanici.KullaniciTuruId == 2)
                 {
                     return RedirectToAction("LaptopSayfasi");
+                }
+
+                if (pLaptopId == null)
+                {
+                    pLaptopId = HttpContext.Session.GetInt32("secilenLaptopId");
                 }
 
                 string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetLaptopResmiList";

@@ -10,9 +10,11 @@ namespace AEC_WebApi.Controllers
     public class LaptopApiController : BaseApiController
     {
         ILaptopService _Laptop;
-        public LaptopApiController(ILaptopService Laptop)
+        IUrunResmiService _UrunResmi;
+        public LaptopApiController(ILaptopService Laptop, IUrunResmiService urunResmi)
         {
             _Laptop = Laptop;
+            _UrunResmi = urunResmi;
         }
 
         [HttpGet]
@@ -44,10 +46,14 @@ namespace AEC_WebApi.Controllers
 
             if (model.Id > 0)
             {
-                return Ok(Update(model));
+                Update(model);
+            }
+            else
+            {
+                model.Id = _Laptop.Add(model);
             }
 
-            return Ok(_Laptop.Add(model));
+            return Ok(model);
         }
 
         [HttpPut]
@@ -61,6 +67,12 @@ namespace AEC_WebApi.Controllers
         [Authorize]
         public IActionResult Delete(int pId)
         {
+            var deleteList = _UrunResmi.GetLaptopResmiList(pId);
+            foreach (var item in deleteList)
+            {
+                _UrunResmi.Delete(item.Id);
+            }
+
             return Ok(_Laptop.Delete(pId));
         }
     }

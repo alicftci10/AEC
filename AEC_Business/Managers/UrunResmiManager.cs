@@ -1,4 +1,5 @@
 ﻿using AEC_Business.Interfaces;
+using AEC_DataAccess.DBContext;
 using AEC_DataAccess.DBModels;
 using AEC_DataAccess.EFInterfaces;
 using AEC_Entities.Configuration;
@@ -60,7 +61,7 @@ namespace AEC_Business.Managers
             }
             else
             {
-                var deleteList = _UrunResmiRepository.GetLaptopResmiList(LaptopId);
+                var deleteList = GetLaptopResmiList(LaptopId);
                 foreach (var item in deleteList)
                 {
                     Delete(item.Id);

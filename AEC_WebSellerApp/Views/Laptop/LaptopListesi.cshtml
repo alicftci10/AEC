@@ -26,7 +26,20 @@
                         @siralama
                     </td>
                     <td>
-                        <a class="dropdown-item text-warning" href="#" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)">@item.ResimUrl</a>
+                        @if (item.ResimUrl != null && ViewData["KullaniciTuru"] == "Admin")
+                        {
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)"><img src="~/images/@item.ResimUrl?x=1" width="120" /></a>
+                        }
+                        else if (item.ResimUrl == null)
+                        {
+                            <button type="button" class="btn rounded-pill btn-dark bg-black" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)">
+                                <i class="bi bi-plus-circle"></i> RESİM EKLE
+                            </button>
+                        }
+                        else
+                        {
+                            <img src="~/images/@item.ResimUrl?x=1" width="120" />
+                        }
                     </td>
                     <td>@item.LaptopAdi</td>
                     <td>

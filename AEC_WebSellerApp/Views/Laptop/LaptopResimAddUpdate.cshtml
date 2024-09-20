@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel4">Laptop Ekle/Düzenle</h5>
+                <h5 class="modal-title" id="exampleModalLabel4">Resim Ekle/Düzenle</h5>
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
@@ -19,26 +19,68 @@
                     <div class="row g-2">
                         <div class="col mb-0">
                             <label for="frmResimUrl1" class="form-label fw-bold">RESİM 1</label>
-                            <input type="file" name="ResimUrl" id="frmResimUrl1" class="form-control" />
+                            <input type="file" name="ResimUrl" accept="image/*" id="frmResimUrl1" class="form-control" onchange="previewImage(this, 'preview1')" />
                         </div>
                         <div class="col mb-0">
-                            <div class="col mb-0">
-                                <label for="frmResimUrl2" class="form-label fw-bold">RESİM 2</label>
-                                <input type="file" name="ResimUrl" id="frmResimUrl2" class="form-control" />
-                            </div>
+                            @if (Model.Count > 0)
+                            {
+                                <img id="preview1" src="~/images/@Model[0].ResimUrl?x=1" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <img id="preview1" class="img-thumbnail" />
+                            }
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmResimUrl2" class="form-label fw-bold">RESİM 2</label>
+                            <input type="file" name="ResimUrl" accept="image/*" id="frmResimUrl2" class="form-control" onchange="previewImage(this, 'preview2')" />
+                        </div>
+                        <div class="col mb-0">
+                            @if (Model.Count > 1)
+                            {
+                                <img id="preview2" src="~/images/@Model[1].ResimUrl?x=1" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <img id="preview2" class="img-thumbnail" />
+                            }
                         </div>
                     </div>
                     <br />
                     <div class="row g-2">
                         <div class="col mb-0">
                             <label for="frmResimUrl3" class="form-label fw-bold">RESİM 3</label>
-                            <input type="file" name="ResimUrl" id="frmResimUrl3" class="form-control" />
+                            <input type="file" name="ResimUrl" accept="image/*" id="frmResimUrl3" class="form-control" onchange="previewImage(this, 'preview3')" />
                         </div>
                         <div class="col mb-0">
-                            <div class="col mb-0">
-                                <label for="frmResimUrl4" class="form-label fw-bold">RESİM 4</label>
-                                <input type="file" name="ResimUrl" id="frmResimUrl4" class="form-control" />
-                            </div>
+                            @if (Model.Count > 2)
+                            {
+                                <img id="preview3" src="~/images/@Model[2].ResimUrl?x=1" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <img id="preview3" class="img-thumbnail" />
+                            }
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmResimUrl4" class="form-label fw-bold">RESİM 4</label>
+                            <input type="file" name="ResimUrl" accept="image/*" id="frmResimUrl4" class="form-control" onchange="previewImage(this, 'preview4')" />
+                        </div>
+                        <div class="col mb-0">
+                            @if (Model.Count > 3)
+                            {
+                                <img id="preview4" src="~/images/@Model[3].ResimUrl?x=1" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <img id="preview4" class="img-thumbnail" />
+                            }
                         </div>
                     </div>
                     <br />
@@ -56,21 +98,3 @@
         </div>
     </div>
 </div>
-
-@section AECScript {
-
-    <script type="text/javascript">
-
-        function addModal2() {
-
-            $('#resimId').val('0');
-            $('#frmResimUrl1').val('');
-            $('#frmResimUrl2').val('');
-            $('#frmResimUrl3').val('');
-            $('#frmResimUrl4').val('');
-
-        }
-
-    </script>
-
-}
