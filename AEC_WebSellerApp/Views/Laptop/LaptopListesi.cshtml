@@ -21,7 +21,7 @@
 
             @foreach (var item in Model)
             {
-                <tr>
+                <tr style="cursor:pointer;" onclick="laptopdetay(event, @item.Id)">
                     <td class="text-center">
                         @siralama
                     </td>
@@ -81,3 +81,12 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    function laptopdetay(event, id) {
+        // Eğer tıklanan eleman dropdown, dropdown'un altındaki elemanlardan biri veya bir resim değilse yönlendir
+        if (!event.target.closest('.dropdown') && !event.target.closest('img')) {
+            window.location.href = '/Laptop/LaptopDetay?pId=' + id;
+        }
+    }
+</script>

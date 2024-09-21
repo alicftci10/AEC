@@ -162,23 +162,6 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public async Task<IActionResult> LaptopSil(int pId)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/Delete";
-
-                url += $"?pId={pId}";
-
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
-
-                var response = await client.DeleteAsync(url);
-
-                HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("LaptopSayfasi");
-            }
-        }
-
         public async Task<IActionResult> LaptopResimAddUpdate(int? pLaptopId)
         {
             using (HttpClient client = new HttpClient())
@@ -251,6 +234,69 @@ namespace AEC_WebSellerApp.Controllers
                 }
 
                 return PartialView(ResimUrl);
+            }
+        }
+
+        public async Task<IActionResult> LaptopDetay(int pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/GetLaptop";
+
+                url += $"?pId={pId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                var response = await client.GetAsync(url);
+
+                LaptopDataModel model = new LaptopDataModel();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
+                }
+
+                return View(model);
+            }
+        }
+
+        public async Task<IActionResult> LaptopDetayResim(int pLaptopId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetLaptopResmiList";
+
+                url += $"?pLaptopId={pLaptopId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                var response = await client.GetAsync(url);
+
+                List<UrunResmiDataModel> model = new List<UrunResmiDataModel>();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<List<UrunResmiDataModel>>(response.Content.ReadAsStringAsync().Result);
+                }
+
+                return PartialView(model);
+            }
+        }
+
+        public async Task<IActionResult> LaptopSil(int pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/Delete";
+
+                url += $"?pId={pId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                var response = await client.DeleteAsync(url);
+
+                HttpContext.Session.SetInt32("MessageBox", 2);
+                return RedirectToAction("LaptopSayfasi");
             }
         }
     }

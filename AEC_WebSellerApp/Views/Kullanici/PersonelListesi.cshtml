@@ -22,63 +22,112 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td class="text-center">
-                        @siralama
-                    </td>
-                    <td>
-                        @if (ViewData["KullaniciTuru"] == "Admin" || item.Id == Convert.ToInt32(ViewData["KullaniciId"]))
-                        {
-                            <a href="/Kullanici/KullaniciDetay?pId=@item.Id" class="fw-bold text-white" style="text-decoration: none;">@item.FullName</a>
-                        }
-                        else
-                        {
-                            @item.FullName
-                        }
-                    </td>
-                    <td>@item.Email</td>
-                    <td>@item.Telefon</td>
-                    <td>@item.CreatedByName</td>
-                    <td>@item.CreatedAt</td>
-                    <td>
-                        @if (item.KullaniciTuruName == "Admin")
-                        {
-                            <span class="text-success">@item.KullaniciTuruName</span>
-                        }
-                        else
-                        {
-                            <span class="text-danger">@item.KullaniciTuruName</span>
-                        }
-                    </td>
-                    <td>
-                        @if (ViewData["KullaniciTuru"] == "Admin" || item.Id == Convert.ToInt32(ViewData["KullaniciId"]))
-                        {
-                            <div class="dropdown">
-                                <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
+                if (ViewData["KullaniciTuru"] == "Admin" || item.Id == Convert.ToInt32(ViewData["KullaniciId"]))
+                {
+                    <tr style="cursor:pointer;" onclick="kullanicidetay(event, @item.Id)">
+                        <td class="text-center">
+                            @siralama
+                        </td>
+                        <td>@item.FullName</td>
+                        <td>@item.Email</td>
+                        <td>@item.Telefon</td>
+                        <td>@item.CreatedByName</td>
+                        <td>@item.CreatedAt</td>
+                        <td>
+                            @if (item.KullaniciTuruName == "Admin")
+                            {
+                                <span class="text-success">@item.KullaniciTuruName</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">@item.KullaniciTuruName</span>
+                            }
+                        </td>
+                        <td>
+                            @if (ViewData["KullaniciTuru"] == "Admin" || item.Id == Convert.ToInt32(ViewData["KullaniciId"]))
+                            {
+                                <div class="dropdown">
+                                    <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </div>
+                                    <div class="dropdown-menu" style="background-color:black">
+
+                                        <a class="dropdown-item text-warning" href="/Kullanici/PersonelSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+                                        @if (ViewData["KullaniciTuru"] == "Admin" && item.Id != Convert.ToInt32(ViewData["KullaniciId"]))
+                                        {
+                                            <button type="button" class="dropdown-item text-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#backDropModal"
+                                                    onclick="deleteModal(@item.Id)">
+                                                <i class="bx bx-trash me-1"></i> Sil
+                                            </button>
+                                        }
+                                    </div>
                                 </div>
-                                <div class="dropdown-menu" style="background-color:black">
+                            }
 
-                                    <a class="dropdown-item text-warning" href="/Kullanici/PersonelSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
-                                    @if (ViewData["KullaniciTuru"] == "Admin" && item.Id != Convert.ToInt32(ViewData["KullaniciId"]))
-                                    {
-                                        <button type="button" class="dropdown-item text-danger"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#backDropModal"
-                                                onclick="deleteModal(@item.Id)">
-                                            <i class="bx bx-trash me-1"></i> Sil
-                                        </button>
-                                    }
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-center">
+                            @siralama
+                        </td>
+                        <td>@item.FullName</td>
+                        <td>@item.Email</td>
+                        <td>@item.Telefon</td>
+                        <td>@item.CreatedByName</td>
+                        <td>@item.CreatedAt</td>
+                        <td>
+                            @if (item.KullaniciTuruName == "Admin")
+                            {
+                                <span class="text-success">@item.KullaniciTuruName</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">@item.KullaniciTuruName</span>
+                            }
+                        </td>
+                        <td>
+                            @if (ViewData["KullaniciTuru"] == "Admin" || item.Id == Convert.ToInt32(ViewData["KullaniciId"]))
+                            {
+                                <div class="dropdown">
+                                    <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </div>
+                                    <div class="dropdown-menu" style="background-color:black">
+
+                                        <a class="dropdown-item text-warning" href="/Kullanici/PersonelSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+                                        @if (ViewData["KullaniciTuru"] == "Admin" && item.Id != Convert.ToInt32(ViewData["KullaniciId"]))
+                                        {
+                                            <button type="button" class="dropdown-item text-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#backDropModal"
+                                                    onclick="deleteModal(@item.Id)">
+                                                <i class="bx bx-trash me-1"></i> Sil
+                                            </button>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                        }
+                            }
 
-                    </td>
-                </tr>
-
+                        </td>
+                    </tr>
+                }
                 siralama++;
             }
 
         </tbody>
     </table>
 </div>
+
+<script>
+    function kullanicidetay(event, id) {
+        // Eğer tıklanan eleman dropdown veya dropdown'un altındaki elemanlardan biri değilse, yönlendir
+        if (!event.target.closest('.dropdown')) {
+            window.location.href = '/Kullanici/KullaniciDetay?pId=' + id;
+        }
+    }
+</script>
