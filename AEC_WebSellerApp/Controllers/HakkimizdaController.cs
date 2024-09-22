@@ -59,22 +59,5 @@ namespace AEC_WebSellerApp.Controllers
                 return RedirectToAction("HakkimizdaSayfasi");
             }
         }
-
-        public async Task<IActionResult> HakkimizdaSil(int pId)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                string url = ConfigurationInfo.ApiUrl + "/api/HakkimizdaApi/Delete";
-
-                url += $"?pId={pId}";
-
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
-
-                var response = await client.DeleteAsync(url);
-
-                HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("HakkimizdaSayfasi");
-            }
-        }
     }
 }

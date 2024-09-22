@@ -26,7 +26,7 @@ namespace AEC_WebApi.Controllers
         [Authorize]
         public IActionResult AddUpdate([FromBody] HakkimizdaDataModel model)
         {
-            model.CreatedBy = GetCurrentKullanici(HttpContext).Id;
+            model.UpdatedBy = GetCurrentKullanici(HttpContext).Id;
 
             if (model.Id > 0)
             {

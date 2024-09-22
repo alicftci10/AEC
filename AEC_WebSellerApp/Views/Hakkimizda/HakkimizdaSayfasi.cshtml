@@ -190,8 +190,7 @@
                 placeholder="Ara..."
                 aria-label="Ara..." style="background-color:black!important;">
                 </div> *@
-                <div id="havadurumu"></div>
-                <div class="col-md-2"></div>
+                <div class="col-md-10" id="havadurumu"></div>
                 <span id="datetimenow" style="font-size:20px;color:white;"></span>
             </div>
             <!-- /Search -->
@@ -247,119 +246,220 @@
 
         <div class="container-xxl flex-grow-1 container-p-y">
 
-            <div class="card mb-4 bg-dark">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="fw-bold" style="color:#329d00">HAKKIMIZDA</h4>
+            <br />
+            <h4 class="fw-bold text-center" style="color:#329d00">HAKKIMIZDA</h4>
+            <br />
+
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <p class="text-center" style="color:white;">
+                        AECommerce, teknoloji meraklıları ve profesyoneller için yüksek performanslı bilgisayarlar ve donanım ekipmanlarının satışını yapan,
+                        güvenilir bir e-ticaret platformudur. Biz, müşterilerimizin dijital dünyada ihtiyaç duydukları tüm bilgisayar bileşenlerini ve
+                        aksesuarlarını bir arada sunarak teknoloji alışverişini daha kolay, güvenilir ve keyifli hale getiriyoruz.
+                    </p>
                 </div>
+                <div class="col-md-2"></div>
+            </div>
+            <br />
 
-                @if (ViewData["KullaniciTuru"] == "Admin")
-                {
-                    <div class="card-body">
-                        <form asp-action="HakkimizdaSayfasi" asp-controller="Hakkimizda" method="post">
+            @if (ViewData["KullaniciTuru"] == "Admin")
+            {
 
-                            <input type="hidden" asp-for="Id" id="pId" />
+                <form asp-action="HakkimizdaSayfasi" asp-controller="Hakkimizda" method="post">
 
-                            <div class="row">
-                                <div class="mb-3 col-md-6">
-                                    <label for="frmVizyon" class="form-label fw-bold">VİZYON</label>
-                                    <textarea asp-for="Vizyon" id="frmVizyon" class="form-control" placeholder="Vizyon Giriniz"></textarea>
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="frmMisyon" class="form-label fw-bold">MİSYON</label>
-                                    <textarea asp-for="Misyon" id="frmMisyon" class="form-control" placeholder="Misyon Giriniz"></textarea>
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="frmHikaye" class="form-label fw-bold">HİKAYE</label>
-                                    <textarea asp-for="Hikaye" id="frmHikaye" class="form-control" placeholder="Hikaye Giriniz"></textarea>
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="frmAdres" class="form-label fw-bold">ADRES</label>
-                                    <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
-                                    <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Giriniz" />
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
-                                    <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="frmCalismaGunleri" class="form-label fw-bold">ÇALIŞMA GÜNLERİ</label>
-                                    <input type="text" asp-for="CalismaGunleri" id="frmCalismaGunleri" class="form-control" placeholder="Çalışma Günleri Giriniz" />
-                                </div>
-                            </div>
-                            <div class="mt-2">
-                                <button type="submit" class="btn btn-primary me-2">Kaydet</button>
-                                <a href="/Home/Index" class="btn btn-danger">İptal</a>
-                            </div>
-                        </form>
-                    </div>
-                }
-                else
-                {
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
-                                <label for="frmVizyon" class="form-label fw-bold">VİZYON</label>
-                                <textarea asp-for="Vizyon" id="frmVizyon" class="form-control" placeholder="Vizyon Giriniz"></textarea>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmMisyon" class="form-label fw-bold">MİSYON</label>
-                                <textarea asp-for="Misyon" id="frmMisyon" class="form-control" placeholder="Misyon Giriniz"></textarea>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmHikaye" class="form-label fw-bold">HİKAYE</label>
-                                <textarea asp-for="Hikaye" id="frmHikaye" class="form-control" placeholder="Hikaye Giriniz"></textarea>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmAdres" class="form-label fw-bold">ADRES</label>
-                                <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
-                                <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Giriniz" />
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
-                                <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="frmCalismaGunleri" class="form-label fw-bold">ÇALIŞMA GÜNLERİ</label>
-                                <input type="text" asp-for="CalismaGunleri" id="frmCalismaGunleri" class="form-control" placeholder="Çalışma Günleri Giriniz" />
-                            </div>
+                    <input type="hidden" asp-for="Id" id="pId" />
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <h3 for="frmVizyon" class="fw-bold" style="margin-top:10px;color:white;">Vizyonumuz</h3>
                         </div>
-                        <div class="mt-2">
-                            <button type="submit" class="btn btn-primary me-2">Kaydet</button>
+                        <div class="col">
+                            <textarea asp-for="Vizyon" id="frmVizyon" class="form-control" placeholder="Vizyon Giriniz"></textarea>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <h3 for="frmMisyon" class="fw-bold" style="margin-top:10px;color:white;">Misyonumuz</h3>
+                        </div>
+                        <div class="col">
+                            <textarea asp-for="Misyon" id="frmMisyon" class="form-control" placeholder="Misyon Giriniz"></textarea>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <h3 for="frmHikaye" class="fw-bold" style="margin-top:10px;color:white;">Hikayemiz</h3>
+                        </div>
+                        <div class="col">
+                            <textarea asp-for="Hikaye" id="frmHikaye" class="form-control" placeholder="Hikaye Giriniz"></textarea>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <h3 for="frmAdres" class="fw-bold" style="margin-top:10px;color:white;">Adresimiz</h3>
+                        </div>
+                        <div class="col">
+                            <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <h3 for="frmEmail" class="fw-bold" style="margin-top:5px;color:white;">Emailimiz</h3>
+                        </div>
+                        <div class="col">
+                            <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Giriniz" />
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <h3 for="frmTelefon" class="fw-bold" style="margin-top:5px;color:white;">Telefonumuz</h3>
+                        </div>
+                        <div class="col">
+                            <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <h3 for="frmCalismaGunleri" class="fw-bold" style="margin-top:5px;color:white;">Aktif Günlerimiz</h3>
+                        </div>
+                        <div class="col">
+                            <input type="text" asp-for="CalismaGunleri" id="frmCalismaGunleri" class="form-control" placeholder="Çalışma Günleri Giriniz" />
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-5"></div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary me-4 col-md-2">Kaydet</button>
                             <a href="/Home/Index" class="btn btn-danger">İptal</a>
                         </div>
                     </div>
-                }
+                   
+                </form>
 
-            </div>
-
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <h3 for="frmVizyon" class="fw-bold" style="color:white;">Vizyonumuz</h3>
+                    </div>
+                    <div class="col" style="color:darkgray">
+                        @Model.Vizyon
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <h3 for="frmMisyon" class="fw-bold" style="color:white;">Misyonumuz</h3>
+                    </div>
+                    <div class="col" style="color:darkgray">
+                        @Model.Misyon
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <h3 for="frmHikaye" class="fw-bold" style="color:white;">Hikayemiz</h3>
+                    </div>
+                    <div class="col" style="color:darkgray">
+                        @Model.Hikaye
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <h3 for="frmAdres" class="fw-bold" style="color:white;">Adresimiz</h3>
+                    </div>
+                    <div class="col" style="color:darkgray">
+                        @Model.Adres
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <h3 for="frmEmail" class="fw-bold" style="color:white;">Emailimiz</h3>
+                    </div>
+                    <div class="col" style="color:darkgray">
+                        @Model.Email
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <h3 for="frmTelefon" class="fw-bold" style="color:white;">Telefonumuz</h3>
+                    </div>
+                    <div class="col" style="color:darkgray">
+                        @Model.Telefon
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <h3 for="frmCalismaGunleri" class="fw-bold" style="color:white;">Aktif Günlerimiz</h3>
+                    </div>
+                    <div class="col" style="color:darkgray">
+                        @Model.CalismaGunleri
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br />
+            }
         </div>
-
-        <footer style="background-color:black!important;">
-            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row">
-                <div class="mb-2 mb-md-2">
-                    ©
-                    <script>
-                        document.write(new Date().getFullYear());
-                    </script>
-                    ,
-                    <a href="https://localhost:7019/Home/Index" target="_blank" class="footer-link fw-bolder">Ali E-Commerce</a>
-                </div>
-                <div>
-                    <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
-                    <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
-
-                </div>
-            </div>
-        </footer>
-
-        <div class="content-backdrop fade"></div>
     </div>
+
+    <footer style="background-color:black!important;">
+        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row">
+            <div class="mb-2 mb-md-2">
+                ©
+                <script>
+                    document.write(new Date().getFullYear());
+                </script>
+                ,
+                <a href="https://localhost:7019/Home/Index" target="_blank" class="footer-link fw-bolder">Ali E-Commerce</a>
+            </div>
+            <div>
+                <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
+                <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
+
+            </div>
+        </div>
+    </footer>
+
+    <div class="content-backdrop fade"></div>
 </div>
 
 @section AECScript {
@@ -409,10 +509,10 @@
 
                 document.getElementById('havadurumu').innerHTML =
                     `<div style="font-size: 16px;">
-                            <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                            <span style="color: white;">${temperature}°C</span>,
-                            <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                            </div>`;
+                                                                    <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                                                                    <span style="color: white;">${temperature}°C</span>,
+                                                                    <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                                                                    </div>`;
             })
             .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 
