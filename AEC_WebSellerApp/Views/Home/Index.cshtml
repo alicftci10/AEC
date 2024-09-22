@@ -159,7 +159,7 @@
             </li>
         }
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="/Hakkimizda/HakkimizdaSayfasi" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-eye-fill"></i>
                 <div class="fw-bold">Hakkımızda</div>
             </a>
@@ -304,13 +304,12 @@
                 const temperature = data.main.temp;
                 const weatherDescription = data.weather[0].description;
 
-                document.getElementById('havadurumu').innerHTML = `
-                              <div style="font-size: 16px;">
-                                  <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                                  <span style="color: white;">${temperature}°C</span>,
-                                  <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                              </div>
-                            `;
+                document.getElementById('havadurumu').innerHTML =
+                    `<div style="font-size: 16px;">
+                    <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                    <span style="color: white;">${temperature}°C</span>,
+                    <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                    </div>`;
             })
             .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 

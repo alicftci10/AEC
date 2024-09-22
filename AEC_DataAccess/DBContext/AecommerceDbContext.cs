@@ -24,6 +24,8 @@ public partial class AecommerceDbContext : DbContext
 
     public virtual DbSet<Gpu> Gpus { get; set; }
 
+    public virtual DbSet<Hakkimizdum> Hakkimizda { get; set; }
+
     public virtual DbSet<IsletimSistemi> IsletimSistemis { get; set; }
 
     public virtual DbSet<Kategori> Kategoris { get; set; }
@@ -114,6 +116,25 @@ public partial class AecommerceDbContext : DbContext
                 .HasForeignKey(d => d.EkranKartiSerisiId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_GPU_Kategori");
+        });
+
+        modelBuilder.Entity<Hakkimizdum>(entity =>
+        {
+            entity.Property(e => e.Adres).HasMaxLength(250);
+            entity.Property(e => e.CalismaGunleri).HasMaxLength(250);
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.Hikaye).HasMaxLength(1000);
+            entity.Property(e => e.Misyon).HasMaxLength(1000);
+            entity.Property(e => e.Telefon)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+            entity.Property(e => e.Vizyon).HasMaxLength(1000);
+
+            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.Hakkimizda)
+                .HasForeignKey(d => d.UpdatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Hakkimizda_Kullanici");
         });
 
         modelBuilder.Entity<IsletimSistemi>(entity =>

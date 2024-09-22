@@ -33,6 +33,8 @@ public partial class Kullanici
 
     public virtual ICollection<Gpu> Gpus { get; set; } = new List<Gpu>();
 
+    public virtual ICollection<Hakkimizdum> Hakkimizda { get; set; } = new List<Hakkimizdum>();
+
     public virtual ICollection<IsletimSistemi> IsletimSistemis { get; set; } = new List<IsletimSistemi>();
 
     public virtual ICollection<Kategori> Kategoris { get; set; } = new List<Kategori>();
