@@ -1,0 +1,100 @@
+﻿@model List<UrunResmiDataModel>
+
+<div class="modal fade" id="exLargeModalresim" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Resim Ekle/Düzenle</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <form asp-action="MonitorResimAddUpdate" asp-controller="Monitor" method="post" enctype="multipart/form-data">
+
+                <input type="hidden" name="Id" id="resimId" />
+                <input type="hidden" name="MonitorId" id="monitorid" />
+
+                <div class="modal-body">
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmResimUrl1" class="form-label fw-bold">RESİM 1</label>
+                            <input type="file" name="ResimUrl" accept="image/*" id="frmResimUrl1" class="form-control" onchange="previewImage(this, 'preview1')" />
+                        </div>
+                        <div class="col mb-0">
+                            @if (Model.Count > 0)
+                            {
+                                <img id="preview1" src="~/images/@Model[0].ResimUrl?x=1" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <img id="preview1" class="img-thumbnail" />
+                            }
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmResimUrl2" class="form-label fw-bold">RESİM 2</label>
+                            <input type="file" name="ResimUrl" accept="image/*" id="frmResimUrl2" class="form-control" onchange="previewImage(this, 'preview2')" />
+                        </div>
+                        <div class="col mb-0">
+                            @if (Model.Count > 1)
+                            {
+                                <img id="preview2" src="~/images/@Model[1].ResimUrl?x=1" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <img id="preview2" class="img-thumbnail" />
+                            }
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmResimUrl3" class="form-label fw-bold">RESİM 3</label>
+                            <input type="file" name="ResimUrl" accept="image/*" id="frmResimUrl3" class="form-control" onchange="previewImage(this, 'preview3')" />
+                        </div>
+                        <div class="col mb-0">
+                            @if (Model.Count > 2)
+                            {
+                                <img id="preview3" src="~/images/@Model[2].ResimUrl?x=1" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <img id="preview3" class="img-thumbnail" />
+                            }
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmResimUrl4" class="form-label fw-bold">RESİM 4</label>
+                            <input type="file" name="ResimUrl" accept="image/*" id="frmResimUrl4" class="form-control" onchange="previewImage(this, 'preview4')" />
+                        </div>
+                        <div class="col mb-0">
+                            @if (Model.Count > 3)
+                            {
+                                <img id="preview4" src="~/images/@Model[3].ResimUrl?x=1" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <img id="preview4" class="img-thumbnail" />
+                            }
+                        </div>
+                    </div>
+                    <br />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Kapat
+                    </button>
+                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

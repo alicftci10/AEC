@@ -1,0 +1,140 @@
+﻿@model List<MonitorDataModel>
+
+@{
+    int siralama = 1;
+}
+
+<div class="table-responsive text-nowrap bg-dark" style="height:73vh;">
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>MONİTÖR</th>
+                <th>FİYATI</th>
+                <th>EKLEYEN</th>
+                <th>GÜNCELLEME TARİHİ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+
+            @foreach (var item in Model)
+            {
+                if (ViewData["KullaniciTuru"] == "Admin")
+                {
+                    <tr style="cursor:pointer;" onclick="monitordetay(event, @item.Id)">
+                        <td class="text-center">
+                            @siralama
+                        </td>
+                        <td>
+                            @if (item.ResimUrl != null)
+                            {
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)">
+                                    <img src="~/images/@item.ResimUrl?x=1" width="120" />
+                                </a>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn rounded-pill btn-dark bg-black" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)">
+                                    <i class="bi bi-plus-circle"></i> RESİM EKLE
+                                </button>
+                            }
+                        </td>
+                        <td>@item.MonitorAdi</td>
+                        <td>
+                            @if (item.Fiyat.HasValue)
+                            {
+                                @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                            }
+                        </td>
+                        <td>@item.CreatedByName</td>
+                        <td>@item.CreatedAt</td>
+                        <td>
+                            <div class="dropdown">
+                                <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </div>
+                                <div class="dropdown-menu" style="background-color:black">
+
+                                    <a class="dropdown-item text-warning" href="/Monitor/MonitorSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+
+                                    <button type="button" class="dropdown-item text-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#backDropModal"
+                                            onclick="deleteModal(@item.Id)">
+                                        <i class="bx bx-trash me-1"></i> Sil
+                                    </button>
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr style="cursor:pointer;" onclick="monitordetaypersonel(event, @item.Id)">
+                        <td class="text-center">
+                            @siralama
+                        </td>
+                        <td>
+                            <img src="~/images/@item.ResimUrl?x=1" width="120" />
+                        </td>
+                        <td>@item.MonitorAdi</td>
+                        <td>
+                            @if (item.Fiyat.HasValue)
+                            {
+                                @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                            }
+                        </td>
+                        <td>@item.CreatedByName</td>
+                        <td>@item.CreatedAt</td>
+                        <td>
+                            @if (ViewData["KullaniciTuru"] == "Admin")
+                            {
+                                <div class="dropdown">
+                                    <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </div>
+                                    <div class="dropdown-menu" style="background-color:black">
+
+                                        <a class="dropdown-item text-warning" href="/Monitor/MonitorSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+
+                                        <button type="button" class="dropdown-item text-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#backDropModal"
+                                                onclick="deleteModal(@item.Id)">
+                                            <i class="bx bx-trash me-1"></i> Sil
+                                        </button>
+
+                                    </div>
+                                </div>
+                            }
+
+                        </td>
+                    </tr>
+                }
+
+                siralama++;
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    function monitordetay(event, id) {
+        // Eğer tıklanan eleman dropdown, dropdown'un altındaki elemanlardan biri veya bir resim değilse yönlendir
+        if (!event.target.closest('.dropdown') && !event.target.closest('img')) {
+            window.location.href = '/Monitor/MonitorDetay?pId=' + id;
+        }
+    }
+
+    function monitordetaypersonel(event, id) {
+        // Eğer tıklanan eleman dropdown, dropdown'un altındaki elemanlardan biri değilse yönlendir
+        if (!event.target.closest('.dropdown')) {
+            window.location.href = '/Monitor/MonitorDetay?pId=' + id;
+        }
+    }
+</script>

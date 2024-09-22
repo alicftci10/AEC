@@ -279,7 +279,10 @@ public partial class AecommerceDbContext : DbContext
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.EkranYapisi).HasMaxLength(100);
             entity.Property(e => e.Fiyat).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.Hdr).HasColumnName("HDR");
+            entity.Property(e => e.Hdr)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("HDR");
             entity.Property(e => e.MonitorAdi).HasMaxLength(100);
 
             entity.HasOne(d => d.Cozunurluk).WithMany(p => p.Monitors)

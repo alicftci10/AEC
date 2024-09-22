@@ -1,4 +1,15 @@
-﻿@model GPUDataModel
+﻿@model MonitorDataModel
+
+<style type="text/css">
+
+    .img-thumbnail {
+        max-width: 150px;
+        max-height: 150px;
+        object-fit: cover;
+        margin-top: 10px;
+        margin-left: 50px;
+    }
+</style>
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
@@ -47,7 +58,7 @@
         <li class="menu-header small">
             <span class="menu-header-text">ÜRÜNLER</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-cart3" style="position: relative; top: -2px; -webkit-text-stroke: 0.5px;"></i>
                 <div class="fw-bold">Ürün Yönetimi</div>
@@ -58,14 +69,14 @@
                         <div>Laptop</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="/Monitor/MonitorSayfasi" class="menu-link">
                         <div>Monitör</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li class="menu-item active open">
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-motherboard" style="-webkit-text-stroke: 0.5px;"></i>
                 <div class="fw-bold">Donanım</div>
@@ -76,7 +87,7 @@
                         <div>CPU</div>
                     </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="/GPU/GPUSayfasi" class="menu-link">
                         <div>GPU</div>
                     </a>
@@ -247,7 +258,7 @@
                 <div class="card-header" style="background-color:#329D00;">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
-                            Ekran Kartı Listesi
+                            Monitör Listesi
                         </h4>
                         @if (ViewData["KullaniciTuru"] == "Admin")
                         {
@@ -286,36 +297,72 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel4">Ekran Kartı Ekle/Düzenle</h5>
+                <h5 class="modal-title" id="exampleModalLabel4">Monitör Ekle/Düzenle</h5>
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form asp-action="GPUSayfasi" asp-controller="GPU" method="post">
+            <form asp-action="MonitorSayfasi" asp-controller="Monitor" method="post">
 
                 <input type="hidden" asp-for="Id" id="pId" />
 
                 <div class="modal-body">
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmEkranKartiSerisi" class="form-label fw-bold">EKRAN KARTI SERİSİ</label>
-                            <select asp-for="EkranKartiSerisiId"
-                                    asp-items="@ViewBag.EkranKartiSerisiList"
-                                    class="form-select"
-                                    id="frmEkranKartiSerisi">
-                                <option selected value="">Seçiniz </option>
-                            </select>
-                            <span asp-validation-for="EkranKartiSerisiId" class="text-danger"></span>
+                            <label for="frmMonitorAdi" class="form-label fw-bold">MONİTÖR ADI</label>
+                            <input type="text" asp-for="MonitorAdi" id="frmMonitorAdi" class="form-control" placeholder="Monitör Adı Giriniz" />
+                            <span asp-validation-for="MonitorAdi" class="text-danger"></span>
                         </div>
-                        <div class="col mb-0"></div>
+                        <div class="col mb-0">
+                            <label for="frmFiyat" class="form-label fw-bold">FİYATI</label>
+                            <input type="text" asp-for="Fiyat" id="frmFiyat" class="form-control" placeholder="Fiyat Giriniz" />
+                            <span asp-validation-for="Fiyat" class="text-danger"></span>
+                        </div>
                     </div>
                     <br />
                     <div class="row g-2">
                         <div class="col mb-0">
-                            <label for="frmEkranKartiAdi" class="form-label fw-bold">EKRAN KARTI ADI</label>
-                            <input type="text" asp-for="EkranKartiAdi" id="frmEkranKartiAdi" class="form-control" placeholder="Ekran Kartı Adı Giriniz" />
-                            <span asp-validation-for="EkranKartiAdi" class="text-danger"></span>
+                            <label for="frmCozunurlukId" class="form-label fw-bold">ÇÖZÜNÜRLÜK</label>
+                            <select asp-for="CozunurlukId"
+                                    asp-items="@ViewBag.CozunurlukAdiList"
+                                    class="form-select"
+                                    id="frmCozunurlukId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="CozunurlukId" class="text-danger"></span>
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmYenilemeHiziId" class="form-label fw-bold">YENİLEME HIZI</label>
+                            <select asp-for="YenilemeHiziId"
+                                    asp-items="@ViewBag.YenilemeHiziAdiList"
+                                    class="form-select"
+                                    id="frmYenilemeHiziId">
+                                <option selected value="">Seçiniz </option>
+                            </select>
+                            <span asp-validation-for="YenilemeHiziId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmEkranYapisi" class="form-label fw-bold">EKRAN YAPISI</label>
+                            <input type="text" asp-for="EkranYapisi" id="frmEkranYapisi" class="form-control" placeholder="Ekran Yapısı Giriniz" />
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmHdr" class="form-label fw-bold">HDR</label>
+                            <input type="text" asp-for="Hdr" id="frmHdr" class="form-control" placeholder="HDR Giriniz" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row g-2">
+                        <div class="col mb-0">
+                            <label for="frmBoyut" class="form-label fw-bold">BOYUT</label>
+                            <input type="text" asp-for="Boyut" id="frmBoyut" class="form-control" placeholder="Boyut Giriniz" />
+                        </div>
+                        <div class="col mb-0">
+                            <label for="frmAgirlik" class="form-label fw-bold">AĞIRLIK</label>
+                            <input type="text" asp-for="Agirlik" id="frmAgirlik" class="form-control" placeholder="Ağırlık Giriniz" />
                         </div>
                     </div>
                     <br />
@@ -334,6 +381,7 @@
     </div>
 </div>
 
+<div id="list2"></div>
 
 <div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
     <div class="modal-dialog">
@@ -348,7 +396,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-3" style="color:black">
-                        Ekran Kartını Silmek İstediğinize Emin Misiniz ?
+                        Monitör Kaydını Silmek İstediğinize Emin Misiniz ?
                     </div>
                 </div>
             </div>
@@ -369,8 +417,14 @@
         function addModal() {
 
             $('#pId').val('0');
-            $('#frmEkranKartiSerisi').val('');
-            $('#frmEkranKartiAdi').val('');
+            $('#frmMonitorAdi').val('');
+            $('#frmFiyat').val('');
+            $('#frmCozunurlukId').val('');
+            $('#frmYenilemeHiziId').val('');
+            $('#frmEkranYapisi').val('');
+            $('#frmHdr').val('');
+            $('#frmBoyut').val('');
+            $('#frmAgirlik').val('');
 
         }
 
@@ -379,7 +433,7 @@
             $('#searchBox').on('input', function () {
                 var searchTerm = $(this).val();
                 $.ajax({
-                    url: '/GPU/GPUListesi',
+                    url: '/Monitor/MonitorListesi',
                     type: 'GET',
                     data: { searchTerm: searchTerm },
                     success: function (data) {
@@ -393,7 +447,7 @@
         });
 
         $.ajax({
-            url: '/GPU/GPUListesi',
+            url: '/Monitor/MonitorListesi',
             type: 'GET',
             success: function (result) {
                 $('#list').html(result);
@@ -419,23 +473,65 @@
 
             var messageBox = '@TempData["MessageBox"]';
             if (messageBox == 1) {
-                MessageBox("success", "Ekran Kartı Kayıt Edildi");
+                MessageBox("success", "Monitör Kayıt Edildi");
+                resimModal();
             }
             else if (messageBox == 2) {
-                MessageBox("success", "Ekran Kartı Silindi");
+                MessageBox("success", "Monitör Silindi");
+            }
+            else if (messageBox == 4) {
+                MessageBox("success", "Resim Kayıt Edildi");
+            }
+            else if (messageBox == 5) {
+                MessageBox("success", "Resim Silindi");
             }
 
         });
 
+        function resimModal(id) {
+            $.ajax({
+                url: '/Monitor/MonitorResimAddUpdate?pMonitorId=' + id,
+                type: 'GET',
+                success: function (result) {
+                    $('#list2').html(result);
+                    var modal = new bootstrap.Modal(document.getElementById('exLargeModalresim'));
+                    modal.show();
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+        }
+
         $('#exLargeModal').on('hidden.bs.modal', function () {
+            $('.modal-backdrop').remove();
+        });
+
+        $('#list2').on('hidden.bs.modal', function () {
             $('.modal-backdrop').remove();
         });
 
         function deleteModal(id) {
 
             const confirmDeleteLink = document.getElementById('confirmDeleteLink');
-            confirmDeleteLink.href = '/GPU/GPUSil?pId=' + id;
+            confirmDeleteLink.href = '/Monitor/MonitorSil?pId=' + id;
 
+        }
+
+        function previewImage(input, previewId) {
+            const file = input.files[0];
+            const preview = document.getElementById(previewId);
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result; // Seçilen dosyanın önizleme URL'sini ayarla
+                    preview.style.display = 'block'; // Resmi göster
+                }
+                reader.readAsDataURL(file); // Dosyayı URL formatında oku
+            } else {
+                preview.style.display = 'none'; // Dosya seçilmediğinde resmi gizle
+            }
         }
 
     </script>

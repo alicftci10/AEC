@@ -779,5 +779,36 @@ namespace AEC_WebSellerApp.Controllers
                 }
             }
         }
+
+        public void LoadMonitorList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/MonitorApi/GetAllMonitor";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<MonitorDataModel> modelList = new List<MonitorDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<MonitorDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> MonitorAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        MonitorAdi.Add(item.MonitorAdi);
+                    }
+
+                    HttpContext.Session.SetString("MonitorAdiList", JsonConvert.SerializeObject(MonitorAdi));
+                }
+            }
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
+﻿@model MonitorDataModel
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
         <div class="app-brand-link">
             <span class="menu-text fw-bolder ms-2" style="font-size:32px;"><img src="~/assets/img/favicon/AEC.ico" width="45" />EC</span>
@@ -13,7 +15,7 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item">
             <a href="/Home/Index" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div class="fw-bold">Ana Sayfa</div>
@@ -45,7 +47,7 @@
         <li class="menu-header small">
             <span class="menu-header-text">ÜRÜNLER</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-cart3" style="position: relative; top: -2px; -webkit-text-stroke: 0.5px;"></i>
                 <div class="fw-bold">Ürün Yönetimi</div>
@@ -56,7 +58,7 @@
                         <div>Laptop</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="/Monitor/MonitorSayfasi" class="menu-link">
                         <div>Monitör</div>
                     </a>
@@ -180,7 +182,7 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center col">
-                @*  <div class="col nav-item d-flex align-items-center">
+                @* <div class="col nav-item d-flex align-items-center">
                 <i class="bx bx-search fs-4 lh-0"></i>
                 <input type="text"
                 id="searchBox"
@@ -244,33 +246,215 @@
     <div class="content-wrapper">
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            buraya yazılacak
-        </div>
-
-        <footer style="background-color:black!important;">
-            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row">
-                <div class="mb-2 mb-md-2">
-                    ©
-                    <script>
-                        document.write(new Date().getFullYear());
-                    </script>
-                    ,
-                    <a href="https://localhost:7019/Home/Index" target="_blank" class="footer-link fw-bolder">Ali E-Commerce</a>
+            <h4 class="fw-bold py-3 mb-4">Monitör / Ürün Kodu : MT - @Model.Id</h4>
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div id="monitorresim"></div>
                 </div>
-                <div>
-                    <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
-                    <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
+                <div class="col-md-1"></div>
+                <div class="col-md mb-4 mb-md-0">
+                    <h2 class="fw-bold" style="color:#329d00">@Model.MonitorAdi</h2>
+                    Ürün Puanı Yazılacak
+                    <br />
+                    <br />
+                    <h3 class="fw-bold" style="color:white">@Formatting.FormatTurkLirasi(Model.Fiyat.Value)</h3>
+                    <br />
+                    <h4 class="fw-bold" style="color:white">Teknik Özellikler</h4>
+                    <ul style="margin-top:5px;color:darkgray">
+                        <li>@Model.EkranYapisi</li>
+                        <li>@Model.YenilemeHiziIdName</li>
+                        <li>1 Ms Tepki Süresi</li>
+                        <li>@Model.CozunurlukIdName</li>
+                        <li>@Model.Hdr</li>
+                    </ul>
+                    <a href="#teknikozellikler" class="fw-bold" style="font-size:15px;color:#329d00;"><i class="bi bi-caret-down-fill"></i> Tüm Teknik Özellikler</a>
                 </div>
             </div>
-        </footer>
-
-        <div class="content-backdrop fade"></div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <h2 class="text-center" style="color:white;">Tarzını Belli Et</h2>
+            <br />
+            <h4 class="text-center" style="color:white;">
+                Masana biraz daha renk katmak istersen
+                dinamik değişen RGB
+                aydınlatmasıyla galibiyetlerine tarz kat.
+            </h4>
+            <br />
+            <h2 class="text-center" style="color:white;">
+                Hoparlörün Hazır
+            </h2>
+            <br />
+            <h4 class="text-center" style="color:white;">
+                Aryond içinde barındırdığı iki adet 2 Wattlık hoparlörü ile ekstra bir ses kaynağına ihtiyaç duymadan ses üretebilir,
+                film izlerken ya da oyun oynarken eğlenceye ara vermezsin.
+            </h4>
+            <br />
+            <br id="teknikozellikler" />
+            <h1 style="color:#329d00">Teknik Özellikler</h1>
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">Monitör Özellikleri</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Ekran Yapısı
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.EkranYapisi</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Çözünürlük
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.CozunurlukIdName</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Yenileme Hızı
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.YenilemeHiziIdName</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Parlaklık
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>300 cd/m²</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Renk Sayısı
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>16.7M</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        HDR
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.Hdr</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Boyut
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.Boyut</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Ağırlık
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.Agirlik</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Garanti Süresi
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>2 YIL</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Ürün Kodu
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>MT - @Model.Id</span>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <footer style="background-color:black!important;">
+        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row">
+            <div class="mb-2 mb-md-2">
+                ©
+                <script>
+                    document.write(new Date().getFullYear());
+                </script>
+                ,
+                <a href="https://localhost:7019/Home/Index" target="_blank" class="footer-link fw-bolder">Ali E-Commerce</a>
+            </div>
+            <div>
+                <a href="https://wa.me/905546813361?text=Bilgi%20Almak%20istiyorum" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
+                <a href="https://www.instagram.com/alicftciii/" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
+
+            </div>
+        </div>
+    </footer>
+
+    <div class="content-backdrop fade"></div>
 </div>
 
 @section AECScript {
 
     <script type="text/javascript">
+
+        $.ajax({
+            url: '/Monitor/MonitorDetayResim?pMonitorId=' + '@Model.Id',
+            type: 'GET',
+            success: function (result) {
+                $('#monitorresim').html(result);
+            },
+            error: function (xhr, status, error) {
+                MessageBox("Error: " + error);
+            }
+        });
 
         //Anlık hava durumu ve zaman bilgisi
 
@@ -304,13 +488,12 @@
                 const temperature = data.main.temp;
                 const weatherDescription = data.weather[0].description;
 
-                document.getElementById('havadurumu').innerHTML = `
-                              <div style="font-size: 16px;">
-                                  <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                                  <span style="color: white;">${temperature}°C</span>,
-                                  <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                              </div>
-                            `;
+                document.getElementById('havadurumu').innerHTML =
+                    `<div style="font-size: 16px;">
+                    <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                    <span style="color: white;">${temperature}°C</span>,
+                    <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                    </div>`;
             })
             .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 

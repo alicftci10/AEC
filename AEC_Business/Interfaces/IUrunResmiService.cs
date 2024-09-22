@@ -13,7 +13,9 @@ namespace AEC_Business.Interfaces
     {
         List<UrunResmiDataModel> GetAllUrunResmi();
 
-        bool AddUpdate(int LaptopId, List<IFormFile> ResimUrl, int CreatedBy);
+        bool AddUpdateLaptop(int LaptopId, List<IFormFile> ResimUrl, int CreatedBy);
+
+        bool AddUpdateMonitor(int MonitorId, List<IFormFile> ResimUrl, int CreatedBy);
 
         List<UrunResmiDataModel> GetLaptopResmiList(int pLaptopId);
 

@@ -45,9 +45,16 @@ namespace AEC_WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult AddUpdate([FromForm] int LaptopId, [FromForm] List<IFormFile> ResimUrl)
+        public IActionResult AddUpdateLaptop([FromForm] int LaptopId, [FromForm] List<IFormFile> ResimUrl)
         {
-            return Ok(_UrunResmi.AddUpdate(LaptopId, ResimUrl, GetCurrentKullanici(HttpContext).Id));
+            return Ok(_UrunResmi.AddUpdateLaptop(LaptopId, ResimUrl, GetCurrentKullanici(HttpContext).Id));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult AddUpdateMonitor([FromForm] int MonitorId, [FromForm] List<IFormFile> ResimUrl)
+        {
+            return Ok(_UrunResmi.AddUpdateMonitor(MonitorId, ResimUrl, GetCurrentKullanici(HttpContext).Id));
         }
 
         [HttpDelete]

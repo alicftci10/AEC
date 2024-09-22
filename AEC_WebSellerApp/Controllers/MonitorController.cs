@@ -7,13 +7,13 @@ using System.Text;
 
 namespace AEC_WebSellerApp.Controllers
 {
-    public class LaptopController : BaseController
+    public class MonitorController : BaseController
     {
-        public async Task<IActionResult> LaptopListesi(string searchTerm)
+        public async Task<IActionResult> MonitorListesi(string searchTerm)
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/GetLaptopList";
+                string url = ConfigurationInfo.ApiUrl + "/api/MonitorApi/GetMonitorList";
 
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
@@ -24,26 +24,21 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.GetAsync(url);
 
-                List<LaptopDataModel> modelList = new List<LaptopDataModel>();
+                List<MonitorDataModel> modelList = new List<MonitorDataModel>();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    modelList = JsonConvert.DeserializeObject<List<LaptopDataModel>>(response.Content.ReadAsStringAsync().Result);
+                    modelList = JsonConvert.DeserializeObject<List<MonitorDataModel>>(response.Content.ReadAsStringAsync().Result);
                 }
 
                 return PartialView(modelList);
             }
         }
 
-        public async Task<IActionResult> LaptopSayfasi(int? pId)
+        public async Task<IActionResult> MonitorSayfasi(int? pId)
         {
             using (HttpClient client = new HttpClient())
             {
-                LoadIsletimSistemiList();
-                LoadCPUList();
-                LoadGPUList();
-                LoadRAMList();
-                LoadSSDList();
                 LoadCozunurlukList();
                 LoadYenilemeHiziList();
 
@@ -69,7 +64,7 @@ namespace AEC_WebSellerApp.Controllers
                     HttpContext.Session.SetInt32("MessageBox", 3);
                 }
 
-                LaptopDataModel model = new LaptopDataModel();
+                MonitorDataModel model = new MonitorDataModel();
 
                 if (pId > 0)
                 {
@@ -78,7 +73,7 @@ namespace AEC_WebSellerApp.Controllers
                         return View(model);
                     }
 
-                    string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/GetLaptop";
+                    string url = ConfigurationInfo.ApiUrl + "/api/MonitorApi/GetMonitor";
 
                     url += $"?pId={pId}";
 
@@ -88,9 +83,9 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
-                        model = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
+                        model = JsonConvert.DeserializeObject<MonitorDataModel>(response.Content.ReadAsStringAsync().Result);
 
-                        HttpContext.Session.SetString("secilenLaptopAdi", model.LaptopAdi);
+                        HttpContext.Session.SetString("secilenMonitorAdi", model.MonitorAdi);
                     }
                 }
 
@@ -99,45 +94,40 @@ namespace AEC_WebSellerApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LaptopSayfasi(LaptopDataModel model)
+        public async Task<IActionResult> MonitorSayfasi(MonitorDataModel model)
         {
             using (HttpClient client = new HttpClient())
             {
-                LoadIsletimSistemiList();
-                LoadCPUList();
-                LoadGPUList();
-                LoadRAMList();
-                LoadSSDList();
                 LoadCozunurlukList();
                 LoadYenilemeHiziList();
 
                 if (ModelState.IsValid)
                 {
-                    string? secilenLaptopAdi = HttpContext.Session.GetString("secilenLaptopAdi");
+                    string? secilenMonitorAdi = HttpContext.Session.GetString("secilenMonitorAdi");
 
                     if (model.Id == 0)
                     {
-                        secilenLaptopAdi = null;
+                        secilenMonitorAdi = null;
                     }
 
-                    LoadLaptopList();
+                    LoadMonitorList();
 
-                    if (model.LaptopAdi != secilenLaptopAdi)
+                    if (model.MonitorAdi != secilenMonitorAdi)
                     {
-                        var LaptopAdi = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("LaptopAdiList"));
+                        var MonitorAdi = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("MonitorAdiList"));
 
-                        if (LaptopAdi != null)
+                        if (MonitorAdi != null)
                         {
-                            if (LaptopAdi.Contains(model.LaptopAdi))
+                            if (MonitorAdi.Contains(model.MonitorAdi))
                             {
-                                ModelState.AddModelError("LaptopAdi", "Bu Laptop Adı daha önce kullanılmış. Lütfen farklı Laptop Adı deneyin!");
+                                ModelState.AddModelError("MonitorAdi", "Bu Monitör Adı daha önce kullanılmış. Lütfen farklı Monitör Adı deneyin!");
                                 model.IsSuccess = true;
                                 return View(model);
                             }
                         }
                     }
 
-                    string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/AddUpdate";
+                    string url = ConfigurationInfo.ApiUrl + "/api/MonitorApi/AddUpdate";
 
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
 
@@ -148,11 +138,11 @@ namespace AEC_WebSellerApp.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
-                        var kayitedilenmodel = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
+                        var kayitedilenmodel = JsonConvert.DeserializeObject<MonitorDataModel>(response.Content.ReadAsStringAsync().Result);
 
-                        HttpContext.Session.SetInt32("secilenLaptopId", kayitedilenmodel.Id);
+                        HttpContext.Session.SetInt32("secilenMonitorId", kayitedilenmodel.Id);
                         HttpContext.Session.SetInt32("MessageBox", 1);
-                        return RedirectToAction("LaptopSayfasi");
+                        return RedirectToAction("MonitorSayfasi");
 
                     }
                 }
@@ -162,23 +152,23 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public async Task<IActionResult> LaptopResimAddUpdate(int? pLaptopId)
+        public async Task<IActionResult> MonitorResimAddUpdate(int? pMonitorId)
         {
             using (HttpClient client = new HttpClient())
             {
                 if (CurrentKullanici.KullaniciTuruId == 2)
                 {
-                    return RedirectToAction("LaptopSayfasi");
+                    return RedirectToAction("MonitorSayfasi");
                 }
 
-                if (pLaptopId == null)
+                if (pMonitorId == null)
                 {
-                    pLaptopId = HttpContext.Session.GetInt32("secilenLaptopId");
+                    pMonitorId = HttpContext.Session.GetInt32("secilenMonitorId");
                 }
 
-                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetLaptopResmiList";
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetMonitorResmiList";
 
-                url += $"?pLaptopId={pLaptopId}";
+                url += $"?pMonitorId={pMonitorId}";
 
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
 
@@ -189,7 +179,7 @@ namespace AEC_WebSellerApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     model = JsonConvert.DeserializeObject<List<UrunResmiDataModel>>(response.Content.ReadAsStringAsync().Result);
-                    HttpContext.Session.SetInt32("secilenLaptopId",pLaptopId.Value);
+                    HttpContext.Session.SetInt32("secilenMonitorId", pMonitorId.Value);
                 }
 
                 return PartialView(model);
@@ -197,15 +187,15 @@ namespace AEC_WebSellerApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LaptopResimAddUpdate(List<IFormFile> ResimUrl)
+        public async Task<IActionResult> MonitorResimAddUpdate(List<IFormFile> ResimUrl)
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/AddUpdateLaptop";
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/AddUpdateMonitor";
 
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
 
-                int? LaptopId = HttpContext.Session.GetInt32("secilenLaptopId");
+                int? MonitorId = HttpContext.Session.GetInt32("secilenMonitorId");
 
                 using (var multipartFormContent = new MultipartFormDataContent())
                 {
@@ -219,9 +209,9 @@ namespace AEC_WebSellerApp.Controllers
                         }
                     }
 
-                    if (LaptopId.HasValue)
+                    if (MonitorId.HasValue)
                     {
-                        multipartFormContent.Add(new StringContent(LaptopId.Value.ToString()), "LaptopId");
+                        multipartFormContent.Add(new StringContent(MonitorId.Value.ToString()), "MonitorId");
                     }
 
                     var response = await client.PostAsync(url, multipartFormContent);
@@ -229,7 +219,7 @@ namespace AEC_WebSellerApp.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         HttpContext.Session.SetInt32("MessageBox", 4);
-                        return RedirectToAction("LaptopSayfasi");
+                        return RedirectToAction("MonitorSayfasi");
                     }
                 }
 
@@ -237,11 +227,11 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public async Task<IActionResult> LaptopDetay(int pId)
+        public async Task<IActionResult> MonitorDetay(int pId)
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/GetLaptopId";
+                string url = ConfigurationInfo.ApiUrl + "/api/MonitorApi/GetMonitorId";
 
                 url += $"?pId={pId}";
 
@@ -249,24 +239,24 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.GetAsync(url);
 
-                LaptopDataModel model = new LaptopDataModel();
+                MonitorDataModel model = new MonitorDataModel();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    model = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
+                    model = JsonConvert.DeserializeObject<MonitorDataModel>(response.Content.ReadAsStringAsync().Result);
                 }
 
                 return View(model);
             }
         }
 
-        public async Task<IActionResult> LaptopDetayResim(int pLaptopId)
+        public async Task<IActionResult> MonitorDetayResim(int pMonitorId)
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetLaptopResmiList";
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetMonitorResmiList";
 
-                url += $"?pLaptopId={pLaptopId}";
+                url += $"?pMonitorId={pMonitorId}";
 
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
 
@@ -283,11 +273,11 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public async Task<IActionResult> LaptopSil(int pId)
+        public async Task<IActionResult> MonitorSil(int pId)
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/Delete";
+                string url = ConfigurationInfo.ApiUrl + "/api/MonitorApi/Delete";
 
                 url += $"?pId={pId}";
 
@@ -296,7 +286,7 @@ namespace AEC_WebSellerApp.Controllers
                 var response = await client.DeleteAsync(url);
 
                 HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("LaptopSayfasi");
+                return RedirectToAction("MonitorSayfasi");
             }
         }
     }

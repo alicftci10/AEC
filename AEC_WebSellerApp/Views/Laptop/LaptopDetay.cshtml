@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="/Monitor/MonitorSayfasi" class="menu-link">
                         <div>Monitör</div>
                     </a>
                 </li>
@@ -251,6 +251,7 @@
                 <div class="col-md-4 mb-4 mb-md-0">
                     <div id="laptopresim"></div>
                 </div>
+                <div class="col-md-1"></div>
                 <div class="col-md mb-4 mb-md-0">
                     <h2 class="fw-bold" style="color:#329d00">@Model.LaptopAdi</h2>
                     Ürün Puanı Yazılacak
@@ -269,7 +270,7 @@
                         <li>2 Adet Disk Desteği (2x M.2 SSD)</li>
                         <li>@Model.Klavye</li>
                     </ul>
-                    <a href="#teknikozellikler" class="fw-bold" style="font-size:15px;color:#329d00"><i class="bi bi-caret-down-fill"></i> Tüm Teknik Özellikler</a>
+                    <a href="#teknikozellikler" class="fw-bold" style="font-size:15px;color:#329d00;"><i class="bi bi-caret-down-fill"></i> Tüm Teknik Özellikler</a>
                 </div>
             </div>
             <br />
@@ -280,34 +281,32 @@
             <br />
             <h3 class="text-center" style="color:white;">HIZLININ ÖTESİNDE</h3>
             <br />
-            <p class="text-center" style="color:white;">
+            <h4 class="text-center" style="color:white;">
                 NVIDIA® GeForce RTX™ 40 Serisi Monster Notebook GPU'ları,
                 oyuncular ve içerik oluşturucular için dünyanın en hızlı dizüstü bilgisayarlarına güç sağlıyor.
                 Son derece verimli NVIDIA Ada Lovelace mimarisi ile geliştirilen bu GPU'lar,
                 yapay zeka destekli DLSS 3 ile performansta dev bir artış sağlar ve tam ışın izleme ile gerçekçi sanal dünyalara olanak tanır.
                 Ayrıca Max-P ve Max-Q teknolojileri en yüksek verimlilik için sistem performansını, gücü, pil ömrünü ve akustiği optimize eder.
-            </p>
+            </h4>
             <br />
-            <h3 class="text-center" style="color:white;">Oyuncular ve içerik oluşturucular için en iyi platform.</h3>
+            <h4 class="text-center" style="color:white;">Oyuncular ve içerik oluşturucular için en iyi platform.</h4>
             <br />
             <h2 class="text-center" style="color:white;">GeForce RTX™ 40 Serisi ve DLSS 3 Tarafından Desteklenmektedir</h2>
             <br />
-            <h3 class="text-center" style="color:white;">
+            <h4 class="text-center" style="color:white;">
                 Yeni Duraksız İşlem Özellikli Çoklu İşlemciler
                 2 kata kadar performans ve enerji tasarrufu
-            </h3>
-            <br />
-            <h3 class="text-center" style="color:white;">
+            </h4>
+            <h4 class="text-center" style="color:white;">
                 Dördüncü Nesil Tensor Çekirdekleri
                 Her noktanın değerini ayrı hesaplama yaklaşımına kıyasla DLSS 3 ile 4 kata kadar performans
-            </h3>
-            <br />
-            <h3 class="text-center" style="color:white;">
+            </h4>
+            <h4 class="text-center" style="color:white;">
                 Üçüncü Nesil RT Çekirdekleri
                 2 kata kadar Ray Tracing performansı
-            </h3>
+            </h4>
             <br />
-            <br id ="teknikozellikler" />
+            <br id="teknikozellikler" />
             <h1 style="color:#329d00">Teknik Özellikler</h1>
             <br />
             <div class="divider divider-success text-start">
@@ -616,13 +615,12 @@
                 const temperature = data.main.temp;
                 const weatherDescription = data.weather[0].description;
 
-                document.getElementById('havadurumu').innerHTML = `
-                                                                                                                                      <div style="font-size: 16px;">
-                                                                                                                                          <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                                                                                                                                          <span style="color: white;">${temperature}°C</span>,
-                                                                                                                                          <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                                                                                                                                      </div>
-                                                                                                                                    `;
+                document.getElementById('havadurumu').innerHTML =
+                    `<div style="font-size: 16px;">
+                    <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                    <span style="color: white;">${temperature}°C</span>,
+                    <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                    </div>`;
             })
             .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 

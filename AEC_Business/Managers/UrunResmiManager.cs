@@ -51,7 +51,7 @@ namespace AEC_Business.Managers
             return listUrunResmi;
         }
 
-        public bool AddUpdate(int LaptopId, List<IFormFile> ResimUrl, int CreatedBy)
+        public bool AddUpdateLaptop(int LaptopId, List<IFormFile> ResimUrl, int CreatedBy)
         {
             string imageFilePath = "Laptop_" + LaptopId;
             string imagePath = ConfigurationInfo.UrunResmiFolderUrl + "\\" + imageFilePath;
@@ -89,6 +89,58 @@ namespace AEC_Business.Managers
                     UrunResmiDataModel img = new UrunResmiDataModel();
 
                     img.LaptopId = LaptopId;
+                    img.ResimUrl = imageFilePath + "\\" + index + Path.GetExtension(imagePath + file.FileName);
+                    img.ResimBoyutu = file.Length;
+                    img.ResimTuru = file.ContentType;
+                    img.CreatedBy = CreatedBy;
+
+                    Add(img);
+
+                    index++;
+                }
+            }
+
+            return true;
+        }
+
+        public bool AddUpdateMonitor(int MonitorId, List<IFormFile> ResimUrl, int CreatedBy)
+        {
+            string imageFilePath = "Monitor_" + MonitorId;
+            string imagePath = ConfigurationInfo.UrunResmiFolderUrl + "\\" + imageFilePath;
+            if (!Directory.Exists(imagePath))
+            {
+                Directory.CreateDirectory(imagePath);
+            }
+            else
+            {
+                var deleteList = GetMonitorResmiList(MonitorId);
+                foreach (var item in deleteList)
+                {
+                    Delete(item.Id);
+                }
+            }
+
+            int index = 1;
+
+            foreach (var file in ResimUrl)
+            {
+                if (ResimUrl == null || file.Length == 0 || MonitorId <= 0)
+                {
+                    return false;
+                }
+
+                if (file.Length > 0)
+                {
+                    var filePath = Path.Combine(imagePath, index + Path.GetExtension(imagePath + file.FileName));
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    UrunResmiDataModel img = new UrunResmiDataModel();
+
+                    img.MonitorId = MonitorId;
                     img.ResimUrl = imageFilePath + "\\" + index + Path.GetExtension(imagePath + file.FileName);
                     img.ResimBoyutu = file.Length;
                     img.ResimTuru = file.ContentType;

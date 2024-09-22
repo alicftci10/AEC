@@ -17,7 +17,7 @@ public partial class Monitor
 
     public string? EkranYapisi { get; set; }
 
-    public bool? Hdr { get; set; }
+    public string? Hdr { get; set; }
 
     public string? Boyut { get; set; }
 
