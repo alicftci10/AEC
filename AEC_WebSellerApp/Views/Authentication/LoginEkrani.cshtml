@@ -16,12 +16,11 @@
         <div class="authentication">
             <!-- Register -->
             <div class="card" >
-                <div class="card-body" style="background-color:darkblue;">
-
-                    <span class="row justify-content-center menu-text fw-bolder" style="font-size:32px;margin-bottom:10px;"><img src="~/assets/img/favicon/AEC.ico" style="width:49px;padding-right:unset;padding-left:unset;" />EC</span>
-
-                    <h4 class="row justify-content-center mb-2 fw-bold" style="margin-bottom:10px;">Giriş Ekranı 👋</h4>
-                    <p class="mb-4">Lütfen size tanımlanan kullanıcı adı ve şifre ile giriş yapınız!</p>
+                <div class="card-body bg-dark">
+                    <span class="row justify-content-center menu-text fw-bolder" style="font-size:32px;"><img src="~/assets/img/favicon/AEC.ico" style="width:49px;padding-right:unset;padding-left:unset;" />EC</span>
+                    <br />
+                    <h4 class="row justify-content-center mb-2 fw-bold" style="margin-bottom:10px;color:white">Giriş Ekranı 👋</h4>
+                    <p class="mb-4 text-white">Lütfen size tanımlanan kullanıcı adı ve şifre ile giriş yapınız!</p>
 
                     <form id="formAuthentication" class="mb-3" asp-controller="Authentication" asp-action="LoginEkrani" method="post">
 
@@ -32,7 +31,7 @@
                         <input type="hidden" asp-for="KullaniciTuruId" value="0" />
 
                         <div class="mb-3">
-                            <label for="email" class="form-label fw-bold">Kullanıcı Adı</label>
+                            <label for="email" class="form-label fw-bold">KULLANICI ADI</label>
                             <input type="text" asp-for="EmailorKullaniciAdi"
                                    class="form-control"
                                    id="email"
@@ -42,7 +41,7 @@
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <div class="d-flex justify-content-between">
-                                <label class="form-label fw-bold" for="password">Şifre</label>
+                                <label class="form-label fw-bold" for="password">ŞİFRE</label>
                             </div>
                             <div class="input-group input-group-merge">
                                 <input type="password" asp-for="Sifre"
@@ -57,7 +56,7 @@
                         <div class="mb-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="remember-me" />
-                                <label class="form-check-label" for="remember-me"> Beni Hatırla </label>
+                                <label class="form-check-label fw-bold" for="remember-me"> Beni Hatırla </label>
                             </div>
                         </div>
                         <div class="mb-3">
