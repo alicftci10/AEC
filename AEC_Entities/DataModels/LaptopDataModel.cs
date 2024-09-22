@@ -23,6 +23,8 @@ namespace AEC_Entities.DataModels
         [Required(ErrorMessage = "İşlemci Boş Girilemez!!")]
         public int? IslemciId { get; set; }
 
+        public string? IslemciMimarisiIdName { get; set; }
+
         public string? IslemciIdName { get; set; }
 
         [Required(ErrorMessage = "Ekran Kartı Boş Girilemez!!")]

@@ -47,6 +47,7 @@ namespace AEC_DataAccess.EFOperations
                                 IsletimSistemiIdName = isletsis.IsletimSistemiAdi,
                                 IslemciId = x.IslemciId,
                                 IslemciIdName = islemci.IslemciAdi,
+                                IslemciMimarisiIdName = islemci.IslemciMimarisi,
                                 EkranKartiId = x.EkranKartiId,
                                 EkranKartiIdName = ekran.EkranKartiAdi,
                                 BellekId = x.BellekId,
@@ -79,6 +80,65 @@ namespace AEC_DataAccess.EFOperations
                 }
 
                 return List;
+            }
+        }
+
+        public LaptopDataModel GetLaptopId(int pId)
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                var laptop = (from x in db.Laptops
+
+                            join kul in db.Kullanicis on x.CreatedBy equals kul.Id
+
+                            join isletsis in db.IsletimSistemis on x.IsletimSistemiId equals isletsis.Id
+
+                            join islemci in db.Cpus on x.IslemciId equals islemci.Id
+
+                            join ekran in db.Gpus on x.EkranKartiId equals ekran.Id
+
+                            join bellek in db.Rams on x.BellekId equals bellek.Id
+
+                            join depolama in db.Ssds on x.DepolamaId equals depolama.Id
+
+                            join cozunurluk in db.Cozunurluks on x.CozunurlukId equals cozunurluk.Id
+
+                            join yenhizi in db.YenilemeHizis on x.YenilemeHiziId equals yenhizi.Id
+
+                            where x.Id == pId
+
+                            select new LaptopDataModel
+                            {
+                                Id = x.Id,
+                                LaptopAdi = x.LaptopAdi,
+                                Fiyat = x.Fiyat,
+                                IsletimSistemiId = x.IsletimSistemiId,
+                                IsletimSistemiIdName = isletsis.IsletimSistemiAdi,
+                                IslemciId = x.IslemciId,
+                                IslemciIdName = islemci.IslemciAdi,
+                                IslemciMimarisiIdName = islemci.IslemciMimarisi,
+                                EkranKartiId = x.EkranKartiId,
+                                EkranKartiIdName = ekran.EkranKartiAdi,
+                                BellekId = x.BellekId,
+                                BellekIdName = bellek.BellekAdi,
+                                DepolamaId = x.DepolamaId,
+                                DepolamaIdName = depolama.DepolamaAdi,
+                                CozunurlukId = x.CozunurlukId,
+                                CozunurlukIdName = cozunurluk.CozunurlukAdi,
+                                YenilemeHiziId = x.YenilemeHiziId,
+                                YenilemeHiziIdName = yenhizi.YenilemeHiziAdi,
+                                Klavye = x.Klavye,
+                                Boyut = x.Boyut,
+                                Agirlik = x.Agirlik,
+                                Batarya = x.Batarya,
+                                CreatedAt = x.CreatedAt,
+                                CreatedBy = x.CreatedBy,
+                                CreatedByName = kul.Ad + " " + kul.Soyad,
+                                ResimUrl = db.UrunResmis.Where(i => i.LaptopId == x.Id).Select(i => i.ResimUrl).FirstOrDefault()
+
+                            }).FirstOrDefault();
+
+                return laptop;
             }
         }
     }

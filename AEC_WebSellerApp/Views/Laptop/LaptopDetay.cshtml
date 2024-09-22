@@ -246,17 +246,303 @@
     <div class="content-wrapper">
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">Laptop / Ürün Kodu : @Model.Id</h4>
+            <h4 class="fw-bold py-3 mb-4">Laptop / Ürün Kodu : LT - @Model.Id</h4>
             <div class="row">
                 <div class="col-md-4 mb-4 mb-md-0">
                     <div id="laptopresim"></div>
                 </div>
                 <div class="col-md mb-4 mb-md-0">
-                    <span class="fw-bold" style="font-size:30px;color:#329d00">@Model.LaptopAdi</span>
-                    <br />
+                    <h2 class="fw-bold" style="color:#329d00">@Model.LaptopAdi</h2>
                     Ürün Puanı Yazılacak
                     <br />
-                    <span class="fw-bold" style="font-size:30px;color:white">@Formatting.FormatTurkLirasi(Model.Fiyat.Value)</span>
+                    <br />
+                    <h3 class="fw-bold" style="color:white">@Formatting.FormatTurkLirasi(Model.Fiyat.Value)</h3>
+                    <br />
+                    <h4 class="fw-bold" style="color:white">Teknik Özellikler</h4>
+                    <ul style="margin-top:5px;color:darkgray">
+                        <li>@Model.IslemciIdName</li>
+                        <li>@Model.IsletimSistemiIdName</li>
+                        <li>@Model.EkranKartiIdName</li>
+                        <li>@Model.CozunurlukIdName @Model.YenilemeHiziIdName</li>
+                        <li>@Model.BellekIdName</li>
+                        <li>@Model.DepolamaIdName</li>
+                        <li>2 Adet Disk Desteği (2x M.2 SSD)</li>
+                        <li>@Model.Klavye</li>
+                    </ul>
+                    <a href="#teknikozellikler" class="fw-bold" style="font-size:15px;color:#329d00"><i class="bi bi-caret-down-fill"></i> Tüm Teknik Özellikler</a>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <h2 class="text-center" style="color:white;">GeForce RTX™ 40 Serisi Monster Notebooklar</h2>
+            <br />
+            <h3 class="text-center" style="color:white;">HIZLININ ÖTESİNDE</h3>
+            <br />
+            <p class="text-center" style="color:white;">
+                NVIDIA® GeForce RTX™ 40 Serisi Monster Notebook GPU'ları,
+                oyuncular ve içerik oluşturucular için dünyanın en hızlı dizüstü bilgisayarlarına güç sağlıyor.
+                Son derece verimli NVIDIA Ada Lovelace mimarisi ile geliştirilen bu GPU'lar,
+                yapay zeka destekli DLSS 3 ile performansta dev bir artış sağlar ve tam ışın izleme ile gerçekçi sanal dünyalara olanak tanır.
+                Ayrıca Max-P ve Max-Q teknolojileri en yüksek verimlilik için sistem performansını, gücü, pil ömrünü ve akustiği optimize eder.
+            </p>
+            <br />
+            <h3 class="text-center" style="color:white;">Oyuncular ve içerik oluşturucular için en iyi platform.</h3>
+            <br />
+            <h2 class="text-center" style="color:white;">GeForce RTX™ 40 Serisi ve DLSS 3 Tarafından Desteklenmektedir</h2>
+            <br />
+            <h3 class="text-center" style="color:white;">
+                Yeni Duraksız İşlem Özellikli Çoklu İşlemciler
+                2 kata kadar performans ve enerji tasarrufu
+            </h3>
+            <br />
+            <h3 class="text-center" style="color:white;">
+                Dördüncü Nesil Tensor Çekirdekleri
+                Her noktanın değerini ayrı hesaplama yaklaşımına kıyasla DLSS 3 ile 4 kata kadar performans
+            </h3>
+            <br />
+            <h3 class="text-center" style="color:white;">
+                Üçüncü Nesil RT Çekirdekleri
+                2 kata kadar Ray Tracing performansı
+            </h3>
+            <br />
+            <br id ="teknikozellikler" />
+            <h1 style="color:#329d00">Teknik Özellikler</h1>
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">İşletim Sistemi</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        İşletim Sistemi
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.IsletimSistemiIdName</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">İşlemci Özellikleri</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        İşlemci Mimarisi
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.IslemciMimarisiIdName</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        İşlemci
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.IslemciIdName</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">Ekran Kartı Özellikleri</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Ekran Kartı
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.EkranKartiIdName</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">Ekran Özellikleri</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Ekran
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.CozunurlukIdName @Model.YenilemeHiziIdName</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">Bellek Özellikleri</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Bellek
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.BellekIdName</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">Depolama Özellikleri</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        1.Port M2 SSD
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.DepolamaIdName</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        2.Port M.2 SSD
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>Takılı Değil</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">Donanım Özellikleri</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Klavye
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.Klavye</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Hoparlör
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>2x 2W Hoparlör</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Gigabit Ethernet
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>Var</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">Boyutlar ve Ağırlık</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Boyutlar
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.Boyut</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Ağırlık
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.Agirlik</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Batarya
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>@Model.Batarya</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="divider divider-success text-start">
+                <div class="divider-text" style="font-size:25px;color:white;">Diğer Özellikler</div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Garanti Süresi
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>2 YIL</span>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="color:darkgray;">
+                <div class="col-md-2">
+                    <span style="font-size:16px;">
+                        Ürün Kodu
+                    </span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col">
+                    <span>LT - @Model.Id</span>
                 </div>
             </div>
         </div>
@@ -331,12 +617,12 @@
                 const weatherDescription = data.weather[0].description;
 
                 document.getElementById('havadurumu').innerHTML = `
-                                                                                              <div style="font-size: 16px;">
-                                                                                                  <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                                                                                                  <span style="color: white;">${temperature}°C</span>,
-                                                                                                  <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                                                                                              </div>
-                                                                                            `;
+                                                                                                                                      <div style="font-size: 16px;">
+                                                                                                                                          <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                                                                                                                                          <span style="color: white;">${temperature}°C</span>,
+                                                                                                                                          <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                                                                                                                                      </div>
+                                                                                                                                    `;
             })
             .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
 

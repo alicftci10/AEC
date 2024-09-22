@@ -33,6 +33,13 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult GetLaptopId(int pId)
+        {
+            return Ok(_Laptop.GetLaptopId(pId));
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult GetLaptop(int pId)
         {
             return Ok(_Laptop.GetId(pId));

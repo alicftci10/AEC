@@ -12,5 +12,7 @@ namespace AEC_DataAccess.EFInterfaces
     public interface IEFLaptopRepository : IRepository<Laptop>
     {
         List<LaptopDataModel> GetLaptopList(string searchTerm);
+
+        LaptopDataModel GetLaptopId(int pId);
     }
 }

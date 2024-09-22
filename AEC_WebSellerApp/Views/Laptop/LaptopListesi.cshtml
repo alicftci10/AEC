@@ -21,38 +21,36 @@
 
             @foreach (var item in Model)
             {
-                <tr style="cursor:pointer;" onclick="laptopdetay(event, @item.Id)">
-                    <td class="text-center">
-                        @siralama
-                    </td>
-                    <td>
-                        @if (item.ResimUrl != null && ViewData["KullaniciTuru"] == "Admin")
-                        {
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)"><img src="~/images/@item.ResimUrl?x=1" width="120" /></a>
-                        }
-                        else if (item.ResimUrl == null)
-                        {
-                            <button type="button" class="btn rounded-pill btn-dark bg-black" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)">
-                                <i class="bi bi-plus-circle"></i> RESİM EKLE
-                            </button>
-                        }
-                        else
-                        {
-                            <img src="~/images/@item.ResimUrl?x=1" width="120" />
-                        }
-                    </td>
-                    <td>@item.LaptopAdi</td>
-                    <td>
-                        @if (item.Fiyat.HasValue)
-                        {
-                            @Formatting.FormatTurkLirasi(item.Fiyat.Value)
-                        }
-                    </td>
-                    <td>@item.CreatedByName</td>
-                    <td>@item.CreatedAt</td>
-                    <td>
-                        @if (ViewData["KullaniciTuru"] == "Admin")
-                        {
+                if (ViewData["KullaniciTuru"] == "Admin")
+                {
+                    <tr style="cursor:pointer;" onclick="laptopdetay(event, @item.Id)">
+                        <td class="text-center">
+                            @siralama
+                        </td>
+                        <td>
+                            @if (item.ResimUrl != null)
+                            {
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)">
+                                    <img src="~/images/@item.ResimUrl?x=1" width="120" />
+                                </a>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn rounded-pill btn-dark bg-black" data-bs-toggle="modal" data-bs-target="#exLargeModalresim" onclick="resimModal(@item.Id)">
+                                    <i class="bi bi-plus-circle"></i> RESİM EKLE
+                                </button>
+                            }
+                        </td>
+                        <td>@item.LaptopAdi</td>
+                        <td>
+                            @if (item.Fiyat.HasValue)
+                            {
+                                @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                            }
+                        </td>
+                        <td>@item.CreatedByName</td>
+                        <td>@item.CreatedAt</td>
+                        <td>
                             <div class="dropdown">
                                 <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
                                     <i class="bx bx-dots-vertical-rounded"></i>
@@ -70,10 +68,52 @@
 
                                 </div>
                             </div>
-                        }
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr style="cursor:pointer;" onclick="laptopdetaypersonel(event, @item.Id)">
+                        <td class="text-center">
+                            @siralama
+                        </td>
+                        <td>
+                            <img src="~/images/@item.ResimUrl?x=1" width="120" />
+                        </td>
+                        <td>@item.LaptopAdi</td>
+                        <td>
+                            @if (item.Fiyat.HasValue)
+                            {
+                                @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                            }
+                        </td>
+                        <td>@item.CreatedByName</td>
+                        <td>@item.CreatedAt</td>
+                        <td>
+                            @if (ViewData["KullaniciTuru"] == "Admin")
+                            {
+                                <div class="dropdown">
+                                    <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </div>
+                                    <div class="dropdown-menu" style="background-color:black">
 
-                    </td>
-                </tr>
+                                        <a class="dropdown-item text-warning" href="/Laptop/LaptopSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+
+                                        <button type="button" class="dropdown-item text-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#backDropModal"
+                                                onclick="deleteModal(@item.Id)">
+                                            <i class="bx bx-trash me-1"></i> Sil
+                                        </button>
+
+                                    </div>
+                                </div>
+                            }
+
+                        </td>
+                    </tr>
+                }
 
                 siralama++;
             }
@@ -83,9 +123,17 @@
 </div>
 
 <script>
+
     function laptopdetay(event, id) {
         // Eğer tıklanan eleman dropdown, dropdown'un altındaki elemanlardan biri veya bir resim değilse yönlendir
         if (!event.target.closest('.dropdown') && !event.target.closest('img')) {
+            window.location.href = '/Laptop/LaptopDetay?pId=' + id;
+        }
+    }
+
+    function laptopdetaypersonel(event, id) {
+        // Eğer tıklanan eleman dropdown, dropdown'un altındaki elemanlardan biri değilse yönlendir
+        if (!event.target.closest('.dropdown')) {
             window.location.href = '/Laptop/LaptopDetay?pId=' + id;
         }
     }

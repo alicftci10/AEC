@@ -241,7 +241,7 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/GetLaptop";
+                string url = ConfigurationInfo.ApiUrl + "/api/LaptopApi/GetLaptopId";
 
                 url += $"?pId={pId}";
 
