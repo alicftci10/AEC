@@ -1,18 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
 
 namespace AEC_WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+		public HomeController(IMemoryCache IMemoryCache)
+		{
+			_memoryCacheBase = IMemoryCache;
+		}
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
+		public IActionResult Index()
         {
             return View();
         }

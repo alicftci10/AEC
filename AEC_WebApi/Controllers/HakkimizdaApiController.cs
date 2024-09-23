@@ -22,7 +22,14 @@ namespace AEC_WebApi.Controllers
             return Ok(_Hakkimizda.GetHakkimizda());
         }
 
-        [HttpPost]
+		[HttpGet]
+		[AllowAnonymous]
+		public IActionResult GetHakkimizdaAllowAnonymous()
+		{
+			return Ok(_Hakkimizda.GetHakkimizda());
+		}
+
+		[HttpPost]
         [Authorize]
         public IActionResult AddUpdate([FromBody] HakkimizdaDataModel model)
         {

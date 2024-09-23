@@ -23,7 +23,14 @@ namespace AEC_WebApi.Controllers
             return Ok(_kategori.GetAllKategori());
         }
 
-        [HttpGet]
+		[HttpGet]
+		[AllowAnonymous]
+		public IActionResult GetAllKategoriAllowAnonymous()
+		{
+			return Ok(_kategori.GetAllKategori());
+		}
+
+		[HttpGet]
         [Authorize]
         public IActionResult GetKategoriList(string? searchTerm)
         {
