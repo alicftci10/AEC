@@ -1,17 +1,38 @@
 ﻿@{
-	string hakkimizdatelefon = "";
+    string hakkimizdatelefon = "";
 
-	if (ViewData["Hakkimizda_Telefon"] != null)
-	{
-		hakkimizdatelefon = ViewData["Hakkimizda_Telefon"].ToString();
-	}
+    if (ViewData["Hakkimizda_Telefon"] != null)
+    {
+        hakkimizdatelefon = ViewData["Hakkimizda_Telefon"].ToString();
+    }
 
+    string whatsappLink = "https://wa.me/9" + hakkimizdatelefon + "?text=Bilgi%20Almak%20istiyorum";
 
-	string whatsappLink = "https://wa.me/9" + hakkimizdatelefon + "?text=Bilgi%20Almak%20istiyorum";
+    string telefonformat = hakkimizdatelefon.Substring(1, 3) + " " + hakkimizdatelefon.Substring(4, 3) + " " + hakkimizdatelefon.Substring(7, 2) + " " + hakkimizdatelefon.Substring(9, 2);
 
-	string telefonformat = hakkimizdatelefon.Substring(1, 3) + " " + hakkimizdatelefon.Substring(4, 3) + " " + hakkimizdatelefon.Substring(7, 2) + " " + hakkimizdatelefon.Substring(9, 2);
+    List<KategoriDataModel> kategoriList = ViewData["KategoriList"] as List<KategoriDataModel>;
+    List<KategoriDataModel> mainKategoriList = kategoriList.Where(i => i.MainKategoriId == null).ToList();
 }
 
+<style>
+    /* Dropdown için hover özelliğini aktif hale getirelim */
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+        border-color: #329d00;
+    }
+
+    /* Dropdown menüler için konumlandırma */
+    .dropdown-submenu {
+        position: relative;
+    }
+
+        .dropdown-submenu > .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
+
+</style>
 
 <!DOCTYPE html>
 
@@ -24,11 +45,11 @@
 
     <meta name="description" content="" />
 
-   @*  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
 
-   @*  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
+    @*  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
     <link rel="stylesheet" href="~/lib/toastr/css/toastr.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" />
@@ -40,7 +61,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css?x=1" />
 
     <!-- Slick -->
     <link type="text/css" rel="stylesheet" href="~/css/slick.css" />
@@ -53,248 +74,279 @@
     <link rel="stylesheet" href="~/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="~/css/style.css?x=2" />
+    <link type="text/css" rel="stylesheet" href="~/css/style.css?x=1" />
 </head>
 
 <body>
-	<!-- HEADER -->
-	<header>
-		<!-- TOP HEADER -->
-		<div id="top-header">
-			<div class="container">
-				<ul class="header-links pull-left">
-					<li><a href="@whatsappLink" target="_blank"><i class="fa fa-phone"></i>+90 @telefonformat</a></li>
-					<li><a href="mailto:@ViewData["Hakkimizda_Email"]"><i class="fa fa-envelope-o"></i>@ViewData["Hakkimizda_Email"]</a></li>
-					<li><a href="https://www.google.com/maps/search/?api=1&query=@ViewData["Hakkimizda_Adres"]" target="_blank"><i class="fa fa-map-marker"></i>AECommerce Ankara</a></li>
-				</ul>
-				<ul class="header-links pull-right">
-					@* <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li> *@
-					<li><a href="#"><i class="fa fa-user-o"></i>Giriş Yap</a></li>
-				</ul>
-			</div>
-		</div>
-		<!-- /TOP HEADER -->
-		<!-- MAIN HEADER -->
-		<div id="header">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<!-- LOGO -->
-					<div class="col-md-3">
-						<div class="header-logo">
-							<a href="/Home/Index">
-								<span style="font-size:45px;"><img src="~/assets/img/favicon/AEC.ico" style="width:60px;" />EC</span>
-							</a>
-						</div>
-					</div>
-					<!-- /LOGO -->
-					<!-- SEARCH BAR -->
-					<div class="col-md-6">
-						<div class="header-search">
-							<form>
-								<select class="input-select">
-									<option value="0">All Categories</option>
-									<option value="1">Category 01</option>
-									<option value="1">Category 02</option>
-								</select>
-								<input class="input" placeholder="Search here">
-								<button class="search-btn">Search</button>
-							</form>
-						</div>
-					</div>
-					<!-- /SEARCH BAR -->
-					<!-- ACCOUNT -->
-					<div class="col-md-3 clearfix">
-						<div class="header-ctn">
-							<!-- Wishlist -->
-							<div>
-								<a href="#">
-									<i class="fa fa-heart-o"></i>
-									<span>Your Wishlist</span>
-									<div class="qty">2</div>
-								</a>
-							</div>
-							<!-- /Wishlist -->
-							<!-- Cart -->
-							<div class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-									<i class="fa fa-shopping-cart"></i>
-									<span>Your Cart</span>
-									<div class="qty">3</div>
-								</a>
-								<div class="cart-dropdown">
-									<div class="cart-list">
-										<div class="product-widget">
-											<div class="product-img">
-												<img src="~/img/product01.png" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-											</div>
-											<button class="delete"><i class="fa fa-close"></i></button>
-										</div>
+    <!-- HEADER -->
+    <header>
+        <!-- TOP HEADER -->
+        <div id="top-header">
+            <div class="container">
+                <ul class="header-links pull-left">
+                    <li><a href="@whatsappLink" target="_blank"><i class="fa fa-phone"></i>+90 @telefonformat</a></li>
+                    <li><a href="mailto:@ViewData["Hakkimizda_Email"]"><i class="fa fa-envelope-o"></i>@ViewData["Hakkimizda_Email"]</a></li>
+                    <li><a href="https://www.google.com/maps/search/?api=1&query=@ViewData["Hakkimizda_Adres"]" target="_blank"><i class="fa fa-map-marker"></i>AECommerce Ankara</a></li>
+                </ul>
+                <ul class="header-links pull-right">
+                    @* <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li> *@
+                    <li><a href="#"><i class="fa fa-user-o"></i>Giriş Yap</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /TOP HEADER -->
+        <!-- MAIN HEADER -->
+        <div id="header">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="/Home/Index">
+                                <span style="font-size:45px;font-weight:bold;"><img src="~/assets/img/favicon/AEC.ico" style="width:60px;" />EC</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /LOGO -->
+                    <!-- SEARCH BAR -->
+                    <div class="col-md-6">
+                        <div class="header-search">
+                            <form>
+                                @* <select class="input-select">
+                                <option value="0">All Categories</option>
+                                <option value="1">Category 01</option>
+                                <option value="1">Category 02</option>
+                                </select> *@
+                                <input class="input" placeholder="Ara...">
+                                <button class="search-btn">Sorgula</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /SEARCH BAR -->
+                    <!-- ACCOUNT -->
+                    <div class="col-md-3 clearfix">
+                        <div class="header-ctn">
+                            <!-- Wishlist -->
+                            <div>
+                                <a href="#">
+                                    <i class="fa fa-heart-o"></i>
+                                    <span>Favoriler</span>
+                                    <div class="qty">2</div>
+                                </a>
+                            </div>
+                            <!-- /Wishlist -->
+                            <!-- Cart -->
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>Sepet</span>
+                                    <div class="qty">3</div>
+                                </a>
+                                <div class="cart-dropdown">
+                                    <div class="cart-list">
+                                        <div class="product-widget">
+                                            <div class="product-img">
+                                                <img src="~/img/product01.png" alt="">
+                                            </div>
+                                            <div class="product-body">
+                                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                                <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+                                            </div>
+                                            <button class="delete"><i class="fa fa-close"></i></button>
+                                        </div>
 
-										<div class="product-widget">
-											<div class="product-img">
-												<img src="~/img/product02.png" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-											</div>
-											<button class="delete"><i class="fa fa-close"></i></button>
-										</div>
-									</div>
-									<div class="cart-summary">
-										<small>3 Item(s) selected</small>
-										<h5>SUBTOTAL: $2940.00</h5>
-									</div>
-									<div class="cart-btns">
-										<a href="#">View Cart</a>
-										<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-									</div>
-								</div>
-							</div>
-							<!-- /Cart -->
-							<!-- Menu Toogle -->
-							<div class="menu-toggle">
-								<a href="#">
-									<i class="fa fa-bars"></i>
-									<span>Menu</span>
-								</a>
-							</div>
-							<!-- /Menu Toogle -->
-						</div>
-					</div>
-					<!-- /ACCOUNT -->
-				</div>
-				<!-- row -->
-			</div>
-			<!-- container -->
-		</div>
-		<!-- /MAIN HEADER -->
-	</header>
-	<!-- /HEADER -->
-	<!-- NAVIGATION -->
-	<nav id="navigation">
-		<!-- container -->
-		<div class="container">
-			<!-- responsive-nav -->
-			<div id="responsive-nav">
-				<!-- NAV -->
-				<ul class="main-nav nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">Hot Deals</a></li>
-					<li><a href="#">Categories</a></li>
-					<li><a href="#">Laptops</a></li>
-					<li><a href="#">Smartphones</a></li>
-					<li><a href="#">Cameras</a></li>
-					<li><a href="#">Accessories</a></li>
-				</ul>
-				<!-- /NAV -->
-			</div>
-			<!-- /responsive-nav -->
-		</div>
-		<!-- /container -->
-	</nav>
-	<!-- /NAVIGATION -->
-	@RenderBody()
-	<!-- FOOTER -->
-	<footer id="footer">
-		<!-- top footer -->
-		<div class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-3 col-xs-6">
-						<div class="footer">
-							<h3 class="footer-title">About Us</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
-							<ul class="footer-links">
-								<li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-								<li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-								<li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
-							</ul>
-						</div>
-					</div>
+                                        <div class="product-widget">
+                                            <div class="product-img">
+                                                <img src="~/img/product02.png" alt="">
+                                            </div>
+                                            <div class="product-body">
+                                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                                <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+                                            </div>
+                                            <button class="delete"><i class="fa fa-close"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="cart-summary">
+                                        <small>3 Item(s) selected</small>
+                                        <h5>SUBTOTAL: $2940.00</h5>
+                                    </div>
+                                    <div class="cart-btns">
+                                        <a href="#">View Cart</a>
+                                        <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Cart -->
+                            <!-- Menu Toogle -->
+                            <div class="menu-toggle">
+                                <a href="#">
+                                    <i class="fa fa-bars"></i>
+                                    <span>Menu</span>
+                                </a>
+                            </div>
+                            <!-- /Menu Toogle -->
+                        </div>
+                    </div>
+                    <!-- /ACCOUNT -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
+    <!-- /HEADER -->
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+        <!-- container -->
+        <div class="container">
+            <!-- responsive-nav -->
+            <div id="responsive-nav">
+                <!-- NAV -->
+                <ul class="main-nav nav navbar-nav">
 
-					<div class="col-md-3 col-xs-6">
-						<div class="footer">
-							<h3 class="footer-title">Categories</h3>
-							<ul class="footer-links">
-								<li><a href="#">Hot deals</a></li>
-								<li><a href="#">Laptops</a></li>
-								<li><a href="#">Smartphones</a></li>
-								<li><a href="#">Cameras</a></li>
-								<li><a href="#">Accessories</a></li>
-							</ul>
-						</div>
-					</div>
+                    @foreach (var item in mainKategoriList)
+                    {
+                        <li class="dropdown">
+                            <a href="#" style="color:black;font-weight:bold;font-size:20px;">
+                                @item.KategoriAdi
+                            </a>
+                            <ul class="dropdown-menu" style="min-width:max-content;background-color:#2c313c">
+                                <li>
+                                    <div class="row">
+                                        @{
+                                            List<KategoriDataModel> KategoriList1 = kategoriList.Where(i => i.MainKategoriId == item.Id).ToList();
+                                        }
 
-					<div class="clearfix visible-xs"></div>
+                                        @foreach (var item2 in KategoriList1)
+                                        {
+                                            <div class="col-lg-2" style="width:245px;height:100px;margin:10px;">
 
-					<div class="col-md-3 col-xs-6">
-						<div class="footer">
-							<h3 class="footer-title">Information</h3>
-							<ul class="footer-links">
-								<li><a href="#">About Us</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Orders and Returns</a></li>
-								<li><a href="#">Terms & Conditions</a></li>
-							</ul>
-						</div>
-					</div>
+                                                <a href="#" style="font-weight:bold;font-size:15px;color:#696cff">@item2.KategoriAdi</a>
+                                                <ul>
+                                                    <br />
+                                                    @{
+                                                        List<KategoriDataModel> KategoriList2 = kategoriList.Where(i => i.MainKategoriId == item2.Id).ToList();
+                                                    }
 
-					<div class="col-md-3 col-xs-6">
-						<div class="footer">
-							<h3 class="footer-title">Service</h3>
-							<ul class="footer-links">
-								<li><a href="#">My Account</a></li>
-								<li><a href="#">View Cart</a></li>
-								<li><a href="#">Wishlist</a></li>
-								<li><a href="#">Track My Order</a></li>
-								<li><a href="#">Help</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /top footer -->
-		<!-- bottom footer -->
-		<div id="bottom-footer" class="section">
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-12 text-center">
-						<ul class="footer-payments">
-							<li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-							<li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-							<li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-							<li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-							<li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-							<li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
-						</ul>
-						<span class="copyright">
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						</span>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /bottom footer -->
-	</footer>
-	<!-- /FOOTER -->
+                                                    @foreach (var item3 in KategoriList2)
+                                                    {
+                                                        <div class="col-md-1"></div>
+                                                        <li><a href="#" style="margin-left:5px;">@item3.KategoriAdi</a></li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                <!-- /NAV -->
+            </div>
+            <!-- /responsive-nav -->
+        </div>
+        <!-- /container -->
+    </nav>
+    <!-- /NAVIGATION -->
+    @RenderBody()
+    <!-- FOOTER -->
+    <footer id="footer">
+        <!-- top footer -->
+        <div class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Hakkımızda</h3>
+                            <p>AECommerce, Ankara ilimizde kurulan güvendiğiniz e-ticaret platformu. İletişim için.. </p>
+                            <ul class="footer-links">
+                                <li><a href="https://www.google.com/maps/search/?api=1&query=@ViewData["Hakkimizda_Adres"]" target="_blank"><i class="fa fa-map-marker"></i>AECommerce Ankara</a></li>
+                                <li><a href="@whatsappLink" target="_blank"><i class="fa fa-phone"></i>+90 @telefonformat</a></li>
+                                <li><a href="mailto:@ViewData["Hakkimizda_Email"]"><i class="fa fa-envelope-o"></i>@ViewData["Hakkimizda_Email"]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Categories</h3>
+                            <ul class="footer-links">
+                                <li><a href="#">Hot deals</a></li>
+                                <li><a href="#">Laptops</a></li>
+                                <li><a href="#">Smartphones</a></li>
+                                <li><a href="#">Cameras</a></li>
+                                <li><a href="#">Accessories</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="clearfix visible-xs"></div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Information</h3>
+                            <ul class="footer-links">
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Orders and Returns</a></li>
+                                <li><a href="#">Terms & Conditions</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Service</h3>
+                            <ul class="footer-links">
+                                <li><a href="#">My Account</a></li>
+                                <li><a href="#">View Cart</a></li>
+                                <li><a href="#">Wishlist</a></li>
+                                <li><a href="#">Track My Order</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /top footer -->
+        <!-- bottom footer -->
+        <div id="bottom-footer" class="section">
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <ul class="footer-payments">
+                            <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
+                            <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+                        </ul>
+                        <span class="copyright">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </span>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /bottom footer -->
+    </footer>
+    <!-- /FOOTER -->
 
     <script type="text/javascript" src="~/lib/jquery/js/jquery-3.7.1.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

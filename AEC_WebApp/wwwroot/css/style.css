@@ -68,14 +68,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: #2B2D42;
-  font-weight: 500;
-  -webkit-transition: 0.2s color;
-  transition: 0.2s color;
+    color: white;
+    font-weight: 500;
+    -webkit-transition: 0.2s color;
+    transition: 0.2s color;
 }
 
 a:hover, a:focus {
-  color: #329d00;
+  color: #329d00!important;
   text-decoration: none;
   outline: none;
 }
