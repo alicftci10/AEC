@@ -2,6 +2,7 @@
 using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Text;
@@ -10,6 +11,8 @@ namespace AEC_WebSellerApp.Controllers
 {
     public class KullaniciKartController : BaseController
     {
+        public KullaniciKartController(IMemoryCache memoryCache) { _memoryCacheBase = memoryCache; }
+
         public async Task<IActionResult> KullaniciKartListesi(int pId)
         {
             using (HttpClient client = new HttpClient())

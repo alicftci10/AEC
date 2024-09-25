@@ -3,6 +3,7 @@ using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using static System.Net.WebRequestMethods;
@@ -11,6 +12,8 @@ namespace AEC_WebSellerApp.Controllers
 {
     public class BaseController : Controller
     {
+        public IMemoryCache _memoryCacheBase;
+
         public BaseController()
         {
 
@@ -37,6 +40,9 @@ namespace AEC_WebSellerApp.Controllers
 
             if (!string.IsNullOrEmpty(sessionKullanici))
             {//Session Dolu
+
+                LoadHakkimizdaInfo();
+
                 KullaniciDataModel model = JsonConvert.DeserializeObject<KullaniciDataModel>(sessionKullanici);
 
                 if (model != null)
@@ -63,6 +69,47 @@ namespace AEC_WebSellerApp.Controllers
                 context.Result = new RedirectResult("/Authentication/LoginEkrani");
             }
 
+        }
+
+        public HakkimizdaDataModel LoadHakkimizdaInfo()
+        {
+            HakkimizdaDataModel model = new HakkimizdaDataModel();
+
+            if (_memoryCacheBase != null && !_memoryCacheBase.TryGetValue("HakkimizdaCacheValue", out model))
+            {//Cache'de yoksa API'den getir.
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                    var response = client.GetAsync(ConfigurationInfo.ApiUrl + "/api/HakkimizdaApi/GetHakkimizda").Result;
+                    if (response != null)
+                    {
+                        model = JsonConvert.DeserializeObject<HakkimizdaDataModel>(response.Content.ReadAsStringAsync().Result);
+                    }
+                }
+
+                var cacheEntryOptionsSliding = new MemoryCacheEntryOptions().
+                    SetSlidingExpiration(TimeSpan.FromHours(ConfigurationInfo.MemoryCacheTimeOut));
+
+                _memoryCacheBase.Set("HakkimizdaCacheValue", model, cacheEntryOptionsSliding);
+                //cache de yoksa cache e datamodel yazsın.
+            }
+            else
+            {//Cache'de varsa cache den getir.
+                _memoryCacheBase.TryGetValue("HakkimizdaCacheValue", out model);
+            }
+
+            if (model != null)
+            {
+                string whatsappLink = "https://wa.me/9" + model.Telefon + "?text=Bilgi%20Almak%20istiyorum";
+
+                ViewData["Hakkimizda_whatsappLink"] = whatsappLink;
+                ViewData["Hakkimizda_Telefon"] = model.Telefon;
+                ViewData["Hakkimizda_Adres"] = model.Adres;
+                ViewData["Hakkimizda_Email"] = model.Email;
+                ViewData["Hakkimizda_CalismaGunleri"] = model.CalismaGunleri;
+            }
+
+            return model;
         }
 
         public void LoadKullaniciList()

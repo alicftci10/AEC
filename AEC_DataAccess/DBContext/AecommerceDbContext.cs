@@ -42,9 +42,9 @@ public partial class AecommerceDbContext : DbContext
 
     public virtual DbSet<Ram> Rams { get; set; }
 
-    public virtual DbSet<Sepet> Sepets { get; set; }
-
     public virtual DbSet<Ssd> Ssds { get; set; }
+
+    public virtual DbSet<UrunDurum> UrunDurums { get; set; }
 
     public virtual DbSet<UrunResmi> UrunResmis { get; set; }
 
@@ -340,26 +340,6 @@ public partial class AecommerceDbContext : DbContext
                 .HasConstraintName("FK_RAM_Kullanici");
         });
 
-        modelBuilder.Entity<Sepet>(entity =>
-        {
-            entity.ToTable("Sepet");
-
-            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Sepets)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Sepet_Kullanici");
-
-            entity.HasOne(d => d.Laptop).WithMany(p => p.Sepets)
-                .HasForeignKey(d => d.LaptopId)
-                .HasConstraintName("FK_Sepet_Laptop");
-
-            entity.HasOne(d => d.Monitor).WithMany(p => p.Sepets)
-                .HasForeignKey(d => d.MonitorId)
-                .HasConstraintName("FK_Sepet_Monitor");
-        });
-
         modelBuilder.Entity<Ssd>(entity =>
         {
             entity.ToTable("SSD");
@@ -376,6 +356,33 @@ public partial class AecommerceDbContext : DbContext
                 .HasForeignKey(d => d.DepolamaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SSD_Kategori");
+        });
+
+        modelBuilder.Entity<UrunDurum>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Sepet");
+
+            entity.ToTable("UrunDurum");
+
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.UrunDurumCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UrunDurum_Kullanici1");
+
+            entity.HasOne(d => d.Laptop).WithMany(p => p.UrunDurums)
+                .HasForeignKey(d => d.LaptopId)
+                .HasConstraintName("FK_UrunDurum_Laptop");
+
+            entity.HasOne(d => d.Monitor).WithMany(p => p.UrunDurums)
+                .HasForeignKey(d => d.MonitorId)
+                .HasConstraintName("FK_UrunDurum_Monitor");
+
+            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.UrunDurumUpdatedByNavigations)
+                .HasForeignKey(d => d.UpdatedBy)
+                .HasConstraintName("FK_UrunDurum_Kullanici");
         });
 
         modelBuilder.Entity<UrunResmi>(entity =>

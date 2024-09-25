@@ -31,7 +31,7 @@ public partial class Monitor
 
     public virtual Kullanici CreatedByNavigation { get; set; } = null!;
 
-    public virtual ICollection<Sepet> Sepets { get; set; } = new List<Sepet>();
+    public virtual ICollection<UrunDurum> UrunDurums { get; set; } = new List<UrunDurum>();
 
     public virtual ICollection<UrunResmi> UrunResmis { get; set; } = new List<UrunResmi>();
 

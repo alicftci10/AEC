@@ -13,7 +13,7 @@ namespace AEC_WebApp.Controllers
 
 		public BaseController()
 		{
-
+		
 		}
 
 		public override void OnActionExecuting(ActionExecutingContext context)
@@ -69,8 +69,11 @@ namespace AEC_WebApp.Controllers
 
 			if (model != null)
 			{
-				ViewData["Hakkimizda_Telefon"] = model.Telefon;
-				ViewData["Hakkimizda_Adres"] = model.Adres;
+                string whatsappLink = "https://wa.me/9" + model.Telefon + "?text=Bilgi%20Almak%20istiyorum";
+
+				ViewData["Hakkimizda_whatsappLink"] = whatsappLink;
+                ViewData["Hakkimizda_Telefon"] = model.Telefon;
+                ViewData["Hakkimizda_Adres"] = model.Adres;
 				ViewData["Hakkimizda_Email"] = model.Email;
 				ViewData["Hakkimizda_CalismaGunleri"] = model.CalismaGunleri;
 			}

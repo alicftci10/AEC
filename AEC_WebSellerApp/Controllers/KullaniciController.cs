@@ -1,6 +1,7 @@
 ﻿using AEC_Entities.Configuration;
 using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Text;
@@ -9,6 +10,8 @@ namespace AEC_WebSellerApp.Controllers
 {
     public class KullaniciController : BaseController
     {
+        public KullaniciController(IMemoryCache memoryCache) { _memoryCacheBase = memoryCache; }
+
         public async Task<IActionResult> PersonelListesi(string searchTerm)
         {
             using (HttpClient client = new HttpClient())

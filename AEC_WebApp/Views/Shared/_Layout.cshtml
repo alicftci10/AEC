@@ -6,8 +6,6 @@
         hakkimizdatelefon = ViewData["Hakkimizda_Telefon"].ToString();
     }
 
-    string whatsappLink = "https://wa.me/9" + hakkimizdatelefon + "?text=Bilgi%20Almak%20istiyorum";
-
     string telefonformat = hakkimizdatelefon.Substring(1, 3) + " " + hakkimizdatelefon.Substring(4, 3) + " " + hakkimizdatelefon.Substring(7, 2) + " " + hakkimizdatelefon.Substring(9, 2);
 
     List<KategoriDataModel> kategoriList = ViewData["KategoriList"] as List<KategoriDataModel>;
@@ -28,7 +26,6 @@
 
         .dropdown-submenu > .dropdown-menu {
             top: 0;
-            left: 100%;
             margin-top: -1px;
         }
 
@@ -64,7 +61,7 @@
     <link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css?x=1" />
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="~/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/slick.css?x=1" />
     <link type="text/css" rel="stylesheet" href="~/css/slick-theme.css" />
 
     <!-- nouislider -->
@@ -84,7 +81,7 @@
         <div id="top-header">
             <div class="container">
                 <ul class="header-links pull-left">
-                    <li><a href="@whatsappLink" target="_blank"><i class="fa fa-phone"></i>+90 @telefonformat</a></li>
+                    <li><a href="@ViewData["Hakkimizda_whatsappLink"]" target="_blank"><i class="fa fa-phone"></i>+90 @telefonformat</a></li>
                     <li><a href="mailto:@ViewData["Hakkimizda_Email"]"><i class="fa fa-envelope-o"></i>@ViewData["Hakkimizda_Email"]</a></li>
                     <li><a href="https://www.google.com/maps/search/?api=1&query=@ViewData["Hakkimizda_Adres"]" target="_blank"><i class="fa fa-map-marker"></i>AECommerce Ankara</a></li>
                 </ul>
@@ -234,8 +231,15 @@
                                                     @foreach (var item3 in KategoriList2)
                                                     {
                                                         <div class="col-md-1"></div>
-                                                        <li><a href="#" style="margin-left:5px;">@item3.KategoriAdi</a></li>
-                                                    }
+                                                        @if (item.KategoriAdi == "Laptop")
+                                                        {
+                                                            <li><a href="#" style="margin-left:5px;">@item3.KategoriAdi Laptoplar</a></li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li><a href="#" style="margin-left:5px;">@item3.KategoriAdi Monitörler</a></li>
+                                                        }
+                                            }
                                                 </ul>
                                             </div>
                                         }
@@ -263,11 +267,11 @@
                 <div class="row">
                     <div class="col-md-3 col-xs-6">
                         <div class="footer">
-                            <h3 class="footer-title">Hakkımızda</h3>
+                            <h3 class="footer-title">HAKKIMIZDA</h3>
                             <p>AECommerce, Ankara ilimizde kurulan güvendiğiniz e-ticaret platformu. İletişim için.. </p>
                             <ul class="footer-links">
                                 <li><a href="https://www.google.com/maps/search/?api=1&query=@ViewData["Hakkimizda_Adres"]" target="_blank"><i class="fa fa-map-marker"></i>AECommerce Ankara</a></li>
-                                <li><a href="@whatsappLink" target="_blank"><i class="fa fa-phone"></i>+90 @telefonformat</a></li>
+                                <li><a href="@ViewData["Hakkimizda_whatsappLink"]" target="_blank"><i class="fa fa-phone"></i>+90 @telefonformat</a></li>
                                 <li><a href="mailto:@ViewData["Hakkimizda_Email"]"><i class="fa fa-envelope-o"></i>@ViewData["Hakkimizda_Email"]</a></li>
                             </ul>
                         </div>
@@ -275,13 +279,12 @@
 
                     <div class="col-md-3 col-xs-6">
                         <div class="footer">
-                            <h3 class="footer-title">Categories</h3>
+                            <h3 class="footer-title">KATEGORİLER</h3>
                             <ul class="footer-links">
-                                <li><a href="#">Hot deals</a></li>
-                                <li><a href="#">Laptops</a></li>
-                                <li><a href="#">Smartphones</a></li>
-                                <li><a href="#">Cameras</a></li>
-                                <li><a href="#">Accessories</a></li>
+                                @foreach (var item in mainKategoriList)
+                                {
+                                    <li><a href="#">@item.KategoriAdi</a></li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -290,26 +293,26 @@
 
                     <div class="col-md-3 col-xs-6">
                         <div class="footer">
-                            <h3 class="footer-title">Information</h3>
+                            <h3 class="footer-title">BİLGİ</h3>
                             <ul class="footer-links">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Orders and Returns</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">AECommerce</a></li>
+                                <li><a href="#">Bize Ulaşın</a></li>
+                                <li><a href="#">Gizlilik Politikası</a></li>
+                                <li><a href="#">Siparişler ve İadeler</a></li>
+                                <li><a href="#">Şartlar ve Koşullar</a></li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="col-md-3 col-xs-6">
                         <div class="footer">
-                            <h3 class="footer-title">Service</h3>
+                            <h3 class="footer-title">HİZMETLER</h3>
                             <ul class="footer-links">
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">View Cart</a></li>
-                                <li><a href="#">Wishlist</a></li>
-                                <li><a href="#">Track My Order</a></li>
-                                <li><a href="#">Help</a></li>
+                                <li><a href="#">Hesabım</a></li>
+                                <li><a href="#">Sepeti Görüntüle</a></li>
+                                <li><a href="#">Favoriler</a></li>
+                                <li><a href="#">Siparişi Görüntüle</a></li>
+                                <li><a href="#">Destek</a></li>
                             </ul>
                         </div>
                     </div>
@@ -326,17 +329,18 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <ul class="footer-payments">
-                            <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-                            <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+                            <li><a><i class="fa fa-cc-visa"></i></a></li>
+                            <li><a><i class="fa fa-cc-paypal"></i></a></li>
+                            <li><a><i class="fa fa-cc-mastercard"></i></a></li>
                         </ul>
                         <span class="copyright">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved |  <a href="/Home/Index" target="_blank" class="footer-link fw-bolder">Ali E-Commerce</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            <div style="margin-top:10px;">
+                                <a href="@ViewData["Hakkimizda_whatsappLink"]" target="_blank" class="menu-icon tf-icons"><img src="~/icons/whatsapp.png" /></a>
+                                <a href="https://www.instagram.com/" target="_blank" class="menu-icon tf-icons"><img src="~/icons/instagram.png" /></a>
+                            </div>
                         </span>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 ﻿using AEC_Entities.Configuration;
 using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Text;
@@ -9,6 +10,8 @@ namespace AEC_WebSellerApp.Controllers
 {
     public class HakkimizdaController : BaseController
     {
+        public HakkimizdaController(IMemoryCache memoryCache) { _memoryCacheBase = memoryCache; }
+
         public async Task<IActionResult> HakkimizdaSayfasi()
         {
             using (HttpClient client = new HttpClient())

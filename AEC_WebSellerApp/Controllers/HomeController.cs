@@ -1,16 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
 
 namespace AEC_WebSellerApp.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        public HomeController(IMemoryCache memoryCache) { _memoryCacheBase = memoryCache; }
 
         public IActionResult Index()
         {

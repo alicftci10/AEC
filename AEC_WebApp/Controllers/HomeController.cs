@@ -6,10 +6,7 @@ namespace AEC_WebApp.Controllers
 {
     public class HomeController : BaseController
     {
-		public HomeController(IMemoryCache IMemoryCache)
-		{
-			_memoryCacheBase = IMemoryCache;
-		}
+        public HomeController(IMemoryCache memoryCache) { _memoryCacheBase = memoryCache; }
 
 		public IActionResult Index()
         {

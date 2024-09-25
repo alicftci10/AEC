@@ -1,6 +1,7 @@
 ﻿using AEC_Entities.Configuration;
 using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -8,6 +9,8 @@ namespace AEC_WebSellerApp.Controllers
 {
     public class CPUController : BaseController
     {
+        public CPUController(IMemoryCache memoryCache) { _memoryCacheBase = memoryCache; }
+
         public async Task<IActionResult> CPUListesi(string searchTerm)
         {
             using (HttpClient client = new HttpClient())
