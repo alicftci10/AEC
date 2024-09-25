@@ -51,9 +51,9 @@ public partial class Laptop
 
     public virtual IsletimSistemi IsletimSistemi { get; set; } = null!;
 
-    public virtual ICollection<UrunDurum> UrunDurums { get; set; } = new List<UrunDurum>();
-
     public virtual ICollection<UrunResmi> UrunResmis { get; set; } = new List<UrunResmi>();
+
+    public virtual ICollection<UrunTakip> UrunTakips { get; set; } = new List<UrunTakip>();
 
     public virtual ICollection<UrunYorum> UrunYorums { get; set; } = new List<UrunYorum>();
 

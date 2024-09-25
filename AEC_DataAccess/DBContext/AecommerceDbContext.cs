@@ -44,9 +44,9 @@ public partial class AecommerceDbContext : DbContext
 
     public virtual DbSet<Ssd> Ssds { get; set; }
 
-    public virtual DbSet<UrunDurum> UrunDurums { get; set; }
-
     public virtual DbSet<UrunResmi> UrunResmis { get; set; }
+
+    public virtual DbSet<UrunTakip> UrunTakips { get; set; }
 
     public virtual DbSet<UrunYorum> UrunYorums { get; set; }
 
@@ -358,33 +358,6 @@ public partial class AecommerceDbContext : DbContext
                 .HasConstraintName("FK_SSD_Kategori");
         });
 
-        modelBuilder.Entity<UrunDurum>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK_Sepet");
-
-            entity.ToTable("UrunDurum");
-
-            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.UrunDurumCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_UrunDurum_Kullanici1");
-
-            entity.HasOne(d => d.Laptop).WithMany(p => p.UrunDurums)
-                .HasForeignKey(d => d.LaptopId)
-                .HasConstraintName("FK_UrunDurum_Laptop");
-
-            entity.HasOne(d => d.Monitor).WithMany(p => p.UrunDurums)
-                .HasForeignKey(d => d.MonitorId)
-                .HasConstraintName("FK_UrunDurum_Monitor");
-
-            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.UrunDurumUpdatedByNavigations)
-                .HasForeignKey(d => d.UpdatedBy)
-                .HasConstraintName("FK_UrunDurum_Kullanici");
-        });
-
         modelBuilder.Entity<UrunResmi>(entity =>
         {
             entity.ToTable("UrunResmi");
@@ -406,6 +379,31 @@ public partial class AecommerceDbContext : DbContext
             entity.HasOne(d => d.Monitor).WithMany(p => p.UrunResmis)
                 .HasForeignKey(d => d.MonitorId)
                 .HasConstraintName("FK_UrunResmi_Monitor");
+        });
+
+        modelBuilder.Entity<UrunTakip>(entity =>
+        {
+            entity.ToTable("UrunTakip");
+
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.UrunTakipCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UrunTakip_Kullanici");
+
+            entity.HasOne(d => d.Laptop).WithMany(p => p.UrunTakips)
+                .HasForeignKey(d => d.LaptopId)
+                .HasConstraintName("FK_UrunTakip_Laptop");
+
+            entity.HasOne(d => d.Monitor).WithMany(p => p.UrunTakips)
+                .HasForeignKey(d => d.MonitorId)
+                .HasConstraintName("FK_UrunTakip_Monitor");
+
+            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.UrunTakipUpdatedByNavigations)
+                .HasForeignKey(d => d.UpdatedBy)
+                .HasConstraintName("FK_UrunTakip_Kullanici1");
         });
 
         modelBuilder.Entity<UrunYorum>(entity =>

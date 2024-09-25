@@ -55,11 +55,11 @@ public partial class Kullanici
 
     public virtual ICollection<Ssd> Ssds { get; set; } = new List<Ssd>();
 
-    public virtual ICollection<UrunDurum> UrunDurumCreatedByNavigations { get; set; } = new List<UrunDurum>();
-
-    public virtual ICollection<UrunDurum> UrunDurumUpdatedByNavigations { get; set; } = new List<UrunDurum>();
-
     public virtual ICollection<UrunResmi> UrunResmis { get; set; } = new List<UrunResmi>();
+
+    public virtual ICollection<UrunTakip> UrunTakipCreatedByNavigations { get; set; } = new List<UrunTakip>();
+
+    public virtual ICollection<UrunTakip> UrunTakipUpdatedByNavigations { get; set; } = new List<UrunTakip>();
 
     public virtual ICollection<UrunYorum> UrunYorums { get; set; } = new List<UrunYorum>();
 

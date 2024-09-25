@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AEC_DataAccess.DBModels;
 
-public partial class UrunDurum
+public partial class UrunTakip
 {
     public int Id { get; set; }
 
