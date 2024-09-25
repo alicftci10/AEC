@@ -29,11 +29,17 @@ namespace AEC_Business.Managers
                 foreach (UrunTakip item in list)
                 {
                     UrunTakipDataModel model = new UrunTakipDataModel();
-                    //model.Id = item.Id;
-                    //model.EkranKartiSerisiId = item.EkranKartiSerisiId;
-                    //model.EkranKartiAdi = item.EkranKartiAdi;
-                    //model.CreatedAt = item.CreatedAt;
-                    //model.CreatedBy = item.CreatedBy;
+                    model.Id = item.Id;
+                    model.LaptopId = item.LaptopId;
+                    model.MonitorId = item.MonitorId;
+                    model.Adet = item.Adet;
+                    model.Favori = item.Favori;
+                    model.SepetDurum = item.SepetDurum;
+                    model.SiparisDurum = item.SiparisDurum;
+                    model.UpdatedAt = item.UpdatedAt;
+                    model.UpdatedBy = item.UpdatedBy;
+                    model.CreatedAt = item.CreatedAt;
+                    model.CreatedBy = item.CreatedBy;
 
                     listUrunTakip.Add(model);
                 }
@@ -46,14 +52,23 @@ namespace AEC_Business.Managers
         {
             UrunTakip item = new UrunTakip();
 
-            //item.EkranKartiSerisiId = model.EkranKartiSerisiId.Value;
-            //item.EkranKartiAdi = model.EkranKartiAdi;
-            //item.CreatedAt = DateTime.Now;
-            //item.CreatedBy = model.CreatedBy.Value;
-
+            item.LaptopId = model.LaptopId;
+            item.MonitorId = model.MonitorId;
+            item.Adet = model.Adet;
+            item.Favori = model.Favori;
+            item.SepetDurum = model.SepetDurum;
+            item.SiparisDurum = model.SiparisDurum;
+            
             if (model.Id > 0)
             {
                 item.Id = model.Id;
+                item.UpdatedAt = DateTime.Now;
+                item.UpdatedBy = model.UpdatedBy;
+            }
+            else
+            {
+                item.CreatedAt = DateTime.Now;
+                item.CreatedBy = model.CreatedBy.Value;
             }
 
             return item;

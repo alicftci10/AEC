@@ -14,6 +14,13 @@ namespace AEC_Core.Utilities
             return pPrice.ToString("C", new System.Globalization.CultureInfo("tr-TR"));
         }
 
+        public static string FormatIndirimsizFiyat(decimal pPrice,int pOran)
+        {
+            var fiyat = Convert.ToDouble(pPrice) * (100 + pOran) / 100;
+
+            return FormatTurkLirasi(Convert.ToDecimal(fiyat));
+        }
+
         public static string FormatMetniİkiyeBolme(string pName)
         {
             var metin = pName;
