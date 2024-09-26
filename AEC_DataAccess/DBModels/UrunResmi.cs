@@ -11,6 +11,8 @@ public partial class UrunResmi
 
     public int? MonitorId { get; set; }
 
+    public int? MouseId { get; set; }
+
     public string ResimUrl { get; set; } = null!;
 
     public decimal ResimBoyutu { get; set; }
@@ -26,4 +28,6 @@ public partial class UrunResmi
     public virtual Laptop? Laptop { get; set; }
 
     public virtual Monitor? Monitor { get; set; }
+
+    public virtual Mouse? Mouse { get; set; }
 }

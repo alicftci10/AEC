@@ -38,6 +38,13 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult GetMouseResmiList(int pMouseId)
+        {
+            return Ok(_UrunResmi.GetMouseResmiList(pMouseId));
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult GetUrunResmi(int pId)
         {
             return Ok(_UrunResmi.GetId(pId));
@@ -55,6 +62,13 @@ namespace AEC_WebApi.Controllers
         public IActionResult AddUpdateMonitor([FromForm] int MonitorId, [FromForm] List<IFormFile> ResimUrl)
         {
             return Ok(_UrunResmi.AddUpdateMonitor(MonitorId, ResimUrl, GetCurrentKullanici(HttpContext).Id));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult AddUpdateMouse([FromForm] int MouseId, [FromForm] List<IFormFile> ResimUrl)
+        {
+            return Ok(_UrunResmi.AddUpdateMouse(MouseId, ResimUrl, GetCurrentKullanici(HttpContext).Id));
         }
 
         [HttpDelete]

@@ -12,11 +12,13 @@ namespace AEC_WebApi.Controllers
         IUrunTakipService _UrunTakip;
         ILaptopService _LaptopService;
         IMonitorService _MonitorService;
-        public UrunTakipApiController(IUrunTakipService UrunTakip, ILaptopService laptopService, IMonitorService monitorService)
+        IMouseService _MouseService;
+        public UrunTakipApiController(IUrunTakipService UrunTakip, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService)
         {
             _UrunTakip = UrunTakip;
             _LaptopService = laptopService;
             _MonitorService = monitorService;
+            _MouseService = mouseService;
         }
 
         [HttpGet]
@@ -43,9 +45,13 @@ namespace AEC_WebApi.Controllers
 
             var monitorList = _MonitorService.GetMonitorList(searchTerm);
 
+            var mouseList = _MouseService.GetMouseList(searchTerm);
+
             model.LaptopList = laptopList;
 
             model.MonitorList = monitorList;
+
+            model.MouseList = mouseList;
 
             return Ok(model);
         }

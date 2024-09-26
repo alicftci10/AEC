@@ -16,7 +16,7 @@
                 <a href="#">
                     <div class="shop">
                         <div class="shop-img">
-                            <img src="~/img/LAPTOP.png" alt="">
+                            <img src="~/img/TR_T6_V1.2_RTX_4080.png" alt="">
                         </div>
                         <div class="shop-body">
                             <h3>LAPTOP<br>KOLEKSİYONU</h3>
@@ -31,7 +31,7 @@
                 <a href="#">
                     <div class="shop">
                         <div class="shop-img">
-                            <img src="~/img/MONİTOR.png" alt="">
+                            <img src="~/img/Aryond_A24_V2_1.png" alt="">
                         </div>
                         <div class="shop-body">
                             <h3>MONİTÖR<br>KOLEKSİYONU</h3>
@@ -46,10 +46,10 @@
                 <a href="#">
                     <div class="shop">
                         <div class="shop-img">
-                            <img src="~/img/shop03.png" alt="">
+                            <img src="~/img/pusat-business-pro-siyah-01.png" alt="">
                         </div>
                         <div class="shop-body">
-                            <h3>KULAKLIK<br>KOLEKSİYONU</h3>
+                            <h3>MOUSE<br>KOLEKSİYONU</h3>
                             <span class="cta-btn" style="font-weight:bold;">Hemen İncele <i class="fa fa-arrow-circle-right"></i></span>
                         </div>
                     </div>
@@ -163,6 +163,42 @@
 
                                     }
                                 }
+
+                                @if (Model.MouseList != null && Model.MouseList.Count > 0)
+                                {
+                                    foreach (var item in Model.MouseList)
+                                    {
+                                        <div class="product">
+                                            <a href="#">
+                                                <div class="product-img">
+                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                    <div class="product-label">
+                                                        <span class="sale">-5%</span>
+                                                        <span class="new">NEW</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-body">
+                                                    <h3 class="product-name"><span style="color:#696cff">@item.MouseAdi</span></h3>
+                                                    <h4 class="product-price">@Formatting.FormatTurkLirasi(item.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(item.Fiyat.Value, 5)</del></h4>
+                                                    <div class="product-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <div class="product-btns">
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o" style="color:#329d00e6"></i><span class="tooltipp">FAVORİYE EKLE</span></button>
+                                                    </div>
+                                                </div>
+                                                <div class="add-to-cart">
+                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> SEPETE EKLE</button>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                    }
+                                }
                                 <!-- /product -->
                             </div>
                             <div id="slick-nav-1" class="products-slick-nav"></div>
@@ -215,7 +251,7 @@
                                     <div id="slick-nav-1" class="products-slick-nav"></div>
                                 </div>
                             }
-                            else
+                            else if (main.Id == 2)
                             {
                                 <div id="tab_@main.Id" class="tab-pane">
                                     <div class="products-slick" data-nav="#slick-nav-1">
@@ -235,6 +271,51 @@
                                                         </div>
                                                         <div class="product-body">
                                                             <h3 class="product-name"><span style="color:#696cff">@item.MonitorAdi</span></h3>
+                                                            <h4 class="product-price">@Formatting.FormatTurkLirasi(item.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(item.Fiyat.Value, 5)</del></h4>
+                                                            <div class="product-rating">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            </div>
+                                                            <div class="product-btns">
+                                                                <button class="add-to-wishlist"><i class="fa fa-heart-o" style="color:#329d00e6"></i><span class="tooltipp">FAVORİYE EKLE</span></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="add-to-cart">
+                                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> SEPETE EKLE</button>
+                                                        </div>
+                                                    </a>
+                                                </div>
+
+                                            }
+                                        }
+                                        <!-- /product -->
+                                    </div>
+                                    <div id="slick-nav-1" class="products-slick-nav"></div>
+                                </div>
+                            }
+                            else if (main.Id == 30)
+                            {
+                                <div id="tab_@main.Id" class="tab-pane">
+                                    <div class="products-slick" data-nav="#slick-nav-1">
+                                        <!-- product -->
+                                        @if (Model.MouseList != null && Model.MouseList.Count > 0)
+                                        {
+                                            foreach (var item in Model.MouseList)
+                                            {
+                                                <div class="product">
+                                                    <a href="#">
+                                                        <div class="product-img">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                            <div class="product-label">
+                                                                <span class="sale">-5%</span>
+                                                                <span class="new">NEW</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-body">
+                                                            <h3 class="product-name"><span style="color:#696cff">@item.MouseAdi</span></h3>
                                                             <h4 class="product-price">@Formatting.FormatTurkLirasi(item.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(item.Fiyat.Value, 5)</del></h4>
                                                             <div class="product-rating">
                                                                 <i class="fa fa-star"></i>
@@ -418,6 +499,42 @@
 
                                     }
                                 }
+
+                                @if (Model.MouseList != null && Model.MouseList.Count > 0)
+                                {
+                                    foreach (var item in Model.MouseList)
+                                    {
+                                        <div class="product">
+                                            <a href="#">
+                                                <div class="product-img">
+                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                    <div class="product-label">
+                                                        <span class="sale">-5%</span>
+                                                        <span class="new">NEW</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-body">
+                                                    <h3 class="product-name"><span style="color:#696cff">@item.MouseAdi</span></h3>
+                                                    <h4 class="product-price">@Formatting.FormatTurkLirasi(item.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(item.Fiyat.Value, 5)</del></h4>
+                                                    <div class="product-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <div class="product-btns">
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o" style="color:#329d00e6"></i><span class="tooltipp">FAVORİYE EKLE</span></button>
+                                                    </div>
+                                                </div>
+                                                <div class="add-to-cart">
+                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> SEPETE EKLE</button>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                    }
+                                }
                                 <!-- /product -->
                             </div>
                             <div id="slick-nav-2" class="products-slick-nav"></div>
@@ -470,7 +587,7 @@
                                     <div id="slick-nav-2" class="products-slick-nav"></div>
                                 </div>
                             }
-                            else
+                            else if (main.Id == 2)
                             {
                                 <div id="tab2_@main.Id" class="tab-pane">
                                     <div class="products-slick" data-nav="#slick-nav-2">
@@ -515,9 +632,55 @@
                                     <div id="slick-nav-2" class="products-slick-nav"></div>
                                 </div>
                             }
+                            else if (main.Id == 30)
+                            {
+                                <div id="tab2_@main.Id" class="tab-pane">
+                                    <div class="products-slick" data-nav="#slick-nav-2">
+                                        <!-- product -->
+                                        @if (Model.MouseList != null && Model.MouseList.Count > 0)
+                                        {
+                                            foreach (var item in Model.MouseList)
+                                            {
+                                                <div class="product">
+                                                    <a href="#">
+                                                        <div class="product-img">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                            <div class="product-label">
+                                                                <span class="sale">-5%</span>
+                                                                <span class="new">NEW</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-body">
+                                                            <h3 class="product-name"><span style="color:#696cff">@item.MouseAdi</span></h3>
+                                                            <h4 class="product-price">@Formatting.FormatTurkLirasi(item.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(item.Fiyat.Value, 5)</del></h4>
+                                                            <div class="product-rating">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            </div>
+                                                            <div class="product-btns">
+                                                                <button class="add-to-wishlist"><i class="fa fa-heart-o" style="color:#329d00e6"></i><span class="tooltipp">FAVORİYE EKLE</span></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="add-to-cart">
+                                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> SEPETE EKLE</button>
+                                                        </div>
+                                                    </a>
+                                                </div>
+
+                                            }
+                                        }
+                                        <!-- /product -->
+                                    </div>
+                                    <div id="slick-nav-2" class="products-slick-nav"></div>
+                                </div>
+                            }
                         }
                         <!-- /tab -->
                     </div>
+                    <br />
                 </div>
             </div>
             <!-- Products tab & slick -->
@@ -527,8 +690,6 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
-
-
 @section AECScript {
     <script type="text/javascript">
         // Şu anki zamana 2 gün ekleyin

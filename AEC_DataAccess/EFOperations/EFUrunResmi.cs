@@ -56,5 +56,26 @@ namespace AEC_DataAccess.EFOperations
                 return List;
             }
         }
+
+        public List<UrunResmiDataModel> GetMouseResmiList(int pMouseId)
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                var List = db.UrunResmis.Where(i => i.MouseId == pMouseId)
+                    .Select(x => new UrunResmiDataModel
+                    {
+                        Id = x.Id,
+                        MouseId = x.MouseId,
+                        ResimUrl = x.ResimUrl,
+                        ResimBoyutu = x.ResimBoyutu,
+                        ResimTuru = x.ResimTuru,
+                        CreatedAt = x.CreatedAt,
+                        CreatedBy = x.CreatedBy
+
+                    }).ToList();
+
+                return List;
+            }
+        }
     }
 }

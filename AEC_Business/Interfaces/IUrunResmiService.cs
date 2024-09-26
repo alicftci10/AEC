@@ -17,9 +17,13 @@ namespace AEC_Business.Interfaces
 
         bool AddUpdateMonitor(int MonitorId, List<IFormFile> ResimUrl, int CreatedBy);
 
+        bool AddUpdateMouse(int MouseId, List<IFormFile> ResimUrl, int CreatedBy);
+
         List<UrunResmiDataModel> GetLaptopResmiList(int pLaptopId);
 
         List<UrunResmiDataModel> GetMonitorResmiList(int pMonitorId);
+
+        List<UrunResmiDataModel> GetMouseResmiList(int pMouseId);
 
         UrunResmi GetId(int pId);
 

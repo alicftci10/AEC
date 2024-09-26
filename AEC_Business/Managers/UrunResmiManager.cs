@@ -38,6 +38,7 @@ namespace AEC_Business.Managers
                     model.Id = item.Id;
                     model.LaptopId = item.LaptopId;
                     model.MonitorId = item.MonitorId;
+                    model.MouseId = item.MouseId;
                     model.ResimUrl = item.ResimUrl;
                     model.ResimBoyutu = item.ResimBoyutu;
                     model.ResimTuru = item.ResimTuru;
@@ -155,12 +156,65 @@ namespace AEC_Business.Managers
             return true;
         }
 
+        public bool AddUpdateMouse(int MouseId, List<IFormFile> ResimUrl, int CreatedBy)
+        {
+            string imageFilePath = "Mouse_" + MouseId;
+            string imagePath = ConfigurationInfo.UrunResmiFolderUrl + "\\" + imageFilePath;
+            if (!Directory.Exists(imagePath))
+            {
+                Directory.CreateDirectory(imagePath);
+            }
+            else
+            {
+                var deleteList = GetMouseResmiList(MouseId);
+                foreach (var item in deleteList)
+                {
+                    Delete(item.Id);
+                }
+            }
+
+            int index = 1;
+
+            foreach (var file in ResimUrl)
+            {
+                if (ResimUrl == null || file.Length == 0 || MouseId <= 0)
+                {
+                    return false;
+                }
+
+                if (file.Length > 0)
+                {
+                    var filePath = Path.Combine(imagePath, index + Path.GetExtension(imagePath + file.FileName));
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    UrunResmiDataModel img = new UrunResmiDataModel();
+
+                    img.MouseId = MouseId;
+                    img.ResimUrl = imageFilePath + "\\" + index + Path.GetExtension(imagePath + file.FileName);
+                    img.ResimBoyutu = file.Length;
+                    img.ResimTuru = file.ContentType;
+                    img.CreatedBy = CreatedBy;
+
+                    Add(img);
+
+                    index++;
+                }
+            }
+
+            return true;
+        }
+
         private UrunResmi GetDataModel(UrunResmiDataModel model)
         {
             UrunResmi item = new UrunResmi();
 
             item.LaptopId = model.LaptopId;
             item.MonitorId = model.MonitorId;
+            item.MouseId = model.MouseId;
             item.ResimUrl = model.ResimUrl;
             item.ResimBoyutu = model.ResimBoyutu.Value;
             item.ResimTuru = model.ResimTuru;
@@ -183,6 +237,11 @@ namespace AEC_Business.Managers
         public List<UrunResmiDataModel> GetMonitorResmiList(int pMonitorId)
         {
             return _UrunResmiRepository.GetMonitorResmiList(pMonitorId);
+        }
+
+        public List<UrunResmiDataModel> GetMouseResmiList(int pMouseId)
+        {
+            return _UrunResmiRepository.GetMouseResmiList(pMouseId);
         }
 
         public UrunResmi GetId(int pId)

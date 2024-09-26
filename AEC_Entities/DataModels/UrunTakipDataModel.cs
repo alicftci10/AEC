@@ -13,6 +13,8 @@ namespace AEC_Entities.DataModels
 
         public int? MonitorId { get; set; }
 
+        public int? MouseId { get; set; }
+
         public int? Adet { get; set; }
 
         public bool? Favori { get; set; }
@@ -30,5 +32,7 @@ namespace AEC_Entities.DataModels
         public List<LaptopDataModel>? LaptopList { get; set; }
 
         public List<MonitorDataModel>? MonitorList { get; set; }
+
+        public List<MouseDataModel>? MouseList { get; set; }
     }
 }

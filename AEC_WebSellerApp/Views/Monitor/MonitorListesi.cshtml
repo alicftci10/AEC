@@ -126,7 +126,7 @@
 
     function monitordetay(event, id) {
         // Eğer tıklanan eleman dropdown, dropdown'un altındaki elemanlardan biri veya bir resim değilse yönlendir
-        if (!event.target.closest('.dropdown') && !event.target.closest('img')) {
+        if (!event.target.closest('.dropdown') && !event.target.closest('img') && !event.target.closest('button')) {
             window.location.href = '/Monitor/MonitorDetay?pId=' + id;
         }
     }

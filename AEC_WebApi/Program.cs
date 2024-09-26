@@ -98,6 +98,7 @@ namespace AEC_WebApi
             builder.Services.AddTransient<IIsletimSistemiService, IsletimSistemiManager>();
             builder.Services.AddTransient<ILaptopService, LaptopManager>();
             builder.Services.AddTransient<IMonitorService, MonitorManager>();
+            builder.Services.AddTransient<IMouseService, MouseManager>();
             builder.Services.AddTransient<IUrunTakipService, UrunTakipManager>();
             builder.Services.AddTransient<IUrunResmiService, UrunResmiManager>();
             builder.Services.AddTransient<IHakkimizdaService, HakkimizdaManager>();
@@ -115,6 +116,7 @@ namespace AEC_WebApi
             builder.Services.AddTransient<IEFIsletimSistemiRepository, EFIsletimSistemi>();
             builder.Services.AddTransient<IEFLaptopRepository, EFLaptop>();
             builder.Services.AddTransient<IEFMonitorRepository, EFMonitor>();
+            builder.Services.AddTransient<IEFMouseRepository, EFMouse>();
             builder.Services.AddTransient<IEFUrunTakipRepository, EFUrunTakip>();
             builder.Services.AddTransient<IEFUrunResmiRepository, EFUrunResmi>();
             builder.Services.AddTransient<IEFHakkimizdaRepository, EFHakkimizda>();

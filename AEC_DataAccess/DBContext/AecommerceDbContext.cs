@@ -40,6 +40,8 @@ public partial class AecommerceDbContext : DbContext
 
     public virtual DbSet<Monitor> Monitors { get; set; }
 
+    public virtual DbSet<Mouse> Mice { get; set; }
+
     public virtual DbSet<Ram> Rams { get; set; }
 
     public virtual DbSet<Ssd> Ssds { get; set; }
@@ -322,6 +324,28 @@ public partial class AecommerceDbContext : DbContext
                 .HasConstraintName("FK_Monitor_YenilemeHizi");
         });
 
+        modelBuilder.Entity<Mouse>(entity =>
+        {
+            entity.ToTable("Mouse");
+
+            entity.Property(e => e.Agirlik).HasMaxLength(100);
+            entity.Property(e => e.BaglantiOzellikleri).HasMaxLength(100);
+            entity.Property(e => e.Boyut).HasMaxLength(100);
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.Dpi)
+                .HasMaxLength(50)
+                .HasColumnName("DPI");
+            entity.Property(e => e.Fiyat).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.MouseAdi).HasMaxLength(100);
+            entity.Property(e => e.Renk).HasMaxLength(100);
+            entity.Property(e => e.TusSayisi).HasMaxLength(20);
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Mice)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Mouse_Kullanici");
+        });
+
         modelBuilder.Entity<Ram>(entity =>
         {
             entity.ToTable("RAM");
@@ -379,6 +403,10 @@ public partial class AecommerceDbContext : DbContext
             entity.HasOne(d => d.Monitor).WithMany(p => p.UrunResmis)
                 .HasForeignKey(d => d.MonitorId)
                 .HasConstraintName("FK_UrunResmi_Monitor");
+
+            entity.HasOne(d => d.Mouse).WithMany(p => p.UrunResmis)
+                .HasForeignKey(d => d.MouseId)
+                .HasConstraintName("FK_UrunResmi_Mouse");
         });
 
         modelBuilder.Entity<UrunTakip>(entity =>
@@ -400,6 +428,10 @@ public partial class AecommerceDbContext : DbContext
             entity.HasOne(d => d.Monitor).WithMany(p => p.UrunTakips)
                 .HasForeignKey(d => d.MonitorId)
                 .HasConstraintName("FK_UrunTakip_Monitor");
+
+            entity.HasOne(d => d.Mouse).WithMany(p => p.UrunTakips)
+                .HasForeignKey(d => d.MouseId)
+                .HasConstraintName("FK_UrunTakip_Mouse");
 
             entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.UrunTakipUpdatedByNavigations)
                 .HasForeignKey(d => d.UpdatedBy)
@@ -425,6 +457,10 @@ public partial class AecommerceDbContext : DbContext
             entity.HasOne(d => d.Monitor).WithMany(p => p.UrunYorums)
                 .HasForeignKey(d => d.MonitorId)
                 .HasConstraintName("FK_UrunYorum_Monitor");
+
+            entity.HasOne(d => d.Mouse).WithMany(p => p.UrunYorums)
+                .HasForeignKey(d => d.MouseId)
+                .HasConstraintName("FK_UrunYorum_Mouse");
         });
 
         modelBuilder.Entity<YenilemeHizi>(entity =>

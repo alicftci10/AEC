@@ -11,6 +11,8 @@ public partial class UrunYorum
 
     public int? MonitorId { get; set; }
 
+    public int? MouseId { get; set; }
+
     public string Yorum { get; set; } = null!;
 
     public short? YorumPuan { get; set; }
@@ -24,4 +26,6 @@ public partial class UrunYorum
     public virtual Laptop? Laptop { get; set; }
 
     public virtual Monitor? Monitor { get; set; }
+
+    public virtual Mouse? Mouse { get; set; }
 }

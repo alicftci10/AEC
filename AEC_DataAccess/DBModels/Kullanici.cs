@@ -49,6 +49,8 @@ public partial class Kullanici
 
     public virtual ICollection<Laptop> Laptops { get; set; } = new List<Laptop>();
 
+    public virtual ICollection<Mouse> Mice { get; set; } = new List<Mouse>();
+
     public virtual ICollection<Monitor> Monitors { get; set; } = new List<Monitor>();
 
     public virtual ICollection<Ram> Rams { get; set; } = new List<Ram>();

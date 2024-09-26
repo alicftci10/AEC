@@ -30,6 +30,7 @@ namespace AEC_DataAccess.EFOperations
                                 Id = x.Id,
                                 LaptopId = x.LaptopId,
                                 MonitorId = x.MonitorId,
+                                MouseId = x.MouseId,
                                 Adet = x.Adet,
                                 Favori = x.Favori,
                                 SepetDurum = x.SepetDurum,

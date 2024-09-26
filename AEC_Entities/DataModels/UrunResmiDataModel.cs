@@ -13,6 +13,8 @@ namespace AEC_Entities.DataModels
 
         public int? MonitorId { get; set; }
 
+        public int? MouseId { get; set; }
+
         [Required(ErrorMessage = "Resim Url Bilgisi Boş Girilemez!!")]
         public string ResimUrl { get; set; } = null!;
 

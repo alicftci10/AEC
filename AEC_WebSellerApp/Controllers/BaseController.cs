@@ -198,7 +198,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.TurAdi == "Admin" || item.TurAdi == "Personel")
+                        if (item.Id == 1 || item.Id == 2)
                         {
                             listPersonel.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TurAdi });
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TurAdi });
@@ -377,7 +377,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.AltKategori != null && item.OrtaKategori == "İşlemci Donanımları")
+                        if (item.AltKategori != null && item.MainKategoriId == 4)
                         {
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
                         }
@@ -445,7 +445,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.AltKategori != null && item.OrtaKategori == "Ekran Kartı Donanımları")
+                        if (item.AltKategori != null && item.MainKategoriId == 3)
                         {
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
                         }
@@ -513,7 +513,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.AltKategori != null && item.OrtaKategori == "Bellek")
+                        if (item.AltKategori != null && item.MainKategoriId == 5)
                         {
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
                         }
@@ -581,7 +581,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.AltKategori != null && item.OrtaKategori == "Depolama")
+                        if (item.AltKategori != null && item.MainKategoriId == 25)
                         {
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
                         }
@@ -649,7 +649,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.AltKategori != null && item.OrtaKategori == "Yenileme Hızı")
+                        if (item.AltKategori != null && item.MainKategoriId == 7)
                         {
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
                         }
@@ -717,7 +717,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.AltKategori != null && item.OrtaKategori == "Çözünürlük")
+                        if (item.AltKategori != null && item.MainKategoriId == 8)
                         {
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
                         }
@@ -785,7 +785,7 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     foreach (var item in modelList)
                     {
-                        if (item.AltKategori != null && item.OrtaKategori == "İşletim Sistemi")
+                        if (item.AltKategori != null && item.MainKategoriId == 6)
                         {
                             list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.AltKategori });
                         }
@@ -854,6 +854,37 @@ namespace AEC_WebSellerApp.Controllers
                     }
 
                     HttpContext.Session.SetString("MonitorAdiList", JsonConvert.SerializeObject(MonitorAdi));
+                }
+            }
+        }
+
+        public void LoadMouseList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/MouseApi/GetAllMouse";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<MouseDataModel> modelList = new List<MouseDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<MouseDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> MouseAdi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        MouseAdi.Add(item.MouseAdi);
+                    }
+
+                    HttpContext.Session.SetString("MouseAdiList", JsonConvert.SerializeObject(MouseAdi));
                 }
             }
         }

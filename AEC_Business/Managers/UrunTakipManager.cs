@@ -32,6 +32,7 @@ namespace AEC_Business.Managers
                     model.Id = item.Id;
                     model.LaptopId = item.LaptopId;
                     model.MonitorId = item.MonitorId;
+                    model.MouseId = item.MouseId;
                     model.Adet = item.Adet;
                     model.Favori = item.Favori;
                     model.SepetDurum = item.SepetDurum;
@@ -54,6 +55,7 @@ namespace AEC_Business.Managers
 
             item.LaptopId = model.LaptopId;
             item.MonitorId = model.MonitorId;
+            item.MouseId = model.MouseId;
             item.Adet = model.Adet;
             item.Favori = model.Favori;
             item.SepetDurum = model.SepetDurum;

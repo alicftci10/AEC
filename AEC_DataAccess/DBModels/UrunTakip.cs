@@ -11,6 +11,8 @@ public partial class UrunTakip
 
     public int? MonitorId { get; set; }
 
+    public int? MouseId { get; set; }
+
     public int? Adet { get; set; }
 
     public bool? Favori { get; set; }
@@ -32,6 +34,8 @@ public partial class UrunTakip
     public virtual Laptop? Laptop { get; set; }
 
     public virtual Monitor? Monitor { get; set; }
+
+    public virtual Mouse? Mouse { get; set; }
 
     public virtual Kullanici? UpdatedByNavigation { get; set; }
 }

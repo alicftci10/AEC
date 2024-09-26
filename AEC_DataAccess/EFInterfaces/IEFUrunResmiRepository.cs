@@ -14,5 +14,7 @@ namespace AEC_DataAccess.EFInterfaces
         List<UrunResmiDataModel> GetLaptopResmiList(int pLaptopId);
 
         List<UrunResmiDataModel> GetMonitorResmiList(int pMonitorId);
+
+        List<UrunResmiDataModel> GetMouseResmiList(int pMouseId);
     }
 }
