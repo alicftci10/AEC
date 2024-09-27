@@ -1,9 +1,19 @@
-﻿@model UrunTakipDataModel
+﻿@model HomeDataModel
 
 @{
     List<KategoriDataModel> kategoriList = ViewData["KategoriList"] as List<KategoriDataModel>;
     List<KategoriDataModel> mainKategoriList = kategoriList.Where(i => i.MainKategoriId == null).ToList();
 }
+
+<style>
+    .product-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        min-height: 60px; /* Ad alanı sabit yükseklikte olur */
+        overflow: hidden; /* Uzun adların taşmasını engeller */
+    }
+</style>
 
 <!-- SECTION -->
 <div class="section">
@@ -100,7 +110,7 @@
                                         <div class="product">
                                             <a href="#">
                                                 <div class="product-img">
-                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                     <div class="product-label">
                                                         <span class="sale">-5%</span>
                                                         <span class="new">NEW</span>
@@ -135,7 +145,7 @@
                                         <div class="product">
                                             <a href="#">
                                                 <div class="product-img">
-                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                     <div class="product-label">
                                                         <span class="sale">-5%</span>
                                                         <span class="new">NEW</span>
@@ -171,7 +181,7 @@
                                         <div class="product">
                                             <a href="#">
                                                 <div class="product-img">
-                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                     <div class="product-label">
                                                         <span class="sale">-5%</span>
                                                         <span class="new">NEW</span>
@@ -218,7 +228,7 @@
                                                 <div class="product">
                                                     <a href="#">
                                                         <div class="product-img">
-                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                             <div class="product-label">
                                                                 <span class="sale">-5%</span>
                                                                 <span class="new">NEW</span>
@@ -263,7 +273,7 @@
                                                 <div class="product">
                                                     <a href="#">
                                                         <div class="product-img">
-                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                             <div class="product-label">
                                                                 <span class="sale">-5%</span>
                                                                 <span class="new">NEW</span>
@@ -308,7 +318,7 @@
                                                 <div class="product">
                                                     <a href="#">
                                                         <div class="product-img">
-                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                             <div class="product-label">
                                                                 <span class="sale">-5%</span>
                                                                 <span class="new">NEW</span>
@@ -389,7 +399,7 @@
                     </ul>
                     <h2 class="text-uppercase">BU HAFTANIN KAMPANYALARI</h2>
                     <p>YENİ ÜRÜNLERİMİZDE %5'E VARAN İNDİRİMLER</p>
-                    <a class="primary-btn cta-btn" href="#" style="background-color:#696cff">ÜRÜNLERİ GÖRÜNTÜLE</a>
+                    <a class="primary-btn cta-btn" href="/Home/UrunlerListSayfasi" style="background-color:#696cff">ÜRÜNLERİ GÖRÜNTÜLE</a>
                 </div>
             </div>
         </div>
@@ -436,7 +446,7 @@
                                         <div class="product">
                                             <a href="#">
                                                 <div class="product-img">
-                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                     <div class="product-label">
                                                         <span class="sale">-5%</span>
                                                         <span class="new">NEW</span>
@@ -471,7 +481,7 @@
                                         <div class="product">
                                             <a href="#">
                                                 <div class="product-img">
-                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                     <div class="product-label">
                                                         <span class="sale">-5%</span>
                                                         <span class="new">NEW</span>
@@ -507,7 +517,7 @@
                                         <div class="product">
                                             <a href="#">
                                                 <div class="product-img">
-                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                    <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                     <div class="product-label">
                                                         <span class="sale">-5%</span>
                                                         <span class="new">NEW</span>
@@ -554,7 +564,7 @@
                                                 <div class="product">
                                                     <a href="#">
                                                         <div class="product-img">
-                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                             <div class="product-label">
                                                                 <span class="sale">-5%</span>
                                                                 <span class="new">NEW</span>
@@ -599,7 +609,7 @@
                                                 <div class="product">
                                                     <a href="#">
                                                         <div class="product-img">
-                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                             <div class="product-label">
                                                                 <span class="sale">-5%</span>
                                                                 <span class="new">NEW</span>
@@ -644,7 +654,7 @@
                                                 <div class="product">
                                                     <a href="#">
                                                         <div class="product-img">
-                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                             <div class="product-label">
                                                                 <span class="sale">-5%</span>
                                                                 <span class="new">NEW</span>

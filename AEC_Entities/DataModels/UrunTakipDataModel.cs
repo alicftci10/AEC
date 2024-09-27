@@ -28,11 +28,5 @@ namespace AEC_Entities.DataModels
         public int? UpdatedBy { get; set; }
 
         public string? UpdatedByName { get; set; }
-
-        public List<LaptopDataModel>? LaptopList { get; set; }
-
-        public List<MonitorDataModel>? MonitorList { get; set; }
-
-        public List<MouseDataModel>? MouseList { get; set; }
     }
 }

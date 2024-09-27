@@ -11,24 +11,38 @@ namespace AEC_WebApp.Controllers
     {
         public HomeController(IMemoryCache memoryCache) { _memoryCacheBase = memoryCache; }
 
-        public async Task<IActionResult> Index(string searchTerm)
+        public async Task<IActionResult> Index()
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/UrunTakipApi/GetUrunlerList";
-
-                if (!string.IsNullOrEmpty(searchTerm))
-                {
-                    url += $"?searchTerm={searchTerm}";
-                }
+                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetHomeList";
 
                 var response = await client.GetAsync(url);
 
-                UrunTakipDataModel model = new UrunTakipDataModel();
+                HomeDataModel model = new HomeDataModel();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    model = JsonConvert.DeserializeObject<UrunTakipDataModel>(response.Content.ReadAsStringAsync().Result);
+                    model = JsonConvert.DeserializeObject<HomeDataModel>(response.Content.ReadAsStringAsync().Result);
+                }
+
+                return View(model);
+            }
+        }
+
+        public async Task<IActionResult> UrunlerListSayfasi(int pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetHomeList";
+
+                var response = await client.GetAsync(url);
+
+                HomeDataModel model = new HomeDataModel();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<HomeDataModel>(response.Content.ReadAsStringAsync().Result);
                 }
 
                 return View(model);

@@ -231,11 +231,11 @@
                                                     @foreach (var item3 in KategoriList2)
                                                     {
                                                         <div class="col-md-1"></div>
-                                                        @if (item.KategoriAdi == "Laptop")
+                                                        @if (item.Id == 1)
                                                         {
                                                             <li><a href="#" style="margin-left:5px;">@item3.KategoriAdi Laptoplar</a></li>
                                                         }
-                                                        else
+                                                        else if (item.Id == 2)
                                                         {
                                                             <li><a href="#" style="margin-left:5px;">@item3.KategoriAdi Monitörler</a></li>
                                                         }

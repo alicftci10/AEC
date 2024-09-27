@@ -10,15 +10,9 @@ namespace AEC_WebApi.Controllers
     public class UrunTakipApiController : BaseApiController
     {
         IUrunTakipService _UrunTakip;
-        ILaptopService _LaptopService;
-        IMonitorService _MonitorService;
-        IMouseService _MouseService;
-        public UrunTakipApiController(IUrunTakipService UrunTakip, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService)
+        public UrunTakipApiController(IUrunTakipService UrunTakip)
         {
             _UrunTakip = UrunTakip;
-            _LaptopService = laptopService;
-            _MonitorService = monitorService;
-            _MouseService = mouseService;
         }
 
         [HttpGet]
@@ -33,27 +27,6 @@ namespace AEC_WebApi.Controllers
         public IActionResult GetUrunTakipList(string? searchTerm)
         {
             return Ok(_UrunTakip.GetUrunTakipList(searchTerm));
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult GetUrunlerList(string? searchTerm)
-        {
-            UrunTakipDataModel model = new UrunTakipDataModel();
-
-            var laptopList = _LaptopService.GetLaptopList(searchTerm);
-
-            var monitorList = _MonitorService.GetMonitorList(searchTerm);
-
-            var mouseList = _MouseService.GetMouseList(searchTerm);
-
-            model.LaptopList = laptopList;
-
-            model.MonitorList = monitorList;
-
-            model.MouseList = mouseList;
-
-            return Ok(model);
         }
 
         [HttpGet]
