@@ -13,28 +13,27 @@ namespace AEC_WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            using (HttpClient client = new HttpClient())
-            {
-                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetHomeList";
-
-                var response = await client.GetAsync(url);
-
-                HomeDataModel model = new HomeDataModel();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    model = JsonConvert.DeserializeObject<HomeDataModel>(response.Content.ReadAsStringAsync().Result);
-                }
-
-                return View(model);
-            }
+            return View(AllUrunlerList());
         }
 
-        public async Task<IActionResult> UrunlerListSayfasi(int pId)
+        public async Task<IActionResult> UrunlerListSayfasi(int? pId, string searchTerm)
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetHomeList";
+                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi";
+
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    url += $"/GetHomeSearchList?searchTerm={searchTerm}";
+                }
+                else if (pId != null)
+                {
+                    url += $"/GetHomeSearchIdList?pId={pId}";
+                }
+                else
+                {
+                    return View(AllUrunlerList());
+                }
 
                 var response = await client.GetAsync(url);
 

@@ -76,6 +76,11 @@ namespace AEC_Business.Managers
             return _MouseRepository.GetMouseList(searchTerm);
         }
 
+        public List<MouseDataModel> GetMouseList()
+        {
+            return _MouseRepository.GetMouseList();
+        }
+
         public MouseDataModel GetMouseId(int pId)
         {
             return _MouseRepository.GetMouseId(pId);

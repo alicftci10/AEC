@@ -19,7 +19,8 @@ namespace AEC_WebApp.Controllers
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
 			ViewData["KategoriList"] = LoadKategoriList();
-			LoadHakkimizdaInfo();
+            AllUrunlerList();
+            LoadHakkimizdaInfo();
 		}
 
 		public List<KategoriDataModel> LoadKategoriList()
@@ -41,7 +42,44 @@ namespace AEC_WebApp.Controllers
 			}
 		}
 
-		public HakkimizdaDataModel LoadHakkimizdaInfo()
+        public HomeDataModel AllUrunlerList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetHomeList";
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                HomeDataModel model = new HomeDataModel();
+
+                if (text != null)
+                {
+                    model = JsonConvert.DeserializeObject<HomeDataModel>(text.Content.ReadAsStringAsync().Result);
+                }
+
+				if (model != null)
+				{
+					if (model.LaptopList != null && model.LaptopList.Count > 0)
+					{
+                        ViewData["AllLaptop"] = model.LaptopList.Count;
+                    }
+
+                    if (model.MonitorList != null && model.MonitorList.Count > 0)
+                    {
+                        ViewData["AllMonitor"] = model.MonitorList.Count;
+                    }
+
+                    if (model.MouseList != null && model.MouseList.Count > 0)
+                    {
+                        ViewData["AllMouse"] = model.MouseList.Count;
+                    }
+                }
+
+                return model;
+            }
+        }
+
+        public HakkimizdaDataModel LoadHakkimizdaInfo()
 		{
 			HakkimizdaDataModel model = new HakkimizdaDataModel();
 

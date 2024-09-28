@@ -15,6 +15,8 @@ namespace AEC_Business.Interfaces
 
         List<MonitorDataModel> GetMonitorList(string searchTerm);
 
+        List<MonitorDataModel> GetMonitorList();
+
         MonitorDataModel GetMonitorId(int pId);
 
         Monitor GetId(int pId);

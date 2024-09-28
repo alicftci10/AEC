@@ -13,6 +13,8 @@ namespace AEC_DataAccess.EFInterfaces
     {
         List<MouseDataModel> GetMouseList(string searchTerm);
 
+        List<MouseDataModel> GetMouseList();
+
         MouseDataModel GetMouseId(int pId);
     }
 }

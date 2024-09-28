@@ -77,6 +77,11 @@ namespace AEC_Business.Managers
             return _MonitorRepository.GetMonitorList(searchTerm);
         }
 
+        public List<MonitorDataModel> GetMonitorList()
+        {
+            return _MonitorRepository.GetMonitorList();
+        }
+
         public MonitorDataModel GetMonitorId(int pId)
         {
             return _MonitorRepository.GetMonitorId(pId);

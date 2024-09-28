@@ -86,6 +86,11 @@ namespace AEC_Business.Managers
             return _LaptopRepository.GetLaptopList(searchTerm);
         }
 
+        public List<LaptopDataModel> GetLaptopList()
+        {
+            return _LaptopRepository.GetLaptopList();
+        }
+
         public LaptopDataModel GetLaptopId(int pId)
         {
             return _LaptopRepository.GetLaptopId(pId);

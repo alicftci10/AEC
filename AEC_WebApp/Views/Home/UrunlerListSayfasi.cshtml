@@ -3,6 +3,23 @@
 @{
     List<KategoriDataModel> kategoriList = ViewData["KategoriList"] as List<KategoriDataModel>;
     List<KategoriDataModel> mainKategoriList = kategoriList.Where(i => i.MainKategoriId == null).ToList();
+
+    List<int> allurun = new List<int>();
+
+    if (Model.LaptopList != null && Model.LaptopList.Count > 0)
+    {
+        allurun.Add(Model.LaptopList.Count);
+    }
+
+    if (Model.MonitorList != null && Model.MonitorList.Count > 0)
+    {
+        allurun.Add(Model.MonitorList.Count);
+    }
+
+    if (Model.MouseList != null && Model.MouseList.Count > 0)
+    {
+        allurun.Add(Model.MouseList.Count);
+    }
 }
 
 <style>
@@ -23,7 +40,10 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
-                    <li><h3>İNDİRİMLİ ÜRÜNLER</h3></li>
+                    @if (allurun.Count > 2)
+                    {
+                        <li><h3>TÜM ÜRÜNLER</h3></li>
+                    }
                 </ul>
             </div>
         </div>
@@ -47,17 +67,17 @@
                         <label for="category-1">
                             <span></span>
                             @item.KategoriAdi
-                            @if (Model.LaptopList != null && Model.LaptopList.Count > 0 && item.Id == 1)
+                            @if (item.Id == 1)
                             {
-                                <small>(@Model.LaptopList.Count)</small>
+                                <small>(@ViewData["AllLaptop"])</small>
                             }
-                            else if (Model.MonitorList != null && Model.MonitorList.Count > 0 && item.Id == 2)
+                            else if (item.Id == 2)
                             {
-                                <small>(@Model.MonitorList.Count)</small>
+                                <small>(@ViewData["AllMonitor"])</small>
                             }
-                            else if (Model.MouseList != null && Model.MouseList.Count > 0 && item.Id == 30)
+                            else if (item.Id == 30)
                             {
-                                <small>(@Model.MouseList.Count)</small>
+                                <small>(@ViewData["AllMouse"])</small>
                             }
                         </label>
                     </div>
@@ -278,14 +298,7 @@
                 <!-- /store products -->
                 <!-- store bottom filter -->
                 <div class="store-filter clearfix">
-                    <span class="store-qty">0-20 ÜRÜN GÖSTERİLİYOR..</span>
-                    <ul class="store-pagination">
-                        <li class="active">1</li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                    </ul>
+                    <span class="store-qty">@allurun.Sum() SONUÇ LİSTELENİYOR..</span>
                 </div>
                 <!-- /store bottom filter -->
             </div>

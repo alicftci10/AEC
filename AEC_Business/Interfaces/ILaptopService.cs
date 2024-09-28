@@ -14,6 +14,8 @@ namespace AEC_Business.Interfaces
 
         List<LaptopDataModel> GetLaptopList(string searchTerm);
 
+        List<LaptopDataModel> GetLaptopList();
+
         LaptopDataModel GetLaptopId(int pId);
 
         Laptop GetId(int pId);

@@ -62,6 +62,42 @@ namespace AEC_DataAccess.EFOperations
             }
         }
 
+        public List<MonitorDataModel> GetMonitorList()
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                var List = (from x in db.Monitors
+
+                            join kul in db.Kullanicis on x.CreatedBy equals kul.Id
+
+                            join cozunurluk in db.Cozunurluks on x.CozunurlukId equals cozunurluk.Id
+
+                            join yenhizi in db.YenilemeHizis on x.YenilemeHiziId equals yenhizi.Id
+
+                            select new MonitorDataModel
+                            {
+                                Id = x.Id,
+                                MonitorAdi = x.MonitorAdi,
+                                Fiyat = x.Fiyat,
+                                CozunurlukId = x.CozunurlukId,
+                                CozunurlukIdName = cozunurluk.CozunurlukAdi,
+                                YenilemeHiziId = x.YenilemeHiziId,
+                                YenilemeHiziIdName = yenhizi.YenilemeHiziAdi,
+                                EkranYapisi = x.EkranYapisi,
+                                Hdr = x.Hdr,
+                                Boyut = x.Boyut,
+                                Agirlik = x.Agirlik,
+                                CreatedAt = x.CreatedAt,
+                                CreatedBy = x.CreatedBy,
+                                CreatedByName = kul.Ad + " " + kul.Soyad,
+                                ResimUrl = db.UrunResmis.Where(i => i.MonitorId == x.Id).Select(i => i.ResimUrl).FirstOrDefault()
+
+                            }).ToList();
+
+                return List;
+            }
+        }
+
         public MonitorDataModel GetMonitorId(int pId)
         {
             using (AecommerceDbContext db = new AecommerceDbContext())

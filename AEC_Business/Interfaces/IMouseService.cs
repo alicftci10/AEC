@@ -14,6 +14,8 @@ namespace AEC_Business.Interfaces
 
         List<MouseDataModel> GetMouseList(string searchTerm);
 
+        List<MouseDataModel> GetMouseList();
+
         MouseDataModel GetMouseId(int pId);
 
         Mouse GetId(int pId);

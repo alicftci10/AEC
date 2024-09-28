@@ -55,6 +55,36 @@ namespace AEC_DataAccess.EFOperations
             }
         }
 
+        public List<MouseDataModel> GetMouseList()
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                var List = (from x in db.Mice
+
+                            join kul in db.Kullanicis on x.CreatedBy equals kul.Id
+
+                            select new MouseDataModel
+                            {
+                                Id = x.Id,
+                                MouseAdi = x.MouseAdi,
+                                Fiyat = x.Fiyat,
+                                Renk = x.Renk,
+                                Dpi = x.Dpi,
+                                TusSayisi = x.TusSayisi,
+                                BaglantiOzellikleri = x.BaglantiOzellikleri,
+                                Boyut = x.Boyut,
+                                Agirlik = x.Agirlik,
+                                CreatedAt = x.CreatedAt,
+                                CreatedBy = x.CreatedBy,
+                                CreatedByName = kul.Ad + " " + kul.Soyad,
+                                ResimUrl = db.UrunResmis.Where(i => i.MouseId == x.Id).Select(i => i.ResimUrl).FirstOrDefault()
+
+                            }).ToList();
+
+                return List;
+            }
+        }
+
         public MouseDataModel GetMouseId(int pId)
         {
             using (AecommerceDbContext db = new AecommerceDbContext())

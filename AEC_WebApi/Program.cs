@@ -85,8 +85,10 @@ namespace AEC_WebApi
             builder.Services.AddDbContext<AecommerceDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddTransient<IHomeService, HomeManager>();
+
             builder.Services.AddTransient<IKullaniciService, KullaniciManager>();
-            builder.Services.AddTransient <IKullaniciTuruService, KullaniciTuruManager>();
+            builder.Services.AddTransient<IKullaniciTuruService, KullaniciTuruManager>();
             builder.Services.AddTransient<IKullaniciKartService, KullaniciKartManager>();
             builder.Services.AddTransient<IKategoriService, KategoriManager>();
             builder.Services.AddTransient<ICPUService, CPUManager>();

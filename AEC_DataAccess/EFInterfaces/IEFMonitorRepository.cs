@@ -14,6 +14,8 @@ namespace AEC_DataAccess.EFInterfaces
     {
         List<MonitorDataModel> GetMonitorList(string searchTerm);
 
+        List<MonitorDataModel> GetMonitorList();
+
         MonitorDataModel GetMonitorId(int pId);
     }
 }

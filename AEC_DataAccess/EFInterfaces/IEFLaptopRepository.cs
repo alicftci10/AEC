@@ -13,6 +13,8 @@ namespace AEC_DataAccess.EFInterfaces
     {
         List<LaptopDataModel> GetLaptopList(string searchTerm);
 
+        List<LaptopDataModel> GetLaptopList();
+
         LaptopDataModel GetLaptopId(int pId);
     }
 }

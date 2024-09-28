@@ -9,11 +9,13 @@ namespace AEC_WebApi.Controllers
     [ApiController]
     public class HomeApiController : BaseApiController
     {
+        IHomeService _HomeService;
         ILaptopService _LaptopService;
         IMonitorService _MonitorService;
         IMouseService _MouseService;
-        public HomeApiController(ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService)
+        public HomeApiController(IHomeService homeService, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService)
         {
+            _HomeService = homeService;
             _LaptopService = laptopService;
             _MonitorService = monitorService;
             _MouseService = mouseService;
@@ -21,42 +23,56 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult GetHomeList(string? searchTerm)
+        public IActionResult GetHomeList()
         {
             HomeDataModel model = new HomeDataModel();
 
-            var laptopList = _LaptopService.GetLaptopList(searchTerm);
+            model.LaptopList = _LaptopService.GetLaptopList();
 
-            var monitorList = _MonitorService.GetMonitorList(searchTerm);
+            model.MonitorList = _MonitorService.GetMonitorList();
 
-            var mouseList = _MouseService.GetMouseList(searchTerm);
-
-            model.LaptopList = laptopList;
-
-            model.MonitorList = monitorList;
-
-            model.MouseList = mouseList;
+            model.MouseList = _MouseService.GetMouseList();
 
             return Ok(model);
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult GetHomeSearchList(int? pId)
+        public IActionResult GetHomeSearchList(string searchTerm)
         {
             HomeDataModel model = new HomeDataModel();
 
-            var laptopList = _LaptopService.GetLaptopList(searchTerm);
+            model.LaptopList = _LaptopService.GetLaptopList(searchTerm);
 
-            var monitorList = _MonitorService.GetMonitorList(searchTerm);
+            model.MonitorList = _MonitorService.GetMonitorList(searchTerm);
 
-            var mouseList = _MouseService.GetMouseList(searchTerm);
+            model.MouseList = _MouseService.GetMouseList(searchTerm);
 
-            model.LaptopList = laptopList;
+            return Ok(model);
+        }
 
-            model.MonitorList = monitorList;
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult GetHomeSearchIdList(int pId)
+        {
+            HomeDataModel model = new HomeDataModel();
 
-            model.MouseList = mouseList;
+            if (pId == 1)
+            {
+                model.LaptopList = _LaptopService.GetLaptopList();
+            }
+            else if (pId == 2)
+            {
+                model.MonitorList = _MonitorService.GetMonitorList();
+            }
+            else if (pId == 30)
+            {
+                model.MouseList = _MouseService.GetMouseList();
+            }
+            else
+            {
+                return Ok(_HomeService.GetHomeSearchList(pId));
+            }
 
             return Ok(model);
         }
