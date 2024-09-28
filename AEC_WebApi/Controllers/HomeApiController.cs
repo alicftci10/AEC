@@ -10,12 +10,14 @@ namespace AEC_WebApi.Controllers
     public class HomeApiController : BaseApiController
     {
         IHomeService _HomeService;
+        IKategoriService _KategoriService;
         ILaptopService _LaptopService;
         IMonitorService _MonitorService;
         IMouseService _MouseService;
-        public HomeApiController(IHomeService homeService, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService)
+        public HomeApiController(IHomeService homeService,IKategoriService kategoriService, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService)
         {
             _HomeService = homeService;
+            _KategoriService = kategoriService;
             _LaptopService = laptopService;
             _MonitorService = monitorService;
             _MouseService = mouseService;
@@ -33,6 +35,8 @@ namespace AEC_WebApi.Controllers
 
             model.MouseList = _MouseService.GetMouseList();
 
+            model.KategoriIdName = "Ali E-Commerce / TÜM ÜRÜNLER";
+
             return Ok(model);
         }
 
@@ -47,6 +51,8 @@ namespace AEC_WebApi.Controllers
             model.MonitorList = _MonitorService.GetMonitorList(searchTerm);
 
             model.MouseList = _MouseService.GetMouseList(searchTerm);
+
+            model.KategoriIdName = "Ali E-Commerce / ARAMA SONUÇLARI";
 
             return Ok(model);
         }
@@ -71,7 +77,24 @@ namespace AEC_WebApi.Controllers
             }
             else
             {
-                return Ok(_HomeService.GetHomeSearchList(pId));
+                model = _HomeService.GetHomeSearchList(pId);
+            }
+
+            var kategoriList = _KategoriService.GetKategoriList();
+
+            foreach (var item in kategoriList)
+            {
+                if (item.Id == pId)
+                {
+                    if (item.AltKategori != null)
+                    {
+                        model.KategoriIdName = "Ali E-Commerce / " + item.UstKategori + " / " + item.OrtaKategori + " / " + item.AltKategori;
+                    }
+                    else
+                    {
+                        model.KategoriIdName = "Ali E-Commerce / " + item.UstKategori;
+                    }
+                }
             }
 
             return Ok(model);

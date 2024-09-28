@@ -46,6 +46,7 @@ namespace AEC_DataAccess.EFOperations
                     searchTerm = searchTerm.ToLower();
                     List = List.Where(i => (!string.IsNullOrEmpty(i.MouseAdi) && i.MouseAdi.ToLower().Contains(searchTerm)) ||
                                            (i.Fiyat != null && i.Fiyat.ToString().Contains(searchTerm)) ||
+                                           (!string.IsNullOrEmpty(i.Renk) && i.Renk.ToLower().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||
                                            (i.CreatedAt != null && i.CreatedAt.ToString().Contains(searchTerm))
                                            ).ToList();

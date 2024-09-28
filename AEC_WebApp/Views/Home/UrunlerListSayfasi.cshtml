@@ -4,21 +4,21 @@
     List<KategoriDataModel> kategoriList = ViewData["KategoriList"] as List<KategoriDataModel>;
     List<KategoriDataModel> mainKategoriList = kategoriList.Where(i => i.MainKategoriId == null).ToList();
 
-    List<int> allurun = new List<int>();
+    int allurun = 0;
 
     if (Model.LaptopList != null && Model.LaptopList.Count > 0)
     {
-        allurun.Add(Model.LaptopList.Count);
+        allurun += Model.LaptopList.Count;
     }
 
     if (Model.MonitorList != null && Model.MonitorList.Count > 0)
     {
-        allurun.Add(Model.MonitorList.Count);
+        allurun += Model.MonitorList.Count;
     }
 
     if (Model.MouseList != null && Model.MouseList.Count > 0)
     {
-        allurun.Add(Model.MouseList.Count);
+        allurun += Model.MouseList.Count;
     }
 }
 
@@ -40,10 +40,7 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
-                    @if (allurun.Count > 2)
-                    {
-                        <li><h3>TÜM ÜRÜNLER</h3></li>
-                    }
+                    <li style="text-transform:none;font-size:20px;">@Model.KategoriIdName</li>
                 </ul>
             </div>
         </div>
@@ -58,15 +55,14 @@
     <div id="aside" class="col-md-2" style="margin-left:20px; margin-right:10px;">
         <!-- aside Widget -->
         <div class="aside">
-            <h3 class="aside-title">KATEGORİLER</h3>
+            <h3 class="aside-title">ÜRÜNLER</h3>
             <div class="checkbox-filter">
                 @foreach (var item in mainKategoriList)
                 {
                     <div class="input-checkbox">
-                        <input type="checkbox" id="category-1">
-                        <label for="category-1">
-                            <span></span>
-                            @item.KategoriAdi
+                        <div style="margin-left:10px;">
+                            <i class="bi bi-arrow-right-short"></i>
+                            <a href="/Home/UrunlerListSayfasi?pId=@item.Id" style="color:black;">@item.KategoriAdi</a>
                             @if (item.Id == 1)
                             {
                                 <small>(@ViewData["AllLaptop"])</small>
@@ -79,10 +75,9 @@
                             {
                                 <small>(@ViewData["AllMouse"])</small>
                             }
-                        </label>
+                        </div>
                     </div>
                 }
-               
             </div>
         </div>
         <!-- /aside Widget -->
@@ -106,59 +101,47 @@
         </div>
         <!-- /aside Widget -->
         <!-- aside Widget -->
-        <div class="aside">
-            <h3 class="aside-title">Brand</h3>
-            <div class="checkbox-filter">
-                <div class="input-checkbox">
-                    <input type="checkbox" id="brand-1">
-                    <label for="brand-1">
-                        <span></span>
-                        SAMSUNG
-                        <small>(578)</small>
-                    </label>
+        @foreach (var item in mainKategoriList)
+        {
+            List<KategoriDataModel> KategoriList1 = kategoriList.Where(i => i.MainKategoriId == item.Id).ToList();
+
+            @foreach (var item2 in KategoriList1)
+            {
+                List<KategoriDataModel> KategoriList2 = kategoriList.Where(i => i.MainKategoriId == item2.Id).ToList();
+
+                <div class="aside">
+                    <h3 class="aside-title" style="text-transform:none;">@item2.KategoriAdi</h3>
+
+                    @foreach (var item3 in KategoriList2)
+                    {
+                        <div class="checkbox-filter">
+                            <div class="input-checkbox">
+                                <div style="margin-left:10px;">
+                                    <i class="bi bi-arrow-right-short"></i>
+                                    @if (item.Id == 1)
+                                    {
+                                        <a href="/Home/UrunlerListSayfasi?pId=@item3.Id" style="color:black;">@item3.KategoriAdi Laptoplar</a>
+                                        if (Model.LaptopList != null && Model.LaptopList.Count > 0)
+                                        {
+                                            <small>(@Model.LaptopList.Count)</small>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <a href="/Home/UrunlerListSayfasi?pId=@item3.Id" style="color:black;">@item3.KategoriAdi Monitörler</a>
+                                        if (Model.MonitorList != null && Model.MonitorList.Count > 0)
+                                        {
+                                            <small>(@Model.MonitorList.Count)</small>
+                                        }
+                                    }
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
-                <div class="input-checkbox">
-                    <input type="checkbox" id="brand-2">
-                    <label for="brand-2">
-                        <span></span>
-                        LG
-                        <small>(125)</small>
-                    </label>
-                </div>
-                <div class="input-checkbox">
-                    <input type="checkbox" id="brand-3">
-                    <label for="brand-3">
-                        <span></span>
-                        SONY
-                        <small>(755)</small>
-                    </label>
-                </div>
-                <div class="input-checkbox">
-                    <input type="checkbox" id="brand-4">
-                    <label for="brand-4">
-                        <span></span>
-                        SAMSUNG
-                        <small>(578)</small>
-                    </label>
-                </div>
-                <div class="input-checkbox">
-                    <input type="checkbox" id="brand-5">
-                    <label for="brand-5">
-                        <span></span>
-                        LG
-                        <small>(125)</small>
-                    </label>
-                </div>
-                <div class="input-checkbox">
-                    <input type="checkbox" id="brand-6">
-                    <label for="brand-6">
-                        <span></span>
-                        SONY
-                        <small>(755)</small>
-                    </label>
-                </div>
-            </div>
-        </div>
+            }
+        }
         <!-- /aside Widget -->
     </div>
     <!-- /ASIDE -->
@@ -182,7 +165,6 @@
                 <!-- store products -->
                 <div class="row">
                     <!-- product -->
-
                     @if (Model.LaptopList != null && Model.LaptopList.Count > 0)
                     {
                         foreach (var item in Model.LaptopList)
@@ -298,7 +280,7 @@
                 <!-- /store products -->
                 <!-- store bottom filter -->
                 <div class="store-filter clearfix">
-                    <span class="store-qty">@allurun.Sum() SONUÇ LİSTELENİYOR..</span>
+                    <span class="store-qty">@allurun SONUÇ LİSTELENİYOR..</span>
                 </div>
                 <!-- /store bottom filter -->
             </div>

@@ -64,6 +64,11 @@ namespace AEC_Business.Managers
             return _KategoriRepository.GetKategoriList(searchTerm);
         }
 
+        public List<KategoriDataModel> GetKategoriList()
+        {
+            return _KategoriRepository.GetKategoriList();
+        }
+
         public Kategori GetId(int pId)
         {
             return _KategoriRepository.GetSelect(pId);

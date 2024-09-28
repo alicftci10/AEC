@@ -12,5 +12,7 @@ namespace AEC_DataAccess.EFInterfaces
     public interface IEFKategoriRepository : IRepository<Kategori>
     {
         List<KategoriDataModel> GetKategoriList(string searchTerm);
+
+        List<KategoriDataModel> GetKategoriList();
     }
 }

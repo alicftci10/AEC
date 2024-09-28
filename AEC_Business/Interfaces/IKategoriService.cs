@@ -14,6 +14,8 @@ namespace AEC_Business.Interfaces
 
         List<KategoriDataModel> GetKategoriList(string searchTerm);
 
+        List<KategoriDataModel> GetKategoriList();
+
         Kategori GetId(int pId);
 
         int Add(KategoriDataModel item);

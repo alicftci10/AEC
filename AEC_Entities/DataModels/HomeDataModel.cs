@@ -8,6 +8,8 @@ namespace AEC_Entities.DataModels
 {
     public class HomeDataModel : BaseDataModel
     {
+        public string? KategoriIdName { get; set; }
+
         public List<LaptopDataModel>? LaptopList { get; set; }
 
         public List<MonitorDataModel>? MonitorList { get; set; }

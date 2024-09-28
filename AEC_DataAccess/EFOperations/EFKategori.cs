@@ -82,5 +82,60 @@ namespace AEC_DataAccess.EFOperations
 				return List;
 			}
 		}
+
+        public List<KategoriDataModel> GetKategoriList()
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                var List = (from x in db.Kategoris
+
+                            join kul in db.Kullanicis on x.CreatedBy equals kul.Id
+
+                            join k in db.Kategoris on x.MainKategoriId equals k.Id into a
+                            from KategoriTable in a.DefaultIfEmpty()
+
+                            select new KategoriDataModel
+                            {
+                                Id = x.Id,
+                                KategoriAdi = x.KategoriAdi,
+                                MainKategoriId = x.MainKategoriId,
+                                CreatedAt = x.CreatedAt,
+                                CreatedBy = x.CreatedBy,
+                                CreatedByName = kul.Ad + " " + kul.Soyad
+
+                            }).ToList();
+
+                List<KategoriDataModel> ustList = List.Where(i => i.MainKategoriId == null).ToList();
+
+                foreach (var item in ustList)
+                {
+                    item.UstKategori = item.KategoriAdi;
+
+                    List<KategoriDataModel> ortalist = List.Where(i => i.MainKategoriId == item.Id).ToList();
+                    foreach (var item2 in ortalist)
+                    {
+                        item2.UstKategori = item.UstKategori;
+                        item2.OrtaKategori = item2.KategoriAdi;
+
+                        List<KategoriDataModel> altlist = List.Where(i => i.MainKategoriId == item2.Id).ToList();
+                        foreach (var item3 in altlist)
+                        {
+                            item3.UstKategori = item.UstKategori;
+                            item3.OrtaKategori = item2.OrtaKategori;
+                            item3.AltKategori = item3.KategoriAdi;
+                        }
+                    }
+                }
+
+                List = List.OrderBy(i => string.IsNullOrEmpty(i.OrtaKategori) && string.IsNullOrEmpty(i.AltKategori) ? 0 : 1)
+                   .ThenBy(i => !string.IsNullOrEmpty(i.OrtaKategori) && string.IsNullOrEmpty(i.AltKategori) ? 0 : 1)
+                   .ThenBy(i => !string.IsNullOrEmpty(i.AltKategori) ? 0 : 1)
+                   .ThenBy(i => i.UstKategori)
+                   .ThenBy(i => i.OrtaKategori)
+                   .ToList();
+
+                return List;
+            }
+        }
     }
 }
