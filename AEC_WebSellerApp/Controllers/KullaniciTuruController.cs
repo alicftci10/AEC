@@ -84,7 +84,7 @@ namespace AEC_WebSellerApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string? secilenKullaniciTuruAdi = HttpContext.Session.GetString("secilenKullaniciAdi");
+                    string? secilenKullaniciTuruAdi = HttpContext.Session.GetString("secilenKullaniciTuruAdi");
 
                     if (model.Id == 0)
                     {

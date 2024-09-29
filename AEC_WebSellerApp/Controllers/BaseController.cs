@@ -24,13 +24,18 @@ namespace AEC_WebSellerApp.Controllers
             get
             {
                 KullaniciDataModel model = new KullaniciDataModel();
-                string sessionKullanici = HttpContext.Session.GetString("Kullanici");
+                string? sessionKullanici = HttpContext.Session.GetString("Kullanici");
                 if (!string.IsNullOrEmpty(sessionKullanici))
                 {//Session Dolu
                     model = JsonConvert.DeserializeObject<KullaniciDataModel>(sessionKullanici);
                 }
 
-                return model;
+                if (model != null)
+                {
+                    return model;
+                }
+
+                return new KullaniciDataModel();
             }
         }
 
@@ -107,9 +112,11 @@ namespace AEC_WebSellerApp.Controllers
                 ViewData["Hakkimizda_Adres"] = model.Adres;
                 ViewData["Hakkimizda_Email"] = model.Email;
                 ViewData["Hakkimizda_CalismaGunleri"] = model.CalismaGunleri;
+
+                return model;
             }
 
-            return model;
+            return new HakkimizdaDataModel();
         }
 
         public void LoadKullaniciList()

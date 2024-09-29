@@ -16,10 +16,12 @@ namespace AEC_WebApp.Controllers
             return View(AllUrunlerList());
         }
 
-        public async Task<IActionResult> UrunlerListSayfasi(int? pId, string searchTerm)
+        public async Task<IActionResult> UrunlerListSayfasi(int? pId, string searchTerm, decimal? min, decimal? max)
         {
             using (HttpClient client = new HttpClient())
             {
+                HomeDataModel model = new HomeDataModel();
+
                 string url = ConfigurationInfo.ApiUrl + "/api/HomeApi";
 
                 if (!string.IsNullOrEmpty(searchTerm))
@@ -30,6 +32,11 @@ namespace AEC_WebApp.Controllers
                 {
                     url += $"/GetHomeSearchIdList?pId={pId}";
                 }
+                else if (min != null && max != null)
+                {
+                    model = UrunlerSearchPriceList(min, max);
+                    return View(model);
+                }
                 else
                 {
                     return View(AllUrunlerList());
@@ -37,11 +44,9 @@ namespace AEC_WebApp.Controllers
 
                 var response = await client.GetAsync(url);
 
-                HomeDataModel model = new HomeDataModel();
-
                 if (response.IsSuccessStatusCode)
                 {
-                    model = JsonConvert.DeserializeObject<HomeDataModel>(response.Content.ReadAsStringAsync().Result);
+                    model = JsonConvert.DeserializeObject<HomeDataModel>(await response.Content.ReadAsStringAsync());
                 }
 
                 return View(model);

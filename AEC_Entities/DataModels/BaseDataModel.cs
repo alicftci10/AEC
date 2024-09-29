@@ -15,5 +15,7 @@ namespace AEC_Entities.DataModels
         public bool IsSuccess { get; set; }
 
         public string? CreatedByName { get; set; }
+
+        public int? Count { get; set; }
     }
 }

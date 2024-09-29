@@ -41,6 +41,7 @@ namespace AEC_DataAccess.EFOperations
                     {
                         laptop.AddRange(IslemciList(item.Id));
                     }
+                    model.LaptopList = laptop;
                 }
                 else if (ekranKartiList.Count > 0)
                 {
@@ -48,6 +49,7 @@ namespace AEC_DataAccess.EFOperations
                     {
                         laptop.AddRange(EkranKartiList(item.Id));
                     }
+                    model.LaptopList = laptop;
                 }
                 else if (bellekList.Count > 0)
                 {
@@ -55,6 +57,7 @@ namespace AEC_DataAccess.EFOperations
                     {
                         laptop.AddRange(BellekList(item.Id));
                     }
+                    model.LaptopList = laptop;
                 }
                 else if (depolamaList.Count > 0)
                 {
@@ -62,6 +65,7 @@ namespace AEC_DataAccess.EFOperations
                     {
                         laptop.AddRange(DepolamaList(item.Id));
                     }
+                    model.LaptopList = laptop;
                 }
                 else if (yenilemehiziList.Count > 0)
                 {
@@ -69,6 +73,7 @@ namespace AEC_DataAccess.EFOperations
                     {
                         monitor.AddRange(YenilemeHiziList(item.Id));
                     }
+                    model.MonitorList = monitor;
                 }
                 else if (cozunurlukList.Count > 0)
                 {
@@ -76,6 +81,7 @@ namespace AEC_DataAccess.EFOperations
                     {
                         monitor.AddRange(CozunurlukList(item.Id));
                     }
+                    model.MonitorList = monitor;
                 }
                 else if (isletimsistemiList.Count > 0)
                 {
@@ -83,10 +89,8 @@ namespace AEC_DataAccess.EFOperations
                     {
                         laptop.AddRange(IsletimSistemiList(item.Id));
                     }
+                    model.LaptopList = laptop;
                 }
-
-                model.LaptopList = laptop;
-                model.MonitorList = monitor;
 
                 return model;
             }
@@ -94,8 +98,6 @@ namespace AEC_DataAccess.EFOperations
 
         private List<LaptopDataModel> IslemciList(int pId)
         {
-            HomeDataModel model = new HomeDataModel();
-
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
                 var laptop = db.Laptops.Where(i => i.IslemciId == pId).Select(i => new LaptopDataModel

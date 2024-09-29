@@ -2,6 +2,7 @@
 using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 
 namespace AEC_WebApi.Controllers
 {
@@ -80,6 +81,13 @@ namespace AEC_WebApi.Controllers
                 model = _HomeService.GetHomeSearchList(pId);
             }
 
+            GetKategoriName(pId , model);
+
+            return Ok(model);
+        }
+
+        public void GetKategoriName(int pId, HomeDataModel model)
+        {
             var kategoriList = _KategoriService.GetKategoriList();
 
             foreach (var item in kategoriList)
@@ -96,8 +104,31 @@ namespace AEC_WebApi.Controllers
                     }
                 }
             }
+        }
 
-            return Ok(model);
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult GetKategoriCount([FromBody] List<KategoriDataModel> kategoriList)
+        {
+            foreach (var item in kategoriList)
+            {
+                var countList = _HomeService.GetHomeSearchList(item.Id);
+
+                if (countList.LaptopList != null && countList.LaptopList.Count > 0)
+                {
+                    item.Count = countList.LaptopList.Count;
+                }
+                else if (countList.MonitorList != null && countList.MonitorList.Count > 0)
+                {
+                    item.Count = countList.MonitorList.Count;
+                }
+                else
+                {
+                    item.Count = 0;
+                }
+            }
+
+            return Ok(kategoriList);
         }
     }
 }
