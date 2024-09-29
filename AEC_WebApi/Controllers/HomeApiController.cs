@@ -2,6 +2,7 @@
 using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Cryptography;
 
 namespace AEC_WebApi.Controllers
@@ -15,7 +16,7 @@ namespace AEC_WebApi.Controllers
         ILaptopService _LaptopService;
         IMonitorService _MonitorService;
         IMouseService _MouseService;
-        public HomeApiController(IHomeService homeService,IKategoriService kategoriService, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService)
+        public HomeApiController(IHomeService homeService, IKategoriService kategoriService, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService)
         {
             _HomeService = homeService;
             _KategoriService = kategoriService;
@@ -81,9 +82,27 @@ namespace AEC_WebApi.Controllers
                 model = _HomeService.GetHomeSearchList(pId);
             }
 
-            GetKategoriName(pId , model);
+            GetKategoriName(pId, model);
 
             return Ok(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult GetUrunDetay(int pLaptopId, int pMonitorId, int pMouseId)
+        {
+            if (pLaptopId > 0)
+            {
+               return Ok(_LaptopService.GetLaptopId(pLaptopId));
+            }
+            else if (pMonitorId > 0)
+            {
+                return Ok(_MonitorService.GetMonitorId(pMonitorId));
+            }
+            else
+            {
+                return Ok(_MouseService.GetMouseId(pMouseId));
+            }
         }
 
         public void GetKategoriName(int pId, HomeDataModel model)

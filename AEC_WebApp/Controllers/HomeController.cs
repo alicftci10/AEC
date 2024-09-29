@@ -46,10 +46,63 @@ namespace AEC_WebApp.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    model = JsonConvert.DeserializeObject<HomeDataModel>(await response.Content.ReadAsStringAsync());
+                    model = JsonConvert.DeserializeObject<HomeDataModel>(response.Content.ReadAsStringAsync().Result);
                 }
 
                 return View(model);
+            }
+        }
+
+        public async Task<IActionResult> LaptopDetay(int pLaptopId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetUrunDetay";
+
+                url += $"?pLaptopId={pLaptopId}";
+
+                var response = await client.GetAsync(url);
+
+                LaptopDataModel model = new LaptopDataModel();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
+                }
+
+                return View(model);
+            }
+        }
+
+        public async Task<IActionResult> UrunResim(int? pLaptopId , int? pMonitorId , int? pMouseId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi";
+
+                if (pLaptopId != null)
+                {
+                    url += $"/GetLaptopResmiList?pLaptopId={pLaptopId}";
+                }
+                else if (pMonitorId != null)
+                {
+                    url += $"/GetMonitorResmiList?pMonitorId={pMonitorId}";
+                }
+                else if (pMouseId != null)
+                {
+                    url += $"/GetMouseResmiList?pMouseId={pMouseId}";
+                }
+
+                var response = await client.GetAsync(url);
+
+                List<UrunResmiDataModel> model = new List<UrunResmiDataModel>();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<List<UrunResmiDataModel>>(response.Content.ReadAsStringAsync().Result);
+                }
+
+                return PartialView(model);
             }
         }
     }

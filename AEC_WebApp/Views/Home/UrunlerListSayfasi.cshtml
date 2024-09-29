@@ -287,18 +287,17 @@
 @section AECScript{
     <script type="text/javascript">
 
-        let sliderInitialized = false; // Slider başlangıç durumu
+        let sliderInitialized = false;
 
         function initializeSlider() {
             const slider = document.getElementById('price-slider');
 
-            // Eğer slider zaten başlatıldıysa yok et
             if (slider.noUiSlider) {
-                slider.noUiSlider.destroy(); // Slider'ı yok et
+                slider.noUiSlider.destroy();
             }
 
             noUiSlider.create(slider, {
-                start: [0, 200000], // Başlangıç değerleri
+                start: [0, 200000],
                 connect: true,
                 range: {
                     'min': 0,
@@ -306,24 +305,19 @@
                 }
             });
 
-            // Slider değeri güncellendiğinde
             slider.noUiSlider.on('update', function (values) {
                 document.getElementById('price-min').value = Math.round(values[0]);
                 document.getElementById('price-max').value = Math.round(values[1]);
             });
 
-            // Slider değeri değiştiğinde formu gönder
             slider.noUiSlider.on('change', function () {
-                console.log('Form gönderiliyor...'); // Kontrol için log
-                document.getElementById('price-form').submit(); // Formu gönder
+                document.getElementById('price-form').submit();
             });
 
-            sliderInitialized = true; // Slider başlatıldığını işaretle
+            sliderInitialized = true; 
         }
 
-        // Sayfa yüklendiğinde slider'ı başlat
         document.addEventListener('DOMContentLoaded', initializeSlider);
-
 
     </script>
 }
