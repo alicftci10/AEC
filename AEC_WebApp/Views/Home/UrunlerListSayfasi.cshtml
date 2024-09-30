@@ -200,7 +200,7 @@
                         {
                             <div class="col-md-3 col-xs-6">
                                 <div class="product">
-                                    <a href="#">
+                                    <a href="/Home/MonitorDetay?pMonitorId=@item.Id">
                                         <div class="product-img">
                                             <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                             <div class="product-label">
@@ -237,7 +237,7 @@
                         {
                             <div class="col-md-3 col-xs-6">
                                 <div class="product">
-                                    <a href="#">
+                                    <a href="/Home/MouseDetay?pMouseId=@item.Id">
                                         <div class="product-img">
                                             <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                             <div class="product-label">
@@ -283,8 +283,7 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
-
-@section AECScript{
+@section AECScript {
     <script type="text/javascript">
 
         document.querySelectorAll('.product-btns button, .add-to-cart button').forEach(button => {
@@ -322,7 +321,7 @@
                 document.getElementById('price-form').submit();
             });
 
-            sliderInitialized = true; 
+            sliderInitialized = true;
         }
 
         document.addEventListener('DOMContentLoaded', initializeSlider);

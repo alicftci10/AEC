@@ -51,12 +51,12 @@
                 </div>
             </div>
             <!-- /Product thumb imgs -->
-            @if (Model.GetMonitor != null)
+            @if (Model.GetMouse != null)
             {
                 <!-- Product details -->
                 <div class="col-md-5">
                     <div class="product-details">
-                        <h2 class="product-name" style="text-transform:none;font-size:25px;">@Model.GetMonitor.MonitorAdi</h2>
+                        <h2 class="product-name" style="text-transform:none;font-size:25px;">@Model.GetMouse.MouseAdi</h2>
                         <div>
                             <div class="product-rating">
                                 <i class="fa fa-star"></i>
@@ -68,15 +68,15 @@
                             <a class="review-link" href="#"><i class="bi bi-chat-left-text-fill" style="position: relative; top: 2px;"></i> 10 Değerlendirme</a>
                         </div>
                         <div>
-                            <h3 class="product-price">@Formatting.FormatTurkLirasi(@Model.GetMonitor.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(@Model.GetMonitor.Fiyat.Value, 5)</del></h3>
+                            <h3 class="product-price">@Formatting.FormatTurkLirasi(@Model.GetMouse.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(@Model.GetMouse.Fiyat.Value, 5)</del></h3>
                             <span class="product-available">Stokta Var</span>
                         </div>
                         <ul style="margin-top:5px;color:black;font-weight:bold">
-                            <li>> @Model.GetMonitor.EkranYapisi</li>
-                            <li>> @Model.GetMonitor.YenilemeHiziIdName</li>
-                            <li>> 1 Ms Tepki Süresi</li>
-                            <li>> @Model.GetMonitor.CozunurlukIdName</li>
-                            <li>> @Model.GetMonitor.Hdr</li>
+                            <li>> @Model.GetMouse.Renk</li>
+                            <li>> @Model.GetMouse.Dpi</li>
+                            <li>> Sağ ve sol elle kullanıma ergonomik tasarım</li>
+                            <li>> 5.000.000 Tıklama</li>
+                            <li>> 2 Yıl Garanti</li>
                         </ul>
                         <br />
                         <a href="#teknikozellikler" style="font-size:15px;margin:10px;"><i class="bi bi-caret-down-fill"></i> Tüm Teknik Özellikler</a>
@@ -100,7 +100,7 @@
 
                         @foreach (var item in mainKategoriList)
                         {
-                            if (item.Id == 2)
+                            if (item.Id == 30)
                             {
                                 <ul class="product-links">
                                     <li>KATEGORİ:</li>
@@ -127,21 +127,19 @@
                             <div id="tab1" class="tab-pane fade in active">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h2 class="text-center">Tarzını Belli Et</h2>
+                                        <h2 class="text-center">Sessiz Kullanım</h2>
                                         <br />
                                         <h4 class="text-center">
-                                            Masana biraz daha renk katmak istersen
-                                            dinamik değişen RGB
-                                            aydınlatmasıyla galibiyetlerine tarz kat.
+                                            Sessiz tıklama sunan tuşlarıyla, ofiste ve evde
+                                            ne senin ne de yanındakilerin dikkati dağılmaz.
                                         </h4>
                                         <br />
                                         <h2 class="text-center">
-                                            Hoparlörün Hazır
+                                            Çok Hafif
                                         </h2>
                                         <br />
                                         <h4 class="text-center">
-                                            Aryond içinde barındırdığı iki adet 2 Wattlık hoparlörü ile ekstra bir ses kaynağına ihtiyaç duymadan ses üretebilir,
-                                            film izlerken ya da oyun oynarken eğlenceye ara vermezsin.
+                                            En acil toplantılarda yanında kolayca taşıyabileceğin @Model.GetMouse.MouseAdi ister çantanda ister cebinde taşı.
                                         </h4>
                                         <br />
                                         <br />
@@ -149,79 +147,67 @@
                                         <h1 style="color:#329d00">Teknik Özellikler</h1>
                                         <br />
                                         <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">Monitör Özellikleri</span>
+                                            <span style="font-size:25px;">Mouse Özellikleri</span>
                                             <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
                                         </div>
                                         <br />
                                         <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    Ekran Yapısı
+                                                    Renk
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetMonitor.EkranYapisi</span>
+                                                <span>@Model.GetMouse.Renk</span>
                                             </div>
                                         </div>
                                         <br />
                                         <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    Çözünürlük
+                                                    DPI
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetMonitor.CozunurlukIdName</span>
+                                                <span>@Model.GetMouse.Dpi</span>
                                             </div>
                                         </div>
                                         <br />
                                         <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    Yenileme Hızı
+                                                    Tuş Sayısı
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetMonitor.YenilemeHiziIdName</span>
+                                                <span>@Model.GetMouse.TusSayisi</span>
                                             </div>
                                         </div>
                                         <br />
                                         <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    Parlaklık
+                                                    Bağlantı Özellikleri
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>300 cd/m²</span>
+                                                <span>@Model.GetMouse.BaglantiOzellikleri</span>
                                             </div>
                                         </div>
                                         <br />
                                         <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    Renk Sayısı
+                                                    Tasarım
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>16.7M</span>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold">
-                                            <div class="col-md-2">
-                                                <span style="font-size:16px;">
-                                                    HDR
-                                                </span>
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col">
-                                                <span>@Model.GetMonitor.Hdr</span>
+                                                <span>Sağ ve sol elle kullanıma ergonomik tasarım</span>
                                             </div>
                                         </div>
                                         <br />
@@ -233,7 +219,7 @@
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetMonitor.Boyut</span>
+                                                <span>@Model.GetMouse.Boyut</span>
                                             </div>
                                         </div>
                                         <br />
@@ -245,7 +231,7 @@
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetMonitor.Agirlik</span>
+                                                <span>@Model.GetMouse.Agirlik</span>
                                             </div>
                                         </div>
                                         <br />
@@ -269,7 +255,7 @@
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>MT - @Model.GetMonitor.Id</span>
+                                                <span>MS - @Model.GetMouse.Id</span>
                                             </div>
                                         </div>
                                     </div>
