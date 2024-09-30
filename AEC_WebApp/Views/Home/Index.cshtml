@@ -142,7 +142,7 @@
                                     foreach (var item in Model.MonitorList)
                                     {
                                         <div class="product">
-                                            <a href="#">
+                                            <a href="/Home/MonitorDetay?pMonitorId=@item.Id">
                                                 <div class="product-img">
                                                     <img src="https://localhost:7044/images/@item.ResimUrl" alt="" height="180">
                                                     <div class="product-label">
@@ -701,6 +701,14 @@
 <!-- /SECTION -->
 @section AECScript {
     <script type="text/javascript">
+
+        document.querySelectorAll('.product-btns button, .add-to-cart button').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Buton tıklanınca linkin varsayılan davranışını engelle
+                event.stopPropagation(); // Olayın yukarı doğru yayılmasını engelle
+            });
+        });
+
         // Şu anki zamana 2 gün ekleyin
         var now = new Date();
         var countdownDate = new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000);  // 2 gün = 2 * 24 saat * 60 dakika * 60 saniye * 1000 milisaniye

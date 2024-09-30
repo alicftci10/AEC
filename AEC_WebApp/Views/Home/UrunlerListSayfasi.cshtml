@@ -287,6 +287,14 @@
 @section AECScript{
     <script type="text/javascript">
 
+        document.querySelectorAll('.product-btns button, .add-to-cart button').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Buton tıklanınca linkin varsayılan davranışını engelle
+                event.stopPropagation(); // Olayın yukarı doğru yayılmasını engelle
+            });
+        });
+
+
         let sliderInitialized = false;
 
         function initializeSlider() {

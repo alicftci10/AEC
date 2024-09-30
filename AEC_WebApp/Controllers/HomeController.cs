@@ -81,5 +81,63 @@ namespace AEC_WebApp.Controllers
                 return View(model);
             }
         }
+
+        public async Task<IActionResult> MonitorDetay(int pMonitorId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetUrunDetay";
+
+                url += $"?pMonitorId={pMonitorId}";
+
+                var response = await client.GetAsync(url);
+
+                HomeDataModel model = new HomeDataModel();
+
+                model = AllUrunlerList();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var monitor = JsonConvert.DeserializeObject<HomeDataModel>(response.Content.ReadAsStringAsync().Result);
+
+                    if (monitor != null)
+                    {
+                        model.GetMonitor = monitor.GetMonitor;
+                        model.UrunResmiList = monitor.UrunResmiList;
+                    }
+                }
+
+                return View(model);
+            }
+        }
+
+        public async Task<IActionResult> MouseDetay(int pMouseId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetUrunDetay";
+
+                url += $"?pMouseId={pMouseId}";
+
+                var response = await client.GetAsync(url);
+
+                HomeDataModel model = new HomeDataModel();
+
+                model = AllUrunlerList();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var mouse = JsonConvert.DeserializeObject<HomeDataModel>(response.Content.ReadAsStringAsync().Result);
+
+                    if (mouse != null)
+                    {
+                        model.GetMouse = mouse.GetMouse;
+                        model.UrunResmiList = mouse.UrunResmiList;
+                    }
+                }
+
+                return View(model);
+            }
+        }
     }
 }

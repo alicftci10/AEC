@@ -51,12 +51,12 @@
                 </div>
             </div>
             <!-- /Product thumb imgs -->
-            @if (Model.GetLaptop != null)
+            @if (Model.GetMonitor != null)
             {
                 <!-- Product details -->
                 <div class="col-md-5">
                     <div class="product-details">
-                        <h2 class="product-name" style="text-transform:none;font-size:25px;">@Model.GetLaptop.LaptopAdi</h2>
+                        <h2 class="product-name" style="text-transform:none;font-size:25px;">@Model.GetMonitor.MonitorAdi</h2>
                         <div>
                             <div class="product-rating">
                                 <i class="fa fa-star"></i>
@@ -68,18 +68,15 @@
                             <a class="review-link" href="#"><i class="bi bi-chat-left-text-fill" style="position: relative; top: 2px;"></i> 10 Değerlendirme</a>
                         </div>
                         <div>
-                            <h3 class="product-price">@Formatting.FormatTurkLirasi(@Model.GetLaptop.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(@Model.GetLaptop.Fiyat.Value, 5)</del></h3>
+                            <h3 class="product-price">@Formatting.FormatTurkLirasi(@Model.GetMonitor.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(@Model.GetMonitor.Fiyat.Value, 5)</del></h3>
                             <span class="product-available">Stokta Var</span>
                         </div>
                         <ul style="margin-top:5px;color:black;font-weight:bold">
-                            <li>> @Model.GetLaptop.IslemciIdName</li>
-                            <li>> @Model.GetLaptop.IsletimSistemiIdName</li>
-                            <li>> @Model.GetLaptop.EkranKartiIdName</li>
-                            <li>> @Model.GetLaptop.CozunurlukIdName @Model.GetLaptop.YenilemeHiziIdName</li>
-                            <li>> @Model.GetLaptop.BellekIdName</li>
-                            <li>> @Model.GetLaptop.DepolamaIdName</li>
-                            <li>> 2 Adet Disk Desteği (2x M.2 SSD)</li>
-                            <li>> @Model.GetLaptop.Klavye</li>
+                            <li>@Model.GetMonitor.EkranYapisi</li>
+                            <li>@Model.GetMonitor.YenilemeHiziIdName</li>
+                            <li>1 Ms Tepki Süresi</li>
+                            <li>@Model.GetMonitor.CozunurlukIdName</li>
+                            <li>@Model.GetMonitor.Hdr</li>
                         </ul>
                         <br />
                         <a href="#teknikozellikler" style="font-size:15px;margin:10px;"><i class="bi bi-caret-down-fill"></i> Tüm Teknik Özellikler</a>
@@ -103,7 +100,7 @@
 
                         @foreach (var item in mainKategoriList)
                         {
-                            if (item.Id == 1)
+                            if (item.Id == 2)
                             {
                                 <ul class="product-links">
                                     <li>KATEGORİ:</li>
@@ -130,33 +127,21 @@
                             <div id="tab1" class="tab-pane fade in active">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h2 class="text-center">GeForce RTX™ 40 Serisi Monster Notebooklar</h2>
-                                        <br />
-                                        <h3 class="text-center">HIZLININ ÖTESİNDE</h3>
+                                        <h2 class="text-center">Tarzını Belli Et</h2>
                                         <br />
                                         <h4 class="text-center">
-                                            NVIDIA® GeForce RTX™ 40 Serisi Monster Notebook GPU'ları,
-                                            oyuncular ve içerik oluşturucular için dünyanın en hızlı dizüstü bilgisayarlarına güç sağlıyor.
-                                            Son derece verimli NVIDIA Ada Lovelace mimarisi ile geliştirilen bu GPU'lar,
-                                            yapay zeka destekli DLSS 3 ile performansta dev bir artış sağlar ve tam ışın izleme ile gerçekçi sanal dünyalara olanak tanır.
-                                            Ayrıca Max-P ve Max-Q teknolojileri en yüksek verimlilik için sistem performansını, gücü, pil ömrünü ve akustiği optimize eder.
+                                            Masana biraz daha renk katmak istersen
+                                            dinamik değişen RGB
+                                            aydınlatmasıyla galibiyetlerine tarz kat.
                                         </h4>
                                         <br />
-                                        <h4 class="text-center">Oyuncular ve içerik oluşturucular için en iyi platform.</h4>
+                                        <h2 class="text-center">
+                                            Hoparlörün Hazır
+                                        </h2>
                                         <br />
-                                        <h2 class="text-center">GeForce RTX™ 40 Serisi ve DLSS 3 Tarafından Desteklenmektedir</h2>
-                                        <br />
                                         <h4 class="text-center">
-                                            Yeni Duraksız İşlem Özellikli Çoklu İşlemciler
-                                            2 kata kadar performans ve enerji tasarrufu
-                                        </h4>
-                                        <h4 class="text-center">
-                                            Dördüncü Nesil Tensor Çekirdekleri
-                                            Her noktanın değerini ayrı hesaplama yaklaşımına kıyasla DLSS 3 ile 4 kata kadar performans
-                                        </h4>
-                                        <h4 class="text-center">
-                                            Üçüncü Nesil RT Çekirdekleri
-                                            2 kata kadar Ray Tracing performansı
+                                            Aryond içinde barındırdığı iki adet 2 Wattlık hoparlörü ile ekstra bir ses kaynağına ihtiyaç duymadan ses üretebilir,
+                                            film izlerken ya da oyun oynarken eğlenceye ara vermezsin.
                                         </h4>
                                         <br />
                                         <br />
@@ -164,197 +149,95 @@
                                         <h1 style="color:#329d00">Teknik Özellikler</h1>
                                         <br />
                                         <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">İşletim Sistemi</span>
+                                            <span style="font-size:25px;">Monitör Özellikleri</span>
                                             <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
                                         </div>
                                         <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    İşletim Sistemi
+                                                    Ekran Yapısı
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetLaptop.IsletimSistemiIdName</span>
+                                                <span>@Model.GetMonitor.EkranYapisi</span>
                                             </div>
                                         </div>
                                         <br />
-                                        <br />
-                                        <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">İşlemci Özellikleri</span>
-                                            <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    İşlemci Mimarisi
+                                                    Çözünürlük
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetLaptop.IslemciMimarisiIdName</span>
+                                                <span>@Model.GetMonitor.CozunurlukIdName</span>
                                             </div>
                                         </div>
                                         <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    İşlemci
+                                                    Yenileme Hızı
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetLaptop.IslemciIdName</span>
+                                                <span>@Model.GetMonitor.YenilemeHiziIdName</span>
                                             </div>
                                         </div>
                                         <br />
-                                        <br />
-                                        <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">Ekran Kartı Özellikleri</span>
-                                            <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    Ekran Kartı
+                                                    Parlaklık
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetLaptop.EkranKartiIdName</span>
+                                                <span>300 cd/m²</span>
                                             </div>
                                         </div>
                                         <br />
-                                        <br />
-                                        <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">Ekran Özellikleri</span>
-                                            <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    Ekran
+                                                    Renk Sayısı
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetLaptop.CozunurlukIdName @Model.GetLaptop.YenilemeHiziIdName</span>
+                                                <span>16.7M</span>
                                             </div>
                                         </div>
                                         <br />
-                                        <br />
-                                        <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">Bellek Özellikleri</span>
-                                            <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    Bellek
+                                                    HDR
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetLaptop.BellekIdName</span>
+                                                <span>@Model.GetMonitor.Hdr</span>
                                             </div>
                                         </div>
                                         <br />
-                                        <br />
-                                        <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">Depolama Özellikleri</span>
-                                            <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
-                                                    1.Port M2 SSD
+                                                    Boyut
                                                 </span>
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetLaptop.DepolamaIdName</span>
+                                                <span>@Model.GetMonitor.Boyut</span>
                                             </div>
                                         </div>
                                         <br />
-                                        <div class="row" style="font-weight:bold;">
-                                            <div class="col-md-2">
-                                                <span style="font-size:16px;">
-                                                    2.Port M.2 SSD
-                                                </span>
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col">
-                                                <span>Takılı Değil</span>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">Donanım Özellikleri</span>
-                                            <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
-                                            <div class="col-md-2">
-                                                <span style="font-size:16px;">
-                                                    Klavye
-                                                </span>
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col">
-                                                <span>@Model.GetLaptop.Klavye</span>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
-                                            <div class="col-md-2">
-                                                <span style="font-size:16px;">
-                                                    Hoparlör
-                                                </span>
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col">
-                                                <span>2x 2W Hoparlör</span>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
-                                            <div class="col-md-2">
-                                                <span style="font-size:16px;">
-                                                    Gigabit Ethernet
-                                                </span>
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col">
-                                                <span>Var</span>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">Boyutlar ve Ağırlık</span>
-                                            <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
-                                            <div class="col-md-2">
-                                                <span style="font-size:16px;">
-                                                    Boyutlar
-                                                </span>
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col">
-                                                <span>@Model.GetLaptop.Boyut</span>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
                                                     Ağırlık
@@ -362,29 +245,11 @@
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>@Model.GetLaptop.Agirlik</span>
+                                                <span>@Model.GetMonitor.Agirlik</span>
                                             </div>
                                         </div>
                                         <br />
-                                        <div class="row" style="font-weight:bold;">
-                                            <div class="col-md-2">
-                                                <span style="font-size:16px;">
-                                                    Batarya
-                                                </span>
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                            <div class="col">
-                                                <span>@Model.GetLaptop.Batarya</span>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div class="d-flex align-items-center">
-                                            <span style="font-size:25px;">Diğer Özellikler</span>
-                                            <div class="flex-grow-1 ms-2" style="border-bottom: 1px solid #329d00;"></div>
-                                        </div>
-                                        <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
                                                     Garanti Süresi
@@ -396,7 +261,7 @@
                                             </div>
                                         </div>
                                         <br />
-                                        <div class="row" style="font-weight:bold;">
+                                        <div class="row" style="font-weight:bold">
                                             <div class="col-md-2">
                                                 <span style="font-size:16px;">
                                                     Ürün Kodu
@@ -404,7 +269,7 @@
                                             </div>
                                             <div class="col-md-1"></div>
                                             <div class="col">
-                                                <span>LT - @Model.GetLaptop.Id</span>
+                                                <span>MT - @Model.GetMonitor.Id</span>
                                             </div>
                                         </div>
                                     </div>
@@ -730,7 +595,6 @@
 <br />
 <br />
 <!-- /Section -->
-
 @section AECScript {
 
     <script type="text/javascript">
