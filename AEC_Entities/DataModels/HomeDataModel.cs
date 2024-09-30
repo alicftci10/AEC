@@ -10,10 +10,18 @@ namespace AEC_Entities.DataModels
     {
         public string? KategoriIdName { get; set; }
 
-        public List<LaptopDataModel>? LaptopList { get; set; }
+        public LaptopDataModel? GetLaptop { get; set; }
+
+		public MonitorDataModel? GetMonitor { get; set; }
+
+		public MouseDataModel? GetMouse { get; set; }
+
+		public List<LaptopDataModel>? LaptopList { get; set; }
 
         public List<MonitorDataModel>? MonitorList { get; set; }
 
         public List<MouseDataModel>? MouseList { get; set; }
-    }
+
+		public List<UrunResmiDataModel>? UrunResmiList { get; set; }
+	}
 }

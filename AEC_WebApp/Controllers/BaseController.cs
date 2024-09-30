@@ -166,7 +166,7 @@ namespace AEC_WebApp.Controllers
             return new HomeDataModel();
         }
 
-        public HakkimizdaDataModel LoadHakkimizdaInfo()
+		public HakkimizdaDataModel LoadHakkimizdaInfo()
         {
             HakkimizdaDataModel model = new HakkimizdaDataModel();
 

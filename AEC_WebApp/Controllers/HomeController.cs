@@ -63,46 +63,22 @@ namespace AEC_WebApp.Controllers
 
                 var response = await client.GetAsync(url);
 
-                LaptopDataModel model = new LaptopDataModel();
+                HomeDataModel model = new HomeDataModel();
+
+                model = AllUrunlerList();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    model = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
+                    var laptop = JsonConvert.DeserializeObject<HomeDataModel>(response.Content.ReadAsStringAsync().Result);
+
+                    if (laptop != null)
+                    {
+						model.GetLaptop = laptop.GetLaptop;
+                        model.UrunResmiList = laptop.UrunResmiList;
+					}
                 }
 
                 return View(model);
-            }
-        }
-
-        public async Task<IActionResult> UrunResim(int? pLaptopId , int? pMonitorId , int? pMouseId)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi";
-
-                if (pLaptopId != null)
-                {
-                    url += $"/GetLaptopResmiList?pLaptopId={pLaptopId}";
-                }
-                else if (pMonitorId != null)
-                {
-                    url += $"/GetMonitorResmiList?pMonitorId={pMonitorId}";
-                }
-                else if (pMouseId != null)
-                {
-                    url += $"/GetMouseResmiList?pMouseId={pMouseId}";
-                }
-
-                var response = await client.GetAsync(url);
-
-                List<UrunResmiDataModel> model = new List<UrunResmiDataModel>();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    model = JsonConvert.DeserializeObject<List<UrunResmiDataModel>>(response.Content.ReadAsStringAsync().Result);
-                }
-
-                return PartialView(model);
             }
         }
     }

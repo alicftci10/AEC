@@ -7,147 +7,156 @@ using System.Security.Cryptography;
 
 namespace AEC_WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class HomeApiController : BaseApiController
-    {
-        IHomeService _HomeService;
-        IKategoriService _KategoriService;
-        ILaptopService _LaptopService;
-        IMonitorService _MonitorService;
-        IMouseService _MouseService;
-        public HomeApiController(IHomeService homeService, IKategoriService kategoriService, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService)
-        {
-            _HomeService = homeService;
-            _KategoriService = kategoriService;
-            _LaptopService = laptopService;
-            _MonitorService = monitorService;
-            _MouseService = mouseService;
-        }
+	[Route("api/[controller]/[action]")]
+	[ApiController]
+	public class HomeApiController : BaseApiController
+	{
+		IHomeService _HomeService;
+		IKategoriService _KategoriService;
+		ILaptopService _LaptopService;
+		IMonitorService _MonitorService;
+		IMouseService _MouseService;
+		IUrunResmiService _UrunResmiService;
+		public HomeApiController(IHomeService homeService, IKategoriService kategoriService, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService, IUrunResmiService urunResmiService)
+		{
+			_HomeService = homeService;
+			_KategoriService = kategoriService;
+			_LaptopService = laptopService;
+			_MonitorService = monitorService;
+			_MouseService = mouseService;
+			_UrunResmiService = urunResmiService;
+		}
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult GetHomeList()
-        {
-            HomeDataModel model = new HomeDataModel();
+		[HttpGet]
+		[AllowAnonymous]
+		public IActionResult GetHomeList()
+		{
+			HomeDataModel model = new HomeDataModel();
 
-            model.LaptopList = _LaptopService.GetLaptopList();
+			model.LaptopList = _LaptopService.GetLaptopList();
 
-            model.MonitorList = _MonitorService.GetMonitorList();
+			model.MonitorList = _MonitorService.GetMonitorList();
 
-            model.MouseList = _MouseService.GetMouseList();
+			model.MouseList = _MouseService.GetMouseList();
 
-            model.KategoriIdName = "Ali E-Commerce / TÜM ÜRÜNLER";
+			model.KategoriIdName = "Ali E-Commerce / TÜM ÜRÜNLER";
 
-            return Ok(model);
-        }
+			return Ok(model);
+		}
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult GetHomeSearchList(string searchTerm)
-        {
-            HomeDataModel model = new HomeDataModel();
+		[HttpGet]
+		[AllowAnonymous]
+		public IActionResult GetHomeSearchList(string searchTerm)
+		{
+			HomeDataModel model = new HomeDataModel();
 
-            model.LaptopList = _LaptopService.GetLaptopList(searchTerm);
+			model.LaptopList = _LaptopService.GetLaptopList(searchTerm);
 
-            model.MonitorList = _MonitorService.GetMonitorList(searchTerm);
+			model.MonitorList = _MonitorService.GetMonitorList(searchTerm);
 
-            model.MouseList = _MouseService.GetMouseList(searchTerm);
+			model.MouseList = _MouseService.GetMouseList(searchTerm);
 
-            model.KategoriIdName = "Ali E-Commerce / ARAMA SONUÇLARI";
+			model.KategoriIdName = "Ali E-Commerce / ARAMA SONUÇLARI";
 
-            return Ok(model);
-        }
+			return Ok(model);
+		}
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult GetHomeSearchIdList(int pId)
-        {
-            HomeDataModel model = new HomeDataModel();
+		[HttpGet]
+		[AllowAnonymous]
+		public IActionResult GetHomeSearchIdList(int pId)
+		{
+			HomeDataModel model = new HomeDataModel();
 
-            if (pId == 1)
-            {
-                model.LaptopList = _LaptopService.GetLaptopList();
+			if (pId == 1)
+			{
+				model.LaptopList = _LaptopService.GetLaptopList();
+			}
+			else if (pId == 2)
+			{
+				model.MonitorList = _MonitorService.GetMonitorList();
+			}
+			else if (pId == 30)
+			{
+				model.MouseList = _MouseService.GetMouseList();
+			}
+			else
+			{
+				model = _HomeService.GetHomeSearchList(pId);
+			}
+
+			GetKategoriName(pId, model);
+
+			return Ok(model);
+		}
+
+		[HttpGet]
+		[AllowAnonymous]
+		public IActionResult GetUrunDetay(int pLaptopId, int pMonitorId, int pMouseId)
+		{
+			HomeDataModel model = new HomeDataModel();
+
+			if (pLaptopId > 0)
+			{
+				model.GetLaptop = _LaptopService.GetLaptopId(pLaptopId);
+				model.UrunResmiList = _UrunResmiService.GetLaptopResmiList(pLaptopId);
+			}
+			else if (pMonitorId > 0)
+			{
+				model.GetMonitor = _MonitorService.GetMonitorId(pMonitorId);
+				model.UrunResmiList = _UrunResmiService.GetMonitorResmiList(pMonitorId);
             }
-            else if (pId == 2)
-            {
-                model.MonitorList = _MonitorService.GetMonitorList();
-            }
-            else if (pId == 30)
-            {
-                model.MouseList = _MouseService.GetMouseList();
-            }
-            else
-            {
-                model = _HomeService.GetHomeSearchList(pId);
-            }
-
-            GetKategoriName(pId, model);
-
-            return Ok(model);
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult GetUrunDetay(int pLaptopId, int pMonitorId, int pMouseId)
-        {
-            if (pLaptopId > 0)
-            {
-               return Ok(_LaptopService.GetLaptopId(pLaptopId));
-            }
-            else if (pMonitorId > 0)
-            {
-                return Ok(_MonitorService.GetMonitorId(pMonitorId));
-            }
-            else
-            {
-                return Ok(_MouseService.GetMouseId(pMouseId));
-            }
-        }
-
-        public void GetKategoriName(int pId, HomeDataModel model)
-        {
-            var kategoriList = _KategoriService.GetKategoriList();
-
-            foreach (var item in kategoriList)
-            {
-                if (item.Id == pId)
-                {
-                    if (item.AltKategori != null)
-                    {
-                        model.KategoriIdName = "Ali E-Commerce / " + item.UstKategori + " / " + item.OrtaKategori + " / " + item.AltKategori;
-                    }
-                    else
-                    {
-                        model.KategoriIdName = "Ali E-Commerce / " + item.UstKategori;
-                    }
-                }
-            }
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult GetKategoriCount([FromBody] List<KategoriDataModel> kategoriList)
-        {
-            foreach (var item in kategoriList)
-            {
-                var countList = _HomeService.GetHomeSearchList(item.Id);
-
-                if (countList.LaptopList != null && countList.LaptopList.Count > 0)
-                {
-                    item.Count = countList.LaptopList.Count;
-                }
-                else if (countList.MonitorList != null && countList.MonitorList.Count > 0)
-                {
-                    item.Count = countList.MonitorList.Count;
-                }
-                else
-                {
-                    item.Count = 0;
-                }
+			else if (pMouseId > 0)
+			{
+				model.GetMouse = _MouseService.GetMouseId(pMouseId);
+				model.UrunResmiList = _UrunResmiService.GetMouseResmiList(pMouseId);
             }
 
-            return Ok(kategoriList);
-        }
-    }
+			return Ok(model);
+		}
+
+		private void GetKategoriName(int pId, HomeDataModel model)
+		{
+			var kategoriList = _KategoriService.GetKategoriList();
+
+			foreach (var item in kategoriList)
+			{
+				if (item.Id == pId)
+				{
+					if (item.AltKategori != null)
+					{
+						model.KategoriIdName = "Ali E-Commerce / " + item.UstKategori + " / " + item.OrtaKategori + " / " + item.AltKategori;
+					}
+					else
+					{
+						model.KategoriIdName = "Ali E-Commerce / " + item.UstKategori;
+					}
+				}
+			}
+		}
+
+		[HttpPost]
+		[AllowAnonymous]
+		public IActionResult GetKategoriCount([FromBody] List<KategoriDataModel> kategoriList)
+		{
+			foreach (var item in kategoriList)
+			{
+				var countList = _HomeService.GetHomeSearchList(item.Id);
+
+				if (countList.LaptopList != null && countList.LaptopList.Count > 0)
+				{
+					item.Count = countList.LaptopList.Count;
+				}
+				else if (countList.MonitorList != null && countList.MonitorList.Count > 0)
+				{
+					item.Count = countList.MonitorList.Count;
+				}
+				else
+				{
+					item.Count = 0;
+				}
+			}
+
+			return Ok(kategoriList);
+		}
+	}
 }
