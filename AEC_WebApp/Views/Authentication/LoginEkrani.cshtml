@@ -1,0 +1,182 @@
+﻿@model KullaniciDataModel
+
+@{
+    Layout = null;
+}
+
+<style>
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:hover {
+        -webkit-box-shadow: 0 0 0 1000px white inset !important;
+        background-color: white !important;
+        color: black !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/toastr/css/toastr.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="~/assets/img/favicon/AEC.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet" />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="~/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/css/core.css?x=2" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="~/assets/vendor/css/theme-default.css?x=1" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="~/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <link rel="stylesheet" href="~/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/css/pages/page-auth.css" />
+    <!-- Helpers -->
+    <script src="~/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="~/assets/js/config.js"></script>
+</head>
+<body style="background-color:black">
+
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <div class="container-xxl">
+                <div class="authentication-wrapper authentication-basic container-p-y">
+                    <div class="authentication">
+                        <!-- Register -->
+                        <div class="card">
+                            <div class="card-body bg-dark">
+                                <span class="row justify-content-center menu-text fw-bolder" style="font-size:32px;color:white"><img src="~/assets/img/favicon/AEC.ico" style="width:49px;padding-right:unset;padding-left:unset;" />EC</span>
+                                <br />
+                                <h4 class="row justify-content-center mb-2 fw-bold" style="margin-bottom:10px;color:white">Giriş Ekranı 👋</h4>
+                                <p class="mb-4 text-white">Lütfen E-mail veya kullanıcı adınız ve şifreniz ile giriş yapınız!</p>
+
+                                <form id="formAuthentication" class="mb-3" asp-controller="Authentication" asp-action="LoginEkrani" method="post">
+
+                                    <input type="hidden" asp-for="Ad" value="0" />
+                                    <input type="hidden" asp-for="Soyad" value="0" />
+                                    <input type="hidden" asp-for="KullaniciAdi" value="0" />
+                                    <input type="hidden" asp-for="Email" value="0" />
+                                    <input type="hidden" asp-for="KullaniciTuruId" value="0" />
+
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label fw-bold">KULLANICI ADI</label>
+                                        <input type="text" asp-for="EmailorKullaniciAdi"
+                                               class="form-control"
+                                               id="email"
+                                               placeholder="Kullanıcı Adı veya Email Giriniz"
+                                               autofocus />
+                                        <span asp-validation-for="EmailorKullaniciAdi" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3 form-password-toggle">
+                                        <div class="d-flex justify-content-between">
+                                            <label class="form-label fw-bold" for="password">ŞİFRE</label>
+                                        </div>
+                                        <div class="input-group input-group-merge">
+                                            <input type="password" asp-for="Sifre"
+                                                   id="password"
+                                                   class="form-control"
+                                                   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                   aria-describedby="password" />
+                                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                        </div>
+                                        <span asp-validation-for="Sifre" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="remember-me" />
+                                            <label class="form-check-label fw-bold" for="remember-me"> Beni Hatırla </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary d-grid w-100" type="submit">Giriş</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /Register -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <script type="text/javascript" src="~/lib/jquery/js/jquery-3.7.1.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/toastr/js/toastr.min.js"></script>
+    <script src="~/lib/chartjs/js/chart.js"></script>
+    <script src="~/js/master.js"></script>
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    @* <script src="~/assets/vendor/libs/jquery/jquery.js"></script> *@
+    <script src="~/assets/vendor/libs/popper/popper.js"></script>
+    @* <script src="~/assets/vendor/js/bootstrap.js"></script> *@
+    <script src="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="~/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+    <!-- Vendors JS -->
+    <script src="~/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="~/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="~/assets/js/dashboards-analytics.js"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+    document.addEventListener("DOMContentLoaded", function () {
+        if (localStorage.getItem('rememberMe') === 'true') {
+            document.getElementById('email').value = localStorage.getItem('emailorKullaniciAdi') || '';
+            document.getElementById('password').value = localStorage.getItem('password') || '';
+            document.getElementById('remember-me').checked = true;
+        }
+
+        document.getElementById('formAuthentication').addEventListener('submit', function () {
+            if (document.getElementById('remember-me').checked) {
+                localStorage.setItem('rememberMe', 'true');
+                localStorage.setItem('emailorKullaniciAdi', document.getElementById('email').value);
+                localStorage.setItem('password', document.getElementById('password').value);
+            } else {
+                localStorage.removeItem('rememberMe');
+                localStorage.removeItem('emailorKullaniciAdi');
+                localStorage.removeItem('password');
+            }
+        });
+    });
+
+</script>

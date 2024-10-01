@@ -276,6 +276,14 @@
 
     <script type="text/javascript">
 
+        document.addEventListener('DOMContentLoaded', function () {
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Giriş Başarılı.<br />Hoşgeldiniz @ViewData["KullaniciFullName"]");
+            }
+
+        });
+
         //Anlık hava durumu ve zaman bilgisi
 
         function updateDateTime() {

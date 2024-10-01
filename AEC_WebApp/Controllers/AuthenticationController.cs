@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace AEC_WebSellerApp.Controllers
+namespace AEC_WebApp.Controllers
 {
     public class AuthenticationController : Controller
     {
@@ -15,7 +15,8 @@ namespace AEC_WebSellerApp.Controllers
             if (p == "logout")
             {
                 HttpContext.Session.Clear();
-                TempData["MessageBox"] = 1;
+                HttpContext.Session.SetInt32("MessageBox", 2);
+                return RedirectToAction("Index","Home");
             }
 
             return View(model);
@@ -43,7 +44,7 @@ namespace AEC_WebSellerApp.Controllers
                     }
                 }
 
-                string url = ConfigurationInfo.ApiUrl + "/api/AuthenticationApi/PersonelGiris";
+                string url = ConfigurationInfo.ApiUrl + "/api/AuthenticationApi/Giris";
 
                 var json = JsonConvert.SerializeObject(model);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -59,7 +60,7 @@ namespace AEC_WebSellerApp.Controllers
                     if (model != null && model.Id > 0)
                     {
                         HttpContext.Session.SetString("Kullanici", text.Result);
-                        HttpContext.Session.SetInt32("MessageBox",1);
+                        HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("Index", "Home");
                     }
                     else if (model.ErrorMessage == "1")

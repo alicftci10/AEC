@@ -703,6 +703,17 @@
 @section AECScript {
     <script type="text/javascript">
 
+        document.addEventListener('DOMContentLoaded', function () {
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Giriş Başarılı.<br />Hoşgeldiniz @ViewData["KullaniciFullName"]");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Çıkış Başarılı.");
+            }
+
+        });
+
         document.querySelectorAll('.product-btns button, .add-to-cart button').forEach(button => {
             button.addEventListener('click', function (event) {
                 event.preventDefault(); // Buton tıklanınca linkin varsayılan davranışını engelle

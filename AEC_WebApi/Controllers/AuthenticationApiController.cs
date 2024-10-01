@@ -1,5 +1,6 @@
 ﻿using AEC_Business.Interfaces;
 using AEC_Entities.DataModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AEC_WebApi.Controllers
@@ -15,6 +16,21 @@ namespace AEC_WebApi.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
+        public IActionResult PersonelGiris([FromBody] KullaniciDataModel model)
+        {
+            var kullanici = _Kullanici.PersonelGiris(model);
+
+            if (kullanici.Id > 0)
+            {
+                kullanici.JwtToken = GenerateJwtToken(kullanici);
+            }
+
+            return Ok(kullanici);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
         public IActionResult Giris([FromBody] KullaniciDataModel model)
         {
             var kullanici = _Kullanici.Giris(model);

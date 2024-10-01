@@ -15,7 +15,7 @@ namespace AEC_DataAccess.EFOperations
     {
         public EFKullanici(AecommerceDbContext AECContext) : base(AECContext) { }
 
-        public Kullanici Giris(KullaniciDataModel model, out string? ErrorMessage)
+        public Kullanici PersonelGiris(KullaniciDataModel model, out string? ErrorMessage)
         {
             using (AecommerceDbContext db = new AecommerceDbContext())
             {
@@ -24,6 +24,38 @@ namespace AEC_DataAccess.EFOperations
                 var kullanici = Personel.FirstOrDefault(i => i.Sifre == model.Sifre && i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
                 var kullaniciadi = Personel.FirstOrDefault(i => i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
                 var sifre = Personel.FirstOrDefault(i => i.Sifre == model.Sifre);
+
+                if (kullanici != null)
+                {
+                    ErrorMessage = null;
+                    return kullanici;
+                }
+                else if (kullaniciadi != null && kullaniciadi.Sifre != model.Sifre)
+                {
+                    ErrorMessage = "1";
+                }
+                else if (sifre != null && sifre.KullaniciAdi != model.KullaniciAdi)
+                {
+                    ErrorMessage = "2";
+                }
+                else
+                {
+                    ErrorMessage = "3";
+                }
+
+                return new Kullanici();
+            }
+        }
+
+        public Kullanici Giris(KullaniciDataModel model, out string? ErrorMessage)
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                var Kullanici = db.Kullanicis.ToList();
+
+                var kullanici = Kullanici.FirstOrDefault(i => i.Sifre == model.Sifre && i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
+                var kullaniciadi = Kullanici.FirstOrDefault(i => i.KullaniciAdi == model.KullaniciAdi || i.Email == model.Email);
+                var sifre = Kullanici.FirstOrDefault(i => i.Sifre == model.Sifre);
 
                 if (kullanici != null)
                 {

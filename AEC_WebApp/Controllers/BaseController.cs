@@ -18,11 +18,58 @@ namespace AEC_WebApp.Controllers
 
         }
 
+        public KullaniciDataModel CurrentKullanici
+        {
+            get
+            {
+                KullaniciDataModel model = new KullaniciDataModel();
+                string? sessionKullanici = HttpContext.Session.GetString("Kullanici");
+                if (!string.IsNullOrEmpty(sessionKullanici))
+                {//Session Dolu
+                    model = JsonConvert.DeserializeObject<KullaniciDataModel>(sessionKullanici);
+                }
+
+                if (model != null)
+                {
+                    return model;
+                }
+
+                return new KullaniciDataModel();
+            }
+        }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             ViewData["KategoriList"] = LoadKategoriList();
             AllUrunlerList();
             LoadHakkimizdaInfo();
+
+            string sessionKullanici = HttpContext.Session.GetString("Kullanici");
+
+            if (!string.IsNullOrEmpty(sessionKullanici))
+            {//Session Dolu
+
+                KullaniciDataModel model = JsonConvert.DeserializeObject<KullaniciDataModel>(sessionKullanici);
+
+                if (model != null)
+                {
+                    ViewData["KullaniciId"] = model.Id;
+                    ViewData["KullaniciFullName"] = model.Ad + " " + model.Soyad;
+                    ViewData["KullaniciTelefon"] = model.Telefon;
+                    if (model.KullaniciTuruId == 1)
+                    {
+                        ViewData["KullaniciTuru"] = "Admin";
+                    }
+                    else if (model.KullaniciTuruId == 2)
+                    {
+                        ViewData["KullaniciTuru"] = "Personel";
+                    }
+                    else if (model.KullaniciTuruId == 3)
+                    {
+                        ViewData["KullaniciTuru"] = "Müşteri";
+                    }
+                }
+            }
         }
 
         public List<KategoriDataModel> LoadKategoriList()

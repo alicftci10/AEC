@@ -13,6 +13,18 @@ namespace AEC_WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
+            int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
+            if (MessageBox == 1)
+            {
+                TempData["MessageBox"] = 1;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 2)
+            {
+                TempData["MessageBox"] = 2;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+
             return View(AllUrunlerList());
         }
 

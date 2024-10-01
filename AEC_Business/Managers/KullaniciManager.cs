@@ -48,6 +48,26 @@ namespace AEC_Business.Managers
             return listKullanici;
         }
 
+        public KullaniciDataModel PersonelGiris(KullaniciDataModel model)
+        {
+            Kullanici kul = _KullaniciRepository.PersonelGiris(model, out string? ErrorMessage);
+
+            model.Id = kul.Id;
+            model.Ad = kul.Ad;
+            model.Soyad = kul.Soyad;
+            model.KullaniciAdi = kul.KullaniciAdi;
+            model.Sifre = kul.Sifre;
+            model.Email = kul.Email;
+            model.Telefon = kul.Telefon;
+            model.Adres = kul.Adres;
+            model.KullaniciTuruId = kul.KullaniciTuruId;
+            model.CreatedAt = kul.CreatedAt;
+            model.CreatedBy = kul.CreatedBy;
+            model.ErrorMessage = ErrorMessage;
+
+            return model;
+        }
+
         public KullaniciDataModel Giris(KullaniciDataModel model)
         {
             Kullanici kul = _KullaniciRepository.Giris(model, out string? ErrorMessage);
