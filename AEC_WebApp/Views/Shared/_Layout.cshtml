@@ -89,11 +89,12 @@
                     <li><a href="https://localhost:7044/Home/Index"><i class="fa fa-user-o"></i> Personel Giriş</a></li>
                     @if (ViewData["KullaniciFullName"] == null)
                     {
+                        <li><a href="/Kullanici/KullaniciSayfasi"><i class="bi bi-plus-circle-fill"></i> Kayıt Ol</a></li>
                         <li><a href="/Authentication/LoginEkrani"><i class="bi bi-people-fill"></i> Giriş Yap</a></li>
                     }
                     else
                     {
-                        <li><a href="/Kullanici/KullaniciDetay?pId=@ViewData["KullaniciId"]"><i class="bi bi-people-fill"></i> @ViewData["KullaniciFullName"]</a></li>
+                        <li><a href="/Kullanici/KullaniciSayfasi?pId=@ViewData["KullaniciId"]"><i class="bi bi-people-fill"></i> @ViewData["KullaniciFullName"]</a></li>
                         <li><a href="/Authentication/LoginEkrani?p=logout"><i class="bi bi-x-circle-fill"></i> Çıkış</a></li>
                     }
                     

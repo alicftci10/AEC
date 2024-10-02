@@ -101,8 +101,11 @@ namespace AEC_Business.Managers
             item.Adres = model.Adres;
             item.KullaniciTuruId = model.KullaniciTuruId.Value;
             item.CreatedAt = DateTime.Now;
-            item.CreatedBy = model.CreatedBy.Value;
-
+            if (model.CreatedBy != null)
+            {
+                item.CreatedBy = model.CreatedBy;
+            }
+           
             if (model.Id > 0)
             {
                 item.Id = model.Id;

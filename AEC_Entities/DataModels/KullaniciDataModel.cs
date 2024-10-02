@@ -19,6 +19,7 @@ namespace AEC_Entities.DataModels
         public string KullaniciAdi { get; set; } = null!;
 
         [Required(ErrorMessage = "Şifre Boş Girilemez!!")]
+        [MinLength(5,ErrorMessage = "Minimum 5 Karakter Girmelisiniz!!")]
         public string Sifre { get; set; } = null!;
 
         [Required(ErrorMessage = "Email Boş Girilemez!!")]

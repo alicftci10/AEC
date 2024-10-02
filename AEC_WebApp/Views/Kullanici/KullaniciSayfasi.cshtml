@@ -1,0 +1,269 @@
+﻿@model KullaniciDataModel
+
+<style>
+    input {
+        color: black;
+        font-weight: bold;
+    }
+
+    textarea {
+        color: black;
+        font-weight: bold;
+    }
+
+    .text-danger {
+        color: red;
+        font-weight: bold;
+    }
+
+</style>
+
+@if (Model.IsSuccess == true)
+{
+    <br />
+    <br />
+    <!-- container -->
+    <div class="alert alert-success" role="alert" style="padding:50px;">
+        <div class="container">
+            @if (ViewData["KullaniciId"] == null)
+            {
+                <span style="font-weight:bold;font-size:30px;">
+                    Kullanıcı Kayıt İşlemi Başarılı!!
+                </span>
+                <br />
+                <span style="font-weight:bold;font-size:20px;color:black">Giriş Yapmak İçin <a href="/Authentication/LoginEkrani" style="font-weight:bold;font-size:20px;text-decoration:underline">Tıklayın.</a></span>
+            }
+            else
+            {
+                <span style="font-weight:bold;font-size:30px;">
+                    Kullanıcı Bilgileri Kayıt Edildi!!
+                </span>
+                <br />
+                <span style="font-weight:bold;font-size:20px;color:black">Ana Sayfaya Gitmek İçin <a href="/Home/Index" style="font-weight:bold;font-size:20px;text-decoration:underline">Tıklayın.</a></span>
+            }
+        </div>
+    </div>
+    <div style="height:73vh;"></div>
+    <!-- /container -->
+}
+else
+{
+    @if (ViewData["KullaniciId"] != null)
+    {
+        <div id="breadcrumb" class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb-tree">
+                            <li style="text-transform:none;font-size:20px;">PROFİL</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <div class="row">
+            <div id="aside" class="col-md-2" style="margin-left:20px; margin-right:50px;">
+                <!-- aside Widget -->
+                <div class="aside">
+                    <h3 class="aside-title" style="text-transform:none">@ViewData["KullaniciFullName"]</h3>
+                    <div class="checkbox-filter">
+                        <div class="input-checkbox">
+                            <div style="margin-left:10px;">
+                                <i class="bi bi-arrow-right-short"></i>
+                                <a href="#">Siparişlerim</a>
+                            </div>
+                            <div style="margin-left:10px;">
+                                <i class="bi bi-arrow-right-short"></i>
+                                <a href="/Kullanici/KullaniciSayfasi?pId=@ViewData["KullaniciId"]">Profil</a>
+                            </div>
+                            <div style="margin-left:10px;">
+                                <i class="bi bi-arrow-right-short"></i>
+                                <a href="#">Değerlendirmelerim</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /aside Widget -->
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <form id="formAccountSettings" asp-action="KullaniciSayfasi" asp-controller="Kullanici" method="post" style="height:73vh;">
+                        <input type="hidden" asp-for="Id" id="pId" />
+                        <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
+
+                        @if (ViewData["KullaniciTuru"] != null)
+                        {
+                            if (ViewData["KullaniciTuru"] == "Admin")
+                            {
+                                <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="1" />
+                            }
+                            else if (ViewData["KullaniciTuru"] == "Personel")
+                            {
+                                <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="2" />
+                            }
+                            else
+                            {
+                                <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="3" />
+                            }
+                        }
+                        else
+                        {
+                            <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="3" />
+                        }
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="frmAd" class="form-label fw-bold">AD</label>
+                                <input type="text" asp-for="Ad" id="frmAd" class="input" placeholder="Ad Giriniz" />
+                                <span asp-validation-for="Ad" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
+                                <input type="text" asp-for="Soyad" id="frmSoyad" class="input" placeholder="Soyad Giriniz" />
+                                <span asp-validation-for="Soyad" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
+                                <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="input" placeholder="Kullanıcı Adı Giriniz" />
+                                <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-md-6 form-password-toggle">
+                                <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
+                                <input type="text" asp-for="Sifre"
+                                       id="frmSifre"
+                                       class="input"
+                                       placeholder="Şifre Giriniz" />
+                                <span asp-validation-for="Sifre" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
+                                <input type="email" asp-for="Email" id="frmEmail" class="input" placeholder="Email Adresi Giriniz" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
+                                <input type="text" asp-for="Telefon" id="frmTelefon" class="input" placeholder="Telefon Giriniz" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="frmAdres" class="form-label fw-bold">ADRES</label>
+                                <textarea asp-for="Adres" id="frmAdres" class="input" placeholder="Adres Giriniz"></textarea>
+                            </div>
+                        </div>
+                        <br />
+                        <button type="submit" class="btn btn-primary me-2">Kaydet</button>
+                        <button type="button" onclick="window.location.href='/Home/Index'" class="btn btn-danger">İptal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div id="breadcrumb" class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb-tree">
+                            <li style="text-transform:none;font-size:20px;">KULLANICI KAYIT</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <div class="container">
+            <div class="row">
+                <form id="formAccountSettings" asp-action="KullaniciSayfasi" asp-controller="Kullanici" method="post" style="height:73vh;">
+                    <input type="hidden" asp-for="Id" id="pId" />
+                    <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
+
+                    @if (ViewData["KullaniciTuru"] != null)
+                    {
+                        if (ViewData["KullaniciTuru"] == "Admin")
+                        {
+                            <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="1" />
+                        }
+                        else if (ViewData["KullaniciTuru"] == "Personel")
+                        {
+                            <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="2" />
+                        }
+                        else
+                        {
+                            <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="3" />
+                        }
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="3" />
+                    }
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="frmAd" class="form-label fw-bold">AD</label>
+                            <input type="text" asp-for="Ad" id="frmAd" class="input" placeholder="Ad Giriniz" />
+                            <span asp-validation-for="Ad" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
+                            <input type="text" asp-for="Soyad" id="frmSoyad" class="input" placeholder="Soyad Giriniz" />
+                            <span asp-validation-for="Soyad" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
+                            <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="input" placeholder="Kullanıcı Adı Giriniz" />
+                            <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-md-6 form-password-toggle">
+                            <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
+                            <input type="text" asp-for="Sifre"
+                                   id="frmSifre"
+                                   class="input"
+                                   placeholder="Şifre Giriniz" />
+                            <span asp-validation-for="Sifre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
+                            <input type="email" asp-for="Email" id="frmEmail" class="input" placeholder="Email Adresi Giriniz" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
+                            <input type="text" asp-for="Telefon" id="frmTelefon" class="input" placeholder="Telefon Giriniz" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="frmAdres" class="form-label fw-bold">ADRES</label>
+                            <textarea asp-for="Adres" id="frmAdres" class="input" placeholder="Adres Giriniz"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-primary me-2">Kaydet</button>
+                    <button type="button" onclick="window.location.href='/Home/Index'" class="btn btn-danger">İptal</button>
+                </form>
+            </div>
+        </div>
+    }
+   
+}

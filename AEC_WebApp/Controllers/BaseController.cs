@@ -254,5 +254,38 @@ namespace AEC_WebApp.Controllers
 
             return new HakkimizdaDataModel();
         }
+
+        public void LoadKullaniciList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciApi/GetAllKullanici";
+
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KullaniciDataModel> modelList = new List<KullaniciDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KullaniciDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> kullaniciAdi = new List<string>();
+                List<string> email = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        kullaniciAdi.Add(item.KullaniciAdi);
+                        email.Add(item.Email);
+                    }
+
+                    HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
+                    HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
+                }
+            }
+        }
     }
 }

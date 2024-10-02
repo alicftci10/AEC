@@ -58,6 +58,13 @@ namespace AEC_WebApi.Controllers
             return Ok(_kullanici.Add(model));
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult MusteriAddAllowAnonymous([FromBody] KullaniciDataModel model)
+        {
+            return Ok(_kullanici.Add(model));
+        }
+
         [HttpPut]
         [Authorize]
         public IActionResult Update([FromBody] KullaniciDataModel model)
