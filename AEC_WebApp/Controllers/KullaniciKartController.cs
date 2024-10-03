@@ -143,7 +143,7 @@ namespace AEC_WebApp.Controllers
                     if (kullanicikartadisonuc == "1" && kullanicikartnumarasisonuc == "2")
                     {
                         ModelState.AddModelError("KartAdi", "Bu Kart Adı daha önce kullanılmış. Lütfen farklı Kart Adı deneyin!");
-                        ModelState.AddModelError("KartNumarasi", "Bu Kart Numarasında kartınız mevcut. Lütfen farklı Kart Numarası deneyin!");
+                        ModelState.AddModelError("KartNumarasi", "Bu Kart Numarasında kartınız mevcut. Lütfen farklı Kart deneyin!");
                         return View(model);
                     }
                     else if (kullanicikartadisonuc != "1" && kullanicikartnumarasisonuc == "2")
