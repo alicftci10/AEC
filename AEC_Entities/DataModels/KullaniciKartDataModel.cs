@@ -15,7 +15,8 @@ namespace AEC_Entities.DataModels
         public string KartAdi { get; set; } = null!;
 
         [Required(ErrorMessage = "Kart Numarası Boş Girilemez!!")]
-        [MinLength(16, ErrorMessage = "Lütfen 16 haneli Kart Numarasınızı Giriniz!!")]
+        [MinLength(16, ErrorMessage = "Lütfen 16 haneli Kart Numaranızı Giriniz!!")]
+        [MaxLength(16, ErrorMessage = "Lütfen 16 haneli Kart Numaranızı Giriniz!!")]
         public string KartNumarasi { get; set; } = null!;
 
         [Required(ErrorMessage = "Kart Adı Soyadı Boş Girilemez!!")]

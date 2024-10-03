@@ -287,5 +287,41 @@ namespace AEC_WebApp.Controllers
                 }
             }
         }
+
+        public void LoadKullaniciKartList(int pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciKartApi/GetKullaniciKartListesi";
+
+                url += $"?pId={pId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KullaniciKartDataModel> modelList = new List<KullaniciKartDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KullaniciKartDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                List<string> KartAdi = new List<string>();
+                List<string> KartNumarasi = new List<string>();
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        KartAdi.Add(item.KartAdi);
+                        KartNumarasi.Add(item.KartNumarasi);
+                    }
+
+                    HttpContext.Session.SetString("KullaniciKartAdiList", JsonConvert.SerializeObject(KartAdi));
+                    HttpContext.Session.SetString("KullaniciKartNumarasiList", JsonConvert.SerializeObject(KartNumarasi));
+                }
+            }
+        }
     }
 }

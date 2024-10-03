@@ -1,0 +1,173 @@
+﻿@model KullaniciKartDataModel
+
+<style>
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    input {
+        color: black !important;
+        font-weight: bold;
+    }
+
+    select {
+        color: black !important;
+        font-weight: bold;
+    }
+
+    .text-danger {
+        color: red;
+        font-weight: bold;
+    }
+
+</style>
+
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    @if (Model.Id == 0)
+                    {
+                        <li style="text-transform:none;font-size:20px;">KART EKLE</li>
+                    }
+                    else
+                    {
+                        <li style="text-transform:none;font-size:20px;">KART DÜZENLE</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<div class="section">
+    <div id="aside" class="col-md-2" style="margin-left:20px;">
+        <!-- aside Widget -->
+        <div class="aside">
+            <h3 class="aside-title" style="text-transform:none">@ViewData["KullaniciFullName"]</h3>
+            <div class="checkbox-filter">
+                <div class="input-checkbox">
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="#">Siparişlerim</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/Kullanici/KullaniciSayfasi?pId=@ViewData["KullaniciId"]">Profil</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/KullaniciKart/KullaniciKartListesi?pId=@ViewData["KullaniciId"]">Kayıtlı Kartlarım</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="#">Değerlendirmelerim</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /aside Widget -->
+    </div>
+    <div class="container">
+        <form asp-action="KullaniciKartSayfasi" asp-controller="KullaniciKart" method="post" id="frmKullaniciKart" style="height:73vh;">
+
+            <input type="hidden" asp-for="Id" id="pId" />
+            <input type="hidden" asp-for="KullaniciId" id="kullaniciId" value="@ViewData["KullaniciId"]" />
+
+            <div class="row" style="height:65px;">
+                <div class="mb-3 col-md-6">
+                    <label for="frmKartAdi" class="form-label fw-bold">KART ADI</label>
+                    <input type="text" asp-for="KartAdi" id="frmKartAdi" class="form-control" placeholder="Kart Adı Giriniz" />
+                    <span asp-validation-for="KartAdi" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="frmKartNumarasi" class="form-label fw-bold">KART NUMARASI</label>
+                    <input type="number" asp-for="KartNumarasi" id="frmKartNumarasi" class="form-control" placeholder="Kart Numarası Giriniz" />
+                    <span asp-validation-for="KartNumarasi" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="frmKartAdSoyad" class="form-label fw-bold">KART AD SOYAD</label>
+                    <input type="text" asp-for="KartAdSoyad" id="frmKartAdSoyad" class="form-control" placeholder="Kart Üzerindeki Adı Soyadı Giriniz" />
+                    <span asp-validation-for="KartAdSoyad" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="frmKartSktay" class="form-label fw-bold">KART AY/YIL</label>
+                    <div>
+                        <div class="col-md-2" style="padding-left:0px;">
+                            <select asp-for="KartSktay"
+                                    class="form-select"
+                                    id="frmKartSktay"
+                                    style="height:32px;">
+                                <option selected value="">Seçiniz </option>
+                                <option value="1">01 </option>
+                                <option value="2">02 </option>
+                                <option value="3">03 </option>
+                                <option value="4">04 </option>
+                                <option value="5">05 </option>
+                                <option value="6">06 </option>
+                                <option value="7">07 </option>
+                                <option value="8">08 </option>
+                                <option value="9">09 </option>
+                                <option value="10">10 </option>
+                                <option value="11">11 </option>
+                                <option value="12">12 </option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 d-flex justify-content-center">
+                            <i class="bi bi-slash-lg" style="font-size: 35px;margin-left:-10px;"></i>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" asp-for="KartSktyil" id="frmKartSktyil" class="form-control" placeholder="Yılı Giriniz" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="KartSktay" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="frmKartCvvkodu" class="form-label fw-bold">KART CVV</label>
+                    <input type="number" asp-for="KartCvvkodu" id="frmKartCvvkodu" class="form-control" placeholder="CVV Giriniz" />
+                    <span asp-validation-for="KartCvvkodu" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="mt-2">
+                <button type="submit" class="btn btn-success">Kaydet</button>
+                <button type="button" onclick="window.location.href='/KullaniciKart/KullaniciKartListesi?pId=@ViewData["KullaniciId"]'" class="btn btn-danger">Kapat</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section AECScript {
+
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var modelId = '@Model.Id';
+            if (modelId == 0) {
+
+                $('#frmKartSktay').val('');
+                $('#frmKartSktyil').val('');
+                $('#frmKartCvvkodu').val('');
+            }
+        });
+
+    </script>
+
+}

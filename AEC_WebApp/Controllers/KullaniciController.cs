@@ -120,7 +120,7 @@ namespace AEC_WebApp.Controllers
                     {
                         url += "/MusteriAddAllowAnonymous";
                     }
-                   
+
                     var json = JsonConvert.SerializeObject(model);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
