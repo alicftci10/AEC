@@ -2,12 +2,12 @@
 
 <style>
     input {
-        color: black;
+        color: black!important;
         font-weight: bold;
     }
 
     textarea {
-        color: black;
+        color: black!important;
         font-weight: bold;
     }
 
@@ -66,7 +66,7 @@ else
             <!-- /container -->
         </div>
         <div class="section">
-            <div id="aside" class="col-md-2" style="margin-left:20px;">
+            <div id="aside" class="col-md-2" style="margin-left:20px;height:500px;">
                 <!-- aside Widget -->
                 <div class="aside">
                     <h3 class="aside-title" style="text-transform:none">@ViewData["KullaniciFullName"]</h3>
@@ -95,80 +95,79 @@ else
             </div>
 
             <div class="container">
-                <form id="formAccountSettings" asp-action="KullaniciSayfasi" asp-controller="Kullanici" method="post" style="height:73vh;">
-                    <input type="hidden" asp-for="Id" id="pId" />
-                    <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
+                <div class="store">
+                    <div class="row">
+                        <form id="formAccountSettings" asp-action="KullaniciSayfasi" asp-controller="Kullanici" method="post">
+                            <input type="hidden" asp-for="Id" id="pId" />
+                            <input type="hidden" asp-for="EmailorKullaniciAdi" id="emailorkullaniciadi" value="0" />
 
-                    @if (ViewData["KullaniciTuru"] != null)
-                    {
-                        if (ViewData["KullaniciTuru"] == "Admin")
-                        {
-                            <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="1" />
-                        }
-                        else if (ViewData["KullaniciTuru"] == "Personel")
-                        {
-                            <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="2" />
-                        }
-                        else
-                        {
-                            <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="3" />
-                        }
-                    }
-                    else
-                    {
-                        <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="3" />
-                    }
-                    <div class="row" style="height:65px;">
-                        <div class="col-md-6">
-                            <label for="frmAd" class="form-label fw-bold">AD</label>
-                            <input type="text" asp-for="Ad" id="frmAd" class="input" placeholder="Ad Giriniz" />
-                            <span asp-validation-for="Ad" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
-                            <input type="text" asp-for="Soyad" id="frmSoyad" class="input" placeholder="Soyad Giriniz" />
-                            <span asp-validation-for="Soyad" class="text-danger"></span>
-                        </div>
+                            @if (ViewData["KullaniciTuru"] != null)
+                            {
+                                if (ViewData["KullaniciTuru"] == "Admin")
+                                {
+                                    <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="1" />
+                                }
+                                else if (ViewData["KullaniciTuru"] == "Personel")
+                                {
+                                    <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="2" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="3" />
+                                }
+                            }
+                            else
+                            {
+                                <input type="hidden" asp-for="KullaniciTuruId" id="frmKullaniciTuruId" value="3" />
+                            }
+                            <div class="col-md-5 col-xs-6">
+                                <label for="frmAd" class="form-label fw-bold">AD</label>
+                                <input type="text" asp-for="Ad" id="frmAd" class="form-control" placeholder="Ad Giriniz" />
+                                <span asp-validation-for="Ad" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-5 col-xs-6">
+                                <label for="frmSoyad" class="form-label fw-bold">SOYAD</label>
+                                <input type="text" asp-for="Soyad" id="frmSoyad" class="form-control" placeholder="Soyad Giriniz" />
+                                <span asp-validation-for="Soyad" class="text-danger"></span>
+                                <br />
+                            </div>
+                            <div class="col-md-5 col-xs-6">
+                                <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
+                                <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="form-control" placeholder="Kullanıcı Adı Giriniz" />
+                                <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-5 col-xs-6">
+                                <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
+                                <input type="text" asp-for="Sifre"
+                                       id="frmSifre"
+                                       class="form-control"
+                                       placeholder="Şifre Giriniz" />
+                                <span asp-validation-for="Sifre" class="text-danger"></span>
+                                <br />
+                            </div>
+                            <div class="col-md-5 col-xs-6">
+                                <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
+                                <input type="email" asp-for="Email" id="frmEmail" class="form-control" placeholder="Email Adresi Giriniz" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-5 col-xs-6">
+                                <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
+                                <input type="text" asp-for="Telefon" id="frmTelefon" class="form-control" placeholder="Telefon Giriniz" />
+                                <br />
+                            </div>
+                            <div class="col-md-5 col-xs-6">
+                                <label for="frmAdres" class="form-label fw-bold">ADRES</label>
+                                <textarea asp-for="Adres" id="frmAdres" class="form-control" placeholder="Adres Giriniz"></textarea>
+                                <br />
+                                <br />
+                            </div>
+                            <div class="col-md-10 col-xs-6">
+                                <button type="submit" class="btn btn-primary me-2">Kaydet</button>
+                                <button type="button" onclick="window.location.href='/Home/Index'" class="btn btn-danger">İptal</button>
+                            </div>
+                        </form>
                     </div>
-                    <br />
-                    <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label for="frmKullaniciAdi" class="form-label fw-bold">KULLANICI ADI</label>
-                            <input type="text" asp-for="KullaniciAdi" id="frmKullaniciAdi" class="input" placeholder="Kullanıcı Adı Giriniz" />
-                            <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3 col-md-6 form-password-toggle">
-                            <label for="frmSifre" class="form-label fw-bold">ŞİFRE</label>
-                            <input type="text" asp-for="Sifre"
-                                   id="frmSifre"
-                                   class="input"
-                                   placeholder="Şifre Giriniz" />
-                            <span asp-validation-for="Sifre" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label for="frmEmail" class="form-label fw-bold">EMAİL</label>
-                            <input type="email" asp-for="Email" id="frmEmail" class="input" placeholder="Email Adresi Giriniz" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="frmTelefon" class="form-label fw-bold">TELEFON</label>
-                            <input type="text" asp-for="Telefon" id="frmTelefon" class="input" placeholder="Telefon Giriniz" />
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label for="frmAdres" class="form-label fw-bold">ADRES</label>
-                            <textarea asp-for="Adres" id="frmAdres" class="input" placeholder="Adres Giriniz"></textarea>
-                        </div>
-                    </div>
-                    <br />
-                    <button type="submit" class="btn btn-primary me-2">Kaydet</button>
-                    <button type="button" onclick="window.location.href='/Home/Index'" class="btn btn-danger">İptal</button>
-                </form>
+                </div>
             </div>
         </div>
     }
