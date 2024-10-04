@@ -189,7 +189,11 @@ namespace AEC_WebApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
-                HttpContext.Session.SetInt32("MessageBox", 2);
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 2);
+                }
+                
                 return RedirectToAction("KullaniciKartListesi");
             }
         }

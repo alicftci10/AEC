@@ -13,7 +13,7 @@ public partial class UrunYorum
 
     public int? MouseId { get; set; }
 
-    public string Yorum { get; set; } = null!;
+    public string? Yorum { get; set; }
 
     public short? YorumPuan { get; set; }
 

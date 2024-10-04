@@ -3,6 +3,13 @@
 @{
     List<KategoriDataModel> kategoriList = ViewData["KategoriList"] as List<KategoriDataModel>;
     List<KategoriDataModel> mainKategoriList = kategoriList.Where(i => i.MainKategoriId == null).ToList();
+
+    double? ortalama = null;
+
+    @if (Model.UrunYorumList != null && Model.UrunYorumList.Count > 0)
+    {
+        ortalama = Model.UrunYorumList.Average(i => i.YorumPuan);
+    }
 }
 
 <style>
@@ -58,14 +65,76 @@
                     <div class="product-details">
                         <h2 class="product-name" style="text-transform:none;font-size:25px;">@Model.GetMouse.MouseAdi</h2>
                         <div>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <a class="review-link" href="#"><i class="bi bi-chat-left-text-fill" style="position: relative; top: 2px;"></i> 10 Değerlendirme</a>
+                            @if (ortalama < 1.5)
+                            {
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            }
+                            else if (ortalama >= 1.5 && ortalama < 2.5)
+                            {
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            }
+                            else if (ortalama >= 2.5 && ortalama < 3.5)
+                            {
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            }
+                            else if (ortalama >= 3.5 && ortalama < 4.5)
+                            {
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            }
+                            else if (ortalama >= 4.5)
+                            {
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="product-rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            }
+
+                            @if (Model.UrunYorumList != null && Model.UrunYorumList.Count > 0)
+                            {
+                                <a class="review-link" href="#tab2link"><i class="bi bi-chat-left-text-fill" style="position: relative; top: 2px;"></i> @Model.UrunYorumList.Count Değerlendirme</a>
+                            }
+                            else
+                            {
+                                <a class="review-link" href="#tab2link"><i class="bi bi-chat-left-text-fill" style="position: relative; top: 2px;"></i> 0 Değerlendirme</a>
+                            }
+
                         </div>
                         <div>
                             <h3 class="product-price">@Formatting.FormatTurkLirasi(@Model.GetMouse.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(@Model.GetMouse.Fiyat.Value, 5)</del></h3>
@@ -116,9 +185,16 @@
                 <div class="col-md-12">
                     <div id="product-tab">
                         <!-- product tab nav -->
-                        <ul class="tab-nav">
+                        <ul class="tab-nav" id="tab2link">
                             <li class="active"><a data-toggle="tab" href="#tab1">Detaylar</a></li>
-                            <li><a data-toggle="tab" href="#tab2">Değerlendirmeler (3)</a></li>
+                            @if (Model.UrunYorumList != null && Model.UrunYorumList.Count > 0)
+                            {
+                                <li><a data-toggle="tab" href="#tab2">Değerlendirmeler (@Model.UrunYorumList.Count)</a></li>
+                            }
+                            else
+                            {
+                                <li><a data-toggle="tab" href="#tab2">Değerlendirmeler (0)</a></li>
+                            }
                         </ul>
                         <!-- /product tab nav -->
                         <!-- product tab content -->
@@ -266,173 +342,334 @@
                             <div id="tab2" class="tab-pane fade in">
                                 <div class="row">
                                     <!-- Rating -->
-                                    <div class="col-md-3">
-                                        <div id="rating">
-                                            <div class="rating-avg">
-                                                <span>4.5</span>
-                                                <div class="rating-stars">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
+                                    @if (Model.UrunYorumList != null && Model.UrunYorumList.Count > 0 && ViewData["KullaniciId"] == null)
+                                    {
+                                        <div class="col-md-12">
+                                            <div id="rating" class="text-center">
+                                                <div class="rating-avg">
+                                                    <span>@ortalama?.ToString("F1")</span>
+                                                    @if (ortalama < 1.5)
+                                                    {
+                                                        <div class="rating-stars">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </div>
+                                                    }
+                                                    else if (ortalama >= 1.5 && ortalama < 2.5)
+                                                    {
+                                                        <div class="rating-stars">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </div>
+                                                    }
+                                                    else if (ortalama >= 2.5 && ortalama < 3.5)
+                                                    {
+                                                        <div class="rating-stars">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </div>
+                                                    }
+                                                    else if (ortalama >= 3.5 && ortalama < 4.5)
+                                                    {
+                                                        <div class="rating-stars">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </div>
+                                                    }
+                                                    else if (ortalama >= 4.5)
+                                                    {
+                                                        <div class="rating-stars">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
-                                            <ul class="rating">
-                                                <li>
-                                                    <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                    <div class="rating-progress">
-                                                        <div style="width: 80%;"></div>
-                                                    </div>
-                                                    <span class="sum">3</span>
-                                                </li>
-                                                <li>
-                                                    <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="rating-progress">
-                                                        <div style="width: 60%;"></div>
-                                                    </div>
-                                                    <span class="sum">2</span>
-                                                </li>
-                                                <li>
-                                                    <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="rating-progress">
-                                                        <div></div>
-                                                    </div>
-                                                    <span class="sum">0</span>
-                                                </li>
-                                                <li>
-                                                    <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="rating-progress">
-                                                        <div></div>
-                                                    </div>
-                                                    <span class="sum">0</span>
-                                                </li>
-                                                <li>
-                                                    <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="rating-progress">
-                                                        <div></div>
-                                                    </div>
-                                                    <span class="sum">0</span>
-                                                </li>
-                                            </ul>
+                                            <!-- /Rating -->
+                                            <!-- Reviews -->
+                                            <div id="reviews">
+                                                <ul class="reviews">
+                                                    @foreach (var item in Model.UrunYorumList)
+                                                    {
+                                                        <li>
+                                                            <div class="review-heading">
+                                                                <h5 class="name">@item.CreatedByName</h5>
+                                                                <p class="date">@item.CreatedAt</p>
+                                                                @if (item.YorumPuan == 1)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                    </div>
+                                                                }
+                                                                else if (item.YorumPuan == 2)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                    </div>
+                                                                }
+                                                                else if (item.YorumPuan == 3)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                    </div>
+                                                                }
+                                                                else if (item.YorumPuan == 4)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                    </div>
+                                                                }
+                                                                else if (item.YorumPuan == 5)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                            <div class="review-body">
+                                                                <p>@item.Yorum</p>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <!-- /Reviews -->
                                         </div>
-                                    </div>
-                                    <!-- /Rating -->
-                                    <!-- Reviews -->
-                                    <div class="col-md-6">
-                                        <div id="reviews">
-                                            <ul class="reviews">
-                                                <li>
-                                                    <div class="review-heading">
-                                                        <h5 class="name">John</h5>
-                                                        <p class="date">27 DEC 2018, 8:0 PM</p>
-                                                        <div class="review-rating">
+                                    }
+                                    else if (Model.UrunYorumList != null && Model.UrunYorumList.Count > 0 && ViewData["KullaniciId"] != null)
+                                    {
+                                        <div class="col-md-9">
+                                            <div id="rating" class="text-center">
+                                                <div class="rating-avg">
+                                                    <span>@ortalama?.ToString("F1")</span>
+                                                    @if (ortalama < 1.5)
+                                                    {
+                                                        <div class="rating-stars">
                                                             <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o empty"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
                                                         </div>
-                                                    </div>
-                                                    <div class="review-body">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="review-heading">
-                                                        <h5 class="name">John</h5>
-                                                        <p class="date">27 DEC 2018, 8:0 PM</p>
-                                                        <div class="review-rating">
+                                                    }
+                                                    else if (ortalama >= 1.5 && ortalama < 2.5)
+                                                    {
+                                                        <div class="rating-stars">
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o empty"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
                                                         </div>
-                                                    </div>
-                                                    <div class="review-body">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="review-heading">
-                                                        <h5 class="name">John</h5>
-                                                        <p class="date">27 DEC 2018, 8:0 PM</p>
-                                                        <div class="review-rating">
+                                                    }
+                                                    else if (ortalama >= 2.5 && ortalama < 3.5)
+                                                    {
+                                                        <div class="rating-stars">
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o empty"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
                                                         </div>
-                                                    </div>
-                                                    <div class="review-body">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <ul class="reviews-pagination">
-                                                <li class="active">1</li>
-                                                <li><a href="#">2</a></li>
-                                                <li><a href="#">3</a></li>
-                                                <li><a href="#">4</a></li>
-                                                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- /Reviews -->
-                                    <!-- Review Form -->
-                                    <div class="col-md-3">
-                                        <div id="review-form">
-                                            <form class="review-form">
-                                                <input class="input" type="text" placeholder="Your Name">
-                                                <input class="input" type="email" placeholder="Your Email">
-                                                <textarea class="input" placeholder="Your Review"></textarea>
-                                                <div class="input-rating">
-                                                    <span>Your Rating: </span>
-                                                    <div class="stars">
-                                                        <input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-                                                        <input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-                                                        <input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-                                                        <input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-                                                        <input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
-                                                    </div>
+                                                    }
+                                                    else if (ortalama >= 3.5 && ortalama < 4.5)
+                                                    {
+                                                        <div class="rating-stars">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </div>
+                                                    }
+                                                    else if (ortalama >= 4.5)
+                                                    {
+                                                        <div class="rating-stars">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+                                                    }
                                                 </div>
-                                                <button class="primary-btn">Submit</button>
-                                            </form>
+                                            </div>
+                                            <!-- /Rating -->
+                                            <!-- Reviews -->
+                                            <div id="reviews">
+                                                <ul class="reviews">
+                                                    @foreach (var item in Model.UrunYorumList)
+                                                    {
+                                                        <li>
+                                                            <div class="review-heading">
+                                                                <h5 class="name">@item.CreatedByName</h5>
+                                                                <p class="date">@item.CreatedAt</p>
+                                                                @if (item.YorumPuan == 1)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                    </div>
+                                                                }
+                                                                else if (item.YorumPuan == 2)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                    </div>
+                                                                }
+                                                                else if (item.YorumPuan == 3)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                    </div>
+                                                                }
+                                                                else if (item.YorumPuan == 4)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star-o empty"></i>
+                                                                    </div>
+                                                                }
+                                                                else if (item.YorumPuan == 5)
+                                                                {
+                                                                    <div class="review-rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                    </div>
+                                                                }
+
+                                                                @if (item.CreatedBy == Convert.ToInt32(ViewData["KullaniciId"]))
+                                                                {
+                                                                    <a href="#" data-toggle="modal" data-target="#exampleModal" onclick="deleteModal(@item.Id)"><i class="bi bi-trash2-fill"></i> Sil</a>
+                                                                }
+                                                            </div>
+                                                            <div class="review-body">
+                                                                <p>@item.Yorum</p>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <!-- /Reviews -->
                                         </div>
-                                    </div>
-                                    <!-- /Review Form -->
+                                        <!-- Review Form -->
+                                        <div class="col-md-3">
+                                            <div id="review-form">
+                                                <form class="review-form" asp-action="UrunYorum" asp-controller="Home" method="post">
+                                                    <input type="hidden" name="MouseId" value="@Model.GetMouse.Id" />
+                                                    <label for="frmYorum" class="form-label fw-bold">YORUM YAP</label>
+                                                    <textarea class="input" name="Yorum" id="frmYorum" placeholder="Yorumunu Yaz"></textarea>
+                                                    <div class="input-rating">
+                                                        <span>Derecelendirme: </span>
+                                                        <div class="stars">
+                                                            <input id="star5" name="YorumPuan" value="5" type="radio"><label for="star5"></label>
+                                                            <input id="star4" name="YorumPuan" value="4" type="radio"><label for="star4"></label>
+                                                            <input id="star3" name="YorumPuan" value="3" type="radio"><label for="star3"></label>
+                                                            <input id="star2" name="YorumPuan" value="2" type="radio"><label for="star2"></label>
+                                                            <input id="star1" name="YorumPuan" value="1" type="radio"><label for="star1"></label>
+                                                        </div>
+                                                    </div>
+                                                    <button class="primary-btn">Kaydet</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- /Review Form -->
+                                    }
+                                    else if (ViewData["KullaniciId"] != null)
+                                    {
+                                        <div class="col-md-9 text-center">
+                                            <br />
+                                            <br />
+                                            <h3>Bu Ürüne Henüz Değerlendirme Yapılmamış İlk Yapan Sen Ol!!</h3>
+                                        </div>
+                                        <!-- Review Form -->
+                                        <div class="col-md-3">
+                                            <div id="review-form">
+                                                <form class="review-form" asp-action="UrunYorum" asp-controller="Home" method="post">
+                                                    <input type="hidden" name="MouseId" value="@Model.GetMouse.Id" />
+                                                    <label for="frmYorum" class="form-label fw-bold">YORUM YAP</label>
+                                                    <textarea class="input" name="Yorum" id="frmYorum" placeholder="Yorumunu Yaz"></textarea>
+                                                    <div class="input-rating">
+                                                        <span>Derecelendirme: </span>
+                                                        <div class="stars">
+                                                            <input id="star5" name="YorumPuan" value="5" type="radio"><label for="star5"></label>
+                                                            <input id="star4" name="YorumPuan" value="4" type="radio"><label for="star4"></label>
+                                                            <input id="star3" name="YorumPuan" value="3" type="radio"><label for="star3"></label>
+                                                            <input id="star2" name="YorumPuan" value="2" type="radio"><label for="star2"></label>
+                                                            <input id="star1" name="YorumPuan" value="1" type="radio"><label for="star1"></label>
+                                                        </div>
+                                                    </div>
+                                                    <button class="primary-btn">Kaydet</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- /Review Form -->
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-12 text-center">
+                                            <br />
+                                            <br />
+                                            <h2>Bu Ürüne Henüz Değerlendirme Yapılmamış İlk Yapan Sen Ol!!</h2>
+                                            <br />
+                                            <a href="/Kullanici/KullaniciSayfasi" style="font-weight:bold"><i class="bi bi-hand-index"></i> Kayıt Ol</a>
+                                            <br />
+                                            <br />
+                                            <a href="/Authentication/LoginEkrani" style="font-weight:bold"><i class="bi bi-hand-index"></i> Giriş Yap</a>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                             <!-- /tab2  -->
@@ -581,6 +818,27 @@
 <br />
 <br />
 <!-- /Section -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">UYARI!!</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="color:black;font-weight:bold;">
+                Yorumu Silmek İstediğinize Emin Misiniz ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Hayır</button>
+                <button type="button" id="confirmDeleteLink" class="btn btn-success">Evet</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 @section AECScript {
 
     <script type="text/javascript">
@@ -589,6 +847,56 @@
             button.addEventListener('click', function (event) {
                 event.preventDefault(); // Buton tıklanınca linkin varsayılan davranışını engelle
                 event.stopPropagation(); // Olayın yukarı doğru yayılmasını engelle
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Yorum Kayıt Edildi");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Yorum Silindi");
+            }
+
+        });
+
+        function deleteModal(id) {
+            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
+
+            confirmDeleteLink.onclick = function () {
+                window.location.href = '/Home/UrunYorumSil?pUrun=30&pId=' + id;
+            };
+        }
+
+        $(document).ready(function () {
+
+            $('a[href="#teknikozellikler"]').click(function (e) {
+                e.preventDefault();
+
+                $('#tab1').addClass('active in');
+                $('#tab2').removeClass('active in');
+
+                $('a[href="#tab1"]').parent().addClass('active');
+                $('a[href="#tab2"]').parent().removeClass('active');
+
+                $('html, body').animate({
+                    scrollTop: $('#teknikozellikler').offset().top
+                }, 500);
+            });
+
+            $('a[href="#tab2link"]').click(function (e) {
+                e.preventDefault();
+
+                $('#tab2').addClass('active in');
+                $('#tab1').removeClass('active in');
+
+                $('a[href="#tab2"]').parent().addClass('active');
+                $('a[href="#tab1"]').parent().removeClass('active');
+
+                $('html, body').animate({
+                    scrollTop: $('#tab2link').offset().top
+                }, 500);
             });
         });
 

@@ -23,5 +23,7 @@ namespace AEC_Entities.DataModels
         public List<MouseDataModel>? MouseList { get; set; }
 
 		public List<UrunResmiDataModel>? UrunResmiList { get; set; }
-	}
+
+        public List<UrunYorumDataModel>? UrunYorumList { get; set; }
+    }
 }

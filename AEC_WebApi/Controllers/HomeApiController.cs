@@ -17,7 +17,8 @@ namespace AEC_WebApi.Controllers
 		IMonitorService _MonitorService;
 		IMouseService _MouseService;
 		IUrunResmiService _UrunResmiService;
-		public HomeApiController(IHomeService homeService, IKategoriService kategoriService, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService, IUrunResmiService urunResmiService)
+        IUrunYorumService _UrunYorumService;
+        public HomeApiController(IHomeService homeService, IKategoriService kategoriService, ILaptopService laptopService, IMonitorService monitorService, IMouseService mouseService, IUrunResmiService urunResmiService,IUrunYorumService urunYorumService)
 		{
 			_HomeService = homeService;
 			_KategoriService = kategoriService;
@@ -25,6 +26,7 @@ namespace AEC_WebApi.Controllers
 			_MonitorService = monitorService;
 			_MouseService = mouseService;
 			_UrunResmiService = urunResmiService;
+			_UrunYorumService = urunYorumService;
 		}
 
 		[HttpGet]
@@ -99,16 +101,19 @@ namespace AEC_WebApi.Controllers
 			{
 				model.GetLaptop = _LaptopService.GetLaptopId(pLaptopId);
 				model.UrunResmiList = _UrunResmiService.GetLaptopResmiList(pLaptopId);
-			}
+                model.UrunYorumList = _UrunYorumService.GetUrunYorumLaptopList(pLaptopId);
+            }
 			else if (pMonitorId > 0)
 			{
 				model.GetMonitor = _MonitorService.GetMonitorId(pMonitorId);
 				model.UrunResmiList = _UrunResmiService.GetMonitorResmiList(pMonitorId);
+                model.UrunYorumList = _UrunYorumService.GetUrunYorumMonitorList(pMonitorId);
             }
 			else if (pMouseId > 0)
 			{
 				model.GetMouse = _MouseService.GetMouseId(pMouseId);
 				model.UrunResmiList = _UrunResmiService.GetMouseResmiList(pMouseId);
+                model.UrunYorumList = _UrunYorumService.GetUrunYorumMouseList(pMouseId);
             }
 
 			return Ok(model);

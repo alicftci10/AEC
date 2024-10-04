@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text;
 
 namespace AEC_WebApp.Controllers
 {
@@ -65,10 +66,28 @@ namespace AEC_WebApp.Controllers
             }
         }
 
-        public async Task<IActionResult> LaptopDetay(int pLaptopId)
+        public async Task<IActionResult> LaptopDetay(int? pLaptopId)
         {
             using (HttpClient client = new HttpClient())
             {
+                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
+                if (MessageBox == 1)
+                {
+                    TempData["MessageBox"] = 1;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 2)
+                {
+                    TempData["MessageBox"] = 2;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+
+                int? secilenUrunId = HttpContext.Session.GetInt32("secilenUrunId");
+                if (pLaptopId == null)
+                {
+                    pLaptopId = secilenUrunId;
+                }
+
                 string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetUrunDetay";
 
                 url += $"?pLaptopId={pLaptopId}";
@@ -85,19 +104,39 @@ namespace AEC_WebApp.Controllers
 
                     if (laptop != null)
                     {
-						model.GetLaptop = laptop.GetLaptop;
+                        model.GetLaptop = laptop.GetLaptop;
+                        HttpContext.Session.SetInt32("secilenUrunId", laptop.GetLaptop.Id);
                         model.UrunResmiList = laptop.UrunResmiList;
-					}
+                        model.UrunYorumList = laptop.UrunYorumList;
+                    }
                 }
 
                 return View(model);
             }
         }
 
-        public async Task<IActionResult> MonitorDetay(int pMonitorId)
+        public async Task<IActionResult> MonitorDetay(int? pMonitorId)
         {
             using (HttpClient client = new HttpClient())
             {
+                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
+                if (MessageBox == 1)
+                {
+                    TempData["MessageBox"] = 1;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 2)
+                {
+                    TempData["MessageBox"] = 2;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+
+                int? secilenUrunId = HttpContext.Session.GetInt32("secilenUrunId");
+                if (pMonitorId == null)
+                {
+                    pMonitorId = secilenUrunId;
+                }
+
                 string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetUrunDetay";
 
                 url += $"?pMonitorId={pMonitorId}";
@@ -115,7 +154,9 @@ namespace AEC_WebApp.Controllers
                     if (monitor != null)
                     {
                         model.GetMonitor = monitor.GetMonitor;
+                        HttpContext.Session.SetInt32("secilenUrunId", monitor.GetMonitor.Id);
                         model.UrunResmiList = monitor.UrunResmiList;
+                        model.UrunYorumList = monitor.UrunYorumList;
                     }
                 }
 
@@ -123,12 +164,30 @@ namespace AEC_WebApp.Controllers
             }
         }
 
-        public async Task<IActionResult> MouseDetay(int pMouseId)
+        public async Task<IActionResult> MouseDetay(int? pMouseId)
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetUrunDetay";
+                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
+                if (MessageBox == 1)
+                {
+                    TempData["MessageBox"] = 1;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 2)
+                {
+                    TempData["MessageBox"] = 2;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
 
+                int? secilenUrunId = HttpContext.Session.GetInt32("secilenUrunId");
+                if (pMouseId == null)
+                {
+                    pMouseId = secilenUrunId;
+                }
+
+                string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetUrunDetay";
+             
                 url += $"?pMouseId={pMouseId}";
 
                 var response = await client.GetAsync(url);
@@ -144,11 +203,79 @@ namespace AEC_WebApp.Controllers
                     if (mouse != null)
                     {
                         model.GetMouse = mouse.GetMouse;
+                        HttpContext.Session.SetInt32("secilenUrunId", mouse.GetMouse.Id);
                         model.UrunResmiList = mouse.UrunResmiList;
+                        model.UrunYorumList = mouse.UrunYorumList;
                     }
                 }
 
                 return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UrunYorum(UrunYorumDataModel model)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunYorumApi/AddUpdate";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                var json = JsonConvert.SerializeObject(model);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await client.PostAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 1);
+                }
+
+                if (model.LaptopId != null)
+                {
+                    return RedirectToAction("LaptopDetay");
+                }
+                else if(model.MonitorId != null)
+                {
+                    return RedirectToAction("MonitorDetay");
+                }
+                else
+                {
+                    return RedirectToAction("MouseDetay");
+                }
+            }
+        }
+
+        public async Task<IActionResult> UrunYorumSil(int pUrun ,int pId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunYorumApi/Delete";
+
+                url += $"?pId={pId}";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+
+                var response = await client.DeleteAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 2);
+                }
+
+                if (pUrun == 1)
+                {
+                    return RedirectToAction("LaptopDetay");
+                }
+                else if (pUrun == 2)
+                {
+                    return RedirectToAction("MonitorDetay");
+                }
+                else
+                {
+                    return RedirectToAction("MouseDetay");
+                }
             }
         }
     }

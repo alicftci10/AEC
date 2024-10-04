@@ -17,5 +17,7 @@ namespace AEC_Entities.DataModels
         public string? CreatedByName { get; set; }
 
         public int? Count { get; set; }
+
+        public short? OrtalamaYorumPuan { get; set; }
     }
 }
