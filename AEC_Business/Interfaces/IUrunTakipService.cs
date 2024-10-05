@@ -12,7 +12,11 @@ namespace AEC_Business.Interfaces
     {
         List<UrunTakipDataModel> GetAllUrunTakip();
 
-        List<UrunTakipDataModel> GetUrunTakipList(string searchTerm);
+        List<UrunTakipDataModel> BekliyorList(string searchTerm);
+
+        List<UrunTakipDataModel> TamamlandiList(string searchTerm);
+
+        List<UrunTakipDataModel> IptalList(string searchTerm);
 
         UrunTakip GetId(int pId);
 

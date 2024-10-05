@@ -11,6 +11,10 @@ namespace AEC_DataAccess.EFInterfaces
 {
     public interface IEFUrunTakipRepository : IRepository<UrunTakip>
     {
-        List<UrunTakipDataModel> GetUrunTakipList(string searchTerm);
+        List<UrunTakipDataModel> BekliyorList(string searchTerm);
+
+        List<UrunTakipDataModel> TamamlandiList(string searchTerm);
+
+        List<UrunTakipDataModel> IptalList(string searchTerm);
     }
 }

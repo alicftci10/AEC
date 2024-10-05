@@ -28,5 +28,11 @@ namespace AEC_Entities.DataModels
         public int? UpdatedBy { get; set; }
 
         public string? UpdatedByName { get; set; }
+
+        public string? UrunAdi { get; set; }
+
+        public decimal? Fiyat { get; set; }
+
+        public string? ResimUrl { get; set; }
     }
 }

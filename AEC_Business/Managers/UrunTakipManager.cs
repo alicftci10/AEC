@@ -76,9 +76,19 @@ namespace AEC_Business.Managers
             return item;
         }
 
-        public List<UrunTakipDataModel> GetUrunTakipList(string searchTerm)
+        public List<UrunTakipDataModel> BekliyorList(string searchTerm)
         {
-            return _UrunTakipRepository.GetUrunTakipList(searchTerm);
+            return _UrunTakipRepository.BekliyorList(searchTerm);
+        }
+
+        public List<UrunTakipDataModel> TamamlandiList(string searchTerm)
+        {
+            return _UrunTakipRepository.TamamlandiList(searchTerm);
+        }
+
+        public List<UrunTakipDataModel> IptalList(string searchTerm)
+        {
+            return _UrunTakipRepository.IptalList(searchTerm);
         }
 
         public UrunTakip GetId(int pId)

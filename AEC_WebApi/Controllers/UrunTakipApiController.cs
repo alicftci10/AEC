@@ -24,9 +24,23 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetUrunTakipList(string? searchTerm)
+        public IActionResult BekliyorList(string? searchTerm)
         {
-            return Ok(_UrunTakip.GetUrunTakipList(searchTerm));
+            return Ok(_UrunTakip.BekliyorList(searchTerm));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult TamamlandiList(string? searchTerm)
+        {
+            return Ok(_UrunTakip.TamamlandiList(searchTerm));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult IptalList(string? searchTerm)
+        {
+            return Ok(_UrunTakip.IptalList(searchTerm));
         }
 
         [HttpGet]
