@@ -77,6 +77,12 @@ namespace AEC_WebSellerApp.Controllers
                         model = JsonConvert.DeserializeObject<CozunurlukDataModel>(response.Content.ReadAsStringAsync().Result);
 
                         HttpContext.Session.SetString("secilenCozunurlukAdi", model.CozunurlukAdi);
+
+                        return View(model);
+                    }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
                     }
                 }
 
@@ -131,6 +137,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("CozunurlukSayfasi");
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 model.IsSuccess = true;
@@ -150,8 +160,15 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
-                HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("CozunurlukSayfasi");
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 2);
+                    return RedirectToAction("CozunurlukSayfasi");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
     }

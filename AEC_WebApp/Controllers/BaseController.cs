@@ -33,8 +33,10 @@ namespace AEC_WebApp.Controllers
                 {
                     return model;
                 }
-
-                return new KullaniciDataModel();
+                else
+                {
+                    return new KullaniciDataModel();
+                }
             }
         }
 
@@ -85,12 +87,12 @@ namespace AEC_WebApp.Controllers
                 if (text != null)
                 {
                     kategoriList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
-                }
 
-                if (kategoriList != null)
-                {
-                    kategoriList = GetKategoriCount(kategoriList);
-                    return kategoriList;
+                    if (kategoriList != null)
+                    {
+                        kategoriList = GetKategoriCount(kategoriList);
+                        return kategoriList;
+                    }
                 }
 
                 return new List<KategoriDataModel>();
@@ -112,11 +114,11 @@ namespace AEC_WebApp.Controllers
                 if (text != null)
                 {
                     kategoriList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
-                }
 
-                if (kategoriList != null)
-                {
-                    return kategoriList;
+                    if (kategoriList != null)
+                    {
+                        return kategoriList;
+                    }
                 }
 
                 return new List<KategoriDataModel>(); ;
@@ -157,8 +159,10 @@ namespace AEC_WebApp.Controllers
 
                     return model;
                 }
-
-                return new HomeDataModel();
+                else
+                {
+                    return new HomeDataModel();
+                }
             }
         }
 
@@ -209,8 +213,10 @@ namespace AEC_WebApp.Controllers
 
                 return model;
             }
-
-            return new HomeDataModel();
+            else
+            {
+                return new HomeDataModel();
+            }
         }
 
 		public HakkimizdaDataModel LoadHakkimizdaInfo()
@@ -251,8 +257,10 @@ namespace AEC_WebApp.Controllers
 
                 return model;
             }
-
-            return new HakkimizdaDataModel();
+            else
+            {
+                return new HakkimizdaDataModel();
+            }
         }
 
         public void LoadKullaniciList()
@@ -269,21 +277,21 @@ namespace AEC_WebApp.Controllers
                 if (text != null)
                 {
                     modelList = JsonConvert.DeserializeObject<List<KullaniciDataModel>>(text.Content.ReadAsStringAsync().Result);
-                }
 
-                List<string> kullaniciAdi = new List<string>();
-                List<string> email = new List<string>();
+                    List<string> kullaniciAdi = new List<string>();
+                    List<string> email = new List<string>();
 
-                if (modelList != null)
-                {
-                    foreach (var item in modelList)
+                    if (modelList != null)
                     {
-                        kullaniciAdi.Add(item.KullaniciAdi);
-                        email.Add(item.Email);
-                    }
+                        foreach (var item in modelList)
+                        {
+                            kullaniciAdi.Add(item.KullaniciAdi);
+                            email.Add(item.Email);
+                        }
 
-                    HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
-                    HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
+                        HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
+                        HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
+                    }
                 }
             }
         }
@@ -305,21 +313,21 @@ namespace AEC_WebApp.Controllers
                 if (text != null)
                 {
                     modelList = JsonConvert.DeserializeObject<List<KullaniciKartDataModel>>(text.Content.ReadAsStringAsync().Result);
-                }
 
-                List<string> KartAdi = new List<string>();
-                List<string> KartNumarasi = new List<string>();
+                    List<string> KartAdi = new List<string>();
+                    List<string> KartNumarasi = new List<string>();
 
-                if (modelList != null)
-                {
-                    foreach (var item in modelList)
+                    if (modelList != null)
                     {
-                        KartAdi.Add(item.KartAdi);
-                        KartNumarasi.Add(item.KartNumarasi);
-                    }
+                        foreach (var item in modelList)
+                        {
+                            KartAdi.Add(item.KartAdi);
+                            KartNumarasi.Add(item.KartNumarasi);
+                        }
 
-                    HttpContext.Session.SetString("KullaniciKartAdiList", JsonConvert.SerializeObject(KartAdi));
-                    HttpContext.Session.SetString("KullaniciKartNumarasiList", JsonConvert.SerializeObject(KartNumarasi));
+                        HttpContext.Session.SetString("KullaniciKartAdiList", JsonConvert.SerializeObject(KartAdi));
+                        HttpContext.Session.SetString("KullaniciKartNumarasiList", JsonConvert.SerializeObject(KartNumarasi));
+                    }
                 }
             }
         }

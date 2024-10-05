@@ -46,10 +46,14 @@ namespace AEC_WebApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     modelList = JsonConvert.DeserializeObject<List<KullaniciKartDataModel>>(response.Content.ReadAsStringAsync().Result);
-                }
 
-                HttpContext.Session.SetInt32("secilenKullaniciKartId", pId);
-                return View(modelList);
+                    HttpContext.Session.SetInt32("secilenKullaniciKartId", pId);
+                    return View(modelList);
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
 
@@ -80,6 +84,10 @@ namespace AEC_WebApp.Controllers
 
                         HttpContext.Session.SetString("secilenKullaniciKartAdi", model.KartAdi);
                         HttpContext.Session.SetString("secilenKullaniciKartNumarasi", model.KartNumarasi);
+                    }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
                     }
                 }
 
@@ -171,6 +179,10 @@ namespace AEC_WebApp.Controllers
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("KullaniciKartListesi");
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 return View(model);
@@ -192,9 +204,12 @@ namespace AEC_WebApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     HttpContext.Session.SetInt32("MessageBox", 2);
+                    return RedirectToAction("KullaniciKartListesi");
                 }
-                
-                return RedirectToAction("KullaniciKartListesi");
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
     }

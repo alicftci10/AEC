@@ -39,6 +39,10 @@ namespace AEC_WebApp.Controllers
                         HttpContext.Session.SetString("secilenKullaniciAdi", model.KullaniciAdi);
                         HttpContext.Session.SetString("secilenEmail", model.Email);
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 return View(model);
@@ -130,6 +134,10 @@ namespace AEC_WebApp.Controllers
                     {
                         model.IsSuccess = true;
                         return View(model);
+                    }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
                     }
                 }
 

@@ -95,6 +95,10 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("secilenLaptopAdi", model.LaptopAdi);
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 return View(model);
@@ -156,7 +160,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetInt32("secilenLaptopId", kayitedilenmodel.Id);
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("LaptopSayfasi");
-
+                    }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
                     }
                 }
 
@@ -258,6 +265,10 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     model = JsonConvert.DeserializeObject<LaptopDataModel>(response.Content.ReadAsStringAsync().Result);
                 }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
 
                 return View(model);
             }
@@ -298,8 +309,15 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
-                HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("LaptopSayfasi");
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 2);
+                    return RedirectToAction("LaptopSayfasi");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
     }

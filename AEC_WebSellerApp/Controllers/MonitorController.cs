@@ -90,6 +90,10 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("secilenMonitorAdi", model.MonitorAdi);
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 return View(model);
@@ -146,7 +150,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetInt32("secilenMonitorId", kayitedilenmodel.Id);
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("MonitorSayfasi");
-
+                    }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
                     }
                 }
 
@@ -248,6 +255,10 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     model = JsonConvert.DeserializeObject<MonitorDataModel>(response.Content.ReadAsStringAsync().Result);
                 }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
 
                 return View(model);
             }
@@ -288,8 +299,15 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
-                HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("MonitorSayfasi");
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 2);
+                    return RedirectToAction("MonitorSayfasi");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
     }

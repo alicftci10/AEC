@@ -34,9 +34,12 @@ namespace AEC_WebSellerApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     model = JsonConvert.DeserializeObject<HakkimizdaDataModel>(response.Content.ReadAsStringAsync().Result);
+                    return View(model);
                 }
-
-                return View(model);
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
 
@@ -57,9 +60,12 @@ namespace AEC_WebSellerApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     HttpContext.Session.SetInt32("MessageBox", 1);
+                    return RedirectToAction("HakkimizdaSayfasi");
                 }
-
-                return RedirectToAction("HakkimizdaSayfasi");
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
     }

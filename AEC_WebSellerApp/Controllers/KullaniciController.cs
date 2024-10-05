@@ -83,6 +83,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetString("secilenKullaniciAdi", model.KullaniciAdi);
                         HttpContext.Session.SetString("secilenEmail", model.Email);
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 return View(model);
@@ -172,6 +176,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("PersonelSayfasi");
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 model.IsSuccess = true;
@@ -191,8 +199,15 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
-                HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("PersonelSayfasi");
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 2);
+                    return RedirectToAction("PersonelSayfasi");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
 
@@ -259,9 +274,13 @@ namespace AEC_WebSellerApp.Controllers
                     HttpContext.Session.SetString("secilenKullaniciAdi", model.KullaniciAdi);
                     HttpContext.Session.SetString("secilenEmail", model.Email);
                     HttpContext.Session.SetInt32("secilenkullaniciId", model.Id);
-                }
 
-                return View(model);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
 
@@ -340,6 +359,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetInt32("secilenkullaniciId", model.Id);
                         return RedirectToAction("KullaniciDetay");
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 return View(model);
@@ -413,6 +436,10 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("secilenKullaniciAdi", model.KullaniciAdi);
                         HttpContext.Session.SetString("secilenEmail", model.Email);
+                    }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
                     }
                 }
 
@@ -508,6 +535,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("MusteriSayfasi");
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 model.IsSuccess = true;
@@ -527,8 +558,15 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
-                HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("MusteriSayfasi");
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 2);
+                    return RedirectToAction("MusteriSayfasi");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
     }

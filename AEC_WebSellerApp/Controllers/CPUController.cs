@@ -78,6 +78,10 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("secilenIslemciAdi", model.IslemciAdi);
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 return View(model);
@@ -131,6 +135,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("CPUSayfasi");
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 model.IsSuccess = true;
@@ -150,8 +158,15 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
-                HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("CPUSayfasi");
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 2);
+                    return RedirectToAction("CPUSayfasi");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
     }

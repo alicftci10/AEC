@@ -71,9 +71,13 @@ namespace AEC_WebApp.Controllers
                     {
                         ModelState.AddModelError("Sifre", "Kullanıcı Adı veya Şifre yanlış!! lütfen tekrar deneyiniz.");
                     }
-                }
 
-                return View(model);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
 
@@ -91,19 +95,19 @@ namespace AEC_WebApp.Controllers
                 if (text != null)
                 {
                     kullanicilar = JsonConvert.DeserializeObject<List<KullaniciDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                    List<string> kullaniciAdi = new List<string>();
+                    List<string> email = new List<string>();
+
+                    foreach (var item in kullanicilar)
+                    {
+                        kullaniciAdi.Add(item.KullaniciAdi);
+                        email.Add(item.Email);
+                    }
+
+                    HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
+                    HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
                 }
-
-                List<string> kullaniciAdi = new List<string>();
-                List<string> email = new List<string>();
-
-                foreach (var item in kullanicilar)
-                {
-                    kullaniciAdi.Add(item.KullaniciAdi);
-                    email.Add(item.Email);
-                }
-
-                HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
-                HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
             }
         }
     }

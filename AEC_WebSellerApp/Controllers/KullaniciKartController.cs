@@ -68,6 +68,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetString("secilenKullaniciKartAdi", model.KartAdi);
                         HttpContext.Session.SetString("secilenKullaniciKartNumarasi", model.KartNumarasi);
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
                 else
                 {
@@ -168,6 +172,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetInt32("MessageBox", 4);
                         return RedirectToAction("KullaniciDetay", "Kullanici");
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 return View(model);
@@ -186,8 +194,15 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
-                HttpContext.Session.SetInt32("MessageBox", 5);
-                return RedirectToAction("KullaniciDetay", "Kullanici");
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 5);
+                    return RedirectToAction("KullaniciDetay", "Kullanici");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
     }

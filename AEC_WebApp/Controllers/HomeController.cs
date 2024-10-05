@@ -60,9 +60,13 @@ namespace AEC_WebApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     model = JsonConvert.DeserializeObject<HomeDataModel>(response.Content.ReadAsStringAsync().Result);
-                }
 
-                return View(model);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
 
@@ -109,9 +113,13 @@ namespace AEC_WebApp.Controllers
                         model.UrunResmiList = laptop.UrunResmiList;
                         model.UrunYorumList = laptop.UrunYorumList;
                     }
-                }
 
-                return View(model);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
 
@@ -158,9 +166,13 @@ namespace AEC_WebApp.Controllers
                         model.UrunResmiList = monitor.UrunResmiList;
                         model.UrunYorumList = monitor.UrunYorumList;
                     }
-                }
 
-                return View(model);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
 
@@ -207,9 +219,13 @@ namespace AEC_WebApp.Controllers
                         model.UrunResmiList = mouse.UrunResmiList;
                         model.UrunYorumList = mouse.UrunYorumList;
                     }
-                }
 
-                return View(model);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
 
@@ -230,19 +246,23 @@ namespace AEC_WebApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     HttpContext.Session.SetInt32("MessageBox", 1);
-                }
 
-                if (model.LaptopId != null)
-                {
-                    return RedirectToAction("LaptopDetay");
-                }
-                else if(model.MonitorId != null)
-                {
-                    return RedirectToAction("MonitorDetay");
+                    if (model.LaptopId != null)
+                    {
+                        return RedirectToAction("LaptopDetay");
+                    }
+                    else if (model.MonitorId != null)
+                    {
+                        return RedirectToAction("MonitorDetay");
+                    }
+                    else
+                    {
+                        return RedirectToAction("MouseDetay");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("MouseDetay");
+                    return RedirectToAction("ErrorSayfasi", "Error");
                 }
             }
         }
@@ -262,19 +282,23 @@ namespace AEC_WebApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     HttpContext.Session.SetInt32("MessageBox", 2);
-                }
 
-                if (pUrun == 1)
-                {
-                    return RedirectToAction("LaptopDetay");
-                }
-                else if (pUrun == 2)
-                {
-                    return RedirectToAction("MonitorDetay");
+                    if (pUrun == 1)
+                    {
+                        return RedirectToAction("LaptopDetay");
+                    }
+                    else if (pUrun == 2)
+                    {
+                        return RedirectToAction("MonitorDetay");
+                    }
+                    else
+                    {
+                        return RedirectToAction("MouseDetay");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("MouseDetay");
+                    return RedirectToAction("ErrorSayfasi", "Error");
                 }
             }
         }

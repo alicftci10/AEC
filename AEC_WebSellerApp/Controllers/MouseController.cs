@@ -87,6 +87,10 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("secilenMouseAdi", model.MouseAdi);
                     }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
+                    }
                 }
 
                 return View(model);
@@ -140,7 +144,10 @@ namespace AEC_WebSellerApp.Controllers
                         HttpContext.Session.SetInt32("secilenMouseId", kayitedilenmodel.Id);
                         HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("MouseSayfasi");
-
+                    }
+                    else
+                    {
+                        return RedirectToAction("ErrorSayfasi", "Error");
                     }
                 }
 
@@ -242,6 +249,10 @@ namespace AEC_WebSellerApp.Controllers
                 {
                     model = JsonConvert.DeserializeObject<MouseDataModel>(response.Content.ReadAsStringAsync().Result);
                 }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
 
                 return View(model);
             }
@@ -282,8 +293,15 @@ namespace AEC_WebSellerApp.Controllers
 
                 var response = await client.DeleteAsync(url);
 
-                HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("MouseSayfasi");
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 2);
+                    return RedirectToAction("MouseSayfasi");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
             }
         }
     }
