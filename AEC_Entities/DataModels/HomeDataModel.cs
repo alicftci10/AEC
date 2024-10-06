@@ -16,7 +16,9 @@ namespace AEC_Entities.DataModels
 
 		public MouseDataModel? GetMouse { get; set; }
 
-		public List<LaptopDataModel>? LaptopList { get; set; }
+        public UrunTakipDataModel? GetUrunTakip { get; set; }
+
+        public List<LaptopDataModel>? LaptopList { get; set; }
 
         public List<MonitorDataModel>? MonitorList { get; set; }
 
@@ -25,5 +27,7 @@ namespace AEC_Entities.DataModels
 		public List<UrunResmiDataModel>? UrunResmiList { get; set; }
 
         public List<UrunYorumDataModel>? UrunYorumList { get; set; }
+
+        public List<UrunTakipDataModel>? UrunTakipList { get; set; }
     }
 }

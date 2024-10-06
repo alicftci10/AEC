@@ -20,6 +20,10 @@ namespace AEC_Business.Interfaces
 
         UrunTakip GetId(int pId);
 
+        UrunTakip AddFavori(UrunTakipDataModel item);
+
+        UrunTakip AddSepet(UrunTakipDataModel item);
+
         int Add(UrunTakipDataModel item);
 
         int Update(UrunTakipDataModel item);

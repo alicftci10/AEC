@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AEC_DataAccess.EFOperations
@@ -195,6 +196,107 @@ namespace AEC_DataAccess.EFOperations
                 }
 
                 return List;
+            }
+        }
+
+        public UrunTakipDataModel GetSepetFavoriDurum(UrunTakipDataModel model)
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                if (model.LaptopId != null)
+                {
+                    var laptop = db.UrunTakips.Where(i => i.CreatedBy == model.CreatedBy && i.LaptopId == model.LaptopId)
+
+                        .Select(i=> new UrunTakipDataModel
+                        {
+                            Id = i.Id,
+                            LaptopId = i.LaptopId,
+                            MonitorId = i.MonitorId,
+                            MouseId = i.MouseId,
+                            Adet = i.Adet,
+                            Favori = i.Favori,
+                            SepetDurum = i.SepetDurum,
+                            SiparisDurum = i.SiparisDurum,
+                            UpdatedAt = i.UpdatedAt,
+                            UpdatedBy = i.UpdatedBy,
+                            CreatedAt = i.CreatedAt,
+                            CreatedBy = i.CreatedBy,
+
+                        }).FirstOrDefault();
+
+                    if (laptop != null)
+                    {
+                        return laptop;
+                    }
+                    else
+                    {
+                        return new UrunTakipDataModel();
+                    }
+                }
+                else if (model.MonitorId != null)
+                {
+                    var monitor = db.UrunTakips.Where(i => i.CreatedBy == model.CreatedBy && i.MonitorId == model.MonitorId)
+
+                        .Select(i => new UrunTakipDataModel
+                        {
+                            Id = i.Id,
+                            LaptopId = i.LaptopId,
+                            MonitorId = i.MonitorId,
+                            MouseId = i.MouseId,
+                            Adet = i.Adet,
+                            Favori = i.Favori,
+                            SepetDurum = i.SepetDurum,
+                            SiparisDurum = i.SiparisDurum,
+                            UpdatedAt = i.UpdatedAt,
+                            UpdatedBy = i.UpdatedBy,
+                            CreatedAt = i.CreatedAt,
+                            CreatedBy = i.CreatedBy,
+
+                        }).FirstOrDefault();
+
+                    if (monitor != null)
+                    {
+                        return monitor;
+                    }
+                    else
+                    {
+                        return new UrunTakipDataModel();
+                    }
+                }
+                else if (model.MouseId != null)
+                {
+                    var mouse = db.UrunTakips.Where(i => i.CreatedBy == model.CreatedBy && i.MouseId == model.MouseId)
+
+                        .Select(i => new UrunTakipDataModel
+                        {
+                            Id = i.Id,
+                            LaptopId = i.LaptopId,
+                            MonitorId = i.MonitorId,
+                            MouseId = i.MouseId,
+                            Adet = i.Adet,
+                            Favori = i.Favori,
+                            SepetDurum = i.SepetDurum,
+                            SiparisDurum = i.SiparisDurum,
+                            UpdatedAt = i.UpdatedAt,
+                            UpdatedBy = i.UpdatedBy,
+                            CreatedAt = i.CreatedAt,
+                            CreatedBy = i.CreatedBy,
+
+                        }).FirstOrDefault();
+
+                    if (mouse != null)
+                    {
+                        return mouse;
+                    }
+                    else
+                    {
+                        return new UrunTakipDataModel();
+                    }
+                }
+                else
+                {
+                    return new UrunTakipDataModel();
+                }
             }
         }
     }

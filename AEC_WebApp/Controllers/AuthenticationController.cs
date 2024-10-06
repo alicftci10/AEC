@@ -18,6 +18,10 @@ namespace AEC_WebApp.Controllers
                 HttpContext.Session.SetInt32("MessageBox", 2);
                 return RedirectToAction("Index","Home");
             }
+            else if (p == "hata")
+            {
+                ViewData["ErrorMessage"] = "Önce Giriş Yapmalısın!!";
+            }
 
             return View(model);
         }
