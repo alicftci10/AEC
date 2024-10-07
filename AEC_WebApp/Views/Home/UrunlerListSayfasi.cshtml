@@ -4,6 +4,8 @@
     List<KategoriDataModel> kategoriList = ViewData["KategoriList"] as List<KategoriDataModel>;
     List<KategoriDataModel> mainKategoriList = kategoriList.Where(i => i.MainKategoriId == null).ToList();
 
+    List<UrunYorumDataModel> yorumList = ViewData["YorumList"] as List<UrunYorumDataModel>;
+
     int allurun = 0;
 
     if (Model.LaptopList != null && Model.LaptopList.Count > 0)
@@ -176,13 +178,72 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><span style="color:#696cff">@item.LaptopAdi</span></h3>
                                             <h4 class="product-price">@Formatting.FormatTurkLirasi(item.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(item.Fiyat.Value, 5)</del></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
+
+                                            @{
+                                                var yorumpuan = yorumList.Where(i => i.LaptopId == item.Id).Average(i => i.YorumPuan);
+                                            }
+
+                                            @if (yorumpuan < 1.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 1.5 && yorumpuan < 2.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 2.5 && yorumpuan < 3.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 3.5 && yorumpuan < 4.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 4.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+
                                             <div class="product-btns">
                                                 @if (ViewData["KullaniciId"] != null)
                                                 {
@@ -273,13 +334,72 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><span style="color:#696cff">@item.MonitorAdi</span></h3>
                                             <h4 class="product-price">@Formatting.FormatTurkLirasi(item.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(item.Fiyat.Value, 5)</del></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
+
+                                            @{
+                                                var yorumpuan = yorumList.Where(i => i.MonitorId == item.Id).Average(i => i.YorumPuan);
+                                            }
+
+                                            @if (yorumpuan < 1.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 1.5 && yorumpuan < 2.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 2.5 && yorumpuan < 3.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 3.5 && yorumpuan < 4.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 4.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+
                                             <div class="product-btns">
                                                 @if (ViewData["KullaniciId"] != null)
                                                 {
@@ -370,13 +490,72 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><span style="color:#696cff">@item.MouseAdi</span></h3>
                                             <h4 class="product-price">@Formatting.FormatTurkLirasi(item.Fiyat.Value) <del class="product-old-price">@Formatting.FormatIndirimsizFiyat(item.Fiyat.Value, 5)</del></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
+
+                                            @{
+                                                var yorumpuan = yorumList.Where(i => i.MouseId == item.Id).Average(i => i.YorumPuan);
+                                            }
+
+                                            @if (yorumpuan < 1.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 1.5 && yorumpuan < 2.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 2.5 && yorumpuan < 3.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 3.5 && yorumpuan < 4.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+                                            else if (yorumpuan >= 4.5)
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                            }
+
                                             <div class="product-btns">
                                                 @if (ViewData["KullaniciId"] != null)
                                                 {

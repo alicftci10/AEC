@@ -201,11 +201,12 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetSepetDurum(int pLaptopId, int pMonitorId, int pMouseId)
+        public IActionResult GetSepetDurum(int pLaptopId, int pMonitorId, int pMouseId,int pAdet)
         {
             UrunTakipDataModel model = new UrunTakipDataModel();
 
             model.CreatedBy = GetCurrentKullanici(HttpContext).Id;
+            model.Adet = pAdet;
 
             if (pLaptopId > 0)
             {

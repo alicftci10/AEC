@@ -17,6 +17,10 @@ namespace AEC_DataAccess.EFInterfaces
 
         List<UrunTakipDataModel> IptalList(string searchTerm);
 
+        List<UrunTakipDataModel> GetFavoriList();
+
+        List<UrunTakipDataModel> GetSepetList();
+
         UrunTakipDataModel GetSepetFavoriDurum(UrunTakipDataModel model);
     }
 }

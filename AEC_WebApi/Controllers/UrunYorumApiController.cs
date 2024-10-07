@@ -16,7 +16,7 @@ namespace AEC_WebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [AllowAnonymous]
         public IActionResult GetAllUrunYorum()
         {
             return Ok(_UrunYorum.GetAllUrunYorum());

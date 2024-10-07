@@ -44,6 +44,7 @@ namespace AEC_WebApp.Controllers
         {
             ViewData["KategoriList"] = LoadKategoriList();
             AllUrunlerList();
+            AllUrunYorumList();
             LoadHakkimizdaInfo();
 
             string sessionKullanici = HttpContext.Session.GetString("Kullanici");
@@ -162,6 +163,28 @@ namespace AEC_WebApp.Controllers
                 else
                 {
                     return new HomeDataModel();
+                }
+            }
+        }
+
+        public void AllUrunYorumList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunYorumApi/GetAllUrunYorum";
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<UrunYorumDataModel> model = new List<UrunYorumDataModel>();
+
+                if (text != null)
+                {
+                    model = JsonConvert.DeserializeObject<List<UrunYorumDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                if (model != null && model.Count > 0)
+                {
+                    ViewData["YorumList"] = model;
                 }
             }
         }

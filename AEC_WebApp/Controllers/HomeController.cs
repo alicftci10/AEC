@@ -449,23 +449,28 @@ namespace AEC_WebApp.Controllers
             }
         }
 
-        public void SepetDurum(int? pLaptopId, int? pMonitorId, int? pMouseId)
+        public void SepetDurum(int? pLaptopId, int? pMonitorId, int? pMouseId, int? pAdet)
         {
             using (HttpClient client = new HttpClient())
             {
                 string url = ConfigurationInfo.ApiUrl + "/api/HomeApi/GetSepetDurum";
 
+                if (pAdet == null)
+                {
+                    pAdet = 1;
+                }
+
                 if (pLaptopId != null)
                 {
-                    url += $"?pLaptopId={pLaptopId}";
+                    url += $"?pLaptopId={pLaptopId}&pAdet={pAdet}";
                 }
                 else if (pMonitorId != null)
                 {
-                    url += $"?pMonitorId={pMonitorId}";
+                    url += $"?pMonitorId={pMonitorId}&pAdet={pAdet}";
                 }
                 else if (pMouseId != null)
                 {
-                    url += $"?pMouseId={pMouseId}";
+                    url += $"?pMouseId={pMouseId}&pAdet={pAdet}";
                 }
 
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);

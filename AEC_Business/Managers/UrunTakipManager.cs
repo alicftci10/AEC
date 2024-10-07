@@ -138,6 +138,7 @@ namespace AEC_Business.Managers
                     sepetDurumId.SepetDurum = true;
                 }
 
+                sepetDurumId.Adet = item.Adet;
                 sepetDurumId.UpdatedBy = item.CreatedBy;
                 return _UrunTakipRepository.Update(GetDataModel(sepetDurumId));
             }
