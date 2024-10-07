@@ -65,6 +65,8 @@ namespace AEC_WebApi.Controllers
 
             model.MouseList = _MouseService.GetMouseList(searchTerm);
 
+            model.UrunTakipList = _UrunTakipService.GetAllUrunTakip();
+
             model.KategoriIdName = "Ali E-Commerce / ARAMA SONUÇLARI";
 
             return Ok(model);
@@ -94,6 +96,8 @@ namespace AEC_WebApi.Controllers
             }
 
             GetKategoriName(pId, model);
+
+            model.UrunTakipList = _UrunTakipService.GetAllUrunTakip();
 
             return Ok(model);
         }

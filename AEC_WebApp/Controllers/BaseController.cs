@@ -175,6 +175,7 @@ namespace AEC_WebApp.Controllers
             model.KategoriIdName = "Ali E-Commerce / ARAMA SONUÇLARI";
 
             var urunlerList = AllUrunlerList();
+            model.UrunTakipList = urunlerList.UrunTakipList;
 
             if (urunlerList != null)
             {
@@ -219,7 +220,7 @@ namespace AEC_WebApp.Controllers
             }
         }
 
-		public HakkimizdaDataModel LoadHakkimizdaInfo()
+        public HakkimizdaDataModel LoadHakkimizdaInfo()
         {
             HakkimizdaDataModel model = new HakkimizdaDataModel();
 

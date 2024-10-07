@@ -6,7 +6,7 @@
 
     double? ortalama = null;
 
-    @if (Model.UrunYorumList != null && Model.UrunYorumList.Count > 0)
+    if (Model.UrunYorumList != null && Model.UrunYorumList.Count > 0)
     {
         ortalama = Model.UrunYorumList.Average(i => i.YorumPuan);
     }
@@ -163,30 +163,71 @@
                                     <span class="qty-down">-</span>
                                 </div>
                             </div>
+
+                            @{
+                               var secilenurun = Model.UrunTakipList?.FirstOrDefault(i => i.LaptopId == Model.GetLaptop.Id && i.CreatedBy == Convert.ToInt32(ViewData["KullaniciId"]));
+                            }
+
                             @if (ViewData["KullaniciId"] != null)
                             {
-                                <button class="add-to-cart-btn" onclick="window.location.href='/Home/SepetDurum?pLaptopId=@Model.Id'">
-                                    <i class="fa fa-shopping-cart"></i> Sepete Ekle
-                                </button>
+                                if (secilenurun != null)
+                                {
+                                    if (secilenurun.SepetDurum == true)
+                                    {
+                                        <button class="add-to-cart-btn" onclick="SepetLaptopDurum(@Model.GetLaptop.Id)">
+                                            <i class="fa fa-shopping-cart"></i> SEPETTEN ÇIKAR
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="add-to-cart-btn" onclick="SepetLaptopDurum(@Model.GetLaptop.Id)">
+                                            <i class="fa fa-shopping-cart"></i> SEPETE EKLE
+                                        </button>
+                                    }
+                                }
+                                else
+                                {
+                                    <button class="add-to-cart-btn" onclick="SepetLaptopDurum(@Model.GetLaptop.Id)">
+                                        <i class="fa fa-shopping-cart"></i> SEPETE EKLE
+                                    </button>
+                                }
                             }
                             else
                             {
                                 <button class="add-to-cart-btn" onclick="window.location.href='/Authentication/LoginEkrani?p=hata'">
-                                    <i class="fa fa-shopping-cart"></i> Sepete Ekle
+                                    <i class="fa fa-shopping-cart"></i> SEPETE EKLE
                                 </button>
                             }
                         </div>
 
                         @if (ViewData["KullaniciId"] != null)
                         {
-                            <ul class="product-btns">
-                                <li><a href="/Home/FavoriDurum?pLaptopId=@Model.Id"><i class="fa fa-heart-o"></i> FAVORİLERE EKLE</a></li>
-                            </ul>
+                            if (secilenurun != null)
+                            {
+                                if (secilenurun.Favori == true)
+                                {
+                                    <ul class="product-btns">
+                                        <li><a href="#" onclick="FavoriLaptopDurum(@Model.GetLaptop.Id)" style="color:red;"><i class="bi bi-heart-fill"></i> FAVORİLERDEN ÇIKAR</a></li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="product-btns">
+                                        <li><a href="#" onclick="FavoriLaptopDurum(@Model.GetLaptop.Id)"><i class="bi bi-heart-fill"></i> FAVORİLERE EKLE</a></li>
+                                    </ul>
+                                }
+                            }
+                            else
+                            {
+                                <ul class="product-btns">
+                                    <li><a href="#" onclick="FavoriLaptopDurum(@Model.GetLaptop.Id)"><i class="bi bi-heart-fill"></i> FAVORİLERE EKLE</a></li>
+                                </ul>
+                            }
                         }
                         else
                         {
                             <ul class="product-btns">
-                                <li><a href="/Authentication/LoginEkrani?p=hata"><i class="fa fa-heart-o"></i> FAVORİLERE EKLE</a></li>
+                                <li><a href="/Authentication/LoginEkrani?p=hata"><i class="bi bi-heart-fill"></i> FAVORİLERE EKLE</a></li>
                             </ul>
                         }
 
@@ -873,6 +914,8 @@
                     {
                         foreach (var item in Model.LaptopList)
                         {
+                            var urun = Model.UrunTakipList?.FirstOrDefault(i => i.LaptopId == item.Id && i.CreatedBy == Convert.ToInt32(ViewData["KullaniciId"]));
+
                             <div class="product">
                                 <a href="/Home/LaptopDetay?pLaptopId=@item.Id">
                                     <div class="product-img">
@@ -895,9 +938,27 @@
                                         <div class="product-btns">
                                             @if (ViewData["KullaniciId"] != null)
                                             {
-                                                <button class="add-to-wishlist" onclick="FavoriLaptopDurum(@item.Id)">
-                                                    <i class="bi bi-heart-fill" style="color:#329d00e6;"></i><span class="tooltipp">FAVORİLERE EKLE</span>
-                                                </button>
+                                                if (urun != null)
+                                                {
+                                                    if (urun.Favori == true)
+                                                    {
+                                                        <button class="add-to-wishlist" onclick="FavoriLaptopDurum(@item.Id)">
+                                                            <i class="bi bi-heart-fill" style="color:red;"></i><span class="tooltipp">FAVORİLERDEN ÇIKAR</span>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist" onclick="FavoriLaptopDurum(@item.Id)">
+                                                            <i class="bi bi-heart-fill" style="color:#329d00e6;"></i><span class="tooltipp">FAVORİLERE EKLE</span>
+                                                        </button>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <button class="add-to-wishlist" onclick="FavoriLaptopDurum(@item.Id)">
+                                                        <i class="bi bi-heart-fill" style="color:#329d00e6;"></i><span class="tooltipp">FAVORİLERE EKLE</span>
+                                                    </button>
+                                                }
                                             }
                                             else
                                             {
@@ -910,9 +971,27 @@
                                     <div class="add-to-cart">
                                         @if (ViewData["KullaniciId"] != null)
                                         {
-                                            <button class="add-to-cart-btn" onclick="SepetLaptopDurum(@item.Id)">
-                                                <i class="fa fa-shopping-cart"></i> SEPETE EKLE
-                                            </button>
+                                            if (urun != null)
+                                            {
+                                                if (urun.SepetDurum == true)
+                                                {
+                                                    <button class="add-to-cart-btn" onclick="SepetLaptopDurum(@item.Id)">
+                                                        <i class="fa fa-shopping-cart"></i> SEPETTEN ÇIKAR
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="add-to-cart-btn" onclick="SepetLaptopDurum(@item.Id)">
+                                                        <i class="fa fa-shopping-cart"></i> SEPETE EKLE
+                                                    </button>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <button class="add-to-cart-btn" onclick="SepetLaptopDurum(@item.Id)">
+                                                    <i class="fa fa-shopping-cart"></i> SEPETE EKLE
+                                                </button>
+                                            }
                                         }
                                         else
                                         {
@@ -930,6 +1009,8 @@
                     {
                         foreach (var item in Model.MonitorList)
                         {
+                            var urun = Model.UrunTakipList?.FirstOrDefault(i => i.MonitorId == item.Id && i.CreatedBy == Convert.ToInt32(ViewData["KullaniciId"]));
+
                             <div class="product">
                                 <a href="/Home/MonitorDetay?pMonitorId=@item.Id">
                                     <div class="product-img">
@@ -952,9 +1033,27 @@
                                         <div class="product-btns">
                                             @if (ViewData["KullaniciId"] != null)
                                             {
-                                                <button class="add-to-wishlist" onclick="FavoriMonitorDurum(@item.Id)">
-                                                    <i class="bi bi-heart-fill" style="color:#329d00e6;"></i><span class="tooltipp">FAVORİLERE EKLE</span>
-                                                </button>
+                                                if (urun != null)
+                                                {
+                                                    if (urun.Favori == true)
+                                                    {
+                                                        <button class="add-to-wishlist" onclick="FavoriMonitorDurum(@item.Id)">
+                                                            <i class="bi bi-heart-fill" style="color:red;"></i><span class="tooltipp">FAVORİLERDEN ÇIKAR</span>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist" onclick="FavoriMonitorDurum(@item.Id)">
+                                                            <i class="bi bi-heart-fill" style="color:#329d00e6;"></i><span class="tooltipp">FAVORİLERE EKLE</span>
+                                                        </button>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <button class="add-to-wishlist" onclick="FavoriMonitorDurum(@item.Id)">
+                                                        <i class="bi bi-heart-fill" style="color:#329d00e6;"></i><span class="tooltipp">FAVORİLERE EKLE</span>
+                                                    </button>
+                                                }
                                             }
                                             else
                                             {
@@ -967,9 +1066,27 @@
                                     <div class="add-to-cart">
                                         @if (ViewData["KullaniciId"] != null)
                                         {
-                                            <button class="add-to-cart-btn" onclick="SepetMonitorDurum(@item.Id)">
-                                                <i class="fa fa-shopping-cart"></i> SEPETE EKLE
-                                            </button>
+                                            if (urun != null)
+                                            {
+                                                if (urun.SepetDurum == true)
+                                                {
+                                                    <button class="add-to-cart-btn" onclick="SepetMonitorDurum(@item.Id)">
+                                                        <i class="fa fa-shopping-cart"></i> SEPETTEN ÇIKAR
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="add-to-cart-btn" onclick="SepetMonitorDurum(@item.Id)">
+                                                        <i class="fa fa-shopping-cart"></i> SEPETE EKLE
+                                                    </button>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <button class="add-to-cart-btn" onclick="SepetMonitorDurum(@item.Id)">
+                                                    <i class="fa fa-shopping-cart"></i> SEPETE EKLE
+                                                </button>
+                                            }
                                         }
                                         else
                                         {
@@ -988,6 +1105,8 @@
                     {
                         foreach (var item in Model.MouseList)
                         {
+                            var urun = Model.UrunTakipList?.FirstOrDefault(i => i.MouseId == item.Id && i.CreatedBy == Convert.ToInt32(ViewData["KullaniciId"]));
+
                             <div class="product">
                                 <a href="/Home/MouseDetay?pMouseId=@item.Id">
                                     <div class="product-img">
@@ -1010,9 +1129,27 @@
                                         <div class="product-btns">
                                             @if (ViewData["KullaniciId"] != null)
                                             {
-                                                <button class="add-to-wishlist" onclick="FavoriMouseDurum(@item.Id)">
-                                                    <i class="bi bi-heart-fill" style="color:#329d00e6;"></i><span class="tooltipp">FAVORİLERE EKLE</span>
-                                                </button>
+                                                if (urun != null)
+                                                {
+                                                    if (urun.Favori == true)
+                                                    {
+                                                        <button class="add-to-wishlist" onclick="FavoriMouseDurum(@item.Id)">
+                                                            <i class="bi bi-heart-fill" style="color:red;"></i><span class="tooltipp">FAVORİLERDEN ÇIKAR</span>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="add-to-wishlist" onclick="FavoriMouseDurum(@item.Id)">
+                                                            <i class="bi bi-heart-fill" style="color:#329d00e6;"></i><span class="tooltipp">FAVORİLERE EKLE</span>
+                                                        </button>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <button class="add-to-wishlist" onclick="FavoriMouseDurum(@item.Id)">
+                                                        <i class="bi bi-heart-fill" style="color:#329d00e6;"></i><span class="tooltipp">FAVORİLERE EKLE</span>
+                                                    </button>
+                                                }
                                             }
                                             else
                                             {
@@ -1025,9 +1162,27 @@
                                     <div class="add-to-cart">
                                         @if (ViewData["KullaniciId"] != null)
                                         {
-                                            <button class="add-to-cart-btn" onclick="SepetMouseDurum(@item.Id)">
-                                                <i class="fa fa-shopping-cart"></i> SEPETE EKLE
-                                            </button>
+                                            if (urun != null)
+                                            {
+                                                if (urun.SepetDurum == true)
+                                                {
+                                                    <button class="add-to-cart-btn" onclick="SepetMouseDurum(@item.Id)">
+                                                        <i class="fa fa-shopping-cart"></i> SEPETTEN ÇIKAR
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="add-to-cart-btn" onclick="SepetMouseDurum(@item.Id)">
+                                                        <i class="fa fa-shopping-cart"></i> SEPETE EKLE
+                                                    </button>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <button class="add-to-cart-btn" onclick="SepetMouseDurum(@item.Id)">
+                                                    <i class="fa fa-shopping-cart"></i> SEPETE EKLE
+                                                </button>
+                                            }
                                         }
                                         else
                                         {
@@ -1038,7 +1193,6 @@
                                     </div>
                                 </a>
                             </div>
-
                         }
                     }
                     <!-- /product -->
