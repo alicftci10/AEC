@@ -52,6 +52,9 @@ namespace AEC_WebApp.Controllers
             if (!string.IsNullOrEmpty(sessionKullanici))
             {//Session Dolu
 
+                KullaniciFavoriList();
+                KullaniciSepetList();
+
                 KullaniciDataModel model = JsonConvert.DeserializeObject<KullaniciDataModel>(sessionKullanici);
 
                 if (model != null)
@@ -185,6 +188,52 @@ namespace AEC_WebApp.Controllers
                 if (model != null && model.Count > 0)
                 {
                     ViewData["YorumList"] = model;
+                }
+            }
+        }
+
+        public void KullaniciFavoriList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunTakipApi/GetFavoriList";
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<UrunTakipDataModel> model = new List<UrunTakipDataModel>();
+
+                if (text != null)
+                {
+                    model = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                if (model != null && model.Count > 0)
+                {
+                    ViewData["KullaniciFavoriList"] = model;
+                }
+            }
+        }
+
+        public void KullaniciSepetList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunTakipApi/GetSepetList";
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<UrunTakipDataModel> model = new List<UrunTakipDataModel>();
+
+                if (text != null)
+                {
+                    model = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
+                }
+
+                if (model != null && model.Count > 0)
+                {
+                    ViewData["KullaniciSepetList"] = model;
                 }
             }
         }

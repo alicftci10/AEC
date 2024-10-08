@@ -17,9 +17,9 @@ namespace AEC_DataAccess.EFInterfaces
 
         List<UrunTakipDataModel> IptalList(string searchTerm);
 
-        List<UrunTakipDataModel> GetFavoriList();
+        List<UrunTakipDataModel> GetFavoriList(int pKullaniciId);
 
-        List<UrunTakipDataModel> GetSepetList();
+        List<UrunTakipDataModel> GetSepetList(int pKullaniciId);
 
         UrunTakipDataModel GetSepetFavoriDurum(UrunTakipDataModel model);
     }

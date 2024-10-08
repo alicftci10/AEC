@@ -45,6 +45,24 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult GetFavoriList()
+        {
+            int pKullaniciId = GetCurrentKullanici(HttpContext).Id;
+
+            return Ok(_UrunTakip.GetFavoriList(pKullaniciId));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetSepetList()
+        {
+            int pKullaniciId = GetCurrentKullanici(HttpContext).Id;
+
+            return Ok(_UrunTakip.GetSepetList(pKullaniciId));
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult GetUrunTakip(int pId)
         {
             return Ok(_UrunTakip.GetId(pId));

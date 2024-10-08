@@ -27,6 +27,26 @@ namespace AEC_WebApp.Controllers
                     TempData["MessageBox"] = 2;
                     HttpContext.Session.SetInt32("MessageBox", 3);
                 }
+                else if (MessageBox == 4)
+                {
+                    TempData["MessageBox"] = 4;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 5)
+                {
+                    TempData["MessageBox"] = 5;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 6)
+                {
+                    TempData["MessageBox"] = 6;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 7)
+                {
+                    TempData["MessageBox"] = 7;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
 
                 List<KullaniciKartDataModel> modelList = new List<KullaniciKartDataModel>();
 
@@ -61,6 +81,28 @@ namespace AEC_WebApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
+                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
+                if (MessageBox == 4)
+                {
+                    TempData["MessageBox"] = 4;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 5)
+                {
+                    TempData["MessageBox"] = 5;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 6)
+                {
+                    TempData["MessageBox"] = 6;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+                else if (MessageBox == 7)
+                {
+                    TempData["MessageBox"] = 7;
+                    HttpContext.Session.SetInt32("MessageBox", 3);
+                }
+
                 KullaniciKartDataModel model = new KullaniciKartDataModel();
 
                 if (pId > 0)

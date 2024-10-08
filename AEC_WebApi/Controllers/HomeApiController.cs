@@ -201,7 +201,7 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetSepetDurum(int pLaptopId, int pMonitorId, int pMouseId,int pAdet)
+        public IActionResult GetSepetDurum(int pLaptopId, int pMonitorId, int pMouseId, int pAdet)
         {
             UrunTakipDataModel model = new UrunTakipDataModel();
 

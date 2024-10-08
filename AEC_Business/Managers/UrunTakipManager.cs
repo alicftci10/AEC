@@ -93,6 +93,16 @@ namespace AEC_Business.Managers
             return _UrunTakipRepository.IptalList(searchTerm);
         }
 
+        public List<UrunTakipDataModel> GetFavoriList(int pKullaniciId)
+        {
+            return _UrunTakipRepository.GetFavoriList(pKullaniciId);
+        }
+
+        public List<UrunTakipDataModel> GetSepetList(int pKullaniciId)
+        {
+            return _UrunTakipRepository.GetSepetList(pKullaniciId);
+        }
+
         public UrunTakip GetId(int pId)
         {
             return _UrunTakipRepository.GetSelect(pId);

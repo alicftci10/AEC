@@ -10,6 +10,9 @@
 
     List<KategoriDataModel> kategoriList = ViewData["KategoriList"] as List<KategoriDataModel>;
     List<KategoriDataModel> mainKategoriList = kategoriList.Where(i => i.MainKategoriId == null).ToList();
+
+    var kullaniciFavoriList = ViewData["KullaniciFavoriList"] as List<UrunTakipDataModel>;
+    var kullaniciSepetList = ViewData["KullaniciSepetList"] as List<UrunTakipDataModel>;
 }
 
 <style>
@@ -28,6 +31,30 @@
             top: 0;
             margin-top: -1px;
         }
+
+    .qty-label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 10px;
+    }
+
+    .qty-btn {
+        padding: 2px 6px;
+        background-color: #ddd;
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        border-radius: 3px;
+    }
+
+    .qty-value {
+        padding: 2px 6px;
+        border: 1px solid #ddd;
+        font-size: 12px;
+        width: 30px;
+        text-align: center;
+    }
 
 </style>
 
@@ -97,7 +124,7 @@
                         <li><a href="/Kullanici/KullaniciSayfasi?pId=@ViewData["KullaniciId"]"><i class="bi bi-people-fill"></i> @ViewData["KullaniciFullName"]</a></li>
                         <li><a href="/Authentication/LoginEkrani?p=logout"><i class="bi bi-x-circle-fill"></i> Çıkış</a></li>
                     }
-                    
+
                 </ul>
             </div>
         </div>
@@ -130,15 +157,113 @@
                     <!-- ACCOUNT -->
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
-                            <!-- Wishlist -->
+                            @* <!-- Wishlist -->
                             <div>
-                                <a href="#">
-                                    <i class="fa fa-heart-o"></i>
-                                    <span>Favoriler</span>
-                                    <div class="qty">2</div>
-                                </a>
+                            <a href="#">
+                            <i class="bi bi-heart-fill"></i>
+                            <span>Favoriler</span>
+                            <div class="qty">2</div>
+                            </a>
                             </div>
-                            <!-- /Wishlist -->
+                            <!-- /Wishlist --> *@
+                            <!-- Cart -->
+                            @if (ViewData["KullaniciId"] != null)
+                            {
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="bi bi-heart-fill"></i>
+                                        <span>Favoriler</span>
+                                        @if (kullaniciFavoriList != null)
+                                        {
+                                            <div class="qty">@kullaniciFavoriList.Count</div>
+                                        }
+                                    </a>
+                                    <div class="cart-dropdown">
+                                        @if (kullaniciFavoriList != null)
+                                        {
+                                            <div class="cart-list">
+
+                                                @foreach (var item in kullaniciFavoriList)
+                                                {
+                                                    <div class="product-widget" id="product-@item.Id" data-price="@item.Fiyat.Value">
+                                                        <div class="product-img">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                        </div>
+                                                        <div class="product-body">
+                                                            @if (item.LaptopId != null)
+                                                            {
+                                                                <a href="/Home/LaptopDetay?pLaptopId=@item.LaptopId">
+                                                                    <span class="product-name">@item.UrunAdi</span>
+                                                                </a>
+                                                            }
+                                                            else if (item.MonitorId != null)
+                                                            {
+                                                                <a href="/Home/MonitorDetay?pMonitorId=@item.MonitorId">
+                                                                    <span class="product-name">@item.UrunAdi</span>
+                                                                </a>
+                                                            }
+                                                            else if (item.MouseId != null)
+                                                            {
+                                                                <a href="/Home/MouseDetay?pMouseId=@item.MouseId">
+                                                                    <span class="product-name">@item.UrunAdi</span>
+                                                                </a>
+                                                            }
+
+                                                            <div class="qty-label">
+                                                                <span class="price" style="font-weight:bold;">
+                                                                    @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @if (item.LaptopId != null)
+                                                        {
+                                                            <button class="delete" onclick="FavoriLaptopDurum(@item.LaptopId)"><i class="fa fa-close"></i></button>
+                                                        }
+                                                        else if (item.MonitorId != null)
+                                                        {
+                                                            <button class="delete" onclick="FavoriMonitorDurum(@item.MonitorId)"><i class="fa fa-close"></i></button>
+                                                        }
+                                                        else if (item.MouseId != null)
+                                                        {
+                                                            <button class="delete" onclick="FavoriMouseDurum(@item.MouseId)"><i class="fa fa-close"></i></button>
+                                                        }
+                                                      
+                                                    </div>
+                                                }
+
+                                            </div>
+                                            <div class="cart-summary">
+                                                <small style="color:black">@kullaniciFavoriList.Count ürün listeleniyor..</small>
+                                                <h5>TOPLAM FİYAT: @Formatting.FormatTurkLirasi(Convert.ToDecimal(kullaniciFavoriList.Sum(i => i.Fiyat)))</h5>
+                                            </div>
+                                            <div class="cart-btns">
+                                                <a href="#" style="background-color:blue">Favorileri Sil</a>
+                                                <a href="#" style="background-color:black">Sepete Ekle  <i class="fa fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="bi bi-heart-fill"></i>
+                                        <span>Favoriler</span>
+                                    </a>
+                                    <div class="cart-dropdown">
+                                        <div class="cart">
+                                            <h4>Binlerce Ürünü Favorine Ekle Hemen Alışveriş Yap!!</h4>
+                                            <br />
+                                            <a href="/Kullanici/KullaniciSayfasi" style="font-weight:bold"><i class="bi bi-hand-index"></i> Kayıt Ol</a>
+                                            <br />
+                                            <br />
+                                            <a href="/Authentication/LoginEkrani" style="font-weight:bold"><i class="bi bi-hand-index"></i> Giriş Yap</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <!-- /Cart -->
                             <!-- Cart -->
                             <div class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
@@ -369,6 +494,90 @@
             }
         }
 
+        function SepetLaptopDurum(Id) {
+            $.ajax({
+                url: '/Home/SepetDurum',
+                type: 'GET',
+                data: { pLaptopId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün sepete eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function FavoriLaptopDurum(Id) {
+            $.ajax({
+                url: '/Home/FavoriDurum',
+                type: 'GET',
+                data: { pLaptopId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün favorilere eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function SepetMonitorDurum(Id) {
+            $.ajax({
+                url: '/Home/SepetDurum',
+                type: 'GET',
+                data: { pMonitorId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün sepete eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function FavoriMonitorDurum(Id) {
+            $.ajax({
+                url: '/Home/FavoriDurum',
+                type: 'GET',
+                data: { pMonitorId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün favorilere eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function SepetMouseDurum(Id) {
+            $.ajax({
+                url: '/Home/SepetDurum',
+                type: 'GET',
+                data: { pMouseId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün sepete eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function FavoriMouseDurum(Id) {
+            $.ajax({
+                url: '/Home/FavoriDurum',
+                type: 'GET',
+                data: { pMouseId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün favorilere eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
     </script>
 
     <script type="text/javascript" src="~/lib/jquery/js/jquery-3.7.1.min.js"></script>
@@ -384,7 +593,7 @@
     <script src="~/js/slick.min.js"></script>
     <script src="~/js/nouislider.min.js"></script>
     <script src="~/js/jquery.zoom.min.js"></script>
-    
+
     <script src="~/js/main.js?x=1"></script>
     <script src="~/js/wNumb.min.js"></script>
 

@@ -18,6 +18,10 @@ namespace AEC_Business.Interfaces
 
         List<UrunTakipDataModel> IptalList(string searchTerm);
 
+        List<UrunTakipDataModel> GetFavoriList(int pKullaniciId);
+
+        List<UrunTakipDataModel> GetSepetList(int pKullaniciId);
+
         UrunTakip GetId(int pId);
 
         UrunTakip AddFavori(UrunTakipDataModel item);
