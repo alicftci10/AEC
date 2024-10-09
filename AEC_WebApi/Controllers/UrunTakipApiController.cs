@@ -68,6 +68,82 @@ namespace AEC_WebApi.Controllers
             return Ok(_UrunTakip.GetId(pId));
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllSepeteEkle()
+        {
+            var list = _UrunTakip.GetFavoriList(GetCurrentKullanici(HttpContext).Id);
+
+            foreach (var item in list)
+            {
+                _UrunTakip.AllSepeteEkle(item);
+            }
+
+            return Ok(list);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetAdetDurum(int pId,int pAdet)
+        {
+            var urun = _UrunTakip.GetDataModel(pId);
+
+            urun.Adet += pAdet;
+
+            if (urun.Adet < 1) urun.Adet = 1;
+
+            return Ok(_UrunTakip.Update(urun));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetFavoriDurum(int pLaptopId, int pMonitorId, int pMouseId)
+        {
+            UrunTakipDataModel model = new UrunTakipDataModel();
+
+            model.CreatedBy = GetCurrentKullanici(HttpContext).Id;
+
+            if (pLaptopId > 0)
+            {
+                model.LaptopId = pLaptopId;
+            }
+            else if (pMonitorId > 0)
+            {
+                model.MonitorId = pMonitorId;
+            }
+            else if (pMouseId > 0)
+            {
+                model.MouseId = pMouseId;
+            }
+
+            return Ok(_UrunTakip.AddFavori(model));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetSepetDurum(int pLaptopId, int pMonitorId, int pMouseId, int pAdet)
+        {
+            UrunTakipDataModel model = new UrunTakipDataModel();
+
+            model.CreatedBy = GetCurrentKullanici(HttpContext).Id;
+            model.Adet = pAdet;
+
+            if (pLaptopId > 0)
+            {
+                model.LaptopId = pLaptopId;
+            }
+            else if (pMonitorId > 0)
+            {
+                model.MonitorId = pMonitorId;
+            }
+            else if (pMouseId > 0)
+            {
+                model.MouseId = pMouseId;
+            }
+
+            return Ok(_UrunTakip.AddSepet(model));
+        }
+
         [HttpPost]
         [Authorize]
         public IActionResult AddUpdate([FromBody] UrunTakipDataModel model)
@@ -94,6 +170,34 @@ namespace AEC_WebApi.Controllers
         public IActionResult Delete(int pId)
         {
             return Ok(_UrunTakip.Delete(pId));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllFavoriDelete()
+        {
+            var list = _UrunTakip.GetFavoriList(GetCurrentKullanici(HttpContext).Id);
+
+            foreach (var item in list)
+            {
+                _UrunTakip.AddFavori(item);
+            }
+
+            return Ok(list);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllSepetDelete()
+        {
+            var list = _UrunTakip.GetSepetList(GetCurrentKullanici(HttpContext).Id);
+
+            foreach (var item in list)
+            {
+                _UrunTakip.AllSepetDelete(item);
+            }
+
+            return Ok(list);
         }
     }
 }

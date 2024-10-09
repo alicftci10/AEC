@@ -684,7 +684,7 @@
                                         <!-- Review Form -->
                                         <div class="col-md-3">
                                             <div id="review-form">
-                                                <form class="review-form" asp-action="UrunYorum" asp-controller="Home" method="post">
+                                                <form class="review-form" asp-action="UrunYorum" asp-controller="UrunYorum" method="post">
                                                     <input type="hidden" name="MonitorId" value="@Model.GetMonitor.Id" />
                                                     <label for="frmYorum" class="form-label fw-bold">YORUM YAP</label>
                                                     <textarea class="input" name="Yorum" id="frmYorum" placeholder="Yorumunu Yaz"></textarea>
@@ -714,7 +714,7 @@
                                         <!-- Review Form -->
                                         <div class="col-md-3">
                                             <div id="review-form">
-                                                <form class="review-form" asp-action="UrunYorum" asp-controller="Home" method="post">
+                                                <form class="review-form" asp-action="UrunYorum" asp-controller="UrunYorum" method="post">
                                                     <input type="hidden" name="MonitorId" value="@Model.GetMonitor.Id" />
                                                     <label for="frmYorum" class="form-label fw-bold">YORUM YAP</label>
                                                     <textarea class="input" name="Yorum" id="frmYorum" placeholder="Yorumunu Yaz"></textarea>
@@ -1303,6 +1303,15 @@
             else if (messageBox == 7) {
                 MessageBox("success", "Ürün Sepetten Çıkarıldı");
             }
+            else if (messageBox == 8) {
+                MessageBox("success", "Tüm Favoriler Sepete Eklendi!!");
+            }
+            else if (messageBox == 9) {
+                MessageBox("success", "Tüm Favoriler Silindi!!");
+            }
+            else if (messageBox == 10) {
+                MessageBox("success", "Tüm Sepet Silindi!!");
+            }
 
         });
 
@@ -1311,7 +1320,7 @@
             var adet = document.querySelector('.input-number input').value;
 
             $.ajax({
-                url: '/Home/SepetDurum',
+                url: '/UrunTakip/SepetDurum',
                 type: 'GET',
                 data: { pMonitorId: Id, pAdet: adet },
                 success: function (response) {
@@ -1325,7 +1334,7 @@
 
         function SepetLaptopDurum(Id) {
             $.ajax({
-                url: '/Home/SepetDurum',
+                url: '/UrunTakip/SepetDurum',
                 type: 'GET',
                 data: { pLaptopId: Id },
                 success: function (response) {
@@ -1339,7 +1348,7 @@
 
         function FavoriLaptopDurum(Id) {
             $.ajax({
-                url: '/Home/FavoriDurum',
+                url: '/UrunTakip/FavoriDurum',
                 type: 'GET',
                 data: { pLaptopId: Id },
                 success: function (response) {
@@ -1353,7 +1362,7 @@
 
         function SepetMonitorDurum(Id) {
             $.ajax({
-                url: '/Home/SepetDurum',
+                url: '/UrunTakip/SepetDurum',
                 type: 'GET',
                 data: { pMonitorId: Id },
                 success: function (response) {
@@ -1367,7 +1376,7 @@
 
         function FavoriMonitorDurum(Id) {
             $.ajax({
-                url: '/Home/FavoriDurum',
+                url: '/UrunTakip/FavoriDurum',
                 type: 'GET',
                 data: { pMonitorId: Id },
                 success: function (response) {
@@ -1381,7 +1390,7 @@
 
         function SepetMouseDurum(Id) {
             $.ajax({
-                url: '/Home/SepetDurum',
+                url: '/UrunTakip/SepetDurum',
                 type: 'GET',
                 data: { pMouseId: Id },
                 success: function (response) {
@@ -1395,7 +1404,7 @@
 
         function FavoriMouseDurum(Id) {
             $.ajax({
-                url: '/Home/FavoriDurum',
+                url: '/UrunTakip/FavoriDurum',
                 type: 'GET',
                 data: { pMouseId: Id },
                 success: function (response) {
@@ -1411,7 +1420,7 @@
             const confirmDeleteLink = document.getElementById('confirmDeleteLink');
 
             confirmDeleteLink.onclick = function () {
-                window.location.href = '/Home/UrunYorumSil?pUrun=2&pId=' + id;
+                window.location.href = '/UrunYorum/UrunYorumSil?pUrun=2&pId=' + id;
             };
         }
 

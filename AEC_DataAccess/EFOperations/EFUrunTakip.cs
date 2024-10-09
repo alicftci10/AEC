@@ -306,7 +306,7 @@ namespace AEC_DataAccess.EFOperations
 
                             }).ToList();
 
-                List = List.OrderBy(i => i.UpdatedAt ?? i.CreatedAt).ToList();
+                List = List.OrderBy(i => i.UrunAdi).ToList();
 
                 return List;
             }
@@ -333,7 +333,7 @@ namespace AEC_DataAccess.EFOperations
                             UpdatedAt = i.UpdatedAt,
                             UpdatedBy = i.UpdatedBy,
                             CreatedAt = i.CreatedAt,
-                            CreatedBy = i.CreatedBy,
+                            CreatedBy = i.CreatedBy
 
                         }).FirstOrDefault();
 
@@ -363,7 +363,7 @@ namespace AEC_DataAccess.EFOperations
                             UpdatedAt = i.UpdatedAt,
                             UpdatedBy = i.UpdatedBy,
                             CreatedAt = i.CreatedAt,
-                            CreatedBy = i.CreatedBy,
+                            CreatedBy = i.CreatedBy
 
                         }).FirstOrDefault();
 
@@ -393,7 +393,7 @@ namespace AEC_DataAccess.EFOperations
                             UpdatedAt = i.UpdatedAt,
                             UpdatedBy = i.UpdatedBy,
                             CreatedAt = i.CreatedAt,
-                            CreatedBy = i.CreatedBy,
+                            CreatedBy = i.CreatedBy
 
                         }).FirstOrDefault();
 
@@ -410,6 +410,39 @@ namespace AEC_DataAccess.EFOperations
                 {
                     return new UrunTakipDataModel();
                 }
+            }
+        }
+
+        public UrunTakipDataModel GetDataModel(int pId)
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                var urun = db.UrunTakips.Select(i=> new UrunTakipDataModel
+                {
+                    Id = i.Id,
+                    LaptopId = i.LaptopId,
+                    MonitorId = i.MonitorId,
+                    MouseId = i.MouseId,
+                    Adet = i.Adet,
+                    Favori = i.Favori,
+                    SepetDurum = i.SepetDurum,
+                    SiparisDurum = i.SiparisDurum,
+                    UpdatedAt = i.UpdatedAt,
+                    UpdatedBy = i.UpdatedBy,
+                    CreatedAt = i.CreatedAt,
+                    CreatedBy = i.CreatedBy
+
+                }).FirstOrDefault(i => i.Id == pId);
+
+                if (urun != null)
+                {
+                    return urun;
+                }
+                else
+                {
+                    return new UrunTakipDataModel();
+                }
+                
             }
         }
     }

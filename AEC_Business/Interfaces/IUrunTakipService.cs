@@ -22,6 +22,10 @@ namespace AEC_Business.Interfaces
 
         List<UrunTakipDataModel> GetSepetList(int pKullaniciId);
 
+        UrunTakip AllSepeteEkle(UrunTakipDataModel item);
+
+        UrunTakipDataModel GetDataModel(int pId);
+
         UrunTakip GetId(int pId);
 
         UrunTakip AddFavori(UrunTakipDataModel item);
@@ -31,6 +35,8 @@ namespace AEC_Business.Interfaces
         int Add(UrunTakipDataModel item);
 
         int Update(UrunTakipDataModel item);
+
+        UrunTakip AllSepetDelete(UrunTakipDataModel item);
 
         UrunTakip Delete(int pId);
     }

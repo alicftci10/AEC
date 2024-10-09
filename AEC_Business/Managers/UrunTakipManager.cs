@@ -103,9 +103,32 @@ namespace AEC_Business.Managers
             return _UrunTakipRepository.GetSepetList(pKullaniciId);
         }
 
+        public UrunTakipDataModel GetDataModel(int pId)
+        {
+            return _UrunTakipRepository.GetDataModel(pId);
+        }
+
         public UrunTakip GetId(int pId)
         {
             return _UrunTakipRepository.GetSelect(pId);
+        }
+
+        public UrunTakip AllSepeteEkle(UrunTakipDataModel item)
+        {
+            var sepetDurumId = _UrunTakipRepository.GetSepetFavoriDurum(item);
+
+            if (sepetDurumId.SepetDurum == true)
+            {
+                sepetDurumId.Adet++;
+            }
+            else
+            {
+                sepetDurumId.Adet = 1;
+                sepetDurumId.SepetDurum = true;
+                sepetDurumId.UpdatedBy = item.CreatedBy;
+            }
+
+            return _UrunTakipRepository.Update(GetDataModel(sepetDurumId));
         }
 
         public UrunTakip AddFavori(UrunTakipDataModel item)
@@ -142,13 +165,14 @@ namespace AEC_Business.Managers
                 if (sepetDurumId.SepetDurum == true)
                 {
                     sepetDurumId.SepetDurum = false;
+                    sepetDurumId.Adet = 1;
                 }
                 else
                 {
                     sepetDurumId.SepetDurum = true;
+                    sepetDurumId.Adet = item.Adet;
                 }
 
-                sepetDurumId.Adet = item.Adet;
                 sepetDurumId.UpdatedBy = item.CreatedBy;
                 return _UrunTakipRepository.Update(GetDataModel(sepetDurumId));
             }
@@ -169,9 +193,20 @@ namespace AEC_Business.Managers
             return _UrunTakipRepository.Update(GetDataModel(item)).Id;
         }
 
+        public UrunTakip AllSepetDelete(UrunTakipDataModel item)
+        {
+            var sepetDurumId = _UrunTakipRepository.GetSepetFavoriDurum(item);
+
+            sepetDurumId.Adet = 1;
+            sepetDurumId.SepetDurum = false;
+            sepetDurumId.UpdatedBy = item.CreatedBy;
+
+            return _UrunTakipRepository.Update(GetDataModel(sepetDurumId));
+        }
+
         public UrunTakip Delete(int pId)
         {
             return _UrunTakipRepository.Delete(pId);
-        }
+        }  
     }
 }

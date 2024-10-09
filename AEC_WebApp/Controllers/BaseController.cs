@@ -404,5 +404,55 @@ namespace AEC_WebApp.Controllers
                 }
             }
         }
+
+        public void MessageBox()
+        {
+            int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
+            if (MessageBox == 1)
+            {
+                TempData["MessageBox"] = 1;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 2)
+            {
+                TempData["MessageBox"] = 2;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 4)
+            {
+                TempData["MessageBox"] = 4;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 5)
+            {
+                TempData["MessageBox"] = 5;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 6)
+            {
+                TempData["MessageBox"] = 6;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 7)
+            {
+                TempData["MessageBox"] = 7;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 8)
+            {
+                TempData["MessageBox"] = 8;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 9)
+            {
+                TempData["MessageBox"] = 9;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 10)
+            {
+                TempData["MessageBox"] = 10;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+        }
     }
 }

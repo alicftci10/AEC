@@ -32,28 +32,23 @@
             margin-top: -1px;
         }
 
+    .qty-btn {
+        margin: 10px;
+        background-color: #ddd;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        height: 20px;
+        line-height: 10px;
+        border-radius: 3px;
+    }
+
     .qty-label {
         display: flex;
         align-items: center;
         gap: 5px;
         margin-top: 10px;
-    }
-
-    .qty-btn {
-        padding: 2px 6px;
-        background-color: #ddd;
-        border: none;
-        cursor: pointer;
-        font-size: 12px;
-        border-radius: 3px;
-    }
-
-    .qty-value {
-        padding: 2px 6px;
-        border: 1px solid #ddd;
-        font-size: 12px;
-        width: 30px;
-        text-align: center;
+        margin-left: -80px;
     }
 
 </style>
@@ -185,7 +180,7 @@
 
                                                 @foreach (var item in kullaniciFavoriList)
                                                 {
-                                                    <div class="product-widget" id="product-@item.Id" data-price="@item.Fiyat.Value">
+                                                    <div class="product-widget">
                                                         <div class="product-img">
                                                             <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
                                                         </div>
@@ -227,7 +222,7 @@
                                                         {
                                                             <button class="delete" onclick="FavoriMouseDurum(@item.MouseId)"><i class="fa fa-close"></i></button>
                                                         }
-                                                      
+
                                                     </div>
                                                 }
 
@@ -237,8 +232,16 @@
                                                 <h5>TOPLAM FİYAT: @Formatting.FormatTurkLirasi(Convert.ToDecimal(kullaniciFavoriList.Sum(i => i.Fiyat)))</h5>
                                             </div>
                                             <div class="cart-btns">
-                                                <a href="#" style="background-color:blue">Favorileri Sil</a>
-                                                <a href="#" style="background-color:black">Sepete Ekle  <i class="fa fa-arrow-circle-right"></i></a>
+                                                <a href="#" onclick="AllFavoriDelete()" style="background-color:blue">Favorileri Sil</a>
+                                                <a href="#" onclick="AllSepeteEkle()" style="background-color:black">Sepete Ekle  <i class="fa fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="cart">
+                                                <h4>Binlerce Ürünü Favorine Ekle Hemen Alışveriş Yap!!</h4>
+                                                <br />
+                                                <a href="/Home/UrunlerListSayfasi" style="font-weight:bold"><i class="bi bi-hand-index"></i> Ürünlere Git</a>
                                             </div>
                                         }
                                     </div>
@@ -265,46 +268,113 @@
                             }
                             <!-- /Cart -->
                             <!-- Cart -->
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>Sepet</span>
-                                    <div class="qty">3</div>
-                                </a>
-                                <div class="cart-dropdown">
-                                    <div class="cart-list">
-                                        <div class="product-widget">
-                                            <div class="product-img">
-                                                <img src="~/img/product01.png" alt="">
-                                            </div>
-                                            <div class="product-body">
-                                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                            </div>
-                                            <button class="delete"><i class="fa fa-close"></i></button>
-                                        </div>
+                            @if (ViewData["KullaniciId"] != null)
+                            {
+                                <div class="dropdown">
+                                    <a id="sepetdropdownopen" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" href="#">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span>Sepet</span>
+                                        @if (kullaniciSepetList != null)
+                                        {
+                                            <div class="qty">@kullaniciSepetList.Count</div>
+                                        }
+                                    </a>
+                                    <div class="cart-dropdown" id="sepetdropdown">
+                                        @if (kullaniciSepetList != null)
+                                        {
+                                            <div class="cart-list">
 
-                                        <div class="product-widget">
-                                            <div class="product-img">
-                                                <img src="~/img/product02.png" alt="">
+                                                @foreach (var item in kullaniciSepetList)
+                                                {
+                                                    <div class="product-widget">
+                                                        <div class="product-img">
+                                                            <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
+                                                        </div>
+                                                        <div class="product-body">
+                                                            @if (item.LaptopId != null)
+                                                            {
+                                                                <a href="/Home/LaptopDetay?pLaptopId=@item.LaptopId">
+                                                                    <span class="product-name">@item.UrunAdi</span>
+                                                                </a>
+                                                            }
+                                                            else if (item.MonitorId != null)
+                                                            {
+                                                                <a href="/Home/MonitorDetay?pMonitorId=@item.MonitorId">
+                                                                    <span class="product-name">@item.UrunAdi</span>
+                                                                </a>
+                                                            }
+                                                            else if (item.MouseId != null)
+                                                            {
+                                                                <a href="/Home/MouseDetay?pMouseId=@item.MouseId">
+                                                                    <span class="product-name">@item.UrunAdi</span>
+                                                                </a>
+                                                            }
+
+                                                            <div class="qty-label">
+                                                                <button class="qty-btn" onclick="AdetDurum(@item.Id, -1)">-</button>
+                                                                <span style="font-weight:bold;">@item.Adet</span>
+                                                                <button class="qty-btn" onclick="AdetDurum(@item.Id, 1)">+</button>
+                                                                <span class="price" style="font-weight:bold;">
+                                                                    @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @if (item.LaptopId != null)
+                                                        {
+                                                            <button class="delete" onclick="SepetLaptopDurum(@item.LaptopId)"><i class="fa fa-close"></i></button>
+                                                        }
+                                                        else if (item.MonitorId != null)
+                                                        {
+                                                            <button class="delete" onclick="SepetMonitorDurum(@item.MonitorId)"><i class="fa fa-close"></i></button>
+                                                        }
+                                                        else if (item.MouseId != null)
+                                                        {
+                                                            <button class="delete" onclick="SepetMouseDurum(@item.MouseId)"><i class="fa fa-close"></i></button>
+                                                        }
+
+                                                    </div>
+                                                }
+
                                             </div>
-                                            <div class="product-body">
-                                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+                                            <div class="cart-summary">
+                                                <small style="color:black">@kullaniciSepetList.Count ürün listeleniyor..</small>
+                                                <h5 id="totalPrice">TOPLAM FİYAT: @Formatting.FormatTurkLirasi(Convert.ToDecimal(kullaniciSepetList.Sum(i => i.Fiyat)))</h5>
                                             </div>
-                                            <button class="delete"><i class="fa fa-close"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="cart-summary">
-                                        <small>3 Item(s) selected</small>
-                                        <h5>SUBTOTAL: $2940.00</h5>
-                                    </div>
-                                    <div class="cart-btns">
-                                        <a href="#">View Cart</a>
-                                        <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                            <div class="cart-btns">
+                                                <a href="#" onclick="AllSepetDelete()" style="background-color:blue">Sepeti Sil</a>
+                                                <a href="#" onclick="AllSepeteEkle()" style="background-color:black">Sepeti Onayla  <i class="fa fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="cart">
+                                                <h4>Binlerce Ürünü Sepetine Ekle Hemen Alışveriş Yap!!</h4>
+                                                <br />
+                                                <a href="/Home/UrunlerListSayfasi" style="font-weight:bold"><i class="bi bi-hand-index"></i> Ürünlere Git</a>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="bi bi-heart-fill"></i>
+                                        <span>Sepet</span>
+                                    </a>
+                                    <div class="cart-dropdown">
+                                        <div class="cart">
+                                            <h4>Binlerce Ürünü Sepetine Ekle Hemen Alışveriş Yap!!</h4>
+                                            <br />
+                                            <a href="/Kullanici/KullaniciSayfasi" style="font-weight:bold"><i class="bi bi-hand-index"></i> Kayıt Ol</a>
+                                            <br />
+                                            <br />
+                                            <a href="/Authentication/LoginEkrani" style="font-weight:bold"><i class="bi bi-hand-index"></i> Giriş Yap</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                             <!-- /Cart -->
                             <!-- Menu Toogle -->
                             <div class="menu-toggle">
@@ -482,104 +552,6 @@
     </footer>
     <!-- /FOOTER -->
 
-    <script>
-
-        function searchList() {
-            var aramaterimi = document.getElementById("searchInput").value;
-            if (aramaterimi) {
-                var searchUrl = "/Home/UrunlerListSayfasi?searchTerm=" + encodeURIComponent(aramaterimi);
-                window.location.href = searchUrl;
-            } else {
-                window.location.href = "/Home/UrunlerListSayfasi";
-            }
-        }
-
-        function SepetLaptopDurum(Id) {
-            $.ajax({
-                url: '/Home/SepetDurum',
-                type: 'GET',
-                data: { pLaptopId: Id },
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (xhr, status, error) {
-                    MessageBox("error", "Ürün sepete eklenirken bir hata oluştu!!");
-                }
-            });
-        }
-
-        function FavoriLaptopDurum(Id) {
-            $.ajax({
-                url: '/Home/FavoriDurum',
-                type: 'GET',
-                data: { pLaptopId: Id },
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (xhr, status, error) {
-                    MessageBox("error", "Ürün favorilere eklenirken bir hata oluştu!!");
-                }
-            });
-        }
-
-        function SepetMonitorDurum(Id) {
-            $.ajax({
-                url: '/Home/SepetDurum',
-                type: 'GET',
-                data: { pMonitorId: Id },
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (xhr, status, error) {
-                    MessageBox("error", "Ürün sepete eklenirken bir hata oluştu!!");
-                }
-            });
-        }
-
-        function FavoriMonitorDurum(Id) {
-            $.ajax({
-                url: '/Home/FavoriDurum',
-                type: 'GET',
-                data: { pMonitorId: Id },
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (xhr, status, error) {
-                    MessageBox("error", "Ürün favorilere eklenirken bir hata oluştu!!");
-                }
-            });
-        }
-
-        function SepetMouseDurum(Id) {
-            $.ajax({
-                url: '/Home/SepetDurum',
-                type: 'GET',
-                data: { pMouseId: Id },
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (xhr, status, error) {
-                    MessageBox("error", "Ürün sepete eklenirken bir hata oluştu!!");
-                }
-            });
-        }
-
-        function FavoriMouseDurum(Id) {
-            $.ajax({
-                url: '/Home/FavoriDurum',
-                type: 'GET',
-                data: { pMouseId: Id },
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (xhr, status, error) {
-                    MessageBox("error", "Ürün favorilere eklenirken bir hata oluştu!!");
-                }
-            });
-        }
-
-    </script>
-
     <script type="text/javascript" src="~/lib/jquery/js/jquery-3.7.1.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
@@ -596,6 +568,167 @@
 
     <script src="~/js/main.js?x=1"></script>
     <script src="~/js/wNumb.min.js"></script>
+
+    <script>
+
+        function searchList() {
+            var aramaterimi = document.getElementById("searchInput").value;
+            if (aramaterimi) {
+                var searchUrl = "/Home/UrunlerListSayfasi?searchTerm=" + encodeURIComponent(aramaterimi);
+                window.location.href = searchUrl;
+            }
+            else {
+                window.location.href = "/Home/UrunlerListSayfasi";
+            }
+        }
+
+        function AllSepeteEkle() {
+            $.ajax({
+                url: '/UrunTakip/AllSepeteEkle',
+                type: 'GET',
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürünler sepete eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function AllFavoriDelete() {
+            $.ajax({
+                url: '/UrunTakip/AllFavoriDelete',
+                type: 'GET',
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Favoriler silinirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function AllSepetDelete() {
+            $.ajax({
+                url: '/UrunTakip/AllSepetDelete',
+                type: 'GET',
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Sepetteki ürünler silinirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function AdetDurum(productId, change) {
+            $.ajax({
+                url: '/UrunTakip/AdetDurum',
+                type: 'GET',
+                data: { pId: productId, pAdet: change },
+                success: function (response) {
+                    localStorage.setItem('openCartDropdown', 'true');
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün adeti güncellenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            if (localStorage.getItem('openCartDropdown') === 'true') {
+                $('#sepetdropdownopen').click();
+                localStorage.removeItem('openCartDropdown');
+            }
+        });
+
+        function SepetLaptopDurum(Id) {
+
+            $.ajax({
+                url: '/UrunTakip/SepetDurum',
+                type: 'GET',
+                data: { pLaptopId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün sepete eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function FavoriLaptopDurum(Id) {
+            $.ajax({
+                url: '/UrunTakip/FavoriDurum',
+                type: 'GET',
+                data: { pLaptopId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün favorilere eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function SepetMonitorDurum(Id) {
+            $.ajax({
+                url: '/UrunTakip/SepetDurum',
+                type: 'GET',
+                data: { pMonitorId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün sepete eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function FavoriMonitorDurum(Id) {
+            $.ajax({
+                url: '/UrunTakip/FavoriDurum',
+                type: 'GET',
+                data: { pMonitorId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün favorilere eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function SepetMouseDurum(Id) {
+            $.ajax({
+                url: '/UrunTakip/SepetDurum',
+                type: 'GET',
+                data: { pMouseId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün sepete eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function FavoriMouseDurum(Id) {
+            $.ajax({
+                url: '/UrunTakip/FavoriDurum',
+                type: 'GET',
+                data: { pMouseId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün favorilere eklenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+    </script>
 
     @await RenderSectionAsync("AECScript", required: false)
 

@@ -174,54 +174,5 @@ namespace AEC_WebApi.Controllers
 
             return Ok(kategoriList);
         }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult GetFavoriDurum(int pLaptopId, int pMonitorId, int pMouseId)
-        {
-            UrunTakipDataModel model = new UrunTakipDataModel();
-
-            model.CreatedBy = GetCurrentKullanici(HttpContext).Id;
-
-            if (pLaptopId > 0)
-            {
-                model.LaptopId = pLaptopId;
-            }
-            else if (pMonitorId > 0)
-            {
-                model.MonitorId = pMonitorId;
-            }
-            else if (pMouseId > 0)
-            {
-                model.MouseId = pMouseId;
-            }
-
-            return Ok(_UrunTakipService.AddFavori(model));
-        }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult GetSepetDurum(int pLaptopId, int pMonitorId, int pMouseId, int pAdet)
-        {
-            UrunTakipDataModel model = new UrunTakipDataModel();
-
-            model.CreatedBy = GetCurrentKullanici(HttpContext).Id;
-            model.Adet = pAdet;
-
-            if (pLaptopId > 0)
-            {
-                model.LaptopId = pLaptopId;
-            }
-            else if (pMonitorId > 0)
-            {
-                model.MonitorId = pMonitorId;
-            }
-            else if (pMouseId > 0)
-            {
-                model.MouseId = pMouseId;
-            }
-
-            return Ok(_UrunTakipService.AddSepet(model));
-        }
     }
 }
