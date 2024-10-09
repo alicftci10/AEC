@@ -3,12 +3,47 @@ using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace AEC_WebApp.Controllers
 {
     public class UrunTakipController : BaseController
     {
         public UrunTakipController(IMemoryCache memoryCache) { _memoryCacheBase = memoryCache; }
+
+        public async Task<IActionResult> SepetSayfasi()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                MessageBox();
+
+                LoadKullaniciKartDropDown();
+
+                int? SiparisOnay = HttpContext.Session.GetInt32("SiparisOnay");
+                if (SiparisOnay == 1)
+                {
+                    TempData["SiparisOnay"] = 1;
+                    HttpContext.Session.SetInt32("SiparisOnay", 3);
+                }
+
+                List<UrunTakipDataModel> model = new List<UrunTakipDataModel>();
+
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunTakipApi/GetSepetList";
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(response.Content.ReadAsStringAsync().Result);
+
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
+            }
+        }
 
         public void FavoriDurum(int? pLaptopId, int? pMonitorId, int? pMouseId)
         {
@@ -113,9 +148,46 @@ namespace AEC_WebApp.Controllers
                 var response = client.GetAsync(url);
                 var text = response.Result;
 
+                long urunId = new long();
+
                 if (text != null)
                 {
+                    urunId = JsonConvert.DeserializeObject<long>(text.Content.ReadAsStringAsync().Result);
+                }
+            }
+        }
 
+        public void SiparisDurum(int? secilenKart,int? terms)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                if (!secilenKart.HasValue)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 11);
+                }
+                else if (!terms.HasValue)
+                {
+                    HttpContext.Session.SetInt32("MessageBox", 12);
+                }
+                else
+                {
+                    string url = ConfigurationInfo.ApiUrl + $"/api/UrunTakipApi/GetSiparisDurum";
+
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                    var response = client.GetAsync(url);
+                    var text = response.Result;
+
+                    List<UrunTakipDataModel> modelList = new List<UrunTakipDataModel>();
+
+                    if (text != null)
+                    {
+                        modelList = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                        if (modelList != null)
+                        {
+                            HttpContext.Session.SetInt32("SiparisOnay", 1);
+                        }
+                    }
                 }
             }
         }

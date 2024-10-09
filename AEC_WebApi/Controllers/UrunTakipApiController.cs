@@ -97,6 +97,22 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult GetSiparisDurum()
+        {
+            var list = _UrunTakip.GetSepetList(GetCurrentKullanici(HttpContext).Id);
+
+            foreach (var item in list)
+            {
+                item.SepetDurum = false;
+                item.SiparisDurum = 1;
+                _UrunTakip.Update(item);
+            }
+
+            return Ok(list);
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult GetFavoriDurum(int pLaptopId, int pMonitorId, int pMouseId)
         {
             UrunTakipDataModel model = new UrunTakipDataModel();

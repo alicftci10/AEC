@@ -1,0 +1,231 @@
+﻿@model List<UrunTakipDataModel>
+
+<style>
+    .form-select {
+        width: 90%; /* Tam genişlik */
+        padding: 8px; /* İç boşluk */
+        font-size: 16px; /* Yazı boyutu */
+        border: 2px solid #ccc; /* Kenarlık */
+        border-radius: 5px; /* Köşeleri yuvarla */
+        background-color: #f8f9fa; /* Arka plan rengi */
+        transition: border-color 0.3s ease-in-out; /* Hover efekti için geçiş */
+    }
+
+        .form-select:hover {
+            border-color: #007bff; /* Hover'da kenarlık rengi değişsin */
+        }
+
+        .form-select:focus {
+            border-color: #007bff;
+            outline: none; /* Odakta mavi renkte kenarlık ve outline kaldır */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Hafif bir gölge efekti */
+        }
+</style>
+
+@if (TempData["SiparisOnay"] != null)
+{
+    <br />
+    <br />
+    <!-- container -->
+    <div class="alert alert-success" role="alert" style="padding:50px;">
+        <div class="container">
+            <span style="font-weight:bold;font-size:30px;">
+                Sipariş Başarılı Bir Şekilde Alındı!!
+            </span>
+            <br />
+            <span style="font-weight:bold;font-size:20px;color:black">Siparişlerinizi Görmek İçin <a href="/UrunTakip/SiparisEkrani" style="font-weight:bold;font-size:20px;text-decoration:underline">Tıklayın.</a></span>
+        </div>
+    </div>
+    <div style="height:73vh;"></div>
+    <!-- /container -->
+}
+else
+{
+    <div id="breadcrumb" class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb-tree">
+                        <li style="text-transform:none;font-size:20px;">SEPET</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+
+    <div class="container">
+        <div id="reviews">
+            <div class="row">
+                <div class="col-md-7">
+                    @foreach (var item in Model)
+                    {
+                        <ul class="reviews">
+                            <li>
+                                <div class="review-heading">
+                                    <img src="https://localhost:7044/images/@item.ResimUrl" width="130">
+                                </div>
+                                <div class="review-body">
+                                    <br />
+                                    <h5>@item.UrunAdi</h5>
+                                    <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, -1)">-</button>
+                                    <span style="font-weight:bold;">@item.Adet</span>
+                                    <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, 1)">+</button>
+                                    <span class="price" style="font-weight:bold;font-size:20px;">
+                                        @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                </div>
+                <div class="col-md-5">
+                    <!-- Order Details -->
+                    <div class="order-details">
+                        <div class="section-title text-center">
+                            <h3 class="title">SEPETİM</h3>
+                        </div>
+                        <div class="order-summary">
+                            <div class="order-col">
+                                <div><strong>ÜRÜN</strong></div>
+                                <div><strong>FİYAT</strong></div>
+                            </div>
+                            <div class="order-products">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="order-col">
+                                        <div style="color:black">@item.Adet x @item.UrunAdi</div>
+                                        <div style="color:black">@Formatting.FormatTurkLirasi(item.Fiyat.Value)</div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="order-col">
+                                <div style="color:black">KARGO</div>
+                                <div><strong>BEDAVA</strong></div>
+                            </div>
+                            <div class="order-col">
+                                <div><strong>TOPLAM FİYAT</strong></div>
+                                <div><strong class="order-total">@Formatting.FormatTurkLirasi(Convert.ToDecimal(Model.Sum(i => i.Fiyat)))</strong></div>
+                            </div>
+                            <br />
+                            <div class="order-col">
+                                <div><strong>ÖDEME YÖNTEMİ</strong></div>
+                                <div>
+                                    <strong>
+                                        <select
+                                                asp-items="@ViewBag.KullaniciKartAdiList"
+                                                class="form-select"
+                                                id="kullanicikartlist">
+                                            <option selected value="">Seçiniz </option>
+                                        </select>
+                                    </strong>
+                                </div>
+
+                            </div>
+                            @if (TempData["ErrorMessage"] != null)
+                            {
+                                <span style="color:red;font-weight:bold">@TempData["ErrorMessage"]</span>
+                            }
+                        </div>
+                        <div class="payment-method">
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="terms">
+                                <label for="terms">
+                                    <span></span>
+                                    <a href="#" style="text-decoration: underline">Şartlar ve Koşulları</a> okudum ve kabul ediyorum.
+                                </label>
+                                @if (TempData["CheckboxErrorMessage"] != null)
+                                {
+                                    <br />
+                                    <span style="color:red;font-weight:bold">@TempData["CheckboxErrorMessage"]</span>
+                                }
+                            </div>
+                            <a href="#" onclick="SiparisDurum()" class="primary-btn order-submit" style="background-color:black">SEPETİ ONAYLA</a>
+                        </div>
+                    </div>
+                    <!-- /Order Details -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+}
+
+@section AECScript {
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Kart Bilgileri Kayıt Edildi");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Kart Bilgileri Silindi");
+            }
+            else if (messageBox == 4) {
+                MessageBox("success", "Ürün Favorilere Eklendi");
+            }
+            else if (messageBox == 5) {
+                MessageBox("success", "Ürün Favorilerden Çıkarıldı");
+            }
+            else if (messageBox == 6) {
+                MessageBox("success", "Ürün Sepete Eklendi");
+            }
+            else if (messageBox == 7) {
+                MessageBox("success", "Ürün Sepetten Çıkarıldı");
+            }
+            else if (messageBox == 8) {
+                MessageBox("success", "Tüm Favoriler Sepete Eklendi!!");
+            }
+            else if (messageBox == 9) {
+                MessageBox("success", "Tüm Favoriler Silindi!!");
+            }
+            else if (messageBox == 10) {
+                MessageBox("success", "Tüm Sepet Silindi!!");
+            }
+
+        });
+
+        function AdetDurumSayfasi(productId, change) {
+            $.ajax({
+                url: '/UrunTakip/AdetDurum',
+                type: 'GET',
+                data: { pId: productId, pAdet: change },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Ürün adeti güncellenirken bir hata oluştu!!");
+                }
+            });
+        }
+
+        function SiparisDurum() {
+
+            var secilenKart = document.querySelector('#kullanicikartlist').value;
+
+            var terms = null;
+            if (document.getElementById('terms').checked) {
+                terms = 1;
+            }
+
+            $.ajax({
+                url: '/UrunTakip/SiparisDurum',
+                type: 'GET',
+                data: { secilenKart: secilenKart, terms: terms },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Sipariş onaylanırken bir hata oluştu!!");
+                }
+            });
+        }
+
+    </script>
+}

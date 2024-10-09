@@ -20,6 +20,11 @@ namespace AEC_WebApi.Controllers
         [Authorize]
         public IActionResult GetKullaniciKartListesi(int pId)
         {
+            if (pId == 0)
+            {
+                pId = GetCurrentKullanici(HttpContext).Id;
+            }
+
             return Ok(_kullanicikart.GetKullaniciKartListesi(pId));
         }
 

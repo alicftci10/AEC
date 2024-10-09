@@ -318,7 +318,7 @@ namespace AEC_DataAccess.EFOperations
             {
                 if (model.LaptopId != null)
                 {
-                    var laptop = db.UrunTakips.Where(i => i.CreatedBy == model.CreatedBy && i.LaptopId == model.LaptopId)
+                    var laptop = db.UrunTakips.Where(i => i.CreatedBy == model.CreatedBy && i.LaptopId == model.LaptopId && i.SiparisDurum == null)
 
                         .Select(i => new UrunTakipDataModel
                         {
@@ -348,7 +348,7 @@ namespace AEC_DataAccess.EFOperations
                 }
                 else if (model.MonitorId != null)
                 {
-                    var monitor = db.UrunTakips.Where(i => i.CreatedBy == model.CreatedBy && i.MonitorId == model.MonitorId)
+                    var monitor = db.UrunTakips.Where(i => i.CreatedBy == model.CreatedBy && i.MonitorId == model.MonitorId && i.SiparisDurum == null)
 
                         .Select(i => new UrunTakipDataModel
                         {
@@ -378,7 +378,7 @@ namespace AEC_DataAccess.EFOperations
                 }
                 else if (model.MouseId != null)
                 {
-                    var mouse = db.UrunTakips.Where(i => i.CreatedBy == model.CreatedBy && i.MouseId == model.MouseId)
+                    var mouse = db.UrunTakips.Where(i => i.CreatedBy == model.CreatedBy && i.MouseId == model.MouseId && i.SiparisDurum == null)
 
                         .Select(i => new UrunTakipDataModel
                         {

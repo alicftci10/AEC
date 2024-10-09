@@ -2,8 +2,10 @@
 using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
@@ -405,6 +407,37 @@ namespace AEC_WebApp.Controllers
             }
         }
 
+        public void LoadKullaniciKartDropDown()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/KullaniciKartApi/GetKullaniciKartListesi";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<KullaniciKartDataModel> modelList = new List<KullaniciKartDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<KullaniciKartDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                    List<SelectListItem> list = new List<SelectListItem>();
+
+                    if (modelList != null)
+                    {
+                        foreach (var item in modelList)
+                        {
+                            list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.KartAdi });
+                        }
+
+                        ViewBag.KullaniciKartAdiList = list;
+                    }
+                }
+            }
+        }
+
         public void MessageBox()
         {
             int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
@@ -451,6 +484,16 @@ namespace AEC_WebApp.Controllers
             else if (MessageBox == 10)
             {
                 TempData["MessageBox"] = 10;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 11)
+            {
+                TempData["ErrorMessage"] = "Lütfen Ödeme Yöntemi Seçiniz!!";
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 12)
+            {
+                TempData["CheckboxErrorMessage"] = "Lütfen Şartlar ve Koşulları Onaylayın!!";
                 HttpContext.Session.SetInt32("MessageBox", 3);
             }
         }
