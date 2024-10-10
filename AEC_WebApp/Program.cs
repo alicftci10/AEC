@@ -20,6 +20,7 @@ namespace AEC_WebApp
             builder.Services.AddSession(i =>
             {
                 i.IdleTimeout = TimeSpan.FromHours(6);
+                i.Cookie.Name = "WebApp";
             });
 
             #endregion

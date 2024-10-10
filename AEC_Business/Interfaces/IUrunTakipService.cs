@@ -22,6 +22,8 @@ namespace AEC_Business.Interfaces
 
         List<UrunTakipDataModel> GetSepetList(int pKullaniciId);
 
+        List<UrunTakipDataModel> GetSiparisList(int pKullaniciId);
+
         UrunTakip AllSepeteEkle(UrunTakipDataModel item);
 
         UrunTakipDataModel GetDataModel(int pId);

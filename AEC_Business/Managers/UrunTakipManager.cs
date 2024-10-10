@@ -103,6 +103,11 @@ namespace AEC_Business.Managers
             return _UrunTakipRepository.GetSepetList(pKullaniciId);
         }
 
+        public List<UrunTakipDataModel> GetSiparisList(int pKullaniciId)
+        {
+            return _UrunTakipRepository.GetSiparisList(pKullaniciId);
+        }
+
         public UrunTakipDataModel GetDataModel(int pId)
         {
             return _UrunTakipRepository.GetDataModel(pId);

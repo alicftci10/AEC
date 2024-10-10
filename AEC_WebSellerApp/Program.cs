@@ -22,6 +22,7 @@ namespace AEC_WebSellerApp
                 i.IdleTimeout = TimeSpan.FromHours(6);
                 i.Cookie.HttpOnly = true;
                 i.Cookie.IsEssential = true;
+                i.Cookie.Name = "WebSellerApp";
             });
 
             #endregion

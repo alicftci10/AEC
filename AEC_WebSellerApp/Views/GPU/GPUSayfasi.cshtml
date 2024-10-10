@@ -1,5 +1,9 @@
 ﻿@model GPUDataModel
 
+@{
+    List<UrunTakipDataModel> bekliyorList = ViewData["BekliyorList"] as List<UrunTakipDataModel>;
+}
+
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
         <div class="app-brand-link">
@@ -28,7 +32,13 @@
         <li class="menu-item">
             <a href="/UrunTakip/BekliyorSayfasi" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-alarm" style="position: relative; top: -1px; -webkit-text-stroke: 0.5px;"></i>
-                <div class="fw-bold">Bekliyor</div>
+                <div class="fw-bold">
+                    Bekliyor
+                    @if (bekliyorList?.Count > 0)
+                    {
+                        <span class="badge badge-center rounded-pill bg-warning" style="font-weight:bold;color:black;position: relative; top: -3px;left:5px;"> @bekliyorList?.Count</span>
+                    }
+                </div>
             </a>
         </li>
         <li class="menu-item">

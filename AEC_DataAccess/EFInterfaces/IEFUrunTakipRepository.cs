@@ -21,6 +21,8 @@ namespace AEC_DataAccess.EFInterfaces
 
         List<UrunTakipDataModel> GetSepetList(int pKullaniciId);
 
+        List<UrunTakipDataModel> GetSiparisList(int pKullaniciId);
+
         UrunTakipDataModel GetSepetFavoriDurum(UrunTakipDataModel model);
 
         UrunTakipDataModel GetDataModel(int pId);

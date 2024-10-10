@@ -50,6 +50,8 @@ namespace AEC_WebSellerApp.Controllers
 
                 LoadHakkimizdaInfo();
 
+                LoadBekliyorList();
+
                 KullaniciDataModel model = JsonConvert.DeserializeObject<KullaniciDataModel>(sessionKullanici);
 
                 if (model != null)
@@ -140,7 +142,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<string> kullaniciAdi = new List<string>();
                     List<string> email = new List<string>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -172,7 +174,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<string> kullanicituruAdi = new List<string>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -203,7 +205,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<SelectListItem> listPersonel = new List<SelectListItem>();
                     List<SelectListItem> list = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -246,7 +248,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<string> KartAdi = new List<string>();
                     List<string> KartNumarasi = new List<string>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -279,7 +281,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<string> KategoriAdi = new List<string>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -310,7 +312,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<SelectListItem> list = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -349,7 +351,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<string> IslemciAdi = new List<string>();
                     List<SelectListItem> IslemciAdiList = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -382,7 +384,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<SelectListItem> list = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -417,7 +419,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<string> EkranKartiAdi = new List<string>();
                     List<SelectListItem> EkranKartiAdiList = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -450,7 +452,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<SelectListItem> list = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -485,7 +487,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<string> BellekAdi = new List<string>();
                     List<SelectListItem> BellekAdiList = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -518,7 +520,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<SelectListItem> list = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -553,7 +555,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<string> DepolamaAdi = new List<string>();
                     List<SelectListItem> DepolamaAdiList = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -586,7 +588,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<SelectListItem> list = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -621,7 +623,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<string> YenilemeHiziAdi = new List<string>();
                     List<SelectListItem> YenilemeHiziAdiList = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -654,7 +656,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<SelectListItem> list = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -689,7 +691,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<string> CozunurlukAdi = new List<string>();
                     List<SelectListItem> CozunurlukAdiList = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -722,7 +724,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<SelectListItem> list = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -757,7 +759,7 @@ namespace AEC_WebSellerApp.Controllers
                     List<string> IsletimSistemiAdi = new List<string>();
                     List<SelectListItem> IsletimSistemiAdiList = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -790,7 +792,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<SelectListItem> list = new List<SelectListItem>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -824,7 +826,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<string> LaptopAdi = new List<string>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -855,7 +857,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<string> MonitorAdi = new List<string>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -886,7 +888,7 @@ namespace AEC_WebSellerApp.Controllers
 
                     List<string> MouseAdi = new List<string>();
 
-                    if (modelList != null)
+                    if (modelList != null && modelList.Count > 0)
                     {
                         foreach (var item in modelList)
                         {
@@ -894,6 +896,30 @@ namespace AEC_WebSellerApp.Controllers
                         }
 
                         HttpContext.Session.SetString("MouseAdiList", JsonConvert.SerializeObject(MouseAdi));
+                    }
+                }
+            }
+        }
+
+        public void LoadBekliyorList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunTakipApi/BekliyorList";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<UrunTakipDataModel> modelList = new List<UrunTakipDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                    if (modelList != null && modelList.Count > 0)
+                    {
+                        ViewData["BekliyorList"] = modelList;
                     }
                 }
             }

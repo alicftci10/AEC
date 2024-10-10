@@ -1,4 +1,4 @@
-﻿@model CPUDataModel
+﻿@model List<UrunTakipDataModel>
 
 @{
     List<UrunTakipDataModel> bekliyorList = ViewData["BekliyorList"] as List<UrunTakipDataModel>;
@@ -41,7 +41,7 @@
                 </div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active">
             <a href="/UrunTakip/TamamlandiSayfasi" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-hand-thumbs-up-fill" style="position: relative; top: -1px; -webkit-text-stroke: 0.5px;"></i>
                 <div class="fw-bold">Tamamlandı</div>
@@ -80,13 +80,13 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item active open">
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-motherboard" style="-webkit-text-stroke: 0.5px;"></i>
                 <div class="fw-bold">Donanım</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="/CPU/CPUSayfasi" class="menu-link">
                         <div>CPU</div>
                     </a>
@@ -262,17 +262,59 @@
                 <div class="card-header" style="background-color:#329D00;">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="text-center fw-bold mb-0 flex-grow-1" style="color:black;">
-                            İşlemci Listesi
+                            Tamamlanan Sipariş Listesi
                         </h4>
-                        @if (ViewData["KullaniciTuru"] == "Admin")
-                        {
-                            <button type="button" class="btn rounded-pill btn-dark" data-bs-toggle="modal" data-bs-target="#exLargeModal" onclick="addModal()">
-                                <i class="bi bi-plus-circle"></i> EKLE
-                            </button>
-                        }
                     </div>
                 </div>
-                <div id="list"></div>
+                <div id="list">
+                    <div class="table-responsive bg-dark" style="height:73vh;">
+                        <table class="table table-dark">
+                            <thead>
+                                <tr class="text-nowrap">
+                                    <th class="text-center">SİPARİŞ NO</th>
+                                    <th></th>
+                                    <th>ÜRÜN ADI</th>
+                                    <th>ADET</th>
+                                    <th>FİYATI</th>
+                                    <th>MÜŞTERİ</th>
+                                    <th>SİPARİŞ TARİHİ</th>
+                                    <th>PERSONEL</th>
+                                    <th>TAMAMLANMA TARİHİ</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            @item.Id
+                                        </td>
+                                        <td>
+                                            @if (item.ResimUrl != null)
+                                            {
+                                                <img src="~/images/@item.ResimUrl?x=1" width="120" />
+                                            }
+                                        </td>
+                                        <td>@item.UrunAdi</td>
+                                        <td>X @item.Adet</td>
+                                        <td>
+                                            @if (item.Fiyat.HasValue)
+                                            {
+                                                @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                            }
+                                        </td>
+                                        <td class="text-nowrap">@item.CreatedByName</td>
+                                        <td class="text-nowrap">@item.CreatedAt</td>
+                                        <td class="text-nowrap">@item.UpdatedByName</td>
+                                        <td class="text-nowrap">@item.UpdatedAt</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -297,113 +339,20 @@
     </div>
 </div>
 
-<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel4">İşlemci Ekle/Düzenle</h5>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <form asp-action="CPUSayfasi" asp-controller="CPU" method="post">
-
-                <input type="hidden" asp-for="Id" id="pId" />
-
-                <div class="modal-body">
-                    <div class="row g-2">
-                        <div class="col mb-0">
-                            <label for="frmIslemciSerisi" class="form-label fw-bold">İŞLEMCİ SERİSİ</label>
-                            <select asp-for="IslemciSerisiId"
-                                    asp-items="@ViewBag.IslemciSerisiList"
-                                    class="form-select"
-                                    id="frmIslemciSerisi">
-                                <option selected value="">Seçiniz </option>
-                            </select>
-                            <span asp-validation-for="IslemciSerisiId" class="text-danger"></span>
-                        </div>
-                        <div class="col mb-0">
-                            <label for="frmIslemciMimarisi" class="form-label fw-bold">İŞLEMCİ MİMARİSİ</label>
-                            <input type="text" asp-for="IslemciMimarisi" id="frmIslemciMimarisi" class="form-control" placeholder="İşlemci Mimarisi Giriniz" />
-                            <span asp-validation-for="IslemciMimarisi" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row g-2">
-                        <div class="col mb-0">
-                            <label for="frmIslemciAdi" class="form-label fw-bold">İŞLEMCİ ADI</label>
-                            <input type="text" asp-for="IslemciAdi" id="frmIslemciAdi" class="form-control" placeholder="İşlemci Adı Giriniz" />
-                            <span asp-validation-for="IslemciAdi" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <br />
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                        Kapat
-                    </button>
-                    <button type="submit" class="btn btn-dark">Kaydet</button>
-                </div>
-
-            </form>
-
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
-    <div class="modal-dialog">
-        <form class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="backDropModalTitle">UYARI!!</h5>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-3" style="color:black">
-                        İşlemciyi Silmek İstediğinize Emin Misiniz ?
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    Hayır
-                </button>
-                <a href="#" id="confirmDeleteLink" class="btn btn-dark">Evet</a>
-            </div>
-        </form>
-    </div>
-</div>
-
 @section AECScript {
 
     <script type="text/javascript">
-
-        function addModal() {
-
-            $('#pId').val('0');
-            $('#frmIslemciSerisi').val('');
-            $('#frmIslemciMimarisi').val('');
-            $('#frmIslemciAdi').val('');
-
-        }
 
         $(document).ready(function () {
 
             $('#searchBox').on('input', function () {
                 var searchTerm = $(this).val();
                 $.ajax({
-                    url: '/CPU/CPUListesi',
+                    url: '/UrunTakip/TamamlandiSayfasi',
                     type: 'GET',
                     data: { searchTerm: searchTerm },
-                    success: function (data) {
-                        $('#list').html(data);
+                    success: function (result) {
+                        $('#list tbody').html($(result).find('tbody').html());
                     },
                     error: function (xhr, status, error) {
                         console.log("Error: " + error);
@@ -411,52 +360,6 @@
                 });
             });
         });
-
-        $.ajax({
-            url: '/CPU/CPUListesi',
-            type: 'GET',
-            success: function (result) {
-                $('#list').html(result);
-            },
-            error: function (xhr, status, error) {
-                console.log("Error: " + error);
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-
-            var isSuccess = '@Model.IsSuccess';
-            if (isSuccess == 'True') {
-                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
-                modal.show();
-            }
-
-            var modelid = '@Model.Id';
-            if (modelid > 0) {
-                var modal = new bootstrap.Modal(document.getElementById('exLargeModal'));
-                modal.show();
-            }
-
-            var messageBox = '@TempData["MessageBox"]';
-            if (messageBox == 1) {
-                MessageBox("success", "İşlemci Kayıt Edildi");
-            }
-            else if (messageBox == 2) {
-                MessageBox("success", "İşlemci Silindi");
-            }
-
-        });
-
-        $('#exLargeModal').on('hidden.bs.modal', function () {
-            $('.modal-backdrop').remove();
-        });
-
-        function deleteModal(id) {
-
-            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
-            confirmDeleteLink.href = '/CPU/CPUSil?pId=' + id;
-
-        }
 
     </script>
 

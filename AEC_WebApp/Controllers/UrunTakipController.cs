@@ -45,6 +45,38 @@ namespace AEC_WebApp.Controllers
             }
         }
 
+        public async Task<IActionResult> SiparisSayfasi()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                MessageBox();
+
+                int? SiparisOnay = HttpContext.Session.GetInt32("SiparisOnay");
+                if (SiparisOnay == 1)
+                {
+                    TempData["SiparisOnay"] = 1;
+                    HttpContext.Session.SetInt32("SiparisOnay", 3);
+                }
+
+                List<UrunTakipDataModel> model = new List<UrunTakipDataModel>();
+
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunTakipApi/GetSiparisList";
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    model = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(response.Content.ReadAsStringAsync().Result);
+
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSayfasi", "Error");
+                }
+            }
+        }
+
         public void FavoriDurum(int? pLaptopId, int? pMonitorId, int? pMouseId)
         {
             using (HttpClient client = new HttpClient())
@@ -148,11 +180,9 @@ namespace AEC_WebApp.Controllers
                 var response = client.GetAsync(url);
                 var text = response.Result;
 
-                long urunId = new long();
-
                 if (text != null)
                 {
-                    urunId = JsonConvert.DeserializeObject<long>(text.Content.ReadAsStringAsync().Result);
+                    long? urunId = JsonConvert.DeserializeObject<long>(text.Content.ReadAsStringAsync().Result);
                 }
             }
         }

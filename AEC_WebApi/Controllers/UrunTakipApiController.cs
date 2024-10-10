@@ -63,6 +63,15 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult GetSiparisList()
+        {
+            int pKullaniciId = GetCurrentKullanici(HttpContext).Id;
+
+            return Ok(_UrunTakip.GetSiparisList(pKullaniciId));
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult GetUrunTakip(int pId)
         {
             return Ok(_UrunTakip.GetId(pId));
@@ -84,7 +93,7 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetAdetDurum(int pId,int pAdet)
+        public IActionResult GetAdetDurum(int pId, int pAdet)
         {
             var urun = _UrunTakip.GetDataModel(pId);
 
@@ -104,11 +113,28 @@ namespace AEC_WebApi.Controllers
             foreach (var item in list)
             {
                 item.SepetDurum = false;
-                item.SiparisDurum = 1;
+                item.UpdatedBy = item.CreatedBy;
                 _UrunTakip.Update(item);
+                item.Id = 0;
+                item.Favori = null;
+                item.SepetDurum = null;
+                item.SiparisDurum = 1;
+                _UrunTakip.Add(item);
             }
 
             return Ok(list);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetSiparisDurumSellerApp(int pSiparisDurum, int pId)
+        {
+            var urun = _UrunTakip.GetDataModel(pId);
+
+            urun.SiparisDurum = pSiparisDurum;
+            urun.UpdatedBy = GetCurrentKullanici(HttpContext).Id;
+
+            return Ok(_UrunTakip.Update(urun));
         }
 
         [HttpGet]

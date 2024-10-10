@@ -74,7 +74,7 @@ namespace AEC_DataAccess.EFOperations
                                            ).ToList();
                 }
 
-                List = List.OrderByDescending(i => i.UpdatedAt ?? i.CreatedAt).ToList();
+                List = List.OrderByDescending(i => i.CreatedAt).ToList();
 
                 return List;
             }
@@ -134,7 +134,9 @@ namespace AEC_DataAccess.EFOperations
                                            (i.Adet.HasValue && i.Adet.ToString().Contains(searchTerm)) ||
                                            (i.Fiyat.HasValue && i.Fiyat.ToString().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||
-                                           (i.CreatedAt != null && i.CreatedAt.ToString().Contains(searchTerm))
+                                           (i.CreatedAt != null && i.CreatedAt.ToString().Contains(searchTerm)) ||
+                                           (!string.IsNullOrEmpty(i.UpdatedByName) && i.UpdatedByName.ToLower().Contains(searchTerm)) ||
+                                           (i.UpdatedAt != null && i.UpdatedAt.ToString().Contains(searchTerm))
                                            ).ToList();
                 }
 
@@ -198,7 +200,9 @@ namespace AEC_DataAccess.EFOperations
                                            (i.Adet.HasValue && i.Adet.ToString().Contains(searchTerm)) ||
                                            (i.Fiyat.HasValue && i.Fiyat.ToString().Contains(searchTerm)) ||
                                            (!string.IsNullOrEmpty(i.CreatedByName) && i.CreatedByName.ToLower().Contains(searchTerm)) ||
-                                           (i.CreatedAt != null && i.CreatedAt.ToString().Contains(searchTerm))
+                                           (i.CreatedAt != null && i.CreatedAt.ToString().Contains(searchTerm)) ||
+                                           (!string.IsNullOrEmpty(i.UpdatedByName) && i.UpdatedByName.ToLower().Contains(searchTerm)) ||
+                                           (i.UpdatedAt != null && i.UpdatedAt.ToString().Contains(searchTerm))
                                            ).ToList();
                 }
 
@@ -307,6 +311,58 @@ namespace AEC_DataAccess.EFOperations
                             }).ToList();
 
                 List = List.OrderBy(i => i.UrunAdi).ToList();
+
+                return List;
+            }
+        }
+
+        public List<UrunTakipDataModel> GetSiparisList(int pKullaniciId)
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                var List = (from x in db.UrunTakips
+
+                            join kul in db.Kullanicis on x.CreatedBy equals kul.Id
+
+                            join kul2 in db.Kullanicis on x.UpdatedBy equals kul2.Id into a
+                            from kullanici in a.DefaultIfEmpty()
+
+                            join lap in db.Laptops on x.LaptopId equals lap.Id into b
+                            from laptop in b.DefaultIfEmpty()
+
+                            join mon in db.Monitors on x.MonitorId equals mon.Id into c
+                            from monitor in c.DefaultIfEmpty()
+
+                            join mou in db.Mice on x.MouseId equals mou.Id into d
+                            from mouse in d.DefaultIfEmpty()
+
+                            where x.SiparisDurum != null && x.CreatedBy == pKullaniciId
+
+                            select new UrunTakipDataModel
+                            {
+                                Id = x.Id,
+                                LaptopId = x.LaptopId,
+                                MonitorId = x.MonitorId,
+                                MouseId = x.MouseId,
+                                UrunAdi = x.LaptopId == null ? (x.MonitorId == null ? mouse.MouseAdi : monitor.MonitorAdi) : laptop.LaptopAdi,
+                                Fiyat = x.LaptopId == null ? (x.MonitorId == null ? mouse.Fiyat * x.Adet : monitor.Fiyat * x.Adet) : laptop.Fiyat * x.Adet,
+                                Adet = x.Adet,
+                                Favori = x.Favori,
+                                SepetDurum = x.SepetDurum,
+                                SiparisDurum = x.SiparisDurum,
+                                UpdatedAt = x.UpdatedAt,
+                                UpdatedBy = x.UpdatedBy,
+                                UpdatedByName = kullanici.Ad + " " + kullanici.Soyad,
+                                CreatedAt = x.CreatedAt,
+                                CreatedBy = x.CreatedBy,
+                                CreatedByName = kul.Ad + " " + kul.Soyad,
+                                ResimUrl = db.UrunResmis.Where(i => (x.LaptopId == null ? (x.MonitorId == null ? i.MouseId : i.MonitorId) : i.LaptopId) ==
+                                                                    (x.LaptopId == null ? (x.MonitorId == null ? mouse.Id : monitor.Id) : laptop.Id))
+                                                                    .Select(i => i.ResimUrl).FirstOrDefault()
+
+                            }).ToList();
+
+                List = List.OrderByDescending(i => i.CreatedAt).ToList();
 
                 return List;
             }

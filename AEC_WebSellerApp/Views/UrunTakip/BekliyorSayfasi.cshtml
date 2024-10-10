@@ -1,5 +1,9 @@
 ﻿@model List<UrunTakipDataModel>
 
+@{
+    List<UrunTakipDataModel> bekliyorList = ViewData["BekliyorList"] as List<UrunTakipDataModel>;
+}
+
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" style="background-color:black!important">
     <div class="app-brand demo">
         <div class="app-brand-link">
@@ -28,7 +32,13 @@
         <li class="menu-item active">
             <a href="/UrunTakip/BekliyorSayfasi" class="menu-link">
                 <i class="menu-icon tf-icons bi bi-alarm" style="position: relative; top: -1px; -webkit-text-stroke: 0.5px;"></i>
-                <div class="fw-bold">Bekliyor</div>
+                <div class="fw-bold">
+                    Bekliyor
+                    @if (bekliyorList?.Count > 0)
+                    {
+                        <span class="badge badge-center rounded-pill bg-warning" style="font-weight:bold;color:black;position: relative; top: -3px;left:5px;"> @bekliyorList?.Count</span>
+                    }
+                </div>
             </a>
         </li>
         <li class="menu-item">
@@ -267,7 +277,7 @@
                                     <th>ADET</th>
                                     <th>FİYATI</th>
                                     <th>MÜŞTERİ</th>
-                                    <th>GÜNCELLEME TARİHİ</th>
+                                    <th>SİPARİŞ TARİHİ</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -294,7 +304,7 @@
                                             }
                                         </td>
                                         <td>@item.CreatedByName</td>
-                                        <td>@item.UpdatedAt</td>
+                                        <td>@item.CreatedAt</td>
                                         <td>
                                             <div class="dropdown">
                                                 <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
@@ -302,9 +312,9 @@
                                                 </div>
                                                 <div class="dropdown-menu" style="background-color:black">
 
-                                                    <a class="dropdown-item text-success" href="/UrunTakip/SiparisDurum?pDurumId=2&pId=@item.Id"><i class="bi bi-hand-thumbs-up-fill"></i> Tamamlandı</a>
+                                                    <a class="dropdown-item text-success" href="#" onclick="SiparisDurum(2,@item.Id)"><i class="bi bi-hand-thumbs-up-fill"></i> Tamamlandı</a>
 
-                                                    <a class="dropdown-item text-warning" href="/UrunTakip/SiparisDurum?pDurumId=3&pId=@item.Id"><i class="bi bi-hand-thumbs-down-fill"></i> İptal</a>
+                                                    <a class="dropdown-item text-danger" href="#" onclick="SiparisDurum(3,@item.Id)"><i class="bi bi-hand-thumbs-down-fill"></i> İptal</a>
 
                                                 </div>
                                             </div>
@@ -344,6 +354,18 @@
 
     <script type="text/javascript">
 
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Sipariş Tamamlandı");
+            }
+            else if (messageBox == 2) {
+                MessageBox("error", "Sipariş İptal Edildi");
+            }
+
+        });
+
         $(document).ready(function () {
 
             $('#searchBox').on('input', function () {
@@ -362,17 +384,20 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
+        function SiparisDurum(pSiparisDurum, Id) {
 
-            var messageBox = '@TempData["MessageBox"]';
-            if (messageBox == 1) {
-                MessageBox("success", "Sipariş Tamamlandı");
-            }
-            else if (messageBox == 2) {
-                MessageBox("danger", "Sipariş İptal Edildi");
-            }
-
-        });
+            $.ajax({
+                url: '/UrunTakip/SiparisDurum',
+                type: 'GET',
+                data: { pSiparisDurum: pSiparisDurum, pId: Id },
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    MessageBox("error", "Sipariş Statüsü değiştirilirken bir hata oluştu!!");
+                }
+            });
+        }
 
     </script>
 

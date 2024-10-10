@@ -1,25 +1,36 @@
 ﻿@model List<UrunTakipDataModel>
 
 <style>
+
     .form-select {
-        width: 90%; /* Tam genişlik */
-        padding: 8px; /* İç boşluk */
-        font-size: 16px; /* Yazı boyutu */
-        border: 2px solid #ccc; /* Kenarlık */
-        border-radius: 5px; /* Köşeleri yuvarla */
-        background-color: #f8f9fa; /* Arka plan rengi */
-        transition: border-color 0.3s ease-in-out; /* Hover efekti için geçiş */
+        width: 90%;
+        padding: 8px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        transition: border-color 0.3s ease-in-out;
     }
 
         .form-select:hover {
-            border-color: #007bff; /* Hover'da kenarlık rengi değişsin */
+            border-color: #007bff;
         }
 
         .form-select:focus {
             border-color: #007bff;
-            outline: none; /* Odakta mavi renkte kenarlık ve outline kaldır */
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Hafif bir gölge efekti */
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
+
+    .hover-effect {
+        color: black;
+        transition: color 0.3s ease;
+    }
+
+        .hover-effect:hover {
+            color: green;
+        }
+
 </style>
 
 @if (TempData["SiparisOnay"] != null)
@@ -33,7 +44,7 @@
                 Sipariş Başarılı Bir Şekilde Alındı!!
             </span>
             <br />
-            <span style="font-weight:bold;font-size:20px;color:black">Siparişlerinizi Görmek İçin <a href="/UrunTakip/SiparisEkrani" style="font-weight:bold;font-size:20px;text-decoration:underline">Tıklayın.</a></span>
+            <span style="font-weight:bold;font-size:20px;color:black">Siparişlerinizi Görmek İçin <a href="/UrunTakip/SiparisSayfasi" style="font-weight:bold;font-size:20px;text-decoration:underline">Tıklayın.</a></span>
         </div>
     </div>
     <div style="height:73vh;"></div>
@@ -63,23 +74,66 @@ else
                 <div class="col-md-7">
                     @foreach (var item in Model)
                     {
-                        <ul class="reviews">
-                            <li>
-                                <div class="review-heading">
-                                    <img src="https://localhost:7044/images/@item.ResimUrl" width="130">
-                                </div>
-                                <div class="review-body">
-                                    <br />
-                                    <h5>@item.UrunAdi</h5>
-                                    <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, -1)">-</button>
-                                    <span style="font-weight:bold;">@item.Adet</span>
-                                    <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, 1)">+</button>
-                                    <span class="price" style="font-weight:bold;font-size:20px;">
-                                        @Formatting.FormatTurkLirasi(item.Fiyat.Value)
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
+                        if (item.LaptopId != null)
+                        {
+                            <ul class="reviews">
+                                <li style="cursor:pointer;" onclick="laptopdetay(event, @item.LaptopId)">
+                                    <div class="review-heading">
+                                        <img src="https://localhost:7044/images/@item.ResimUrl" width="130">
+                                    </div>
+                                    <div class="review-body">
+                                        <br />
+                                        <h5 class="hover-effect">@item.UrunAdi</h5>
+                                        <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, -1)">-</button>
+                                        <span style="font-weight:bold;">@item.Adet</span>
+                                        <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, 1)">+</button>
+                                        <span class="price" style="font-weight:bold;font-size:20px;">
+                                            @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
+                        else if(item.MonitorId != null)
+                        {
+                            <ul class="reviews">
+                                <li style="cursor:pointer;" onclick="monitordetay(event, @item.MonitorId)">
+                                    <div class="review-heading">
+                                        <img src="https://localhost:7044/images/@item.ResimUrl" width="130">
+                                    </div>
+                                    <div class="review-body">
+                                        <br />
+                                        <h5 class="hover-effect">@item.UrunAdi</h5>
+                                        <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, -1)">-</button>
+                                        <span style="font-weight:bold;">@item.Adet</span>
+                                        <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, 1)">+</button>
+                                        <span class="price" style="font-weight:bold;font-size:20px;">
+                                            @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
+                        else if (item.MouseId != null)
+                        {
+                            <ul class="reviews">
+                                <li style="cursor:pointer;" onclick="mousedetay(event, @item.MouseId)">
+                                    <div class="review-heading">
+                                        <img src="https://localhost:7044/images/@item.ResimUrl" width="130">
+                                    </div>
+                                    <div class="review-body">
+                                        <br />
+                                        <h5 class="hover-effect">@item.UrunAdi</h5>
+                                        <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, -1)">-</button>
+                                        <span style="font-weight:bold;">@item.Adet</span>
+                                        <button class="qty-btn" onclick="AdetDurumSayfasi(@item.Id, 1)">+</button>
+                                        <span class="price" style="font-weight:bold;font-size:20px;">
+                                            @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
                     }
                 </div>
                 <div class="col-md-5">
@@ -161,13 +215,7 @@ else
 
         document.addEventListener('DOMContentLoaded', function () {
             var messageBox = '@TempData["MessageBox"]';
-            if (messageBox == 1) {
-                MessageBox("success", "Kart Bilgileri Kayıt Edildi");
-            }
-            else if (messageBox == 2) {
-                MessageBox("success", "Kart Bilgileri Silindi");
-            }
-            else if (messageBox == 4) {
+            if (messageBox == 4) {
                 MessageBox("success", "Ürün Favorilere Eklendi");
             }
             else if (messageBox == 5) {
@@ -225,6 +273,24 @@ else
                     MessageBox("error", "Sipariş onaylanırken bir hata oluştu!!");
                 }
             });
+        }
+
+        function laptopdetay(event, id) {
+            if (!event.target.closest('button')) {
+                window.location.href = '/Home/LaptopDetay?pLaptopId=' + id;
+            }
+        }
+
+        function monitordetay(event, id) {
+            if (!event.target.closest('button')) {
+                window.location.href = '/Home/MonitorDetay?pMonitorId=' + id;
+            }
+        }
+
+        function mousedetay(event, id) {
+            if (!event.target.closest('button')) {
+                window.location.href = '/Home/MouseDetay?pMouseId=' + id;
+            }
         }
 
     </script>

@@ -1,0 +1,264 @@
+﻿@model List<UrunTakipDataModel>
+
+<style>
+
+    .hover-effect {
+        color: black;
+        transition: color 0.3s ease;
+    }
+
+        .hover-effect:hover {
+            color: green;
+        }
+
+</style>
+
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li style="text-transform:none;font-size:20px;">SİPARİŞLERİM</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<div class="section">
+    <div id="aside" class="col-md-2" style="margin-left:20px;height:600px;">
+        <!-- aside Widget -->
+        <div class="aside">
+            <h3 class="aside-title" style="text-transform:none">@ViewData["KullaniciFullName"]</h3>
+            <div class="checkbox-filter">
+                <div class="input-checkbox">
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/UrunTakip/SiparisSayfasi">Siparişlerim</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/Kullanici/KullaniciSayfasi?pId=@ViewData["KullaniciId"]">Profil</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/KullaniciKart/KullaniciKartListesi?pId=@ViewData["KullaniciId"]">Kayıtlı Kartlarım</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="#">Değerlendirmelerim</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /aside Widget -->
+    </div>
+    <div class="container">
+        <div class="table-responsive" style="height:73vh;">
+            <table class="table table-striped">
+                <thead>
+                    <tr style="white-space: nowrap;">
+                        <th class="text-center">SİPARİŞ NO</th>
+                        <th></th>
+                        <th>ÜRÜN ADI</th>
+                        <th>ADET</th>
+                        <th>FİYAT</th>
+                        <th>SİPARİŞ TARİHİ</th>
+                        <th>SİPARİŞ DURUMU</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.LaptopId != null)
+                        {
+                            <tr style="cursor:pointer;font-weight:bold" onclick="laptopdetay(event, @item.LaptopId)">
+                                <td class="text-center" style="vertical-align:middle">
+                                    @item.Id
+                                </td>
+                                <td>
+                                    <img src="https://localhost:7044/images/@item.ResimUrl" width="100">
+                                </td>
+                                <td class="hover-effect">
+                                    @item.UrunAdi
+                                </td>
+                                <td>
+                                    @item.Adet x
+                                </td>
+                                <td>
+                                    @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                </td>
+                                <td style="white-space: nowrap;">
+                                    @item.CreatedAt
+                                </td>
+                                <td style="white-space: nowrap;">
+                                    @if (item.SiparisDurum == 1)
+                                    {
+                                        <span style="color:orange;font-weight:bold"><i class="bi bi-alarm"></i> Hazırlanıyor..</span>
+                                    }
+                                    else if (item.SiparisDurum == 2)
+                                    {
+                                        <span style="color:green;font-weight:bold"><i class="bi bi-hand-thumbs-up-fill"></i> Tamamlandı</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:red;font-weight:bold"><i class="bi bi-hand-thumbs-down-fill"></i> İptal Edildi</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@ViewData["Hakkimizda_whatsappLink"]" target="_blank">
+                                        <i class="bi bi-question-circle" style="position: relative; top: 1px; -webkit-text-stroke: 0.5px;font-size:20px;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        else if (item.MonitorId != null)
+                        {
+                            <tr style="cursor:pointer;font-weight:bold" onclick="monitordetay(event, @item.MonitorId)">
+                                <td class="text-center" style="vertical-align:middle">
+                                    @item.Id
+                                </td>
+                                <td>
+                                    <img src="https://localhost:7044/images/@item.ResimUrl" width="100">
+                                </td>
+                                <td class="hover-effect">
+                                    @item.UrunAdi
+                                </td>
+                                <td>
+                                    @item.Adet x
+                                </td>
+                                <td>
+                                    @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                </td>
+                                <td style="white-space: nowrap;">
+                                    @item.CreatedAt
+                                </td>
+                                <td style="white-space: nowrap;">
+                                    @if (item.SiparisDurum == 1)
+                                    {
+                                        <span style="color:orange;font-weight:bold"><i class="bi bi-alarm"></i> Hazırlanıyor..</span>
+                                    }
+                                    else if (item.SiparisDurum == 2)
+                                    {
+                                        <span style="color:green;font-weight:bold"><i class="bi bi-hand-thumbs-up-fill"></i> Tamamlandı</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:red;font-weight:bold"><i class="bi bi-hand-thumbs-down-fill"></i> İptal Edildi</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@ViewData["Hakkimizda_whatsappLink"]" target="_blank">
+                                        <i class="bi bi-question-circle" style="position: relative; top: 1px; -webkit-text-stroke: 0.5px;font-size:20px;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        else if (item.MouseId != null)
+                        {
+                            <tr style="cursor:pointer;font-weight:bold" onclick="mousedetay(event, @item.MouseId)">
+                                <td class="text-center" style="vertical-align:middle">
+                                    @item.Id
+                                </td>
+                                <td>
+                                    <img src="https://localhost:7044/images/@item.ResimUrl" width="100">
+                                </td>
+                                <td class="hover-effect">
+                                    @item.UrunAdi
+                                </td>
+                                <td>
+                                    @item.Adet x
+                                </td>
+                                <td>
+                                    @Formatting.FormatTurkLirasi(item.Fiyat.Value)
+                                </td>
+                                <td style="white-space: nowrap;">
+                                    @item.CreatedAt
+                                </td>
+                                <td style="white-space: nowrap;">
+                                    @if (item.SiparisDurum == 1)
+                                    {
+                                        <span style="color:orange;font-weight:bold"><i class="bi bi-alarm"></i> Hazırlanıyor..</span>
+                                    }
+                                    else if (item.SiparisDurum == 2)
+                                    {
+                                        <span style="color:green;font-weight:bold"><i class="bi bi-hand-thumbs-up-fill"></i> Tamamlandı</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:red;font-weight:bold"><i class="bi bi-hand-thumbs-down-fill"></i> İptal Edildi</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@ViewData["Hakkimizda_whatsappLink"]" target="_blank">
+                                        <i class="bi bi-question-circle" style="position: relative; top: 1px; -webkit-text-stroke: 0.5px;font-size:20px;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+
+@section AECScript {
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 4) {
+                MessageBox("success", "Ürün Favorilere Eklendi");
+            }
+            else if (messageBox == 5) {
+                MessageBox("success", "Ürün Favorilerden Çıkarıldı");
+            }
+            else if (messageBox == 6) {
+                MessageBox("success", "Ürün Sepete Eklendi");
+            }
+            else if (messageBox == 7) {
+                MessageBox("success", "Ürün Sepetten Çıkarıldı");
+            }
+            else if (messageBox == 8) {
+                MessageBox("success", "Tüm Favoriler Sepete Eklendi!!");
+            }
+            else if (messageBox == 9) {
+                MessageBox("success", "Tüm Favoriler Silindi!!");
+            }
+            else if (messageBox == 10) {
+                MessageBox("success", "Tüm Sepet Silindi!!");
+            }
+
+        });
+
+        function laptopdetay(event, id) {
+            if (!event.target.closest('a')) {
+                window.location.href = '/Home/LaptopDetay?pLaptopId=' + id;
+            }
+        }
+
+        function monitordetay(event, id) {
+            if (!event.target.closest('a')) {
+                window.location.href = '/Home/MonitorDetay?pMonitorId=' + id;
+            }
+        }
+
+        function mousedetay(event, id) {
+            if (!event.target.closest('a')) {
+                window.location.href = '/Home/MouseDetay?pMouseId=' + id;
+            }
+        }
+
+    </script>
+}
