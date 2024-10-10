@@ -94,9 +94,10 @@ namespace AEC_WebApp.Controllers
                 {
                     kategoriList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
 
-                    if (kategoriList != null)
+                    if (kategoriList != null && kategoriList.Count > 0)
                     {
                         kategoriList = GetKategoriCount(kategoriList);
+
                         return kategoriList;
                     }
                 }
@@ -121,7 +122,7 @@ namespace AEC_WebApp.Controllers
                 {
                     kategoriList = JsonConvert.DeserializeObject<List<KategoriDataModel>>(text.Content.ReadAsStringAsync().Result);
 
-                    if (kategoriList != null)
+                    if (kategoriList != null && kategoriList.Count > 0)
                     {
                         return kategoriList;
                     }
@@ -144,35 +145,33 @@ namespace AEC_WebApp.Controllers
                 if (text != null)
                 {
                     model = JsonConvert.DeserializeObject<HomeDataModel>(text.Content.ReadAsStringAsync().Result);
+
+                    if (model != null)
+                    {
+                        if (model.LaptopList != null && model.LaptopList.Count > 0)
+                        {
+                            ViewData["AllLaptop"] = model.LaptopList.Count;
+                        }
+
+                        if (model.MonitorList != null && model.MonitorList.Count > 0)
+                        {
+                            ViewData["AllMonitor"] = model.MonitorList.Count;
+                        }
+
+                        if (model.MouseList != null && model.MouseList.Count > 0)
+                        {
+                            ViewData["AllMouse"] = model.MouseList.Count;
+                        }
+
+                        return model;
+                    }
                 }
 
-                if (model != null)
-                {
-                    if (model.LaptopList != null && model.LaptopList.Count > 0)
-                    {
-                        ViewData["AllLaptop"] = model.LaptopList.Count;
-                    }
-
-                    if (model.MonitorList != null && model.MonitorList.Count > 0)
-                    {
-                        ViewData["AllMonitor"] = model.MonitorList.Count;
-                    }
-
-                    if (model.MouseList != null && model.MouseList.Count > 0)
-                    {
-                        ViewData["AllMouse"] = model.MouseList.Count;
-                    }
-
-                    return model;
-                }
-                else
-                {
-                    return new HomeDataModel();
-                }
+                return new HomeDataModel();
             }
         }
 
-        public void AllUrunYorumList()
+        public List<UrunYorumDataModel> AllUrunYorumList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -180,21 +179,25 @@ namespace AEC_WebApp.Controllers
                 var response = client.GetAsync(url);
                 var text = response.Result;
 
-                List<UrunYorumDataModel> model = new List<UrunYorumDataModel>();
+                List<UrunYorumDataModel> modelList = new List<UrunYorumDataModel>();
 
                 if (text != null)
                 {
-                    model = JsonConvert.DeserializeObject<List<UrunYorumDataModel>>(text.Content.ReadAsStringAsync().Result);
+                    modelList = JsonConvert.DeserializeObject<List<UrunYorumDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                    if (modelList != null && modelList.Count > 0)
+                    {
+                        ViewData["YorumList"] = modelList;
+
+                        return modelList;
+                    }
                 }
 
-                if (model != null && model.Count > 0)
-                {
-                    ViewData["YorumList"] = model;
-                }
+                return new List<UrunYorumDataModel>();
             }
         }
 
-        public void KullaniciFavoriList()
+        public List<UrunTakipDataModel> KullaniciFavoriList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -203,21 +206,25 @@ namespace AEC_WebApp.Controllers
                 var response = client.GetAsync(url);
                 var text = response.Result;
 
-                List<UrunTakipDataModel> model = new List<UrunTakipDataModel>();
+                List<UrunTakipDataModel> modelList = new List<UrunTakipDataModel>();
 
                 if (text != null)
                 {
-                    model = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
+                    modelList = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                    if (modelList != null && modelList.Count > 0)
+                    {
+                        ViewData["KullaniciFavoriList"] = modelList;
+
+                        return modelList;
+                    }
                 }
 
-                if (model != null && model.Count > 0)
-                {
-                    ViewData["KullaniciFavoriList"] = model;
-                }
+                return new List<UrunTakipDataModel>();
             }
         }
 
-        public void KullaniciSepetList()
+        public List<UrunTakipDataModel> KullaniciSepetList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -226,17 +233,21 @@ namespace AEC_WebApp.Controllers
                 var response = client.GetAsync(url);
                 var text = response.Result;
 
-                List<UrunTakipDataModel> model = new List<UrunTakipDataModel>();
+                List<UrunTakipDataModel> modelList = new List<UrunTakipDataModel>();
 
                 if (text != null)
                 {
-                    model = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
+                    modelList = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                    if (modelList != null && modelList.Count > 0)
+                    {
+                        ViewData["KullaniciSepetList"] = modelList;
+
+                        return modelList;
+                    }
                 }
 
-                if (model != null && model.Count > 0)
-                {
-                    ViewData["KullaniciSepetList"] = model;
-                }
+                return new List<UrunTakipDataModel>();
             }
         }
 
@@ -288,10 +299,8 @@ namespace AEC_WebApp.Controllers
 
                 return model;
             }
-            else
-            {
-                return new HomeDataModel();
-            }
+
+            return new HomeDataModel();
         }
 
         public HakkimizdaDataModel LoadHakkimizdaInfo()
@@ -338,7 +347,7 @@ namespace AEC_WebApp.Controllers
             }
         }
 
-        public void LoadKullaniciList()
+        public List<KullaniciDataModel> LoadKullaniciList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -366,12 +375,16 @@ namespace AEC_WebApp.Controllers
 
                         HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
                         HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
+
+                        return modelList;
                     }
                 }
+
+                return new List<KullaniciDataModel>();
             }
         }
 
-        public void LoadKullaniciKartList(int pId)
+        public List<KullaniciKartDataModel> LoadKullaniciKartList(int pId)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -402,8 +415,12 @@ namespace AEC_WebApp.Controllers
 
                         HttpContext.Session.SetString("KullaniciKartAdiList", JsonConvert.SerializeObject(KartAdi));
                         HttpContext.Session.SetString("KullaniciKartNumarasiList", JsonConvert.SerializeObject(KartNumarasi));
+
+                        return modelList;
                     }
                 }
+
+                return new List<KullaniciKartDataModel>();
             }
         }
 

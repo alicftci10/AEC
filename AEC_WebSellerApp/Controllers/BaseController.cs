@@ -49,7 +49,6 @@ namespace AEC_WebSellerApp.Controllers
             {//Session Dolu
 
                 LoadHakkimizdaInfo();
-
                 LoadBekliyorList();
 
                 KullaniciDataModel model = JsonConvert.DeserializeObject<KullaniciDataModel>(sessionKullanici);
@@ -124,7 +123,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadKullaniciList()
+        public List<KullaniciDataModel> LoadKullaniciList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -152,12 +151,16 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("KullaniciAdiList", JsonConvert.SerializeObject(kullaniciAdi));
                         HttpContext.Session.SetString("KullaniciEmailList", JsonConvert.SerializeObject(email));
+
+                        return modelList;
                     }
                 }
+
+                return new List<KullaniciDataModel>();
             }
         }
 
-        public void LoadKullaniciTuruList()
+        public List<KullaniciTuruDataModel> LoadKullaniciTuruList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -182,8 +185,12 @@ namespace AEC_WebSellerApp.Controllers
                         }
 
                         HttpContext.Session.SetString("KullaniciTuruAdiList", JsonConvert.SerializeObject(kullanicituruAdi));
+
+                        return modelList;
                     }
                 }
+
+                return new List<KullaniciTuruDataModel>();
             }
         }
 
@@ -227,7 +234,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadKullaniciKartList(int pId)
+        public List<KullaniciKartDataModel> LoadKullaniciKartList(int pId)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -258,12 +265,16 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("KullaniciKartAdiList", JsonConvert.SerializeObject(KartAdi));
                         HttpContext.Session.SetString("KullaniciKartNumarasiList", JsonConvert.SerializeObject(KartNumarasi));
+
+                        return modelList;
                     }
                 }
+
+                return new List<KullaniciKartDataModel>();
             }
         }
 
-        public void LoadKategoriList()
+        public List<KategoriDataModel> LoadKategoriList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -289,8 +300,12 @@ namespace AEC_WebSellerApp.Controllers
                         }
 
                         HttpContext.Session.SetString("KategoriAdiList", JsonConvert.SerializeObject(KategoriAdi));
+
+                        return modelList;
                     }
                 }
+
+                return new List<KategoriDataModel>();
             }
         }
 
@@ -332,7 +347,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadCPUList()
+        public List<CPUDataModel> LoadCPUList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -361,8 +376,12 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("IslemciAdiList", JsonConvert.SerializeObject(IslemciAdi));
                         ViewBag.IslemciAdiList = IslemciAdiList;
+
+                        return modelList;
                     }
                 }
+
+                return new List<CPUDataModel>();
             }
         }
 
@@ -400,7 +419,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadGPUList()
+        public List<GPUDataModel> LoadGPUList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -429,8 +448,12 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("EkranKartiAdiList", JsonConvert.SerializeObject(EkranKartiAdi));
                         ViewBag.EkranKartiAdiList = EkranKartiAdiList;
+
+                        return modelList;
                     }
                 }
+
+                return new List<GPUDataModel>();
             }
         }
 
@@ -468,7 +491,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadRAMList()
+        public List<RAMDataModel> LoadRAMList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -497,8 +520,12 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("BellekAdiList", JsonConvert.SerializeObject(BellekAdi));
                         ViewBag.BellekAdiList = BellekAdiList;
+
+                        return modelList;
                     }
                 }
+
+                return new List<RAMDataModel>();
             }
         }
 
@@ -536,7 +563,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadSSDList()
+        public List<SSDDataModel> LoadSSDList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -565,8 +592,12 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("DepolamaAdiList", JsonConvert.SerializeObject(DepolamaAdi));
                         ViewBag.DepolamaAdiList = DepolamaAdiList;
+
+                        return modelList;
                     }
                 }
+
+                return new List<SSDDataModel>();
             }
         }
 
@@ -604,7 +635,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadYenilemeHiziList()
+        public List<YenilemeHiziDataModel> LoadYenilemeHiziList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -633,8 +664,12 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("YenilemeHiziAdiList", JsonConvert.SerializeObject(YenilemeHiziAdi));
                         ViewBag.YenilemeHiziAdiList = YenilemeHiziAdiList;
+
+                        return modelList;
                     }
                 }
+
+                return new List<YenilemeHiziDataModel>();
             }
         }
 
@@ -672,7 +707,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadCozunurlukList()
+        public List<CozunurlukDataModel> LoadCozunurlukList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -701,8 +736,12 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("CozunurlukAdiList", JsonConvert.SerializeObject(CozunurlukAdi));
                         ViewBag.CozunurlukAdiList = CozunurlukAdiList;
+
+                        return modelList;
                     }
                 }
+
+                return new List<CozunurlukDataModel>();
             }
         }
 
@@ -740,7 +779,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadIsletimSistemiList()
+        public List<IsletimSistemiDataModel> LoadIsletimSistemiList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -769,8 +808,12 @@ namespace AEC_WebSellerApp.Controllers
 
                         HttpContext.Session.SetString("IsletimSistemiAdiList", JsonConvert.SerializeObject(IsletimSistemiAdi));
                         ViewBag.IsletimSistemiAdiList = IsletimSistemiAdiList;
+
+                        return modelList;
                     }
                 }
+
+                return new List<IsletimSistemiDataModel>();
             }
         }
 
@@ -808,7 +851,7 @@ namespace AEC_WebSellerApp.Controllers
             }
         }
 
-        public void LoadLaptopList()
+        public List<LaptopDataModel> LoadLaptopList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -834,12 +877,16 @@ namespace AEC_WebSellerApp.Controllers
                         }
 
                         HttpContext.Session.SetString("LaptopAdiList", JsonConvert.SerializeObject(LaptopAdi));
+
+                        return modelList;
                     }
                 }
+
+                return new List<LaptopDataModel>();
             }
         }
 
-        public void LoadMonitorList()
+        public List<MonitorDataModel> LoadMonitorList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -865,12 +912,16 @@ namespace AEC_WebSellerApp.Controllers
                         }
 
                         HttpContext.Session.SetString("MonitorAdiList", JsonConvert.SerializeObject(MonitorAdi));
+
+                        return modelList;
                     }
                 }
+
+                return new List<MonitorDataModel>();
             }
         }
 
-        public void LoadMouseList()
+        public List<MouseDataModel> LoadMouseList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -896,12 +947,16 @@ namespace AEC_WebSellerApp.Controllers
                         }
 
                         HttpContext.Session.SetString("MouseAdiList", JsonConvert.SerializeObject(MouseAdi));
+
+                        return modelList;
                     }
                 }
+
+                return new List<MouseDataModel>();
             }
         }
 
-        public void LoadBekliyorList()
+        public List<UrunTakipDataModel> LoadBekliyorList()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -920,8 +975,90 @@ namespace AEC_WebSellerApp.Controllers
                     if (modelList != null && modelList.Count > 0)
                     {
                         ViewData["BekliyorList"] = modelList;
+
+                        return modelList;
                     }
                 }
+
+                return new List<UrunTakipDataModel>();
+            }
+        }
+
+        public List<UrunTakipDataModel> AllUrunTakipList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunTakipApi/GetAllUrunTakip";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<UrunTakipDataModel> modelList = new List<UrunTakipDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                    if (modelList != null && modelList.Count > 0)
+                    {
+                        return modelList;
+                    }
+                }
+
+                return new List<UrunTakipDataModel>();
+            }
+        }
+
+        public List<UrunResmiDataModel> AllUrunResmiList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunResmiApi/GetAllUrunResmi";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<UrunResmiDataModel> modelList = new List<UrunResmiDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<UrunResmiDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                    if (modelList != null && modelList.Count > 0)
+                    {
+                        return modelList;
+                    }
+                }
+
+                return new List<UrunResmiDataModel>();
+            }
+        }
+
+        public List<UrunYorumDataModel> AllUrunYorumList()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunYorumApi/GetAllUrunYorum";
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = client.GetAsync(url);
+                var text = response.Result;
+
+                List<UrunYorumDataModel> modelList = new List<UrunYorumDataModel>();
+
+                if (text != null)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<UrunYorumDataModel>>(text.Content.ReadAsStringAsync().Result);
+
+                    if (modelList != null && modelList.Count > 0)
+                    {
+                        return modelList;
+                    }
+                }
+
+                return new List<UrunYorumDataModel>();
             }
         }
     }

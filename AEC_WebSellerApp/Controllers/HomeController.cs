@@ -1,3 +1,4 @@
+using AEC_Entities.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
@@ -17,7 +18,16 @@ namespace AEC_WebSellerApp.Controllers
                 HttpContext.Session.SetInt32("MessageBox", 3);
             }
 
-            return View();
+            HomeDataModel model = new HomeDataModel();
+
+            model.LaptopList = LoadLaptopList();
+            model.MonitorList = LoadMonitorList();
+            model.MouseList = LoadMouseList();
+            model.UrunTakipList = AllUrunTakipList();
+            model.UrunResmiList = AllUrunResmiList();
+            model.UrunYorumList = AllUrunYorumList();
+
+            return View(model);
         }
     }
 }
