@@ -26,6 +26,13 @@ namespace AEC_WebApp.Controllers
                     HttpContext.Session.SetInt32("SiparisOnay", 3);
                 }
 
+                int? SiparisBos = HttpContext.Session.GetInt32("SiparisBos");
+                if (SiparisBos == 1)
+                {
+                    TempData["SiparisBos"] = 1;
+                    HttpContext.Session.SetInt32("SiparisBos", 3);
+                }
+
                 List<UrunTakipDataModel> model = new List<UrunTakipDataModel>();
 
                 string url = ConfigurationInfo.ApiUrl + "/api/UrunTakipApi/GetSepetList";
@@ -170,7 +177,7 @@ namespace AEC_WebApp.Controllers
             }
         }
 
-        public void AdetDurum(int pId,int pAdet)
+        public void AdetDurum(int pId, int pAdet)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -187,7 +194,7 @@ namespace AEC_WebApp.Controllers
             }
         }
 
-        public void SiparisDurum(int? secilenKart,int? terms)
+        public void SiparisDurum(int? secilenKart, int? terms)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -213,9 +220,13 @@ namespace AEC_WebApp.Controllers
                     {
                         modelList = JsonConvert.DeserializeObject<List<UrunTakipDataModel>>(text.Content.ReadAsStringAsync().Result);
 
-                        if (modelList != null)
+                        if (modelList != null && modelList.Count > 0)
                         {
                             HttpContext.Session.SetInt32("SiparisOnay", 1);
+                        }
+                        else
+                        {
+                            HttpContext.Session.SetInt32("SiparisBos", 1);
                         }
                     }
                 }

@@ -23,10 +23,11 @@ namespace AEC_WebSellerApp.Controllers
             model.LaptopList = LoadLaptopList();
             model.MonitorList = LoadMonitorList();
             model.MouseList = LoadMouseList();
+            model.KullaniciList = LoadKullaniciList();
             model.UrunTakipList = AllUrunTakipList();
             model.UrunResmiList = AllUrunResmiList();
             model.UrunYorumList = AllUrunYorumList();
-
+         
             return View(model);
         }
     }

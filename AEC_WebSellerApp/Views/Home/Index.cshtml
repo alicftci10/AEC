@@ -264,19 +264,20 @@
                 <div class="col-lg-8 mb-4 order-0">
                     <div class="card bg-dark">
                         <div class="d-flex align-items-end row">
-                            <div class="col-sm-7">
+                            <div class="col-sm-8">
                                 <div class="card-body">
                                     <h5 class="card-title text-primary">Hoşgeldiniz @ViewData["KullaniciFullName"]</h5>
                                     @if (bekliyorList?.Count > 0)
                                     {
-                                        <h4 class="mb-4" style="color:black;font-weight:bold">
+                                        <h4 class="mb-4 text-white">
                                             Bekleyen <span style="color:red;font-weight:bold">@bekliyorList.Count Adet</span> Siparişiniz Bulunmaktadır.
                                         </h4>
-                                        <a href="/UrunTakip/BekliyorSayfasi" class="btn btn-outline-primary border-danger text-white" style="background-color:black">Siparişleri Görüntüle</a>
+                                        <a href="/UrunTakip/BekliyorSayfasi" class="btn btn-outline-primary text-white" style="background-color:black">Siparişleri Görüntüle</a>
+                                        <br />
                                     }
                                     else
                                     {
-                                        <h4 class="mb-4" style="color:black">
+                                        <h4 class="mb-4 text-white">
                                             Bekleyen Siparişiniz Bulunmamaktadır.
                                         </h4>
                                         <br />
@@ -284,7 +285,7 @@
                                     }
                                 </div>
                             </div>
-                            <div class="col-sm-5 text-center text-sm-left">
+                            <div class="col-sm-4 text-center text-sm-left">
                                 <div class="card-body pb-0 px-0 px-md-4">
                                     <img src="~/assets/img/illustrations/man-with-laptop-light.png"
                                          height="140"
@@ -302,29 +303,11 @@
                             <div class="card bg-dark">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="~/assets/img/icons/unicons/chart-success.png"
-                                                 alt="chart success"
-                                                 class="rounded" />
-                                        </div>
-                                        <div class="dropdown">
-                                            <button class="btn p-0"
-                                                    type="button"
-                                                    id="cardOpt3"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                            </div>
-                                        </div>
+                                        <h3 class="fw-semibold d-block mb-1 text-white">DOLAR</h3>
                                     </div>
-                                    <span class="fw-semibold d-block mb-1">DOLAR</span>
-                                    <h3 class="card-title mb-2">$12,628</h3>
-                                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                                    <br />
+                                    <h3 class="card-title mb-2 text-white" id="dolar-kuru">$0.00</h3>
+                                    <small class="fw-semibold" id="dolar-degisim"><i class="bx" id="dolar-icon"></i> <span class="text-success">+0.12%</span></small>
                                 </div>
                             </div>
                         </div>
@@ -332,29 +315,11 @@
                             <div class="card bg-dark">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="~/assets/img/icons/unicons/wallet-info.png"
-                                                 alt="Credit Card"
-                                                 class="rounded" />
-                                        </div>
-                                        <div class="dropdown">
-                                            <button class="btn p-0"
-                                                    type="button"
-                                                    id="cardOpt6"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                            </div>
-                                        </div>
+                                        <h3 class="fw-semibold d-block mb-1 text-white">EURO</h3>
                                     </div>
-                                    <span>Sales</span>
-                                    <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                                    <br />
+                                    <h3 class="card-title mb-2 text-white" id="euro-kuru">€0.00</h3>
+                                    <small class="fw-semibold"><i class="bx" id="euro-icon"></i> <span class="text-success">+0.05%</span></small>
                                 </div>
                             </div>
                         </div>
@@ -368,15 +333,13 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                     <div class="card-title">
-                                        <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                        <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                        <h5 class="text-nowrap mb-2 text-white">Laptop Ürünlerimiz</h5>
+                                        <span class="badge bg-label-warning rounded-pill">@DateTime.Now.Year Yılı</span>
                                     </div>
                                     <div class="mt-sm-auto">
-                                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small>
-                                        <h3 class="mb-0">$84,686k</h3>
+                                        <h4 class="mb-0 text-white">Toplam Ürün Sayısı : @Model.LaptopList?.Count</h4>
                                     </div>
                                 </div>
-                                <div id="profileReportChart"></div>
                             </div>
                         </div>
                     </div>
@@ -387,15 +350,13 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                     <div class="card-title">
-                                        <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                        <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                        <h5 class="text-nowrap mb-2 text-white">Monitör Ürünlerimiz</h5>
+                                        <span class="badge bg-label-warning rounded-pill">@DateTime.Now.Year Yılı</span>
                                     </div>
                                     <div class="mt-sm-auto">
-                                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small>
-                                        <h3 class="mb-0">$84,686k</h3>
+                                        <h4 class="mb-0 text-white">Toplam Ürün Sayısı : @Model.MonitorList?.Count</h4>
                                     </div>
                                 </div>
-                                <div id="profileReportChart"></div>
                             </div>
                         </div>
                     </div>
@@ -406,15 +367,13 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                     <div class="card-title">
-                                        <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                        <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                        <h5 class="text-nowrap mb-2 text-white">Mouse Ürünlerimiz</h5>
+                                        <span class="badge bg-label-warning rounded-pill">@DateTime.Now.Year Yılı</span>
                                     </div>
                                     <div class="mt-sm-auto">
-                                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small>
-                                        <h3 class="mb-0">$84,686k</h3>
+                                        <h4 class="mb-0 text-white">Toplam Ürün Sayısı : @Model.MonitorList?.Count</h4>
                                     </div>
                                 </div>
-                                <div id="profileReportChart"></div>
                             </div>
                         </div>
                     </div>
@@ -427,15 +386,13 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                     <div class="card-title">
-                                        <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                        <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                        <h5 class="text-nowrap mb-2 text-white">Bekleyen Siparişlerimiz</h5>
+                                        <span class="badge bg-label-warning rounded-pill">Bugün</span>
                                     </div>
                                     <div class="mt-sm-auto">
-                                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small>
-                                        <h3 class="mb-0">$84,686k</h3>
+                                        <h4 class="mb-0 text-white">Bekleyen Sipariş Sayısı : @Model.UrunTakipList?.Where(i => i.SiparisDurum == 1).Count()</h4>
                                     </div>
                                 </div>
-                                <div id="profileReportChart"></div>
                             </div>
                         </div>
                     </div>
@@ -446,15 +403,13 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                     <div class="card-title">
-                                        <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                        <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                        <h5 class="text-nowrap mb-2 text-white">Tamamlanan Siparişlerimiz</h5>
+                                        <span class="badge bg-label-warning rounded-pill">@DateTime.Now.Year YILI</span>
                                     </div>
                                     <div class="mt-sm-auto">
-                                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small>
-                                        <h3 class="mb-0">$84,686k</h3>
+                                        <h4 class="mb-0 text-white">Tamamlanan Sipariş Sayısı : @Model.UrunTakipList?.Where(i => i.SiparisDurum == 2).Count()</h4>
                                     </div>
                                 </div>
-                                <div id="profileReportChart"></div>
                             </div>
                         </div>
                     </div>
@@ -465,15 +420,13 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                     <div class="card-title">
-                                        <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                        <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                        <h5 class="text-nowrap mb-2 text-white">İptal Siparişlerimiz</h5>
+                                        <span class="badge bg-label-warning rounded-pill">@DateTime.Now.Year YILI</span>
                                     </div>
                                     <div class="mt-sm-auto">
-                                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small>
-                                        <h3 class="mb-0">$84,686k</h3>
+                                        <h4 class="mb-0 text-white">İptal Sipariş Sayısı : @Model.UrunTakipList?.Where(i => i.SiparisDurum == 3).Count()</h4>
                                     </div>
                                 </div>
-                                <div id="profileReportChart"></div>
                             </div>
                         </div>
                     </div>
@@ -486,15 +439,13 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                     <div class="card-title">
-                                        <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                        <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                        <h5 class="text-nowrap mb-2 text-white">Müşterilerimiz</h5>
+                                        <span class="badge bg-label-warning rounded-pill">@DateTime.Now.Year YILI</span>
                                     </div>
                                     <div class="mt-sm-auto">
-                                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small>
-                                        <h3 class="mb-0">$84,686k</h3>
+                                        <h4 class="mb-0 text-white">Müşteri Sayısı : @Model.KullaniciList?.Where(i => i.KullaniciTuruId == 3).Count()</h4>
                                     </div>
                                 </div>
-                                <div id="profileReportChart"></div>
                             </div>
                         </div>
                     </div>
@@ -505,15 +456,13 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                     <div class="card-title">
-                                        <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                        <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                        <h5 class="text-nowrap mb-2 text-white">Ürün Yorumlarımız</h5>
+                                        <span class="badge bg-label-warning rounded-pill">@DateTime.Now.Year YILI</span>
                                     </div>
                                     <div class="mt-sm-auto">
-                                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small>
-                                        <h3 class="mb-0">$84,686k</h3>
+                                        <h4 class="mb-0 text-white">Yorum Sayısı : @Model.UrunYorumList?.Count</h4>
                                     </div>
                                 </div>
-                                <div id="profileReportChart"></div>
                             </div>
                         </div>
                     </div>
@@ -524,15 +473,13 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                     <div class="card-title">
-                                        <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                        <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                        <h5 class="text-nowrap mb-2 text-white">Ürün Resimlerimiz</h5>
+                                        <span class="badge bg-label-warning rounded-pill">@DateTime.Now.Year YILI</span>
                                     </div>
                                     <div class="mt-sm-auto">
-                                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small>
-                                        <h3 class="mb-0">$84,686k</h3>
+                                        <h4 class="mb-0 text-white">Toplam @(Model.LaptopList?.Count + Model.MonitorList?.Count + Model.MouseList?.Count) ürün, @Model.UrunResmiList?.Count resim</h4>
                                     </div>
                                 </div>
-                                <div id="profileReportChart"></div>
                             </div>
                         </div>
                     </div>
@@ -607,12 +554,34 @@
 
                 document.getElementById('havadurumu').innerHTML =
                     `<div style="font-size: 16px;">
-                    <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
-                    <span style="color: white;">${temperature}°C</span>,
-                    <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
-                    </div>`;
+                                            <span class="fw-bold" style="color: #329d00;">Ankara Sıcaklık:</span>
+                                            <span style="color: white;">${temperature}°C</span>,
+                                            <span style="color: white;">${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}</span>
+                                            </div>`;
             })
             .catch(error => console.error('Hava durumu verisi alınırken bir hata oluştu:', error));
+
+        //Kur Bilgisi
+
+        async function fetchExchangeRates() {
+            const apiKey = 'YOUR_API_KEY'; // Buraya kendi API anahtarınızı girin
+
+            // Dolar ve Euro kurlarını almak için API çağrısı
+            const response = await fetch(`https://open.er-api.com/v6/latest/TRY`);
+            const data = await response.json();
+
+            const dolarKuru = (1 / data.rates.USD).toFixed(2); // Dolar/TL kuru
+            const euroKuru = (1 / data.rates.EUR).toFixed(2); // Euro/TL kuru
+
+            // Dolar bilgilerini güncelle
+            document.getElementById('dolar-kuru').innerText = `$${dolarKuru}`;
+
+            // Euro bilgilerini güncelle
+            document.getElementById('euro-kuru').innerText = `€${euroKuru}`;
+        }
+
+        // Sayfa yüklendiğinde döviz kurlarını al
+        window.onload = fetchExchangeRates;
 
     </script>
 
