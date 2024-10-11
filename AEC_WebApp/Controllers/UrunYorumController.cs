@@ -11,6 +11,29 @@ namespace AEC_WebApp.Controllers
     {
         public UrunYorumController(IMemoryCache memoryCache) { _memoryCacheBase = memoryCache; }
 
+        public async Task<IActionResult> UrunYorumSayfasi()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                MessageBox();
+
+                string url = ConfigurationInfo.ApiUrl + "/api/UrunYorumApi/UrunYorumKullaniciList";
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + CurrentKullanici.JwtToken);
+                var response = await client.GetAsync(url);
+
+                List<UrunYorumDataModel> modelList = new List<UrunYorumDataModel>();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    modelList = JsonConvert.DeserializeObject<List<UrunYorumDataModel>>(response.Content.ReadAsStringAsync().Result);
+
+                    return View(modelList);
+                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> UrunYorum(UrunYorumDataModel model)
         {
@@ -73,9 +96,13 @@ namespace AEC_WebApp.Controllers
                     {
                         return RedirectToAction("MonitorDetay", "Home");
                     }
-                    else
+                    else if (pUrun == 3)
                     {
                         return RedirectToAction("MouseDetay", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToAction("UrunYorumSayfasi");
                     }
                 }
                 else

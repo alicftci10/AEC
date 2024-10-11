@@ -18,6 +18,8 @@ namespace AEC_Business.Interfaces
 
         List<UrunYorumDataModel> GetUrunYorumMouseList(int pMouseId);
 
+        List<UrunYorumDataModel> UrunYorumKullaniciList(int pKullaniciId);
+
         UrunYorum GetId(int pId);
 
         int Add(UrunYorumDataModel item);

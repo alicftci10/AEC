@@ -17,5 +17,9 @@ namespace AEC_Entities.DataModels
         public string? Yorum { get; set; }
 
         public short? YorumPuan { get; set; }
+
+        public string? UrunAdi { get; set; }
+
+        public string? ResimUrl { get; set; }
     }
 }

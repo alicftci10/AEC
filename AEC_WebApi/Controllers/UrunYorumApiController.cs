@@ -45,6 +45,13 @@ namespace AEC_WebApi.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult UrunYorumKullaniciList()
+        {
+            return Ok(_UrunYorum.UrunYorumKullaniciList(GetCurrentKullanici(HttpContext).Id));
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult GetUrunYorum(int pId)
         {
             return Ok(_UrunYorum.GetId(pId));

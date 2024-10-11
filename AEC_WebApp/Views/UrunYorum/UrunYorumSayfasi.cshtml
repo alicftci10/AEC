@@ -1,0 +1,385 @@
+﻿@model List<UrunYorumDataModel>
+
+<style>
+
+    .hover-effect {
+        color: black;
+        transition: color 0.3s ease;
+    }
+
+        .hover-effect:hover {
+            color: green;
+        }
+
+    .review-rating{
+        color:green
+    }
+
+</style>
+
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li style="text-transform:none;font-size:20px;">DEĞERLENDİRMELERİM</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<div class="section">
+    <div id="aside" class="col-md-2" style="margin-left:20px;height:600px;">
+        <!-- aside Widget -->
+        <div class="aside">
+            <h3 class="aside-title" style="text-transform:none">@ViewData["KullaniciFullName"]</h3>
+            <div class="checkbox-filter">
+                <div class="input-checkbox">
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/UrunTakip/SepetSayfasi">Sepetim</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/UrunTakip/SiparisSayfasi">Siparişlerim</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/Kullanici/KullaniciSayfasi?pId=@ViewData["KullaniciId"]">Profil</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/KullaniciKart/KullaniciKartListesi?pId=@ViewData["KullaniciId"]">Kayıtlı Kartlarım</a>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <i class="bi bi-arrow-right-short"></i>
+                        <a href="/UrunYorum/UrunYorumSayfasi">Değerlendirmelerim</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /aside Widget -->
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="table-responsive" style="height:73vh;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr style="white-space: nowrap;">
+                            <th></th>
+                            <th>ÜRÜN ADI</th>
+                            <th>YORUM</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+
+                        @foreach (var item in Model)
+                        {
+                            if (item.LaptopId != null)
+                            {
+                                <tr style="cursor:pointer;font-weight:bold" onclick="laptopdetay(event, @item.LaptopId)">
+                                    <td>
+                                        <img src="https://localhost:7044/images/@item.ResimUrl" width="100">
+                                    </td>
+                                    <td>
+                                        <span class="hover-effect" style="white-space: nowrap;">@item.UrunAdi</span>
+                                        <br />
+                                        @item.CreatedAt
+                                    </td>
+                                    <td>
+                                        @if (item.YorumPuan == 1)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 2)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 3)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 4)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 5)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        }
+                                        @item.Yorum
+                                    </td>
+                                    <td>
+                                        <a href="#" data-toggle="modal" data-target="#exampleModal" onclick="deleteModal(@item.Id)"><i class="bi bi-trash2-fill"></i> Sil</a>
+                                    </td>
+                                </tr>
+                            }
+                            else if (item.MonitorId != null)
+                            {
+                                <tr style="cursor:pointer;font-weight:bold" onclick="monitordetay(event, @item.MonitorId)">
+                                    <td>
+                                        <img src="https://localhost:7044/images/@item.ResimUrl" width="100">
+                                    </td>
+                                    <td>
+                                        <span class="hover-effect" style="white-space: nowrap;">@item.UrunAdi</span>
+                                        <br />
+                                        @item.CreatedAt
+                                    </td>
+                                    <td>
+                                        @if (item.YorumPuan == 1)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 2)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 3)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 4)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 5)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        }
+                                        @item.Yorum
+                                    </td>
+                                    <td>
+                                        <a href="#" data-toggle="modal" data-target="#exampleModal" onclick="deleteModal(@item.Id)"><i class="bi bi-trash2-fill"></i> Sil</a>
+                                    </td>
+                                </tr>
+                            }
+                            else if (item.MouseId != null)
+                            {
+                                <tr style="cursor:pointer;font-weight:bold" onclick="mousedetay(event, @item.MouseId)">
+                                    <td>
+                                        <img src="https://localhost:7044/images/@item.ResimUrl" width="100">
+                                    </td>
+                                    <td>
+                                        <span class="hover-effect" style="white-space: nowrap;">@item.UrunAdi</span>
+                                        <br />
+                                        @item.CreatedAt
+                                    </td>
+                                    <td>
+                                        @if (item.YorumPuan == 1)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 2)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 3)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 4)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                        }
+                                        else if (item.YorumPuan == 5)
+                                        {
+                                            <div class="review-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        }
+                                        @item.Yorum
+                                    </td>
+                                    <td>
+                                        <a href="#" data-toggle="modal" data-target="#exampleModal" onclick="deleteModal(@item.Id)"><i class="bi bi-trash2-fill"></i> Sil</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">UYARI!!</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="color:black;font-weight:bold;">
+                Yorumu Silmek İstediğinize Emin Misiniz ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Hayır</button>
+                <button type="button" id="confirmDeleteLink" class="btn btn-success">Evet</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section AECScript {
+
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 1) {
+                MessageBox("success", "Yorum Kayıt Edildi");
+            }
+            else if (messageBox == 2) {
+                MessageBox("success", "Yorum Silindi");
+            }
+            else if (messageBox == 4) {
+                MessageBox("success", "Ürün Favorilere Eklendi");
+            }
+            else if (messageBox == 5) {
+                MessageBox("success", "Ürün Favorilerden Çıkarıldı");
+            }
+            else if (messageBox == 6) {
+                MessageBox("success", "Ürün Sepete Eklendi");
+            }
+            else if (messageBox == 7) {
+                MessageBox("success", "Ürün Sepetten Çıkarıldı");
+            }
+            else if (messageBox == 8) {
+                MessageBox("success", "Tüm Favoriler Sepete Eklendi!!");
+            }
+            else if (messageBox == 9) {
+                MessageBox("success", "Tüm Favoriler Silindi!!");
+            }
+            else if (messageBox == 10) {
+                MessageBox("success", "Tüm Sepet Silindi!!");
+            }
+
+        });
+
+        function laptopdetay(event, id) {
+            if (!event.target.closest('a')) {
+                window.location.href = '/Home/LaptopDetay?pLaptopId=' + id;
+            }
+        }
+
+        function monitordetay(event, id) {
+            if (!event.target.closest('a')) {
+                window.location.href = '/Home/MonitorDetay?pMonitorId=' + id;
+            }
+        }
+
+        function mousedetay(event, id) {
+            if (!event.target.closest('a')) {
+                window.location.href = '/Home/MouseDetay?pMouseId=' + id;
+            }
+        }
+
+        function deleteModal(id) {
+            const confirmDeleteLink = document.getElementById('confirmDeleteLink');
+
+            confirmDeleteLink.onclick = function () {
+                window.location.href = '/UrunYorum/UrunYorumSil?pId=' + id;
+            };
+        }
+
+    </script>
+}

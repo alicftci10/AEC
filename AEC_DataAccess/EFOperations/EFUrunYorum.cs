@@ -64,5 +64,46 @@ namespace AEC_DataAccess.EFOperations
                 return List;
             }
         }
+
+        public List<UrunYorumDataModel> UrunYorumKullaniciList(int pKullaniciId)
+        {
+            using (AecommerceDbContext db = new AecommerceDbContext())
+            {
+                var List = (from x in db.UrunYorums
+
+                            join kul in db.Kullanicis on x.CreatedBy equals kul.Id
+
+                            join lap in db.Laptops on x.LaptopId equals lap.Id into a
+                            from laptop in a.DefaultIfEmpty()
+
+                            join mon in db.Monitors on x.MonitorId equals mon.Id into b
+                            from monitor in b.DefaultIfEmpty()
+
+                            join mou in db.Mice on x.MouseId equals mou.Id into c
+                            from mouse in c.DefaultIfEmpty()
+
+                            where x.CreatedBy == pKullaniciId
+
+                            select new UrunYorumDataModel
+                            {
+                                Id = x.Id,
+                                LaptopId = x.LaptopId,
+                                MonitorId = x.MonitorId,
+                                MouseId = x.MouseId,
+                                Yorum = x.Yorum,
+                                YorumPuan = x.YorumPuan,
+                                CreatedAt = x.CreatedAt,
+                                CreatedBy = x.CreatedBy,
+                                CreatedByName = kul.Ad + " " + kul.Soyad,
+                                UrunAdi = x.LaptopId == null ? (x.MonitorId == null ? mouse.MouseAdi : monitor.MonitorAdi) : laptop.LaptopAdi,
+                                ResimUrl = db.UrunResmis.Where(i => (x.LaptopId == null ? (x.MonitorId == null ? i.MouseId : i.MonitorId) : i.LaptopId) ==
+                                                                    (x.LaptopId == null ? (x.MonitorId == null ? mouse.Id : monitor.Id) : laptop.Id))
+                                                                    .Select(i => i.ResimUrl).FirstOrDefault()
+
+                            }).ToList();
+
+                return List;
+            }
+        }
     }
 }

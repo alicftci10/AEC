@@ -12,5 +12,7 @@ namespace AEC_DataAccess.EFInterfaces
     public interface IEFUrunYorumRepository : IRepository<UrunYorum>
     {
         List<UrunYorumDataModel> GetUrunYorumList(int? pLaptopId, int? pMonitorId, int? pMouseId);
+
+        List<UrunYorumDataModel> UrunYorumKullaniciList(int pKullaniciId);
     }
 }

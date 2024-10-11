@@ -81,6 +81,11 @@ namespace AEC_Business.Managers
             return _UrunYorumRepository.GetUrunYorumList(null, null, pMouseId);
         }
 
+        public List<UrunYorumDataModel> UrunYorumKullaniciList(int pKullaniciId)
+        {
+            return _UrunYorumRepository.UrunYorumKullaniciList(pKullaniciId);
+        }
+
         public UrunYorum GetId(int pId)
         {
             return _UrunYorumRepository.GetSelect(pId);
