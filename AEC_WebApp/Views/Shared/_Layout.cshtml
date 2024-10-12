@@ -165,7 +165,7 @@
                             @if (ViewData["KullaniciId"] != null)
                             {
                                 <div class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" href="#">
+                                    <a id="favoridropdownopen" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" href="#">
                                         <i class="bi bi-heart-fill"></i>
                                         <span>Favoriler</span>
                                         @if (kullaniciFavoriList != null)
@@ -468,11 +468,12 @@
                     <div class="col-md-3 col-xs-6">
                         <div class="footer">
                             <h3 class="footer-title">HAKKIMIZDA</h3>
-                            <p>Ali E-Commerce, Ankara ilimizde kurulan güvendiğiniz e-ticaret platformu. İletişim için.. </p>
+                            <p>Ali E-Commerce, İletişim için.. </p>
                             <ul class="footer-links">
                                 <li><a href="https://www.google.com/maps/search/?api=1&query=@ViewData["Hakkimizda_Adres"]" target="_blank"><i class="fa fa-map-marker"></i>Ali E-Commerce Ankara</a></li>
                                 <li><a href="@ViewData["Hakkimizda_whatsappLink"]" target="_blank"><i class="fa fa-phone"></i>+90 @telefonformat</a></li>
                                 <li><a href="mailto:@ViewData["Hakkimizda_Email"]"><i class="fa fa-envelope-o"></i>@ViewData["Hakkimizda_Email"]</a></li>
+                                <li><span><i class="bi bi-clock-fill"></i>@ViewData["Hakkimizda_CalismaGunleri"]</span></li>
                             </ul>
                         </div>
                     </div>
@@ -495,11 +496,11 @@
                         <div class="footer">
                             <h3 class="footer-title">BİLGİ</h3>
                             <ul class="footer-links">
-                                <li><a href="#">Ali E-Commerce</a></li>
-                                <li><a href="#">Bize Ulaşın</a></li>
-                                <li><a href="#">Gizlilik Politikası</a></li>
-                                <li><a href="#">Siparişler ve İadeler</a></li>
-                                <li><a href="#">Şartlar ve Koşullar</a></li>
+                                <li><a href="/Hakkimizda/HakkimizdaSayfasi">Ali E-Commerce</a></li>
+                                <li><a href="/Hakkimizda/IletisimSayfasi">Bize Ulaşın</a></li>
+                                <li><a href="/Hakkimizda/GizlilikSayfasi">Gizlilik Politikası</a></li>
+                                <li><a href="/Hakkimizda/SiparisIadelerSayfasi">Siparişler ve İadeler</a></li>
+                                <li><a href="/Hakkimizda/SartlarKosullarSayfasi">Şartlar ve Koşullar</a></li>
                             </ul>
                         </div>
                     </div>
@@ -508,11 +509,20 @@
                         <div class="footer">
                             <h3 class="footer-title">HİZMETLER</h3>
                             <ul class="footer-links">
-                                <li><a href="#">Hesabım</a></li>
-                                <li><a href="#">Sepeti Görüntüle</a></li>
-                                <li><a href="#">Favoriler</a></li>
-                                <li><a href="#">Siparişi Görüntüle</a></li>
-                                <li><a href="#">Destek</a></li>
+                                @if (ViewData["KullaniciId"] != null)
+                                {
+                                    <li><a href="/Kullanici/KullaniciSayfasi?pId=@ViewData["KullaniciId"]">Hesabım</a></li>
+                                    <li><a href="/UrunTakip/SiparisSayfasi">Siparişlerim</a></li>
+                                    <li><a href="/UrunYorum/UrunYorumSayfasi">Değerlendirmelerim</a></li>
+                                    <li><a href="@ViewData["Hakkimizda_whatsappLink"]" target="_blank">Destek</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="/Authentication/LoginEkrani?p=hata">Hesabım</a></li>
+                                    <li><a href="/Authentication/LoginEkrani?p=hata">Siparişlerim</a></li>
+                                    <li><a href="/Authentication/LoginEkrani?p=hata">Değerlendirmelerim</a></li>
+                                    <li><a href="@ViewData["Hakkimizda_whatsappLink"]" target="_blank">Destek</a></li>
+                                }
                             </ul>
                         </div>
                     </div>

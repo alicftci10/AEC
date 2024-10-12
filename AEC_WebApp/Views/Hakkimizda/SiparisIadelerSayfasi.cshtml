@@ -1,0 +1,95 @@
+﻿
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li style="text-transform:none;font-size:20px;">SİPARİŞLER VE İADELER</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<div class="container">
+    <div class="row" style="color:black;">
+        <br />
+        <br />
+        <h3>Siparişler</h3>
+
+        <h4>a. Sipariş Verme</h4>
+        <h5>AECommerce üzerinden sipariş vermek son derece kolaydır. Ürün sayfasından dilediğiniz ürünü sepete ekleyin ve ödeme adımlarını takip ederek siparişinizi tamamlayın. Siparişiniz, başarılı ödeme sonrasında işleme alınacaktır.</h5>
+
+        <h4>b. Sipariş Durumu</h4>
+        <h5>Siparişinizin durumunu, "Hesabım" bölümündeki "Siparişlerim" sekmesinden takip edebilirsiniz. Siparişiniz kargoya verildiğinde tarafınıza bilgilendirme e-postası gönderilecektir.</h5>
+
+        <h4>c. Kargo ve Teslimat</h4>
+        <h5>Siparişleriniz, 1-3 iş günü içinde kargoya teslim edilir. Kargo süresi teslimat adresine bağlı olarak değişiklik gösterebilir. Kargo firması tarafından sağlanan takip numarası ile kargonuzun durumunu online olarak takip edebilirsiniz.</h5>
+
+        <h3>İade ve Değişim</h3>
+
+        <h4>a. İade Koşulları</h4>
+        <h5>Satın aldığınız ürünleri, teslim tarihinden itibaren 14 gün içerisinde iade edebilirsiniz. İade edilecek ürünün orijinal ambalajında, eksiksiz ve kullanılmamış olması gerekmektedir.</h5>
+
+        <h4>b. İade Süreci</h4>
+        <h5>İade işlemi için, iade talebinizi "Hesabım" bölümündeki "İade Talepleri" kısmından başlatabilirsiniz. İade talebiniz onaylandıktan sonra, ürününüzü anlaşmalı kargo firması aracılığıyla ücretsiz olarak geri gönderebilirsiniz.</h5>
+
+        <h4>c. İade Ücreti</h4>
+        <h5>İade edilen ürünün bedeli, ürün tarafımıza ulaştıktan ve iade koşullarına uygunluğu kontrol edildikten sonra 7-10 iş günü içerisinde ödeme yaptığınız yöntemle tarafınıza geri iade edilecektir.</h5>
+
+        <h4>d. Değişim</h4>
+        <h5>Eğer ürününüzde bir sorun varsa ve değişim talep etmek istiyorsanız, aynı iade süreci adımlarını takip ederek değişim talebi oluşturabilirsiniz. Stok durumuna göre değişim işleminiz gerçekleştirilecektir.</h5>
+
+        <h3>Sıkça Sorulan Sorular</h3>
+
+        <h4>a. Siparişimi nasıl takip edebilirim?</h4>
+        <h5>"Hesabım" sekmesindeki "Siparişlerim" bölümüne giriş yaparak siparişlerinizin durumunu kontrol edebilirsiniz. Ayrıca kargo takip numarası ile kargonuzu online olarak takip edebilirsiniz.</h5>
+
+        <h4>b. Ürün iadesi için kargo ücreti ödeyecek miyim?</h4>
+        <h5>Hayır, iade işlemleri için kargo ücreti ödemezsiniz. İade talebiniz onaylandıktan sonra ürününüzü ücretsiz olarak anlaşmalı kargo firması ile geri gönderebilirsiniz.</h5>
+
+        <h4>c. İade talebim ne kadar sürede sonuçlanır?</h4>
+        <h5>İade talebiniz, ürün tarafımıza ulaştıktan sonra 7-10 iş günü içerisinde işleme alınır ve iade bedeli tarafınıza geri ödenir.</h5>
+
+        <br />
+        <br />
+    </div>
+</div>
+
+@section AECScript {
+
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var messageBox = '@TempData["MessageBox"]';
+            if (messageBox == 4) {
+                MessageBox("success", "Ürün Favorilere Eklendi");
+            }
+            else if (messageBox == 5) {
+                MessageBox("success", "Ürün Favorilerden Çıkarıldı");
+            }
+            else if (messageBox == 6) {
+                MessageBox("success", "Ürün Sepete Eklendi");
+            }
+            else if (messageBox == 7) {
+                MessageBox("success", "Ürün Sepetten Çıkarıldı");
+            }
+            else if (messageBox == 8) {
+                MessageBox("success", "Tüm Favoriler Sepete Eklendi!!");
+            }
+            else if (messageBox == 9) {
+                MessageBox("success", "Tüm Favoriler Silindi!!");
+            }
+            else if (messageBox == 10) {
+                MessageBox("success", "Tüm Sepet Silindi!!");
+            }
+        });
+
+    </script>
+
+}
