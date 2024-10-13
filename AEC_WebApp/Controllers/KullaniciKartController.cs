@@ -40,10 +40,8 @@ namespace AEC_WebApp.Controllers
                     HttpContext.Session.SetInt32("secilenKullaniciKartId", pId);
                     return View(modelList);
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
 
@@ -198,10 +196,8 @@ namespace AEC_WebApp.Controllers
                     HttpContext.Session.SetInt32("MessageBox", 2);
                     return RedirectToAction("KullaniciKartListesi");
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
     }

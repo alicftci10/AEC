@@ -11,12 +11,7 @@ namespace AEC_WebSellerApp.Controllers
 
         public IActionResult Index()
         {
-            int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
-            if (MessageBox == 1)
-            {
-                TempData["MessageBox"] = 1;
-                HttpContext.Session.SetInt32("MessageBox", 3);
-            }
+            MessageBox();
 
             HomeDataModel model = new HomeDataModel();
 

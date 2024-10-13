@@ -111,6 +111,7 @@ else
                             {
                                 if (item.LaptopId != null)
                                 {
+                                    <button class="delete" onclick="SepetLaptopDurum(@item.LaptopId)" style="font-size:10px;"><i class="fa fa-close"></i></button>
                                     <ul class="reviews">
                                         <li style="cursor:pointer;" onclick="laptopdetay(event, @item.LaptopId)">
                                             <div class="review-heading">
@@ -131,6 +132,7 @@ else
                                 }
                                 else if (item.MonitorId != null)
                                 {
+                                    <button class="delete" onclick="SepetMonitorDurum(@item.MonitorId)" style="font-size:10px;"><i class="fa fa-close"></i></button>
                                     <ul class="reviews">
                                         <li style="cursor:pointer;" onclick="monitordetay(event, @item.MonitorId)">
                                             <div class="review-heading">
@@ -151,6 +153,7 @@ else
                                 }
                                 else if (item.MouseId != null)
                                 {
+                                    <button class="delete" onclick="SepetMouseDurum(@item.MouseId)" style="font-size:10px;"><i class="fa fa-close"></i></button>
                                     <ul class="reviews">
                                         <li style="cursor:pointer;" onclick="mousedetay(event, @item.MouseId)">
                                             <div class="review-heading">
@@ -230,7 +233,7 @@ else
                                     <input type="checkbox" id="terms">
                                     <label for="terms">
                                         <span></span>
-                                        <a href="#" style="text-decoration: underline">Şartlar ve Koşulları</a> okudum ve kabul ediyorum.
+                                        <a href="/Hakkimizda/SartlarKosullarSayfasi" target="_blank" style="text-decoration: underline">Şartlar ve Koşulları</a> okudum ve kabul ediyorum.
                                     </label>
                                     @if (TempData["CheckboxErrorMessage"] != null)
                                     {

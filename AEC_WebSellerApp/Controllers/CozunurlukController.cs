@@ -43,17 +43,7 @@ namespace AEC_WebSellerApp.Controllers
             {
                 LoadCozunurlukDropDown();
 
-                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
-                if (MessageBox == 1)
-                {
-                    TempData["MessageBox"] = 1;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
-                else if (MessageBox == 2)
-                {
-                    TempData["MessageBox"] = 2;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
+                MessageBox();
 
                 CozunurlukDataModel model = new CozunurlukDataModel();
 
@@ -77,8 +67,6 @@ namespace AEC_WebSellerApp.Controllers
                         model = JsonConvert.DeserializeObject<CozunurlukDataModel>(response.Content.ReadAsStringAsync().Result);
 
                         HttpContext.Session.SetString("secilenCozunurlukAdi", model.CozunurlukAdi);
-
-                        return View(model);
                     }
                     else
                     {
@@ -165,10 +153,8 @@ namespace AEC_WebSellerApp.Controllers
                     HttpContext.Session.SetInt32("MessageBox", 2);
                     return RedirectToAction("CozunurlukSayfasi");
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
     }

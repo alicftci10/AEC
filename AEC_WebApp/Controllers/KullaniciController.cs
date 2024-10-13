@@ -44,7 +44,7 @@ namespace AEC_WebApp.Controllers
                     else
                     {
                         return RedirectToAction("ErrorSayfasi", "Error");
-                    }
+                    }  
                 }
 
                 return View(model);
@@ -135,7 +135,6 @@ namespace AEC_WebApp.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         model.IsSuccess = true;
-                        return View(model);
                     }
                     else
                     {

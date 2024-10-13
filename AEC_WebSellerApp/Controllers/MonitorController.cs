@@ -45,27 +45,7 @@ namespace AEC_WebSellerApp.Controllers
                 LoadCozunurlukList();
                 LoadYenilemeHiziList();
 
-                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
-                if (MessageBox == 1)
-                {
-                    TempData["MessageBox"] = 1;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
-                else if (MessageBox == 2)
-                {
-                    TempData["MessageBox"] = 2;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
-                else if (MessageBox == 4)
-                {
-                    TempData["MessageBox"] = 4;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
-                else if (MessageBox == 5)
-                {
-                    TempData["MessageBox"] = 5;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
+                MessageBox();
 
                 MonitorDataModel model = new MonitorDataModel();
 
@@ -254,13 +234,11 @@ namespace AEC_WebSellerApp.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     model = JsonConvert.DeserializeObject<MonitorDataModel>(response.Content.ReadAsStringAsync().Result);
-                }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
+
+                    return View(model);
                 }
 
-                return View(model);
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
 
@@ -304,10 +282,8 @@ namespace AEC_WebSellerApp.Controllers
                     HttpContext.Session.SetInt32("MessageBox", 2);
                     return RedirectToAction("MonitorSayfasi");
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
     }

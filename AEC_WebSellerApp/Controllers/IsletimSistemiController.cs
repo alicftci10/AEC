@@ -43,17 +43,7 @@ namespace AEC_WebSellerApp.Controllers
             {
                 LoadIsletimSistemiDropDown();
 
-                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
-                if (MessageBox == 1)
-                {
-                    TempData["MessageBox"] = 1;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
-                else if (MessageBox == 2)
-                {
-                    TempData["MessageBox"] = 2;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
+                MessageBox();
 
                 IsletimSistemiDataModel model = new IsletimSistemiDataModel();
 
@@ -163,10 +153,8 @@ namespace AEC_WebSellerApp.Controllers
                     HttpContext.Session.SetInt32("MessageBox", 2);
                     return RedirectToAction("IsletimSistemiSayfasi");
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
     }

@@ -33,27 +33,24 @@
                     <td>
                         @if (ViewData["KullaniciTuru"] == "Admin")
                         {
-                            <div class="dropdown">
-                                <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                </div>
-                                <div class="dropdown-menu" style="background-color:black">
-
-                                    <a class="dropdown-item text-warning" href="/Kategori/KategoriSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
-
-                                    @if (item.AltKategori != null)
-                                    {
+                            if (item.AltKategori != null)
+                            {
+                                <div class="dropdown">
+                                    <div type="button" class="btn p-0 dropdown-toggle hide-arrow text-secondary" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </div>
+                                    <div class="dropdown-menu" style="background-color:black">
+                                        <a class="dropdown-item text-warning" href="/Kategori/KategoriSayfasi?pId=@item.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
                                         <button type="button" class="dropdown-item text-danger"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#backDropModal"
                                                 onclick="deleteModal(@item.Id)">
                                             <i class="bx bx-trash me-1"></i> Sil
                                         </button>
-                                    }
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
-
                     </td>
                 </tr>
 

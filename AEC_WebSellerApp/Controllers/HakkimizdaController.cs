@@ -16,12 +16,7 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
-                if (MessageBox == 1)
-                {
-                    TempData["MessageBox"] = 1;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
+                MessageBox();
 
                 HakkimizdaDataModel model = new HakkimizdaDataModel();
 
@@ -36,10 +31,8 @@ namespace AEC_WebSellerApp.Controllers
                     model = JsonConvert.DeserializeObject<HakkimizdaDataModel>(response.Content.ReadAsStringAsync().Result);
                     return View(model);
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
 
@@ -62,10 +55,8 @@ namespace AEC_WebSellerApp.Controllers
                     HttpContext.Session.SetInt32("MessageBox", 1);
                     return RedirectToAction("HakkimizdaSayfasi");
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
     }

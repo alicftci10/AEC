@@ -16,7 +16,7 @@ namespace AEC_WebApp.Controllers
             {
                 HttpContext.Session.Clear();
                 HttpContext.Session.SetInt32("MessageBox", 2);
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             else if (p == "hata")
             {
@@ -75,13 +75,9 @@ namespace AEC_WebApp.Controllers
                     {
                         ModelState.AddModelError("Sifre", "Kullanıcı Adı veya Şifre yanlış!! lütfen tekrar deneyiniz.");
                     }
+                }
 
-                    return View(model);
-                }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+                return View(model);
             }
         }
 

@@ -31,34 +31,37 @@
         <!-- row -->
         <div class="row">
             <!-- Product main img -->
-            <div class="col-md-5 col-md-push-2">
-                <div id="product-main-img">
-                    @if (Model.UrunResmiList != null && Model.UrunResmiList.Count > 0)
-                    {
-                        foreach (var item in Model.UrunResmiList)
+            @if (Model.UrunResmiList != null && Model.UrunResmiList.Count > 0)
+            {
+                <div class="col-md-5 col-md-push-2">
+                    <div id="product-main-img">
+                        @foreach (var item in Model.UrunResmiList)
                         {
                             <div class="product-preview">
                                 <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
                             </div>
                         }
-                    }
+                    </div>
                 </div>
-            </div>
-            <!-- /Product main img -->
-            <!-- Product thumb imgs -->
-            <div class="col-md-2  col-md-pull-5">
-                <div id="product-imgs">
-                    @if (Model.UrunResmiList != null && Model.UrunResmiList.Count > 0)
-                    {
-                        foreach (var item in Model.UrunResmiList)
+                <!-- /Product main img -->
+                <!-- Product thumb imgs -->
+                <div class="col-md-2  col-md-pull-5">
+                    <div id="product-imgs">
+                        @foreach (var item in Model.UrunResmiList)
                         {
                             <div class="product-preview">
                                 <img src="https://localhost:7044/images/@item.ResimUrl" alt="">
                             </div>
                         }
-                    }
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="col-md-7">
+                    <h2>BU ÜRÜNE AİT RESİM BULUNAMADI!!</h2>
+                </div>
+            }
             <!-- /Product thumb imgs -->
             @if (Model.GetMonitor != null)
             {
@@ -154,7 +157,7 @@
                         <br />
                         <br />
                         <div class="add-to-cart">
-                            <div class="qty-label">
+                            <div class="qty-label" style="margin-left:5px">
                                 Adet
                                 <div class="input-number" style="margin-left:5px;">
                                     <input type="number" value="1">

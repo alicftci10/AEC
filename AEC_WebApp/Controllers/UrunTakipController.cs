@@ -33,6 +33,20 @@ namespace AEC_WebApp.Controllers
                     HttpContext.Session.SetInt32("SiparisBos", 3);
                 }
 
+                int? secilenKartErrorMessage = HttpContext.Session.GetInt32("secilenKartErrorMessage");
+                if (secilenKartErrorMessage == 1)
+                {
+                    TempData["ErrorMessage"] = "Lütfen Ödeme Yöntemi Seçiniz!!";
+                    HttpContext.Session.SetInt32("secilenKartErrorMessage", 3);
+                }
+
+                int? CheckboxErrorMessage = HttpContext.Session.GetInt32("CheckboxErrorMessage");
+                if (CheckboxErrorMessage == 1)
+                {
+                    TempData["CheckboxErrorMessage"] = "Lütfen Şartlar ve Koşulları Onaylayın!!";
+                    HttpContext.Session.SetInt32("CheckboxErrorMessage", 3);
+                }
+
                 List<UrunTakipDataModel> model = new List<UrunTakipDataModel>();
 
                 string url = ConfigurationInfo.ApiUrl + "/api/UrunTakipApi/GetSepetList";
@@ -45,10 +59,8 @@ namespace AEC_WebApp.Controllers
 
                     return View(model);
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
 
@@ -77,10 +89,8 @@ namespace AEC_WebApp.Controllers
 
                     return View(model);
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
 
@@ -187,9 +197,19 @@ namespace AEC_WebApp.Controllers
                 var response = client.GetAsync(url);
                 var text = response.Result;
 
+                UrunTakipDataModel model = new UrunTakipDataModel();
+
                 if (text != null)
                 {
-                    long? urunId = JsonConvert.DeserializeObject<long>(text.Content.ReadAsStringAsync().Result);
+                    model = JsonConvert.DeserializeObject<UrunTakipDataModel>(text.Content.ReadAsStringAsync().Result);
+
+                    if (model != null)
+                    {
+                        if (model.SepetDurum == false)
+                        {
+                            HttpContext.Session.SetInt32("MessageBox", 7);
+                        }
+                    }
                 }
             }
         }
@@ -200,11 +220,11 @@ namespace AEC_WebApp.Controllers
             {
                 if (!secilenKart.HasValue)
                 {
-                    HttpContext.Session.SetInt32("MessageBox", 11);
+                    HttpContext.Session.SetInt32("secilenKartErrorMessage", 1);
                 }
                 else if (!terms.HasValue)
                 {
-                    HttpContext.Session.SetInt32("MessageBox", 12);
+                    HttpContext.Session.SetInt32("CheckboxErrorMessage", 1);
                 }
                 else
                 {

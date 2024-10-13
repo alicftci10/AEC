@@ -59,7 +59,7 @@ namespace AEC_WebSellerApp.Controllers
                     if (model != null && model.Id > 0)
                     {
                         HttpContext.Session.SetString("Kullanici", text.Result);
-                        HttpContext.Session.SetInt32("MessageBox",1);
+                        HttpContext.Session.SetInt32("MessageBox", 1);
                         return RedirectToAction("Index", "Home");
                     }
                     else if (model.ErrorMessage == "1")
@@ -70,13 +70,9 @@ namespace AEC_WebSellerApp.Controllers
                     {
                         ModelState.AddModelError("Sifre", "Kullanıcı Adı veya Şifre yanlış!! lütfen tekrar deneyiniz.");
                     }
+                }
 
-                    return View(model);
-                }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+                return View(model);
             }
         }
 

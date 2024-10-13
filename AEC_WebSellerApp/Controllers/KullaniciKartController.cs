@@ -199,10 +199,8 @@ namespace AEC_WebSellerApp.Controllers
                     HttpContext.Session.SetInt32("MessageBox", 5);
                     return RedirectToAction("KullaniciDetay", "Kullanici");
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
     }

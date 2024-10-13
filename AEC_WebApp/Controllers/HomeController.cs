@@ -55,10 +55,8 @@ namespace AEC_WebApp.Controllers
 
                     return View(model);
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
 
@@ -98,10 +96,8 @@ namespace AEC_WebApp.Controllers
 
                     return View(model);
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
 
@@ -141,10 +137,8 @@ namespace AEC_WebApp.Controllers
 
                     return View(model);
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
 
@@ -184,10 +178,8 @@ namespace AEC_WebApp.Controllers
 
                     return View(model);
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
     }

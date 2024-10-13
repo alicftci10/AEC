@@ -41,17 +41,7 @@ namespace AEC_WebSellerApp.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
-                if (MessageBox == 1)
-                {
-                    TempData["MessageBox"] = 1;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
-                else if (MessageBox == 2)
-                {
-                    TempData["MessageBox"] = 2;
-                    HttpContext.Session.SetInt32("MessageBox", 3);
-                }
+                MessageBox();
 
                 KullaniciTuruDataModel model = new KullaniciTuruDataModel();
 
@@ -154,10 +144,8 @@ namespace AEC_WebSellerApp.Controllers
                     HttpContext.Session.SetInt32("MessageBox", 2);
                     return RedirectToAction("KullaniciTuruSayfasi");
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
     }

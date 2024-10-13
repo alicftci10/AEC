@@ -65,10 +65,8 @@ namespace AEC_WebApp.Controllers
                         return RedirectToAction("MouseDetay", "Home");
                     }
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
 
@@ -105,10 +103,8 @@ namespace AEC_WebApp.Controllers
                         return RedirectToAction("UrunYorumSayfasi");
                     }
                 }
-                else
-                {
-                    return RedirectToAction("ErrorSayfasi", "Error");
-                }
+
+                return RedirectToAction("ErrorSayfasi", "Error");
             }
         }
     }

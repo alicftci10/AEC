@@ -99,9 +99,15 @@ namespace AEC_WebApi.Controllers
 
             urun.Adet += pAdet;
 
-            if (urun.Adet < 1) urun.Adet = 1;
+            if (urun.Adet < 1)
+            {
+                urun.Adet = 1;
+                urun.SepetDurum = false;
+            }
 
-            return Ok(_UrunTakip.Update(urun));
+            _UrunTakip.Update(urun);
+
+            return Ok(urun);
         }
 
         [HttpGet]
@@ -134,7 +140,9 @@ namespace AEC_WebApi.Controllers
             urun.SiparisDurum = pSiparisDurum;
             urun.UpdatedBy = GetCurrentKullanici(HttpContext).Id;
 
-            return Ok(_UrunTakip.Update(urun));
+            _UrunTakip.Update(urun);
+
+            return Ok(urun);
         }
 
         [HttpGet]

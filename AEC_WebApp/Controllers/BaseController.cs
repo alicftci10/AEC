@@ -341,10 +341,8 @@ namespace AEC_WebApp.Controllers
 
                 return model;
             }
-            else
-            {
-                return new HakkimizdaDataModel();
-            }
+
+            return new HakkimizdaDataModel();
         }
 
         public List<KullaniciDataModel> LoadKullaniciList()
@@ -501,16 +499,6 @@ namespace AEC_WebApp.Controllers
             else if (MessageBox == 10)
             {
                 TempData["MessageBox"] = 10;
-                HttpContext.Session.SetInt32("MessageBox", 3);
-            }
-            else if (MessageBox == 11)
-            {
-                TempData["ErrorMessage"] = "Lütfen Ödeme Yöntemi Seçiniz!!";
-                HttpContext.Session.SetInt32("MessageBox", 3);
-            }
-            else if (MessageBox == 12)
-            {
-                TempData["CheckboxErrorMessage"] = "Lütfen Şartlar ve Koşulları Onaylayın!!";
                 HttpContext.Session.SetInt32("MessageBox", 3);
             }
         }

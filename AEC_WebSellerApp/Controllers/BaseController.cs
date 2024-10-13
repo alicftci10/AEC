@@ -117,10 +117,8 @@ namespace AEC_WebSellerApp.Controllers
 
                 return model;
             }
-            else
-            {
+
                 return new HakkimizdaDataModel();
-            }
         }
 
         public List<KullaniciDataModel> LoadKullaniciList()
@@ -334,10 +332,6 @@ namespace AEC_WebSellerApp.Controllers
                             if (item.AltKategori == null && item.OrtaKategori != null)
                             {
                                 list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.UstKategori + " > " + item.OrtaKategori });
-                            }
-                            else if (item.AltKategori == null && item.OrtaKategori == null)
-                            {
-                                list.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.UstKategori });
                             }
                         }
 
@@ -1059,6 +1053,31 @@ namespace AEC_WebSellerApp.Controllers
                 }
 
                 return new List<UrunYorumDataModel>();
+            }
+        }
+
+        public void MessageBox()
+        {
+            int? MessageBox = HttpContext.Session.GetInt32("MessageBox");
+            if (MessageBox == 1)
+            {
+                TempData["MessageBox"] = 1;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 2)
+            {
+                TempData["MessageBox"] = 2;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 4)
+            {
+                TempData["MessageBox"] = 4;
+                HttpContext.Session.SetInt32("MessageBox", 3);
+            }
+            else if (MessageBox == 5)
+            {
+                TempData["MessageBox"] = 5;
+                HttpContext.Session.SetInt32("MessageBox", 3);
             }
         }
     }
