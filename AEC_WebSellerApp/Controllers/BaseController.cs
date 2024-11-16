@@ -10,7 +10,7 @@ using static System.Net.WebRequestMethods;
 
 namespace AEC_WebSellerApp.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         public IMemoryCache _memoryCacheBase;
 

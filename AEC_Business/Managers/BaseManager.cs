@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace AEC_Business.Managers
 {
-    public class BaseManager
+    public abstract class BaseManager
     {
+
     }
 }

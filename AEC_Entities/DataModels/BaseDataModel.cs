@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AEC_Entities.DataModels
 {
-    public class BaseDataModel
+    public abstract class BaseDataModel
     {
         public int Id { get; set; }
         public DateTime? CreatedAt { get; set; }
