@@ -31,4 +31,6 @@ By designing user-friendly panels, I optimized sales processes. This project is 
 
 ![Ekran görüntüsü 2025-01-21 145459](https://github.com/user-attachments/assets/976fd21b-b687-4389-8113-52ab22f472c8)
 
+![Ekran görüntüsü 2025-01-23 125742](https://github.com/user-attachments/assets/243c4371-9f00-466f-aee0-b8c6212234db)
+
 ![Ekran görüntüsü 2025-01-21 145830](https://github.com/user-attachments/assets/383fe3e3-1e3b-4784-bb1b-bcb2cfe2ec2a)
